@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>{$seo.title}</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="__CSS__/bootstrap.min.css" rel="stylesheet" media="screen">
+	<link href="__CSS__/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
+	<style>
+		body{padding-top:80px;}
+	</style>
+</head>
+<body>
+	  <!-- 公共头部 -->
+	  <include file="Common@Public/header" />
+	
+    <div class="container">
+    		
+    	<div class="row">
+    		<div class="span3">
+    			<include file="Public/sidebar" nav="apply"/>
+    		</div>
+    		<div class="span9">
+    			
+          <h3>申请成为作者</h3>
+  
+          <?php if(!$assign['is_show']):?>
+          
+            <p style="min-height:180px;">您已于{$full_info.aa_date}提交过申请，目前正处于审核状态，请稍等</p>
+
+          <?php else:?>
+
+          <form action="{:U('user/center/doApply')}" class="form-horizontal" method="post">
+
+            <div class="control-group">
+              <label for="inputTrueName" class="control-label">真实姓名</label>
+              <div class="controls">
+                <input type="text" name="user_true_name" placeholder="真实姓名" id="inputTrueName" value="{$full_info.user_true_name}"/>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label for="inputQQ" class="control-label">常用QQ号</label>
+              <div class="controls">
+                <input type="text" id="inputQQ" name="user_qq" placeholder="常用QQ号" value="{$full_info.user_qq}" />
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label for="inputMobile" class="control-label">手机号码</label>  
+              <div class="controls">
+                <input type="text" name="user_mobile" placeholder="手机号码" id="inputMobile" value="{$full_info.user_mobile}" />
+              </div>
+            </div>
+
+            <div class="control-grop">
+              <label for="inputText" class="control-label">申请感言</label>
+              <div class="controls">
+                <textarea name="aa_text" id="inputText" cols="30" rows="10" placeholder="申请感言"></textarea>
+              </div>
+            </div>  
+            
+            <input type="hidden" name="user_id" value="{:session('user.user_id')}" />
+            <button class="btn btn-danger">提交</button>
+          </form>
+          
+          <?php endif;?>
+    		</div>
+    	</div>
+	   
+      <!-- 公共底部 -->
+		  <include file="Common@Public/footer" />
+
+    </div>
+
+
+	<script src="__JS__/jquery.min.js"></script>
+	<script src="__JS__/bootstrap.min.js"></script>
+	<script src="__JS__/zlang.js"></script>
+	<script type="text/javascript">
+		jQuery(function(){
+
+			$.debug("个人中心");
+		});
+	</script>
+</body>
+</html>
