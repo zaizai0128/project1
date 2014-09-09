@@ -1,3 +1,2 @@
 .svn
-main/Runtime/*
-*/Runtime/*
+./main/Runtime
