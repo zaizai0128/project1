@@ -36,9 +36,9 @@ if (!function_exists('de')) {
  * @param String 域名的配置名
  */
 if (!function_exists('ZU')) {
-	function ZU($url_param, $domain = Null)
+	function ZU($url_param, $domain = Null, $param = array())
 	{
-		$http = !$domain ? C('ZL_DOMAIN') : !C($domain) ? C('ZL_DOMAIN') : C($domain);
-		return $http . U($url_param);
+		$http = empty($domain) ? C('ZL_DOMAIN') : !C($domain) ? C('ZL_DOMAIN') : C($domain);
+		return $http . U($url_param, $param);
 	}
 }

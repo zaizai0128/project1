@@ -22,13 +22,27 @@ class ManagerController extends BaseController {
 	}
 
 	/**
-	 * 作品管理
+	 * 作品列表管理
 	 */
 	public function index()
 	{
-		
+		// 读取该作者一共拥有的书籍，遍历显示
+
 		$this->display();
 	}
+
+	/**
+	 * 每本作品的管理界面
+	 *
+	 * @param int $book_id
+	 */
+	public function book()
+	{
+		$book_id = I('book_id');
+		
+		echo $book_id;
+	}
+
 
 	/**
 	 * 新建作品
