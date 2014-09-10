@@ -11,9 +11,6 @@ use Think\Model;
 
 class HomeModel extends Model {
 
-	public function cQuery($sql)
-	{
-		return $this->query($sql);
-	}
+	
 
 }

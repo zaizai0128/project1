@@ -24,7 +24,6 @@ class CenterController extends UserController {
 
 	public function _init()
 	{
-
 		$info = $this->_user->getInfo(session('user.user_id'));
 		$this->assign(array(
 			'info' => $info
@@ -45,11 +44,12 @@ class CenterController extends UserController {
 	public function doAddExt()
 	{
 		if (IS_POST) {
-
-			$state = $this->_user->updateExt(I());
+			$data = I();
+			$data['user_id'] = session('user.user_id');
+			$state = $this->_user->updateExt($data);
 
 			if ($state['code'] > 0)
-				$this->success($state['msg'], U('user/center/index')); 
+				$this->success($state['msg'], ZU('user/center/index')); 
 			else
 				$this->error($state['msg']);
 		}
@@ -59,7 +59,11 @@ class CenterController extends UserController {
 	 * 申请成为作者
 	 */
 	public function apply()
-	{
+	{	
+		// 判断是否需要补充个人真实信息
+		if (!$this->_author->checkTrueInfo(session('user.user_id')))
+			$this->error('请先补充个人真实信息', ZU('user/center/trueInfo'));
+
 		$full_info = array();
 		$assign['is_show'] = True;
 
@@ -68,7 +72,9 @@ class CenterController extends UserController {
 
 		// 如果没有申请作者的信息，则显示申请界面
 		if (empty($info)) {
-			$full_info = $this->_user->getInfo(session('user.user_id'), True);
+
+			// 获取作者的全部信息[包含真实信息]
+			$full_info = $this->_author->getInfo(session('user.user_id'), True);
 
 		// 否则显示申请进度
 		} else {
@@ -89,14 +95,18 @@ class CenterController extends UserController {
 	public function doApply()
 	{
 		if (IS_POST) {
-			
-			if (!$this->_user->checkTrueInfo(session('user.user_id')))
-				$this->error('请先补充个人真实信息', U('user/center/trueInfo'));
 
-			$state = $this->_author->apply(I());
+			$info = $this->_author->getApplyById(session('user.user_id'));
+			if (!empty($info)) {
+				$this->error('您已经提交了申请，正在审核阶段', ZU('user/center/apply'));
+			}
+
+			$data = I();
+			$data['user_id'] = session('user.user_id');
+			$state = $this->_author->apply($data);
 			
 			if ($state['code'] > 0) 
-				$this->success($state['msg'], U('user/center/index'));
+				$this->success($state['msg'], ZU('user/center/index'));
 			else 
 				$this->error($state['msg']);
 		}
@@ -107,7 +117,7 @@ class CenterController extends UserController {
 	 */
 	public function trueInfo()
 	{	
-		$true_info = $this->_user->getTrueInfo(session('user.user_id'));
+		$true_info = $this->_author->getTrueInfo(session('user.user_id'));
 
 		$this->assign(array(
 			'true_info' => $true_info
@@ -121,14 +131,20 @@ class CenterController extends UserController {
 	public function doTrueInfo()
 	{
 		if (IS_POST) {
+			$data = I();
+			$data['user_id'] = session('user.user_id');
+			
+			// 编辑
+			if ($this->_author->checkTrueInfo(session('user.user_id'))) {
+				$state = $this->_author->updateTrueInfo($data);
 
-			if ($this->_user->checkTrueInfo(session('user.user_id')))
-				$state = $this->_user->updateTrueInfo(I());
-			else 
-				$state = $this->_user->updateTrueInfo(I(), False);
+			// 创建 
+			} else {
+				$state = $this->_author->updateTrueInfo($data, False);
+			}
 
 			if ($state['code'] > 0)
-				$this->success($state['msg'], U('user/center/index'));
+				$this->success($state['msg'], ZU('user/center/index'));
 			else
 				$this->error($state['msg']);
 		}
@@ -139,7 +155,7 @@ class CenterController extends UserController {
 	 */
 	public function bank()
 	{
-		$bank_info = $this->_user->getBankById(session('user.user_id'));
+		$bank_info = $this->_author->getBankById(session('user.user_id'));
 
 		$this->assign(array(
 			'bank_info' => $bank_info,
@@ -153,14 +169,18 @@ class CenterController extends UserController {
 	public function doBank()
 	{
 		if (IS_POST) {
+			$data = I();
 
-			if ($this->_user->checkBankInfo(session('user.user_id'))) 
-				$state = $this->_user->updateBankInfo(I());
-			else
-				$state = $this->_user->updateBankInfo(I(), False);
+			if ($id = $this->_author->checkBankInfo(session('user.user_id'))) {
+				$data['id'] = $id;
+				$state = $this->_author->updateBankInfo($data);
+			} else {
+				$data['user_id'] = session('user.user_id');
+				$state = $this->_author->updateBankInfo($data, False);
+			}
 
 			if ($state['code'] > 0)
-				$this->success($state['msg'], U('user/center/index'));
+				$this->success($state['msg'], ZU('user/center/index'));
 			else
 				$this->error($state['msg']);
 		}
@@ -192,6 +212,6 @@ class CenterController extends UserController {
 	public function logout()
 	{
 		$state = $this->_user->logout();		
-		$this->success('退出成功', U('/index/index'));
+		$this->success('退出成功', ZU('/index/index'));
 	}
 }

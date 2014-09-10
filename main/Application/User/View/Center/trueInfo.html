@@ -45,8 +45,7 @@
                 <input type="text" name="user_true_name" placeholder="真实姓名" id="inputTrueName" value="{$true_info.user_true_name}" />
               </div>
             </div>
-            
-            <input type="hidden" name="user_id" value="{:session('user.user_id')}" />
+                        
             <button class="btn btn-danger"><?php if(empty($true_info)):?>提交<?php else:?>修改<?php endif;?></button>
           </form>
 

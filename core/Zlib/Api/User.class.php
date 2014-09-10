@@ -3,8 +3,8 @@
  * 公共的用户api接口
  * 
  * @author 	songmw<songmingwei@kongzhong.com>
- * @date 	2014-09-05
- * @version 1.0
+ * @date 	2014-09-10
+ * @version 1.1
  */
 namespace Zlib\Api;
 use Zlib\Model as Zmodel;
@@ -99,49 +99,8 @@ class User extends Zmodel\BaseModel {
 	public function getInfo($uid, $full = False)
 	{
 		$base_info = $this->where('user_id = '.$uid)->find();
-		$true_info = array();
-
-		if ($full)
-			$true_info = $this->getTrueInfo($uid);
-
-		return array_merge($base_info, $true_info);
-	}
-
-	/**
-	 * 获取用户的真实信息
-	 *
-	 * @param uid 用户id
-	 */
-	public function getTrueInfo($uid)
-	{
-		return M('zl_user_author')->where('user_id = '.$uid)->find();
-	}
-
-	/**
-	 * 判断用户真实信息是否通过
-	 *
-	 * @param uid 用户id
-	 */
-	public function checkTrueInfo($uid)
-	{
-		$info = M('zl_user_author')->field('user_id')->where('user_id = '.$uid)->find();
-		return empty($info) ? False : True;
-	}
-
-	/**
-	 * 补充用户的真实信息
-	 *
-	 * @param array 保存信息
-	 * @param boolean 编辑/添加
-	 */
-	public function updateTrueInfo($info, $is_edit = True)
-	{
-		if ($is_edit)
-			$rs = M('zl_user_author')->data($info)->save();
-		else
-			$rs = M('zl_user_author')->data($info)->add();
-
-		return $rs > 0 ? array('code'=>1, 'msg'=>'成功') : array('code'=>-1, 'msg'=>'失败');
+				
+		return $base_info;
 	}
 
 	/**
@@ -200,42 +159,4 @@ class User extends Zmodel\BaseModel {
 		$state = $this->save($user);
 		return $state > 0 ? array('code'=>1, 'msg'=>'修改成功') : array('code'=>-1, 'msg'=>'内容未修改或修改失败');
 	}
-
-	/**
-	 * 获取用户银行卡信息
-	 *
-	 * @param int 用户id
-	 */
-	public function getBankById($uid)
-	{
-		return M('zl_user_author_bank')->where('user_id = '.$uid)->find();
-	}
-
-	/**
-	 * 验证银行卡信息
-	 * @param int 用户id
-	 * @return boolean
-	 */
-	public function checkBankInfo($uid)
-	{
-		$info = M('zl_user_author_bank')->where('user_id = '.$uid)->find();
-		return empty($info) ? False : True;
-	}
-
-	/**
-	 * 保存银行卡信息
-	 *
-	 * @param Array 银行卡信息
-	 * @param Boolean 是否是更新
-	 */
-	public function updateBankInfo($info, $is_edit = True)
-	{
-		if ($is_edit)
-			$rs = M('zl_user_author_bank')->data($info)->save();
-		else 
-			$rs = M('zl_user_author_bank')->data($info)->add();
-
-		return $rs > 0 ? array('code'=>1, 'msg'=>'成功') : array('code'=>-1, 'msg'=>'失败');
-	}
-	
 }
