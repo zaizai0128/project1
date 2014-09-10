@@ -4,6 +4,9 @@
  *
  */
 jQuery(function(){
+
+	$('.pop').popover({html:true})
+
 	$.extend({
 		debug : function(str)
 		{

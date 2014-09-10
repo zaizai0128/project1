@@ -39,8 +39,13 @@ class ManagerController extends BaseController {
 	public function book()
 	{
 		$book_id = I('book_id');
+
+		// 判断bookid是否存在，不存在，返回error
+
 		
-		echo $book_id;
+
+		
+		$this->display();
 	}
 
 
