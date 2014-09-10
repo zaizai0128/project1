@@ -1,10 +1,10 @@
 <?php
 /**
- * 逐浪小说网 主站入口文件
+ * 逐浪小说网 作者站入口文件
  * ThinkPHP3.2.2+版本 要求php环境必须大于5.3
  *
  * @author 	songmw<songmingwei@kongzhong.com>
- * @date 	2014-09-01
+ * @date 	2014-09-10
  * @version 1.0
  */
 
