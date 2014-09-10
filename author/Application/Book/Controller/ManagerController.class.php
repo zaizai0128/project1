@@ -27,7 +27,7 @@ class ManagerController extends BaseController {
 	public function index()
 	{
 		
-		echo 'book manager';
+		$this->display();
 	}
 
 	/**
