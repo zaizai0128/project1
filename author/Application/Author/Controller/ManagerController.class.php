@@ -27,7 +27,7 @@ class ManagerController extends BaseController {
 	 */
 	public function index()
 	{
-		$info = $this->_author -> getInfo(session('user.user_id'), True);
+		$info = $this->_author->getInfo(session('user.user_id'), True);
 		
 		$this->assign(array(
 			'info' => $info
