@@ -26,3 +26,17 @@ if (!function_exists('de')) {
 		die;
 	}
 }
+
+/**
+ * 生成带有域名的绝对URL路径(封装一下U方法)
+ *
+ * @param String U方法传递参数
+ * @param String 域名的配置名
+ */
+if (!function_exists('CU')) {
+	function CU($url_param, $domain = Null)
+	{
+		$http = !$domain ? C('ZL_DOMAIN') : !C($domain) ? C('ZL_DOMAIN') : C($domain);
+		return $http . U($url_param);
+	}
+}
