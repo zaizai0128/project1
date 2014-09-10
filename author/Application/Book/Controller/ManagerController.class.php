@@ -1,6 +1,6 @@
 <?php
 /**
- * 作者站首页
+ * 作品管理
  *
  * @author 	songmw<songmingwei@kongzhong.com>
  * @date 	2014-09-10
@@ -12,20 +12,12 @@ use Common\Controller\BaseController;
 class IndexController extends BaseController {
 
 	/**
-	 * 作者站首页
+	 * 作品管理
 	 */
 	public function index()
 	{
-		$this->display();
-	}
-
-	/**
-	 * 作者必读
-	 */
-	public function read()
-	{
-		$info = file_get_contents('http://www.zhulang.com/w_author_privilige_info.php');
-		$this->show($info);
+		
+		echo 'book manager';
 	}
 	
 }

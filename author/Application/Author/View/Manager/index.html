@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>{$seo.title}</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="__CSS__/bootstrap.min.css" rel="stylesheet" media="screen">
+	<link href="__CSS__/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
+	<style>
+		body{padding-top:80px;}
+	</style>
+</head>
+<body>
+
+	<!-- 公共头部 -->
+	<include file="Common@Public/header" />
+	
+    <div class="container">
+    	<div class="row">
+    		<div class="span3">
+	    		<include file="Common@Public/sidebar" nav="info"/>
+	    	</div>
+	    	<div class="span9">
+				<div class="tabbable">
+					<div class="pull-right"><a href="{:ZU('author/manager/edit', 'ZL_AUTHOR_DOMAIN')}" class="btn">修改资料</a></div>
+					<ul class="nav nav-tabs">
+						<li class="active"><a href="#tab-basic" data-toggle="tab">基本资料</a></li>
+						<li><a href="#tab-secret" data-toggle="tab">保密资料</a></li>
+					</ul>
+					<div class="tab-content">
+						<div class="tab-pane active" id="tab-basic">
+							<div class="row">
+								<div class="span2">用户名：{$info.user_name}</div>
+								<div class="span2">笔名：{$info.author_name}</div>
+							</div>
+							<p>&nbsp;</p>
+							<div class="row">
+								<div class="span2">QQ号：{$info.user_qq}</div>
+								<div class="span2">手机号：{$info.user_mobile}</div>
+							</div>
+						</div>
+						<div class="tab-pane" id="tab-secret">
+							<div class="row">
+								<div class="span2">真实姓名：{$info.user_true_name}</div>
+								<div class="span3">身份证号：{$info.user_idcard}</div>
+							</div>
+						</div>
+					</div>
+				</div>
+	    	</div>
+    	</div>
+
+		<!-- 公共底部 -->
+		<include file="Common@Public/footer" />
+    </div>
+
+
+	<script src="__JS__/jquery.min.js"></script>
+	<script src="__JS__/bootstrap.min.js"></script>
+	<script src="__JS__/zlang.js"></script>
+	<script type="text/javascript">
+		jQuery(function(){
+
+			$.debug('首页');
+		});
+	</script>
+</body>
+</html>
