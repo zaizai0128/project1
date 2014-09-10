@@ -21,8 +21,10 @@ if (!function_exists('de')) {
 	{
 		if (!isset($var))
 			$txt = 'going...here';
+		else
+			$txt = $var;
 
-		dump($var);
+		dump($txt);
 		die;
 	}
 }
@@ -33,8 +35,8 @@ if (!function_exists('de')) {
  * @param String U方法传递参数
  * @param String 域名的配置名
  */
-if (!function_exists('CU')) {
-	function CU($url_param, $domain = Null)
+if (!function_exists('ZU')) {
+	function ZU($url_param, $domain = Null)
 	{
 		$http = !$domain ? C('ZL_DOMAIN') : !C($domain) ? C('ZL_DOMAIN') : C($domain);
 		return $http . U($url_param);
