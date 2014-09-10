@@ -22,3 +22,4 @@ git pull / svn checkout 后，请将Ignore目录里面的文件拷贝到对应�
 ### Ignore目录里面文件位对应位置
 
 拷贝 db.php 到 Zlib/Conf/
+拷贝 session.php 到 Zlib/Conf/
