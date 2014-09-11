@@ -42,3 +42,16 @@ if (!function_exists('ZU')) {
 		return $http . U($url_param, $param);
 	}
 }
+
+/**
+ * 获取通过C方法获取的常量数组的元素
+ *
+ * @param Array 数组
+ * @param int|String 数组下标
+ */
+if (!function_exists('ZC')) {
+	function ZC($arr, $key)
+	{
+		return isset($arr[$key]) ? $arr[$key] : False;
+	}
+}

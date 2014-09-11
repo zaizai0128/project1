@@ -47,6 +47,7 @@ jQuery(function(){
 
 			child_obj.html(child_html);
 
+			// 添加选择事件
 			main_obj.on('change', function(){
 				child_html = '';
 		 		main_id = $(this).find('option:selected').val();

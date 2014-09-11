@@ -13,4 +13,29 @@ return array(
 	'ZL_AUTHOR_DOMAIN' => 'http://author.zhulang.ne',	// 作者站域名
 	'ZL_ADMIN_DOMAIN' => 'http://admin.zhulang.ne',		// 管理站域名
 	'ZL_DOMAIN_DOT' => '.zhulang.ne',
+
+	
+	// 作品相关
+	'BK' => array(
+
+		// 授权等级 -- 新建作品时候的授权等级
+		'auth_level' => array(
+			1 => '首发作品',
+			2 => '驻站作品',
+			3 => '公众作品',
+		),
+
+		// 签约类型
+		'commision' => array(
+			'A' => 'A',
+			'B' => 'B',
+			'C' => 'C',
+			'D' => 'D',
+			'E' => 'E',
+			'T' => 'T',
+			'X' => 'X',
+			'Y' => 'Y',
+			'Z' => 'Z',
+		),
+	)
 );

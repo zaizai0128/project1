@@ -62,8 +62,6 @@ class BookController extends BaseController {
 		$auth_info = $this->_author->getInfo($this->user_id, True);
 		$book_class = Zapi\BookClass::getInstance()->getAllClassForJson();
 
-		// dump($book_class);
-
 		$this->assign(array(
 			'book_class' => $book_class,
 			'auth_info' => $auth_info
@@ -77,8 +75,25 @@ class BookController extends BaseController {
 	public function doCreateNewBook()
 	{
 		if (IS_POST) {
+			
+			$data = I();
+			$book_service = D('Book', 'Service');
+			$state = $book_service->checkBookName($data['bk_name']);
 
-			dump(I());
+			if ($state['code'] < 0)
+				$this->error($state['msg']);
+
+			$data['bk_author'] = session('author.author_name');
+			$data['bk_author_id'] = $this->user_id;
+			$data['bk_poster_id'] = $this->user_id;
+
+			$book_apply_obj = D('BookApply');
+			$book_id = $book_apply_obj->doAdd($data);
+
+			if ($book_id)
+				$this->success('添加成功等待审核', ZU('/book/book', 'ZL_AUTHOR_DOMAIN', array('book_id'=>$book_id)));
+			else
+				$this->error('添加失败');
 		}
 	}
 

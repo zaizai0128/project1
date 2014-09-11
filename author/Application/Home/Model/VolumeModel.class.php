@@ -14,7 +14,7 @@
 namespace Home\Model;
 use Zlib\Model\BaseModel;
 
-class VolumeController extends BaseModel {
+class VolumeModel extends BaseModel {
 
 	protected $trueTableName = 'zl_book_volume';
 	
