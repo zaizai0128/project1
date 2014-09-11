@@ -6,11 +6,11 @@
  * @date 	2014-09-10
  * @version 1.0
  */
-namespace Book\Controller;
+namespace Home\Controller;
 use Common\Controller\BaseController;
 use Zlib\Api as Zapi;
 
-class ManagerController extends BaseController {
+class BookController extends BaseController {
 
 	protected $_author;
 
@@ -52,7 +52,7 @@ class ManagerController extends BaseController {
 	/**
 	 * 新建作品
 	 */
-	public function create()
+	public function createNewBook()
 	{
 		$auth_info = $this->_author->getInfo(session('user.user_id'), True);
 		
@@ -65,7 +65,7 @@ class ManagerController extends BaseController {
 	/**
 	 * 提交新建作品
 	 */
-	public function doCreate()
+	public function doCreateNewBook()
 	{
 		if (IS_POST) {
 
@@ -76,10 +76,9 @@ class ManagerController extends BaseController {
 	/**
 	 * 新建作品说明
 	 */
-	public function createHelp()
+	public function createNewBookHelp()
 	{
 		$content = file_get_contents('http://www.zhulang.com/htmpage/zpschuan.html');
 		$this->show($content);
 	}
-	
 }

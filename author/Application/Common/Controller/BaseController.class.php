@@ -1,6 +1,6 @@
 <?php
 /**
- * 作者站 基类
+ * 作者站 父类
  *
  * @author 	songmw<songmingwei@kongzhong.com>
  * @date 	2014-09-10

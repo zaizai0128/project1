@@ -151,42 +151,6 @@ class CenterController extends UserController {
 	}
 
 	/**
-	 * 填写银行信息
-	 */
-	public function bank()
-	{
-		$bank_info = $this->_author->getBankById(session('user.user_id'));
-
-		$this->assign(array(
-			'bank_info' => $bank_info,
-		));
-		$this->display();
-	}
-
-	/**
-	 * 保存银行信息
-	 */
-	public function doBank()
-	{
-		if (IS_POST) {
-			$data = I();
-
-			if ($id = $this->_author->checkBankInfo(session('user.user_id'))) {
-				$data['id'] = $id;
-				$state = $this->_author->updateBankInfo($data);
-			} else {
-				$data['user_id'] = session('user.user_id');
-				$state = $this->_author->updateBankInfo($data, False);
-			}
-
-			if ($state['code'] > 0)
-				$this->success($state['msg'], ZU('user/center/index'));
-			else
-				$this->error($state['msg']);
-		}
-	}
-
-	/**
 	 * 升级成为vip
 	 */
 	public function vip()

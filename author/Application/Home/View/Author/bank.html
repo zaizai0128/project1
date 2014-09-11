@@ -1,0 +1,39 @@
+<extend name="Public/base" />
+
+<block name="main">
+<div class="row">
+  <div class="span3">
+    <include file="Public/sidebar" nav="bank"/>
+  </div>
+
+  <div class="span9">
+    <h3>填写银行信息</h3>
+    <form action="{:ZU('author/doBank', 'ZL_AUTHOR_DOMAIN', array('book_id'=>I('book_id')))}" class="form-horizontal" method="post">
+
+      <div class="control-group">
+        <label for="inputBank" class="control-label">开户行</label>
+        <div class="controls">
+          <input type="text" name="bank" placeholder="开户行" id="inputBank" value="{$bank_info.bank}"/>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label for="inputBankName" class="control-label">开户人名称</label>
+        <div class="controls">
+          <input type="text" id="inputBankName" name="bank_name" placeholder="开户人名称" value="{$bank_info.bank_name}" />
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label for="inputBankNum" class="control-label">银行账号</label>  
+        <div class="controls">
+          <input type="text" name="bank_num" placeholder="银行账号" id="inputBankNum" value="{$bank_info.bank_num}" />
+        </div>
+      </div>
+                  
+      <button class="btn btn-danger"><?php if(empty($bank_info)):?>提交<?php else:?>修改<?php endif;?></button>
+    </form>
+  </div>
+
+</div>
+</block>

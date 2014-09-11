@@ -11,10 +11,8 @@
 $zlib_config = require(ZLIB_PATH . '/Conf/config.php');
 
 $app_config = array(
-	
-	
-	// 设置module列表
-    'MODULE_ALLOW_LIST' => array('Home', 'Author', 'Book'),        
+
+	     
 );
 
 return array_merge($zlib_config, $app_config);

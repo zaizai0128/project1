@@ -6,7 +6,7 @@
  * @date 	2014-09-10
  * @version 1.0
  */
-namespace Book\Controller;
+namespace Home\Controller;
 use Common\Controller\BaseController;
 use Zlib\Api as Zapi;
 

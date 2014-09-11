@@ -1,0 +1,23 @@
+<div class="sidebar-nav">
+	<ul class="breadcrumb">
+		<li class="active">当前操作作品名:【笑傲江湖】</li>
+	</ul>
+	<ul class="nav nav-list">
+		<li <if condition="[nav] eq 'author_info'">class="active"</if>><a href="{:ZU('author/index', 'ZL_AUTHOR_DOMAIN', array('book_id'=>I('book_id')))}">作者信息</a></li>
+		<li <if condition="[nav] eq 'new_book'">class="active"</if>><a href="{:ZU('book/createNewBook', 'ZL_AUTHOR_DOMAIN', array('book_id'=>I('book_id')))}">新建作品</a></li>
+		<li <if condition="[nav] eq 'book_manager'">class="active"</if>><a href="{:ZU('book/index', 'ZL_AUTHOR_DOMAIN')}">作品管理</a></li>
+		<li <if condition="[nav] eq 'read'">class="active"</if>><a href="{:ZU('/index/read', 'ZL_AUTHOR_DOMAIN')}" target="_blank">作者必读</a></li>
+		<li <if condition="[nav] eq 'survey'">class="active"</if>><a href="{:ZU('survey/index', 'ZL_AUTHOR_DOMAIN', array('book_id'=>I('book_id')))}">新建调查</a></li>
+		<li <if condition="[nav] eq 'volume'">class="active"</if>><a href="{:ZU('volume/index', 'ZL_AUTHOR_DOMAIN', array('book_id'=>I('book_id')))}">管理分卷</a></li>
+		<li <if condition="[nav] eq 'book'">class="active"</if>><a href="">上传新章节</a></li>
+		<li <if condition="[nav] eq 'read'">class="active"</if>><a href="">上传作品封面</a></li>
+		<li <if condition="[nav] eq 'read'">class="active"</if>><a href="">章节修改调卷</a></li>
+		<li <if condition="[nav] eq 'read'">class="active"</if>><a href="">修改作品信息</a></li>
+		<li <if condition="[nav] eq 'read'">class="active"</if>><a href="">公众版存稿箱</a></li>
+		<li <if condition="[nav] eq 'read'">class="active"</if>><a href="">书评管理</a></li>
+		<li <if condition="[nav] eq 'read'">class="active"</if>><a href="">联系管理员</a></li>
+		<li <if condition="[nav] eq 'read'">class="bank"</if>><a href="{:ZU('author/bank', 'ZL_AUTHOR_DOMAIN', array('book_id'=>I('book_id')))}">添加银行信息</a></li>
+		<li <if condition="[nav] eq 'read'">class="active"</if>><a href="">作品申请签约</a></li>
+		<li <if condition="[nav] eq 'read'">class="active"</if>><a href="">作品申请出版</a></li>
+	</ul>
+</div>
