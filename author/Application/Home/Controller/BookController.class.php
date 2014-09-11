@@ -8,7 +8,7 @@
  */
 namespace Home\Controller;
 use Common\Controller\BaseController;
-use Zlib\Api\Author;
+use Zlib\Api as Zapi;
 
 class BookController extends BaseController {
 
@@ -18,7 +18,7 @@ class BookController extends BaseController {
 	{
 		parent::__construct();
 
-		$this->_author = new Author;
+		$this->_author = new Zapi\Author;
 	}
 
 	/**
@@ -60,8 +60,12 @@ class BookController extends BaseController {
 	public function createNewBook()
 	{
 		$auth_info = $this->_author->getInfo($this->user_id, True);
-		
+		$book_class = Zapi\BookClass::getInstance()->getAllClassForJson();
+
+		// dump($book_class);
+
 		$this->assign(array(
+			'book_class' => $book_class,
 			'auth_info' => $auth_info
 		));
 		$this->display();

@@ -12,6 +12,9 @@ class BookClass {
 	public $mBookClasses = array(); 
 	private static $mInstance =  null;
 
+	// php单例需要把造函数封装起来
+	private function __construct(){}
+
 	// 未来考虑从memcache中读取
 	public static function getInstance() {
 		if (!isset(self::$mInstance)) {
@@ -29,7 +32,6 @@ class BookClass {
 		}
 		return self::$mInstance;
 	}
-
 
 	public function getName($id) 
 	{
@@ -64,7 +66,6 @@ class BookClass {
 		}
 		return $result;
 	}
-
 	
 	public function getChildren($id = null) 
 	{	
@@ -94,5 +95,42 @@ class BookClass {
 	public function remove($id)
 	{	
 		
+	}
+
+	/**
+	 * 获取全部顶级分类
+	 */
+	public function topClass()
+	{
+		$result = array();
+
+		foreach($this->mBookClasses as $key=>$child_id) {
+
+			if ($child_id['class_is_leaf'] != 0)
+				continue;
+
+			$result[$key]['class_id'] = $child_id['class_id'];
+			$result[$key]['class_name'] = $child_id['class_name'];
+		}	
+
+		return $result;
+	}
+
+	/**
+	 * 获取全部分类，返回json形式
+	 */
+	public function getAllClassForJson()
+	{
+		$result = array();
+
+		foreach($this->mBookClasses as $child_id => $child_class) {
+			$result[$child_id]['class_id'] = $child_class['class_id'];
+			$result[$child_id]['class_name'] = $child_class['class_name'];
+			if ($child_class['class_is_leaf'] == 0) {
+				$result[$child_id]['class_children'] = $child_class['class_children'];
+			}
+		}
+		
+		return json_encode($result);
 	}
 }

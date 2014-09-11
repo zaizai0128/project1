@@ -11,6 +11,14 @@
 		</ul>
 		<form action="{:ZU('book/doCreateNewBook', 'ZL_AUTHOR_DOMAIN')}" class="form-horizontal" method="post">
 			<div class="control-group">
+				<label for="book_class" class="control-label">作品类别</label>				
+				<div class="controls">
+					<select class="span2 main_class"></select>
+					<select class="span2 children_class" name="book_class"></select>
+				</div>
+			</div>
+
+			<div class="control-group">
 				<label for="book_name" class="control-label">作品名称</label>
 				<div class="controls">
 					<input type="text" id="book_name" name="book_name" placeholder="作品名称"/>
@@ -52,4 +60,13 @@
 		</form>
 	</div>
 </div>
+</block>
+
+<block name="js">
+<script type="text/javascript">
+	jQuery(function($){
+
+		$.selectChoose('main_class', 'children_class', '{$book_class}');
+	});
+</script>
 </block>

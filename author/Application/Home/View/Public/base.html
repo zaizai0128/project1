@@ -33,15 +33,13 @@
     {// 扩展的modal内容}
     <block name="modal"></block>
     
-	{// 所有js标签最好使用literal标记，防止与thinkphp模板标签混淆}
-	<literal>
-		<script type="text/javascript">
-		jQuery(function(){
+    {// 公共js}
+	<script type="text/javascript">
+	jQuery(function(){
 
-			$.debug('extend布局 - base');
-		});
-		</script>
-	</literal>
+		$.debug('extend布局 - base');
+	});
+	</script>
 	{// 扩展的js}
 	<block name="js"></block>
 </body>
