@@ -40,11 +40,17 @@ class BookController extends BaseController {
 	{
 		$book_id = I('book_id');
 
+		if (empty($book_id)) {
+			$this->error('请选择要操作的作品');
+		}
+
 		// 判断bookid是否存在，不存在，返回error
+		if (False) {
+			$this->error('作品不存在');
+		}
 
-		
+		$book_info['book_id'] = $book_id;
 
-		
 		$this->display();
 	}
 

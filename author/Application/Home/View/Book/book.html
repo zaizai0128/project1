@@ -6,10 +6,13 @@
 		<include file="Public/sidebar" nav="book_manager"/>
 	</div>
 	<div class="span9">
-		<div class="hero-unit">
-			<p>网站内容自查公告（2014-4-14）</p>
-			<p>亲爱的作者朋友们：为响应国家扫黄政策，逐浪网从即日起对站内所有作品进行清查，凡存在涉黄内容、敏感内容的作品均在处理之列。请广大作者立即做好自查工作，以免造成不必要的损失。如有问题，请及时与编辑联系。</p>
-		</div>
+		<ul class="breadcrumb">
+			<li><a href="{:ZU('book/index', 'ZL_AUTHOR_DOMAIN')}">作品管理</a><span class="divider">/</span></li><li class="active">笑傲江湖</li>
+		</ul>
+
+		{// 书的常用管理操作 }
+		<include file="Public/actions" ac="index" />
+		
 		<p class="text-info">2013年逐浪网新版全勤奖励公告！（2012-12-31）</p>
 		<p> 2003-2012，携手十年，我们收获喜悦，一起迈步腾飞。 值此龙蛇更替之际，逐浪网作者福利再传喜讯。 回首2012年，逐浪网在电子、无线、出版等各个领域依旧保持着飞速的发展，网站单月发放稿酬作者突破八百人次，年收入超过六位数的作者四十余人，一大批有实力的作者通过自身的努力在逐浪平台上取得了巨大的成功和丰厚的回报！<a href="###">查看详情</a></p>
 		<p class="text-warning">坦克世界文字争霸赛火热开启，苹果4S、IPAD3抱回家！（2012-09-14）</p>

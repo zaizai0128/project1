@@ -6,10 +6,12 @@
 		<include file="Public/sidebar" nav="survey"/>
 	</div>
 	<div class="span9">
-		<ul class="nav nav-pills">
-			<li class="disabled"><a href="###">修改问卷调查</a></li>
-			<li><a href="###">使用帮助</a></li>
+		<ul class="breadcrumb">
+			<li><a href="{:ZU('book/index', 'ZL_AUTHOR_DOMAIN')}">作品管理</a><span class="divider">/</span></li><li><a href="{:ZU('book/book', 'ZL_AUTHOR_DOMAIN', array('book_id'=>I('book_id')))}">笑傲江湖</a><span class="divider">/</span></li><li class="active">修改问卷调查<span class="divider">-</span><a href="###">[帮助指南]</a></li>
 		</ul>
+
+		{// 书的常用管理操作 }
+		<include file="Public/actions" ac="new_survey" />
 		
 		<form action="{:ZU('survey/doAdd', 'ZL_AUTHOR_DOMAIN')}" class="form-horizontal" method="post">
 			<div class="control-group">

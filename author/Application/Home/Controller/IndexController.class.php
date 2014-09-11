@@ -27,5 +27,5 @@ class IndexController extends BaseController {
 		$info = file_get_contents('http://www.zhulang.com/w_author_privilige_info.php');
 		$this->show($info);
 	}
-	
+
 }

@@ -6,11 +6,9 @@
 		<include file="Public/sidebar" nav="new_book"/>
 	</div>
 	<div class="span9">
-		<ul class="nav nav-pills">
-			<li class="disabled"><a href="">新建作品</a></li>
-			<li><a href="{:ZU('book/createNewBookHelp', 'ZL_AUTHOR_DOMAIN')}" target="_blank">新建作品手册</a></li>
+		<ul class="breadcrumb">
+			<li><li class="active">新建作品<span class="divider">-</span><a href="{:ZU('book/createNewBookHelp', 'ZL_AUTHOR_DOMAIN')}" target="_blank">[帮助指南]</a></li>
 		</ul>
-		
 		<form action="{:ZU('book/doCreateNewBook', 'ZL_AUTHOR_DOMAIN')}" class="form-horizontal" method="post">
 			<div class="control-group">
 				<label for="book_name" class="control-label">作品名称</label>
@@ -18,7 +16,6 @@
 					<input type="text" id="book_name" name="book_name" placeholder="作品名称"/>
 					<a href="###" data-content="1，两个字的作品名在推荐榜上会排在前面；2，超过12个字的作品名逐浪网不允许上推荐榜； 3，作品名的最长字数是16个字；4，作品名不允许出现简体汉字之外的所有符号否则会被编辑强行修改。" title="" data-toggle="popover" class="btn btn-info pop" href="#" data-original-title="作品名小技巧：">说明</a>
 				</div>
-
 			</div>
 			<div class="control-group">
 				<label for="book_accredit" class="control-label">授权等级</label>
