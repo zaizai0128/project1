@@ -85,6 +85,7 @@ class User extends Zmodel\BaseModel {
 	public function logout()
 	{
 		session('user', Null);
+		session('author', Null);
 		return True;
 	}
 

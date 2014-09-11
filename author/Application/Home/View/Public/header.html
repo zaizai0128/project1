@@ -12,21 +12,11 @@
           <li><a href="{:ZU('/index/index')}">首页</a></li>
           <li class="active"><a href="{:ZU('/index/index', 'ZL_AUTHOR_DOMAIN')}">作者站</a></li>
         </ul>
-
-	<?php if(!session('user')):?>		
-        <form class="navbar-form pull-right" action="{:ZU('login/doLogin')}" method="post">
-          <input class="span2" type="text" name="username" placeholder="用户名">
-          <input class="span2" type="password" name="password" placeholder="密码">
-          <button type="submit" class="btn">登录</button>
-          <a href="{:ZU('/login/register')}" class="btn">注册</a>
-        </form>
-      <?php else:?>
-      <p class="navbar-text pull-right">
-      	欢迎, {:session('user.user_name')} | 
-		<a href="{:ZU('user/center/index')}" class="navbar-link">个人中心</a> | 
-		<a href="{:ZU('user/center/logout')}" class="navbar-link">退出</a>
-      </p>
-      <?php endif;?>
+        <p class="navbar-text pull-right">
+        	欢迎, {:session('author.author_name')} | 
+      		<a href="{:ZU('user/center/index')}" class="navbar-link">个人中心</a> | 
+      		<a href="{:ZU('user/center/logout')}" class="navbar-link">退出</a>
+        </p>
       </div>
     </div>
   </div>

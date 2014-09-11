@@ -8,8 +8,7 @@
  */
 namespace Home\Controller;
 use Common\Controller\BaseController;
-use Zlib\Api as Zapi;
-
+use Zlib\Api\Author;
 
 class AuthorController extends BaseController {
 
@@ -19,7 +18,7 @@ class AuthorController extends BaseController {
 	{
 		parent::__construct();
 
-		$this->_author = new Zapi\Author;
+		$this->_author = new Author;
 	}
 
 	/**
@@ -27,8 +26,8 @@ class AuthorController extends BaseController {
 	 */
 	public function index()
 	{
-		$info = $this->_author->getInfo(session('user.user_id'), True);
-		
+		$info = $this->_author->getInfo($this->user_id, True);
+
 		$this->assign(array(
 			'info' => $info
 		));
@@ -48,7 +47,7 @@ class AuthorController extends BaseController {
 	 */
 	public function bank()
 	{
-		$bank_info = $this->_author->getBankById(session('user.user_id'));
+		$bank_info = $this->_author->getBankById($this->user_id);
 
 		$this->assign(array(
 			'bank_info' => $bank_info,
@@ -63,11 +62,15 @@ class AuthorController extends BaseController {
 	{
 		if (IS_POST) {
 			$data = I();
-			if ($id = $this->_author->checkBankInfo(session('user.user_id'))) {
+
+			// 如果存在银行信息，则修改
+			if ($id = $this->_author->checkBankInfo($this->user_id)) {
 				$data['id'] = $id;
 				$state = $this->_author->updateBankInfo($data);
+
+			// 否则添加一条新数据
 			} else {
-				$data['user_id'] = session('user.user_id');
+				$data['user_id'] = $this->user_id;
 				$state = $this->_author->updateBankInfo($data, False);
 			}
 
