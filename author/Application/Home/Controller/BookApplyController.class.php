@@ -20,10 +20,11 @@ class BookApplyController extends BaseController {
 	{
 		parent::_init();
 		$this->_apply_obj = D('BookApply');
-		$this->book_id = I('get.bk_apply_id');
-
+	
 		// 进行书籍与用户拥有的修改权限做比较
 		if (ACTION_NAME != 'index') {
+
+			$this->book_id = I('get.bk_apply_id');
 
 			if (empty($this->book_id)) {
 				$this->error('请选择要操作的作品');

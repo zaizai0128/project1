@@ -8,7 +8,9 @@
  */
 return array(
 	
-	// 添加申请作品章节后，执行的操作
+	// 申请作品章节的一系列，执行的操作
 	'apply_chapter' => array('Home\Behavior\ApplyChapterBehavior'),
 
+	// 作品的一系列，执行的操作
+	'book' => array('Home\Behavior\BookBehavior'),
 );

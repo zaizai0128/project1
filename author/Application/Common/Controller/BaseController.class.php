@@ -8,7 +8,7 @@
  */
 namespace Common\Controller;
 use Think\Controller;
-use Zlib\Api\Author;
+use Zlib\Api as Zapi;
 
 class BaseController extends Controller {
 
@@ -44,8 +44,8 @@ class BaseController extends Controller {
 		// 通过用户id获取作者的全部信息，保存到session中
 		// 作者站的用户信息全部通过author获取
 		if (!session('author')) {
-
-			$author = new Author;
+			
+			$author = new Zapi\Author;
 			$author_info = $author->getInfo($this->user_id, True);
 
 			// 获取该作者所拥有的书籍

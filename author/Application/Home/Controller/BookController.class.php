@@ -88,10 +88,19 @@ class BookController extends BaseController {
 			$book_apply_obj = D('BookApply');
 			$book_id = $book_apply_obj->doAdd($data);
 
-			if ($book_id)
+			if ($book_id) {
+				
+				// 添加作品后的动作，更新书籍的权限
+				$data['bk_id'] = $book_id;
+				$tag['data'] = $data;
+				$tag['ac'] = 'after_add';
+				tag('book', $tag);
+
 				$this->success('添加成功等待审核', ZU('/book/book', 'ZL_AUTHOR_DOMAIN', array('book_id'=>$book_id)));
-			else
+			} else {
+
 				$this->error('添加失败');
+			}
 		}
 	}
 

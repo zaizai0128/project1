@@ -35,7 +35,7 @@ class ApplyChapterBehavior {
 	}
 
 	/**
-	 * 
+	 * 添加章节后的操作
 	 */
 	protected function afterAdd()
 	{
@@ -56,6 +56,9 @@ class ApplyChapterBehavior {
 		$book_apply->save();
 	}
 
+	/**
+	 * 编辑章节后的操作
+	 */
 	protected function afterEdit()
 	{
 		$book_apply = M('zl_book_apply');
