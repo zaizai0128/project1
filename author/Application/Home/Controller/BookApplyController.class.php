@@ -13,12 +13,13 @@ use Zlib\Api as Zapi;
 class BookApplyController extends BaseController {
 
 	protected $_apply_obj;
+	protected $book_id;
 
-	public function __construct()
+	protected function _init()
 	{
-		parent::__construct();
-
+		parent::_init();
 		$this->_apply_obj = D('BookApply');
+		$this->book_id = I('get.bk_apply_id');
 	}
 
 	/**
@@ -27,8 +28,7 @@ class BookApplyController extends BaseController {
 	public function index()
 	{
 		// 获取该用户待审核作品列表
-		$book = $this->_apply_obj->where('bk_author_id='.$this->user_id.' and bk_apply_status != "01"')
-				->order('bk_id DESC')->select();
+		$book = $this->_apply_obj->getApplyList($this->user_id);
 
 		$this->assign(array(
 			'book' => $book
@@ -43,16 +43,37 @@ class BookApplyController extends BaseController {
 	 */
 	public function book()
 	{
-		$book_id = I('bk_apply_id');
-
-		if (empty($book_id)) {
+		if (empty($this->book_id)) {
 			$this->error('请选择要操作的作品');
 		}
 
-		$book = $this->_apply_obj->where('bk_id = '.$book_id.' and bk_author_id='.$this->user_id.' and bk_apply_status != "01"')
-				->find();
+		// 获取该作者的申请作品信息
+		$book = $this->_apply_obj->getInfo($this->book_id, $this->user_id);
 
-		// 判断bookid是否存在，不存在，返回error
+		// 如果不存在，返回error
+		if (empty($book)) {
+			$this->error('作品不存在');
+		}
+		
+		$this->assign(array(
+			'book' => $book,
+		));
+		$this->display();
+	}
+
+	/**
+	 * 编辑作品信息
+	 */
+	public function edit()
+	{
+		if (empty($this->book_id)) {
+			$this->error('请选择要操作的作品');
+		}
+
+		// 获取该作者的申请作品信息
+		$book = $this->_apply_obj->getInfo($this->book_id, $this->user_id);
+
+		// 如果不存在，返回error
 		if (empty($book)) {
 			$this->error('作品不存在');
 		}
@@ -60,7 +81,18 @@ class BookApplyController extends BaseController {
 		$this->assign(array(
 			'book' => $book,
 		));
-		$this->display();
+		$this->display();	
+	}
+
+	/**
+	 * 执行编辑
+	 */
+	public function doEdit()
+	{
+		if (IS_POST) {
+
+			dump(I());
+		}
 	}
 
 }

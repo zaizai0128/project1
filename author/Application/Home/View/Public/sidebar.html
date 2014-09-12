@@ -16,7 +16,7 @@
 		<li <if condition="[nav] eq 'book_manager'">class="active"</if>><a href="{:ZU('book/index', 'ZL_AUTHOR_DOMAIN')}">作品管理</a></li>
 		<li <if condition="[nav] eq 'book_apply_manager'">class="active"</if>><a href="{:ZU('bookApply/index', 'ZL_AUTHOR_DOMAIN')}">待审核作品管理</a></li>
 		<li <if condition="[nav] eq 'read'">class="active"</if>><a href="{:ZU('/index/read', 'ZL_AUTHOR_DOMAIN')}" target="_blank">作者必读</a></li>
-		<li <if condition="[nav] eq 'read'">class="active"</if>><a href="#modal-contactAdmin" data-toggle="modal">联系管理员</a></li>
-		<li <if condition="[nav] eq 'read'">class="bank"</if>><a href="{:ZU('author/bank', 'ZL_AUTHOR_DOMAIN', array('book_id'=>I('book_id')))}">添加银行信息</a></li>
+		<li <if condition="[nav] eq 'contact'">class="active"</if>><a href="#modal-contactAdmin" data-toggle="modal">联系管理员</a></li>
+		<li <if condition="[nav] eq 'bank'">class="active"</if>><a href="{:ZU('author/bank', 'ZL_AUTHOR_DOMAIN', array('book_id'=>I('book_id')))}">银行信息</a></li>
 	</ul>
 </div>

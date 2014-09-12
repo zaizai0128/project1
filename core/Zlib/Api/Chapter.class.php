@@ -18,7 +18,7 @@ class Chapter extends Zmodel\BaseModel {
 		foreach ($m as $row) {
 			$mVolume[$row['volume_order']] = $row;
 		}
-	} 
+	}
 	
 	private function isVip($chapter_id) 
 	{
@@ -28,6 +28,16 @@ class Chapter extends Zmodel\BaseModel {
 	public function getName(chapter_id) 
 	{
 		return name;
+	}
+
+	/**
+	 * 通过book_id获取章节表
+	 *
+	 * @param int $book_id
+	 */
+	public function getTableName($book_id)
+	{
+		
 	}
 
 }

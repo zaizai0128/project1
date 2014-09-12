@@ -12,12 +12,12 @@ use Zlib\Api\Author;
 
 class AuthorController extends BaseController {
 
+	// 作者api
 	protected $_author;
 
-	public function __construct()
+	public function _init()
 	{
-		parent::__construct();
-
+		parent::_init();
 		$this->_author = new Author;
 	}
 
@@ -26,6 +26,7 @@ class AuthorController extends BaseController {
 	 */
 	public function index()
 	{
+		// 获取作者全部信息
 		$info = $this->_author->getInfo($this->user_id, True);
 
 		$this->assign(array(
@@ -43,10 +44,22 @@ class AuthorController extends BaseController {
 	}
 
 	/**
+	 * 执行编辑
+	 */
+	public function doEdit()
+	{
+		if (IS_POST) {
+
+			dump(I());
+		}
+	}
+
+	/**
 	 * 填写银行信息
 	 */
 	public function bank()
 	{
+		// 获取该用户的银行信息
 		$bank_info = $this->_author->getBankById($this->user_id);
 
 		$this->assign(array(
@@ -75,7 +88,7 @@ class AuthorController extends BaseController {
 			}
 
 			if ($state['code'] > 0)
-				$this->success($state['msg'], ZU('index/index', 'ZL_AUTHOR_DOMAIN', array('book_id'=>I('get.book_id'))));
+				$this->success($state['msg'], ZU('author/bank', 'ZL_AUTHOR_DOMAIN'));
 			else
 				$this->error($state['msg']);
 		}

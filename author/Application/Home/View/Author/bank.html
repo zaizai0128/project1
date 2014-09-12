@@ -7,8 +7,8 @@
   </div>
 
   <div class="span9">
-    <h3>填写银行信息</h3>
-    <form action="{:ZU('author/doBank', 'ZL_AUTHOR_DOMAIN', array('book_id'=>I('book_id')))}" class="form-horizontal" method="post">
+    <h3>个人银行信息</h3>
+    <form action="{:ZU('author/doBank', 'ZL_AUTHOR_DOMAIN')}" class="form-horizontal" method="post">
 
       <div class="control-group">
         <label for="inputBank" class="control-label">开户行</label>
@@ -31,7 +31,7 @@
         </div>
       </div>
                   
-      <button class="btn btn-danger"><?php if(empty($bank_info)):?>提交<?php else:?>修改<?php endif;?></button>
+      <button class="btn btn-danger">提交</button>
     </form>
   </div>
 

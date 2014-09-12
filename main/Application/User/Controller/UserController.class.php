@@ -11,6 +11,8 @@ use Think\Controller;
 
 class UserController extends Controller {
 
+	protected $user_id;
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -18,5 +20,7 @@ class UserController extends Controller {
 		if (!session('user')) {
 			$this->error('请登录', U('/login/index'));
 		}
+
+		$this->user_id = session('user.user_id');
 	}
 }

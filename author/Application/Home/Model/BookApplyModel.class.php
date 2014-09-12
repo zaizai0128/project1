@@ -24,5 +24,36 @@ class BookApplyModel extends BaseModel {
 		$book_info['bk_cre_time'] = date('Y-m-d H:i:s', time());
 		return $this->data($book_info)->add();
 	}
-	
+
+	/**
+	 * 获取作者待审核作品列表
+	 *
+	 * @param int user_id
+	 */
+	public function getApplyList($user_id)
+	{
+		return $this->where('bk_author_id='.$user_id.' and bk_apply_status != "01"')
+				->order('bk_id DESC')->select();
+	}
+
+	/**
+	 * 获取待审核作品的信息
+	 *
+	 * @param int book_id
+	 * @param int user_id
+	 */
+	public function getInfo($book_id, $user_id)
+	{
+		return $this->where('bk_id = '.$book_id.' and bk_author_id='.$user_id.' and bk_apply_status != "01"')
+				->find();
+	}
+
+	/**
+	 * 通过name获取id
+	 * @param String name
+	 */
+	public function getIdByName($book_name)
+	{
+		return $this->field('bk_id')->where('bk_name = "'.$book_name.'"')->find();
+	}
 }

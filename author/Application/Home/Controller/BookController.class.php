@@ -14,9 +14,9 @@ class BookController extends BaseController {
 
 	protected $_author;
 
-	public function __construct()
+	public function _init()
 	{
-		parent::__construct();
+		parent::_init();
 
 		$this->_author = new Zapi\Author;
 	}
@@ -58,13 +58,11 @@ class BookController extends BaseController {
 	 * 新建作品
 	 */
 	public function createNewBook()
-	{
-		$auth_info = $this->_author->getInfo($this->user_id, True);
+	{	
 		$book_class = Zapi\BookClass::getInstance()->getAllClassForJson();
 
 		$this->assign(array(
 			'book_class' => $book_class,
-			'auth_info' => $auth_info
 		));
 		$this->display();
 	}
@@ -78,7 +76,7 @@ class BookController extends BaseController {
 			
 			$data = I();
 			$book_service = D('Book', 'Service');
-			$state = $book_service->checkBookName($data['bk_name']);
+			$state = $book_service->checkBook($data);
 
 			if ($state['code'] < 0)
 				$this->error($state['msg']);

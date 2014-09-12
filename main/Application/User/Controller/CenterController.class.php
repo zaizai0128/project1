@@ -24,7 +24,7 @@ class CenterController extends UserController {
 
 	public function _init()
 	{
-		$info = $this->_user->getInfo(session('user.user_id'));
+		$info = $this->_user->getInfo($this->user_id);
 		$this->assign(array(
 			'info' => $info
 		));
@@ -45,7 +45,7 @@ class CenterController extends UserController {
 	{
 		if (IS_POST) {
 			$data = I();
-			$data['user_id'] = session('user.user_id');
+			$data['user_id'] = $this->user_id;
 			$state = $this->_user->updateExt($data);
 
 			if ($state['code'] > 0)
@@ -61,20 +61,20 @@ class CenterController extends UserController {
 	public function apply()
 	{	
 		// 判断是否需要补充个人真实信息
-		if (!$this->_author->checkTrueInfo(session('user.user_id')))
+		if (!$this->_author->checkTrueInfo($this->user_id))
 			$this->error('请先补充个人真实信息', ZU('user/center/trueInfo'));
 
 		$full_info = array();
 		$assign['is_show'] = True;
 
 		// 获取申请信息
-		$info = $this->_author->getApplyById(session('user.user_id'));
+		$info = $this->_author->getApplyById($this->user_id);
 
 		// 如果没有申请作者的信息，则显示申请界面
 		if (empty($info)) {
 
 			// 获取作者的全部信息[包含真实信息]
-			$full_info = $this->_author->getInfo(session('user.user_id'), True);
+			$full_info = $this->_author->getInfo($this->user_id, True);
 
 		// 否则显示申请进度
 		} else {
@@ -96,13 +96,13 @@ class CenterController extends UserController {
 	{
 		if (IS_POST) {
 
-			$info = $this->_author->getApplyById(session('user.user_id'));
+			$info = $this->_author->getApplyById($this->user_id);
 			if (!empty($info)) {
 				$this->error('您已经提交了申请，正在审核阶段', ZU('user/center/apply'));
 			}
 
 			$data = I();
-			$data['user_id'] = session('user.user_id');
+			$data['user_id'] = $this->user_id;
 			$state = $this->_author->apply($data);
 			
 			if ($state['code'] > 0) 
@@ -117,7 +117,7 @@ class CenterController extends UserController {
 	 */
 	public function trueInfo()
 	{	
-		$true_info = $this->_author->getTrueInfo(session('user.user_id'));
+		$true_info = $this->_author->getTrueInfo($this->user_id);
 
 		$this->assign(array(
 			'true_info' => $true_info
@@ -132,10 +132,10 @@ class CenterController extends UserController {
 	{
 		if (IS_POST) {
 			$data = I();
-			$data['user_id'] = session('user.user_id');
+			$data['user_id'] = $this->user_id;
 			
 			// 编辑
-			if ($this->_author->checkTrueInfo(session('user.user_id'))) {
+			if ($this->_author->checkTrueInfo($this->user_id)) {
 				$state = $this->_author->updateTrueInfo($data);
 
 			// 创建 

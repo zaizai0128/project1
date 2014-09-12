@@ -1,0 +1,38 @@
+<?php
+/**
+ * 申请作品的章节 service层
+ *
+ * @author 	songmw<songmingwei@kongzhong.com>
+ * @date 	2014-09-10
+ * @version 1.0
+ */
+namespace Home\Service;
+use Home\Model\BookApplyChapterModel;
+
+class BookApplyChapterService extends BookApplyChapterModel {
+
+	/**
+	 * 判断该章节是否可以发布
+	 * 
+	 * @param String $book_name
+	 */
+	public function checkChapter($chapter)
+	{
+		if (empty($chapter['bk_id']))
+			return array('code'=>-1, 'msg'=>'作品id不允许为空');
+		if (empty($chapter['ch_name']))
+			return array('code'=>-2, 'msg'=>'章节名称不允许为空');
+		if (empty($chapter['ch_content']))
+			return array('code'=>-21, 'msg'=>'章节内容不允许为空');
+
+		$rs = $this->where('bk_id='.$chapter['bk_id'].' and ch_name = "'.$chapter['ch_name'].'"')->find();
+
+		if (!empty($rs)) {
+			return array('code'=>-3, 'msg'=>'该章节名称已存在');
+		}
+
+		// 不允许超过三章
+		
+		return array('code'=>1, 'msg'=>'验证通过');
+	}
+}

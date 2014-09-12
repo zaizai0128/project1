@@ -7,28 +7,30 @@
  * @version 1.0
  */
 namespace Home\Service;
-use Zlib\Model\BaseModel;
+use Home\Model\BookModel;
 
-class BookService extends BaseModel {
-
-	protected $trueTableName = 'zl_book';
+class BookService extends BookModel {
 
 	/**
-	 * 判断书名是否可用
+	 * 判断该作品是否可以提交
 	 * 
 	 * @param String $book_name
 	 */
-	public function checkBookName($book_name)
+	public function checkBook($book)
 	{
-		if (empty($book_name))
+		if (empty($book['bk_name']))
 			return array('code'=>-1, 'msg'=>'书名不允许为空');
+		if (empty($book['bk_intro']))
+			return array('code'=>-11, 'msg'=>'书的描述不允许为空');
 
-		$rs = $this->field('bk_id')->where('bk_name = "'.$book_name.'"')->find();
+		// 在已发售的书中查找该书是否已经存在
+		$rs = $this->getIdByName($book['bk_name']);
 
 		if (!empty($rs))
 			return array('code'=>-2, 'msg'=>'该书名已经存在');
 
-		$rs = M('zl_book_apply')->field('bk_id')->where('bk_name = "'.$book_name.'"')->find();
+		// 在待审核的书中查找该书名是否存在
+		$rs = D('BookApply')->getIdByName($book['bk_name']);
 
 		if (!empty($rs))
 			return array('code'=>-3, 'msg'=>'该书名已经存在');
