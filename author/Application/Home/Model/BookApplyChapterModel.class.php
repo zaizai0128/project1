@@ -22,6 +22,7 @@ class BookApplyChapterModel extends BaseModel {
 	public function doAdd($data)
 	{
 		$data['ch_cre_time'] = date('Y-m-d H:i:s', time());
+		$data['ch_update'] = date('Y-m-d H:i:s', time());
 		$data['ch_size'] = mb_strlen($data['ch_content']);
 
 		return $this->data($data)->add();

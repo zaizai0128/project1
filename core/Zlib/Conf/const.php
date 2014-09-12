@@ -14,6 +14,13 @@ return array(
 	'ZL_ADMIN_DOMAIN' => 'http://admin.zhulang.ne',		// 管理站域名
 	'ZL_DOMAIN_DOT' => '.zhulang.ne',
 
+	// 申请相关
+	'APPLY' => array(
+
+		// 申请作品允许上传的最多章节数
+		'max_chapter_num' => 3,
+
+	),
 	
 	// 作品相关
 	'BK' => array(

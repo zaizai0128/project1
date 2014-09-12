@@ -68,12 +68,21 @@ class BookApplyChapterController extends BaseController {
 				$this->error($state['msg']);
 			}
 
+			// 上传新章节
 			$rs = $this->_apply_chapter_obj->doAdd($data);
 
-			if ($rs > 0)
+			if ($rs > 0) {
+
+				$data['ch_id'] = $rs;
+				$tag['data'] = $data;
+				$tag['ac'] = 'after_add';	// 行为名称
+				tag('apply_chapter', $tag);	// 章节上传成功后，更新对应的数据表信息
+				
 				$this->success('添加成功，审核通过后才会看到', ZU('bookApply/book', 'ZL_AUTHOR_DOMAIN', array('bk_apply_id'=>$this->book_id)));
-			else
+			} else {
+
 				$this->error('添加失败，重新尝试');
-		}	
+			}
+		}
 	}
 }

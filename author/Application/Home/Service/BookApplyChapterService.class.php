@@ -31,7 +31,12 @@ class BookApplyChapterService extends BookApplyChapterModel {
 			return array('code'=>-3, 'msg'=>'该章节名称已存在');
 		}
 
-		// 不允许超过三章
+		// 申请中的作品最大上传章节数限制
+		$total = $this->where('bk_id='.$chapter['bk_id'])->count();
+
+		if ($total >= C('APPLY.max_chapter_num')) {
+			return array('code'=>-4, 'msg'=>'超过最大章节数限制');
+		}
 		
 		return array('code'=>1, 'msg'=>'验证通过');
 	}
