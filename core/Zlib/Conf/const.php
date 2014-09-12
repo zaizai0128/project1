@@ -18,7 +18,7 @@ return array(
 	'APPLY' => array(
 
 		// 申请作品允许上传的最多章节数
-		'max_chapter_num' => 3,
+		'max_chapter_num' => 10,
 
 	),
 	

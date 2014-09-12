@@ -52,12 +52,25 @@ class ApplyChapterBehavior {
 		$book_apply->bk_now_date = $chapter_info['ch_update'];
 		$book_apply->bk_public_name = $chapter_info['ch_name'];
 		$book_apply->bk_public_ch_id = $chapter_info['ch_id'];
+		$book_apply->ch_total += 1;
 		$book_apply->save();
 	}
 
 	protected function afterEdit()
 	{
+		$book_apply = M('zl_book_apply');
+		$rs = $book_apply->where('bk_id = '.$this->data['bk_id'])->find();
 
+		if (!$rs)
+			return False;
+
+		// 获取章节的信息
+		$chapter_info = M('zl_book_apply_chapter')->where('ch_id = '.$this->data['ch_id'])->find();
+
+		// 保存章节更新时间
+		$book_apply->bk_now_date = $chapter_info['ch_update'];
+		$book_apply->bk_public_name = $chapter_info['ch_name'];
+		$book_apply->save();
 	}
 
 }

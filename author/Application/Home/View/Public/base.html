@@ -36,6 +36,24 @@
     {// 公共js}
 	<script type="text/javascript">
 	jQuery(function(){
+		
+		// modal移除数据
+		$('.modal').on('hide', function(){
+			$(this).removeData("modal");
+		})
+
+		// 只有form的modal才会执行的动作
+		$('.modal-form').on('shown', function(){
+			var title = $(this).find('.modal-title').val();
+			var form_action = $(this).find('.modal-action').val();
+
+			$(this).find('form:first').attr('action', form_action);
+			$(this).find('#editTitle').html(title);
+
+		}).on('hide', function(){
+			$(this).find('form:first').attr('action', '###');
+			$(this).find('#editTitle').html('&nbsp;');
+		});
 
 		$.debug('extend布局 - base');
 	});
