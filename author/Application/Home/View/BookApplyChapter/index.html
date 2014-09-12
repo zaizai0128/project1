@@ -9,6 +9,8 @@
 		<ul class="breadcrumb">
 			<li><a href="{:ZU('bookApply/index', 'ZL_AUTHOR_DOMAIN')}">待审核作品管理</a><span class="divider">/</span></li><li><a href="{:ZU('bookApply/book', 'ZL_AUTHOR_DOMAIN', array('bk_apply_id'=>I('bk_apply_id')))}">{$book.bk_name}</a><span class="divider">/</span></li><li class="active">章节列表</li>
 		</ul>
+		{// 书的常用管理操作 }
+		<include file="Public/apply_actions" ac="editChapter" />
 		<div class="alert alert-info">注：删除章节请使用调卷功能，将章节移动到回收站即可</div>
 		<table class="table table-hover">
 			<thead>

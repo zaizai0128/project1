@@ -21,4 +21,19 @@ class BookModel extends BaseModel {
 	{
 		return $this->field('bk_id')->where('bk_name = "'.$book_name.'"')->find();
 	}
+
+	/**
+	 * 通过作者id查找该用户拥有的书
+	 * 
+	 * @param user_id
+	 */
+	public function getOwnBook($user_id)
+	{
+		$rs = $this->field('bk_id')->where('bk_author_id = '.$user_id)->select();
+
+		if (!empty($rs))
+			$rs = array_map(function($val){return $val['bk_id'];}, $rs);
+
+		return $rs;
+	}
 }

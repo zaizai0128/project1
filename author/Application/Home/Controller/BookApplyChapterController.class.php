@@ -29,6 +29,11 @@ class BookApplyChapterController extends BaseController {
 			$this->error('请选择要操作的作品');
 		}
 
+		// 验证操作书籍的权限
+		if (!in_array($this->book_id, session('author.book_apply'))) {
+			$this->error('您无权操作此书');
+		}
+
 		// 获取该作品的信息
 		$book = $this->_apply_obj->getInfo($this->book_id, $this->user_id);
 

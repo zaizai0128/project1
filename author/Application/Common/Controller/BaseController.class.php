@@ -47,6 +47,16 @@ class BaseController extends Controller {
 
 			$author = new Author;
 			$author_info = $author->getInfo($this->user_id, True);
+
+			// 获取该作者所拥有的书籍
+			$author_book = D('Book')->getOwnBook($this->user_id);
+			// 获取该作者正在审核的书籍
+			$author_book_apply = D('BookApply')->getOwnBook($this->user_id);
+
+			// 保存作者可以修改的书
+			$author_info['book'] = $author_book;
+			$author_info['book_apply'] = $author_book_apply;
+			
 			session('author', $author_info);
 		}
 	}

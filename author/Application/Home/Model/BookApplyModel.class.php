@@ -56,4 +56,19 @@ class BookApplyModel extends BaseModel {
 	{
 		return $this->field('bk_id')->where('bk_name = "'.$book_name.'"')->find();
 	}
+
+	/**
+	 * 获取作者正在审核的书籍
+	 *
+	 * @param int user_id
+	 */
+	public function getOwnBook($user_id)
+	{
+		$rs =  $this->field('bk_id')->where('bk_author_id = '.$user_id)->select();
+
+		if (!empty($rs))
+			$rs = array_map(function($val){return $val['bk_id'];}, $rs);
+		
+		return $rs;
+	}
 }

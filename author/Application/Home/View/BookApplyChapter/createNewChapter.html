@@ -7,7 +7,7 @@
 	</div>
 	<div class="span9">
 		<ul class="breadcrumb">
-			<li><a href="{:ZU('bookApply/index', 'ZL_AUTHOR_DOMAIN')}">待审核作品管理</a><span class="divider">/</span></li><li class="active">{$book.bk_name}</li>
+			<li><a href="{:ZU('bookApply/index', 'ZL_AUTHOR_DOMAIN')}">待审核作品管理</a><span class="divider">/</span></li><li><a href="{:ZU('bookApply/book', 'ZL_AUTHOR_DOMAIN', array('bk_apply_id'=>I('bk_apply_id')))}">{$book.bk_name}</a><span class="divider">/</span></li><li class="active">上传新章节</li>
 		</ul>
 
 		{// 书的常用管理操作 }
