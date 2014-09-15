@@ -7,12 +7,64 @@
 	</div>
 	<div class="span9">
 		<ul class="breadcrumb">
-			<li><a href="{:ZU('book/index', 'ZL_AUTHOR_DOMAIN')}">作品管理</a><span class="divider">/</span></li><li><a href="{:ZU('book/book', 'ZL_AUTHOR_DOMAIN', array('book_id'=>I('book_id')))}">笑傲江湖</a><span class="divider">/</span></li><li class="active">管理分卷<span class="divider">-</span><a href="###" class="pop" data-content="一部作品系统默认分为三个分卷<br/>10垃圾箱，100作品相关，200 正文<br/>垃圾箱卷分卷序号为“-10”，垃圾箱卷为系统保留卷，不能象其他分卷一样被执行修改分卷号操作或者被执行删分卷操作<br/>自己新建分卷，可以设定为101 作品前言,102 作品资料<br/>200 第一卷,201 第二卷，完全可以自由组合<br/>分卷序号是排列分卷顺序的唯一标志，当新增的分卷序号比现有分卷序号大就会排后面，小就会放前面。" data-original-title="分卷使用指南" data-toggle="popover" data-placement="bottom">[帮助指南]</a></li>
+			<li><a href="{:ZU('book/index', 'ZL_AUTHOR_DOMAIN')}">作品管理</a><span class="divider">/</span></li><li><a href="{:ZU('book/book', 'ZL_AUTHOR_DOMAIN', array('book_id'=>$book_info['bk_id']))}">{$book_info.bk_name}</a><span class="divider">/</span></li><li class="active">管理分卷<span class="divider">-</span><a href="###" class="pop" data-content="一部作品系统默认分为三个分卷<br/>10垃圾箱，100作品相关，200 正文<br/>垃圾箱卷分卷序号为“-10”，垃圾箱卷为系统保留卷，不能象其他分卷一样被执行修改分卷号操作或者被执行删分卷操作<br/>自己新建分卷，可以设定为101 作品前言,102 作品资料<br/>200 第一卷,201 第二卷，完全可以自由组合<br/>分卷序号是排列分卷顺序的唯一标志，当新增的分卷序号比现有分卷序号大就会排后面，小就会放前面。" data-original-title="分卷使用指南" data-toggle="popover" data-placement="bottom">[帮助指南]</a></li>
 		</ul>
 
 		{// 书的常用管理操作 }
 		<include file="Public/actions" ac="manager_volume" />
 		
+		<div class="row">
+			<div class="span9">
+				<p class="text-info">现有分卷</p>
+				<p>分卷序号：　-10 	分卷名称：　垃圾箱</p>
+				<p>分卷序号：　100 	分卷名称：　作品相关介绍</p>
+			</div>
+		</div>
+		<hr />
+		<div class="row">
+			<div class="span9">
+				<p class="text-info">新增分卷</p>
+				<form action="" class="form-horizontal">
+					<div class="control-group">
+						<label for="input_volume_name" class="control-label">新增的分卷名</label>
+						<div class="controls">
+							<input type="text" id="input_volume_name" placeholder="新增的分卷名" />
+							<a data-original-title="说明：" class="btn btn-info pop" data-toggle="popover" title="" data-content="没有任何章节的为空卷，作品目录页不显示空卷内容；该新增分卷自身存在章节后，作品目录页，开始显示该分卷。" href="###">说明</a>
+						</div>
+					</div>
+
+					<button class="btn btn-danger">确认增加分卷</button>
+				</form>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="span9">
+				<p class="text-info">修改分卷</p>
+				<form action="" class="form-horizontal">
+					
+					<div class="control-group">
+						<label for="" class="control-label">选择要修改的分卷</label>
+						<div class="controls">
+							<select name="" id="">
+								<option value="100">作品相关</option>
+								<option value="1000">正文</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="control-group">
+						<label for="input_volume_name_edit" class="control-label">分卷名修改为</label>
+						<div class="controls">
+							<input type="text" id="input_volume_name_edit" placeholder="分卷名修改为" />
+						</div>
+					</div>
+
+					<button class="btn btn-danger">确认修改分卷</button>
+				</form>
+			</div>
+		</div>
+
 	</div>
 </div>
 </block>

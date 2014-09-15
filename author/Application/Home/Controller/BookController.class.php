@@ -12,7 +12,6 @@ use Zlib\Api as Zapi;
 
 class BookController extends BaseController {
 
-	private $_author;		// 作者接口对象
 	private $_book_obj;		// db对象
 	private $_book_id;		// 书籍id 
 	private $_book_info;	// 书籍信息
@@ -21,7 +20,6 @@ class BookController extends BaseController {
 	{
 		parent::_init();
 
-		$this->_author = new Zapi\Author;
 		$this->_book_obj = D('Book');
 		$this->_book_id = I('get.book_id');
 		$this->checkBookAcl($this->_book_id);

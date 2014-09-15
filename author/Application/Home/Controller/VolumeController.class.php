@@ -12,12 +12,27 @@ use Zlib\Api as Zapi;
 
 class VolumeController extends BaseController {
 
+	private $_book_id;
+	private $_book_info;
+
+	public function _init()
+	{
+		parent::_init();
+
+		$this->_book_id = I('get.book_id');
+		$this->checkBookAcl($this->_book_id);
+		$this->_book_info = D('Book')->getBookInfo($this->_book_id);
+	}
+
 	/**
 	 * 分卷管理页面
 	 */
 	public function index()
 	{
 		
+		$this->assign(array(
+			'book_info' => $this->_book_info,
+		));
 		$this->display();
 	}
 
