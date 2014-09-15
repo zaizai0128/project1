@@ -1,0 +1,71 @@
+<extend name="Public/base" />
+
+<block name="main">
+<div class="row">
+	<div class="span3">
+		<include file="Public/sidebar" nav="new_book"/>
+	</div>
+	<div class="span9">
+		<ul class="breadcrumb">
+			<li><li class="active">新建作品<span class="divider">-</span><a href="{:ZU('book/createNewBookHelp', 'ZL_AUTHOR_DOMAIN')}" target="_blank">[帮助指南]</a></li>
+		</ul>
+		<form action="{:ZU('book/doCreateNewBook', 'ZL_AUTHOR_DOMAIN')}" class="form-horizontal" method="post">
+			<div class="control-group">
+				<label class="control-label">作品类别</label>				
+				<div class="controls">
+					<select class="span2 main_class"></select>
+					<select class="span2 children_class" name="bk_class_id"></select>
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label for="bk_name" class="control-label">作品名称</label>
+				<div class="controls">
+					<input type="text" id="bk_name" name="bk_name" placeholder="作品名称"/>
+					<a href="###" data-content="1，两个字的作品名在推荐榜上会排在前面；2，超过12个字的作品名逐浪网不允许上推荐榜； 3，作品名的最长字数是16个字；4，作品名不允许出现简体汉字之外的所有符号否则会被编辑强行修改。" title="" data-toggle="popover" class="btn btn-info pop" href="#" data-original-title="作品名小技巧：">说明</a>
+				</div>
+			</div>
+			<div class="control-group">
+				<label for="book_accredit" class="control-label">授权等级</label>
+				<div class="controls">
+					<select name="bk_accredit" id="book_accredit">
+						<?php foreach(C('BK.auth_level') as $key=>$val):?>
+						<option value="{$key}">{$val}</option>
+						<?php endforeach;?>
+					</select>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">作&nbsp;者</label>
+				<div class="controls">
+					<input type="text" value="{:session('author.author_name')}" disabled/>		
+				</div>
+			</div>
+			<div class="control-group">
+				<label for="bk_tag" class="control-label">关键字</label>
+				<div class="controls">
+					<input type="text" name="bk_tag" id="bk_tag" value="" placeholder="多个请用 空格 分割"/>
+					<a href="###" data-content="关键字可以输入多个方便会员查询,多个主角间请用'空格'键分割,例如 '名人一 名人二 名人三'" title="" data-toggle="popover" class="btn btn-info pop" href="#" data-original-title="关键字小技巧：">说明</a>
+				</div>
+			</div>
+			<div class="control-group">
+				<label for="bk_intro" class="control-label">内容简介</label>
+				<div class="controls">
+					<textarea name="bk_intro" id="bk_intro" cols="30" rows="10" placeholder="简练、精辟的简介将使您的作品更有吸引力，请认真斟酌撰写，并将字数控制在200字以内，与作品无关的内容请在作者公告区域填写。"></textarea>
+				</div>
+			</div>
+			
+			<button class="btn btn-danger">提交</button>
+		</form>
+	</div>
+</div>
+</block>
+
+<block name="js">
+<script type="text/javascript">
+	jQuery(function($){
+
+		$.selectChoose('main_class', 'children_class', '{$book_class}');
+	});
+</script>
+</block>

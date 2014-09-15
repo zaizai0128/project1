@@ -1,0 +1,41 @@
+<extend name="Public/base" />
+
+<block name="main">
+<div class="row">
+	<div class="span3">
+		<include file="Public/sidebar" nav="author_info"/>
+	</div>
+	<div class="span9">
+		<ul class="breadcrumb">
+			<li class="active">作者信息</li>
+		</ul>
+
+		<div class="tabbable">
+			<div class="pull-right"><a href="{:ZU('author/edit', 'ZL_AUTHOR_DOMAIN')}" class="btn btn-danger">修改资料</a></div>
+			<ul class="nav nav-tabs">
+				<li class="active"><a href="#tab-basic" data-toggle="tab">基本资料</a></li>
+				<li><a href="#tab-secret" data-toggle="tab">保密资料</a></li>
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane active" id="tab-basic">
+					<div class="row">
+						<div class="span2">用户名：{$info.user_name}</div>
+						<div class="span2">笔名：{$info.author_name}</div>
+					</div>
+					<p>&nbsp;</p>
+					<div class="row">
+						<div class="span2">QQ号：{$info.user_qq}</div>
+						<div class="span2">手机号：{$info.user_mobile}</div>
+					</div>
+				</div>
+				<div class="tab-pane" id="tab-secret">
+					<div class="row">
+						<div class="span2">真实姓名：{$info.user_true_name}</div>
+						<div class="span3">身份证号：{$info.user_idcard}</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</block>
