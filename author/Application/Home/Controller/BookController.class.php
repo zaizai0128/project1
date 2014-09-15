@@ -13,12 +13,14 @@ use Zlib\Api as Zapi;
 class BookController extends BaseController {
 
 	protected $_author;
+	private $_book;
 
 	public function _init()
 	{
 		parent::_init();
 
 		$this->_author = new Zapi\Author;
+		$this->_book = D('Book');
 	}
 
 	/**
@@ -26,8 +28,12 @@ class BookController extends BaseController {
 	 */
 	public function index()
 	{
-		// 读取该作者一共拥有的书籍，遍历显示
+		// 获取该用户已经审核通过的作品		
+		$book_list = $this->_book->getBookListByUid($this->user_id);
 
+		$this->assign(array(
+			'book_list' => $book_list
+		));
 		$this->display();
 	}
 
@@ -44,13 +50,15 @@ class BookController extends BaseController {
 			$this->error('请选择要操作的作品');
 		}
 
-		// 判断bookid是否存在，不存在，返回error
-		if (False) {
+		$book_info = $this->_book->getBookInfo($book_id);
+
+		if (empty($book_info)) {
 			$this->error('作品不存在');
 		}
 
-		$book_info['book_id'] = $book_id;
-
+		$this->assign(array(
+			'book_info' => $book_info,
+		));
 		$this->display();
 	}
 

@@ -22,20 +22,15 @@
 				</tr>
 			</thead>
 			<tbody>
+				<?php foreach($book_list as $key => $val):?>
 				<tr>
-					<th>1</th>
-					<th>《笑傲江湖》</th>
-					<th>第三十五章 独孤九剑</th>
-					<th>2014-09-10 16:29:32</th>
-					<th><a href="{:ZU('book/book', 'ZL_AUTHOR_DOMAIN', array('book_id'=>1))}">管理</a></th>
+					<th>{$val.bk_id}</th>
+					<th>《{$val.bk_name}》</th>
+					<th>{$val.bk_public_name}</th>
+					<th>{$val.bk_now_date}</th>
+					<th><a href="{:ZU('book/book', 'ZL_AUTHOR_DOMAIN', array('book_id'=>$val['bk_id']))}">管理</a></th>
 				</tr>
-				<tr>
-					<th>2</th>
-					<th>《天龙八部》</th>
-					<th>第三十二章 珍珑棋局</th>
-					<th>2014-02-10 16:29:32</th>
-					<th><a href="{:ZU('book/book', 'ZL_AUTHOR_DOMAIN', array('book_id'=>2))}">管理</a></th>
-				</tr>	    				
+				<?php endforeach;?>  				
 			</tbody>
 		</table>	
 	</div>

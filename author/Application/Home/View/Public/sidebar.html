@@ -1,13 +1,7 @@
 <div class="sidebar-nav">
 	<ul class="breadcrumb">
 		<li class="active">请选择要操作的作品
-			<select name="" id="" onchange="$.selectChangeUrl(this, '{:ZU('book/book', 'ZL_AUTHOR_DOMAIN')}', 'book_id', '{:ZU('index/index', 'ZL_AUTHOR_DOMAIN')}')">
-				<?php $get_book_id = I('get.book_id')?>
-				<option value="0" <?php if(empty($get_book_id)):?>selected<?php endif;?>>--请选择--</option>
-				<option value="1" <?php if($get_book_id == 1):?>selected<?php endif;?>>【笑傲江湖】</option>
-				<option value="2" <?php if($get_book_id == 2):?>selected<?php endif;?>>【天龙八部】</option>
-				<option value="3" <?php if($get_book_id == 3):?>selected<?php endif;?>>【鹿鼎记】</option>
-			</select>
+			{:W('sidebar/top')}
 		</li>
 	</ul>
 	<ul class="nav nav-list">

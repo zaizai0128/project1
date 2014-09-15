@@ -7,18 +7,41 @@
 	</div>
 	<div class="span9">
 		<ul class="breadcrumb">
-			<li><a href="{:ZU('book/index', 'ZL_AUTHOR_DOMAIN')}">作品管理</a><span class="divider">/</span></li><li class="active">笑傲江湖</li>
+			<li><a href="{:ZU('book/index', 'ZL_AUTHOR_DOMAIN')}">作品管理</a><span class="divider">/</span></li><li class="active">{$book_info.bk_name}</li>
 		</ul>
 
 		{// 书的常用管理操作 }
 		<include file="Public/actions" ac="index" />
 		
-		<p class="text-info">2013年逐浪网新版全勤奖励公告！（2012-12-31）</p>
-		<p> 2003-2012，携手十年，我们收获喜悦，一起迈步腾飞。 值此龙蛇更替之际，逐浪网作者福利再传喜讯。 回首2012年，逐浪网在电子、无线、出版等各个领域依旧保持着飞速的发展，网站单月发放稿酬作者突破八百人次，年收入超过六位数的作者四十余人，一大批有实力的作者通过自身的努力在逐浪平台上取得了巨大的成功和丰厚的回报！<a href="###">查看详情</a></p>
-		<p class="text-warning">坦克世界文字争霸赛火热开启，苹果4S、IPAD3抱回家！（2012-09-14）</p>
-		<p> 疯玩坦克，激扬文字，领取活动万元奖！《坦克世界》是空中网的热门游戏之一，在游戏的世界里，坦克做主，拓展领土无限；而在逐浪，红文无数，文字最大，小小文浪遏飞舟，也能争霸一方！此次活动奖金丰厚，赶快来文字争霸吧！<a href="###">查看详情</a></p>	
-		<p class="text-error">喜迎龙年，逐浪网全勤奖加倍！（2012-01-12）</p>
-		<p>2003-2012，风风雨雨，十年征程，我们相伴相依。2011年，逐浪网在各条战线上全面开花，其中仅无线稿酬月发近百万。喜迎龙年，预祝广大逐浪网作家们，阖家欢乐，写作顺利。庆祝新春佳节，2012年1月全勤奖翻倍！<a href="###">查看详情</a></p>					
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th colspan="3">作品详情</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>作品序号：【{$book_info.bk_id}】</td>
+					<td>作品名称：《{$book_info.bk_name}》</td>
+					<td>创建时间：{$book_info.bk_cre_time}</td>
+				</tr>	
+				<tr>
+					<td>作者ID：{$book_info.bk_author_id}</td>
+					<td>作者笔名：{$book_info.bk_author}</td>
+					<td>主要角色：{$book_info.bk_actor|default='<span class="muted">暂未设置</span>'}</td>
+				</tr>
+				<tr>
+					<td>作品标签：{$book_info.bk_tag}</td>
+					<td>授权等级：{:ZC(C('BK.auth_level'), $book_info['bk_accredit'])}</td>
+					<td>签约类型：{:ZC(C('BK.commision'), $book_info['bk_commision'])}</td>
+				</tr>	
+				<tr>
+					<td>总章节数：{$book_info.ch_total}</td>
+					<td>最后更新章节：{$book_info.bk_public_name}</td>
+					<td>最后更新时间：{$book_info.bk_now_date}</td>
+				</tr>		
+			</tbody>
+		</table>		
 	</div>
 </div>
 </block>
