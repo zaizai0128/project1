@@ -12,10 +12,10 @@ use Zlib\Api as Zapi;
 
 class BookApplyChapterController extends BaseController {
 
-	protected $_apply_obj;			// 请求作品对象
-	protected $_apply_chapter_obj; 	// 请求作品的章节对象
-	protected $book_id;				// 请求作品id
-	protected $book;				// 该作品的信息
+	private $_apply_obj;			// 请求作品对象
+	private $_apply_chapter_obj; 	// 请求作品的章节对象
+	private $_book_id;				// 请求作品id
+	private $_book_info;			// 该作品的信息
 
 	protected function _init()
 	{
@@ -23,26 +23,9 @@ class BookApplyChapterController extends BaseController {
 
 		$this->_apply_obj = D('BookApply');
 		$this->_apply_chapter_obj = D('BookApplyChapter');
-		$this->book_id = I('get.bk_apply_id');
-
-		if (empty($this->book_id)) {
-			$this->error('请选择要操作的作品');
-		}
-
-		// 验证操作书籍的权限
-		if (!in_array($this->book_id, session('author.book_apply'))) {
-			$this->error('您无权操作此书');
-		}
-
-		// 获取该作品的信息
-		$book = $this->_apply_obj->getInfo($this->book_id, $this->user_id);
-
-		// 不存在，返回error
-		if (empty($book)) {
-			$this->error('作品不存在');
-		}
-
-		$this->book = $book;
+		$this->_book_id = I('get.bk_apply_id');
+		$this->checkBookApplyAcl($this->_book_id);
+		$this->_book_info = $this->_apply_obj->getInfo($this->_book_id);
 	}
 
 	/**
@@ -51,13 +34,13 @@ class BookApplyChapterController extends BaseController {
 	public function index()
 	{
 		$size = 10;
-		$total = $this->_apply_chapter_obj->getTotal($this->book_id);
+		$total = $this->_apply_chapter_obj->getTotal($this->_book_id);
 		$Page = new \Think\Page($total, $size);
 		$show = $Page->show();
-		$chapter = $this->_apply_chapter_obj->getList($this->book_id, $Page->firstRow, $Page->listRows);
+		$chapter = $this->_apply_chapter_obj->getList($this->_book_id, $Page->firstRow, $Page->listRows);
 
 		$this->assign(array(
-			'book' => $this->book,
+			'book' => $this->_book_info,
 			'chapter' => $chapter,
 			'page' => $show
 		));
@@ -71,7 +54,7 @@ class BookApplyChapterController extends BaseController {
 	{
 
 		$this->assign(array(
-			'book' => $this->book,
+			'book' => $this->_book_info,
 		));
 		$this->display();
 	}
@@ -83,7 +66,7 @@ class BookApplyChapterController extends BaseController {
 	{
 		if (IS_POST) {
 			$data = I();
-			$data['bk_id'] = $this->book_id;
+			$data['bk_id'] = $this->_book_id;
 
 			// 验证提交的章节是否通过
 			$state = D('BookApplyChapter', 'Service')->checkChapter($data);
@@ -102,7 +85,7 @@ class BookApplyChapterController extends BaseController {
 				$tag['ac'] = 'after_add';	// 行为名称
 				tag('apply_chapter', $tag);	// 章节上传成功后，更新对应的数据表信息
 				
-				$this->success('添加成功，审核通过后才会看到', ZU('bookApply/book', 'ZL_AUTHOR_DOMAIN', array('bk_apply_id'=>$this->book_id)));
+				$this->success('添加成功，审核通过后才会看到', ZU('bookApply/book', 'ZL_AUTHOR_DOMAIN', array('bk_apply_id'=>$this->_book_id)));
 			} else {
 
 				$this->error('添加失败，重新尝试');
@@ -131,7 +114,7 @@ class BookApplyChapterController extends BaseController {
 	public function doEdit()
 	{
 		$data = I();
-		$data['bk_id'] = $this->book_id;
+		$data['bk_id'] = $this->_book_id;
 
 		// 验证提交的章节是否通过
 		$state = D('BookApplyChapter', 'Service')->checkChapter($data, False);
@@ -150,7 +133,7 @@ class BookApplyChapterController extends BaseController {
 			// $tag['ac'] = 'after_edit';	// 行为名称
 			// tag('apply_chapter', $tag);	// 章节编辑成功后，更新对应的数据表信息
 
-			$this->success('修改成功，审核通过后才会看到', ZU('bookApply/book', 'ZL_AUTHOR_DOMAIN', array('bk_apply_id'=>$this->book_id)));
+			$this->success('修改成功，审核通过后才会看到', ZU('bookApply/book', 'ZL_AUTHOR_DOMAIN', array('bk_apply_id'=>$this->_book_id)));
 		} else {
 
 			$this->error('修改失败，重新尝试');

@@ -12,39 +12,19 @@ use Zlib\Api as Zapi;
 
 class BookApplyController extends BaseController {
 
-	protected $_apply_obj;
-	protected $book_id;				// 请求作品id
-	protected $book;				// 该作品的信息
+	private $_apply_obj;
+	private $_book_id;					// 作品id
+	private $_book_info;				// 作品的信息
 
 	protected function _init()
 	{
 		parent::_init();
 		$this->_apply_obj = D('BookApply');
-	
-		// 进行书籍与用户拥有的修改权限做比较
-		if (ACTION_NAME != 'index') {
+		$this->_book_id = I('get.bk_apply_id');
 
-			$this->book_id = I('get.bk_apply_id');
-
-			if (empty($this->book_id)) {
-				$this->error('请选择要操作的作品');
-			}
-
-			// 验证操作书籍的权限
-			if (!in_array($this->book_id, session('author.book_apply'))) {
-				$this->error('您无权操作此书');
-			}
-
-			// 获取该作品的信息
-			$book = $this->_apply_obj->getInfo($this->book_id, $this->user_id);
-
-			// 不存在，返回error
-			if (empty($book)) {
-				$this->error('作品不存在');
-			}
-			
-			$this->book = $book;
-		}
+		// 验证权限
+		$this->checkBookApplyAcl($this->_book_id);
+		$this->_book_info = $this->_apply_obj->getInfo($this->_book_id);
 	}
 
 	/**
@@ -70,7 +50,7 @@ class BookApplyController extends BaseController {
 	{
 		
 		$this->assign(array(
-			'book' => $this->book,
+			'book' => $this->_book_info,
 		));
 		$this->display();
 	}
@@ -82,7 +62,7 @@ class BookApplyController extends BaseController {
 	{
 
 		$this->assign(array(
-			'book' => $this->book,
+			'book' => $this->_book_info,
 		));
 		$this->display();	
 	}

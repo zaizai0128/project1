@@ -57,10 +57,10 @@ class IndexController extends BaseController {
 			if ($book_id) {
 				
 				// 添加作品后的动作，更新书籍的权限
-				$data['bk_id'] = $book_id;
-				$tag['data'] = $data;
-				$tag['ac'] = 'after_add';
-				tag('book', $tag);
+				// $data['bk_id'] = $book_id;
+				// $tag['data'] = $data;
+				// $tag['ac'] = 'after_add';
+				// tag('book', $tag);
 
 				$this->success('添加成功等待审核', ZU('bookApply/book', 'ZL_AUTHOR_DOMAIN', array('bk_apply_id'=>$book_id)));
 			} else {

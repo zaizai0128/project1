@@ -36,7 +36,7 @@ class BookBehavior {
 	}
 
 	/**
-	 * 添加章节后的操作
+	 * 添加作品后的操作
 	 */
 	protected function afterAdd()
 	{

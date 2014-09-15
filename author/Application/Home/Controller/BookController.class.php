@@ -12,40 +12,20 @@ use Zlib\Api as Zapi;
 
 class BookController extends BaseController {
 
-	private $_author;
-	private $_book;
-	private $_book_id;
+	private $_author;		// 作者接口对象
+	private $_book_obj;		// db对象
+	private $_book_id;		// 书籍id 
+	private $_book_info;	// 书籍信息
 
 	public function _init()
 	{
 		parent::_init();
 
 		$this->_author = new Zapi\Author;
-		$this->_book = D('Book');
-		
-		// 进行书籍与用户拥有的修改权限做比较
-		if (ACTION_NAME != 'index') {
-			$this->_book_id = I('get.book_id');
-
-			if (empty($this->_book_id)) {
-				$this->error('请选择要操作的作品');
-			}
-
-			// 验证操作书籍的权限
-			if (!in_array($this->_book_id, session('author.book'))) {
-				$this->error('您无权操作此书');
-			}
-
-			// 获取该作品的信息
-			$book = $this->_book->getBookInfo($this->_book_id, $this->user_id);
-
-			// 不存在，返回error
-			if (empty($book)) {
-				$this->error('作品不存在');
-			}
-			
-			$this->book = $book;
-		}
+		$this->_book_obj = D('Book');
+		$this->_book_id = I('get.book_id');
+		$this->checkBookAcl($this->_book_id);
+		$this->_book_info = $this->_book_obj->getBookInfo($this->_book_id);
 	}
 
 	/**
@@ -53,8 +33,8 @@ class BookController extends BaseController {
 	 */
 	public function index()
 	{
-		// 获取该用户已经审核通过的作品		
-		$book_list = $this->_book->getBookListByUid($this->user_id);
+		// 获取该作者已经审核通过的作品		
+		$book_list = $this->_book_obj->getBookListByUid($this->user_id);
 
 		$this->assign(array(
 			'book_list' => $book_list
@@ -68,18 +48,9 @@ class BookController extends BaseController {
 	 */
 	public function book()
 	{
-		if (empty($this->_book_id)) {
-			$this->error('请选择要操作的作品');
-		}
-
-		$book_info = $this->_book->getBookInfo($this->_book_id);
-
-		if (empty($book_info)) {
-			$this->error('作品不存在');
-		}
 
 		$this->assign(array(
-			'book_info' => $book_info,
+			'book_info' => $this->_book_info,
 		));
 		$this->display();
 	}
@@ -89,10 +60,9 @@ class BookController extends BaseController {
 	 */
 	public function edit()
 	{
-		$book_info = $this->_book->getBookInfo($this->_book_id);
 
 		$this->assign(array(
-			'book_info' => $book_info
+			'book_info' => $this->_book_info
 		));
 		$this->display();
 	}
@@ -106,7 +76,7 @@ class BookController extends BaseController {
 			$data = I();
 			$data['bk_id'] = $this->_book_id;
 
-			$state = $this->_book->editBookInfo($data);
+			$state = $this->_book_obj->editBookInfo($data);
 
 			if ($state > 0)
 				$this->success('修改成功', ZU('book/book', 'ZL_AUTHOR_DOMAIN', array('book_id'=>$this->_book_id)));

@@ -40,11 +40,10 @@ class BookApplyModel extends BaseModel {
 	 * 获取待审核作品的信息
 	 *
 	 * @param int book_id
-	 * @param int user_id
 	 */
-	public function getInfo($book_id, $user_id)
+	public function getInfo($book_id)
 	{
-		return $this->where('bk_id = '.$book_id.' and bk_author_id='.$user_id.' and bk_apply_status != "01"')
+		return $this->where('bk_id = '.$book_id.' and bk_apply_status != "01"')
 				->find();
 	}
 
