@@ -4,7 +4,7 @@
  * 
  *
  * @author 	songmw<songmingwei@kongzhong.com>
- * @date 	2014-09-11
+ * @date 	2014-09-15
  * @version 1.0
  */
 namespace Home\Model;
@@ -15,60 +15,28 @@ class BookApplyModel extends BaseModel {
 	protected $trueTableName = 'zl_book_apply';
 
 	/**
-	 * 创建一个作品申请
-	 *
-	 * @param Array 申请信息
+	 * 获取作品总数
 	 */
-	public function doAdd($book_info)
+	public function getTotal($where = Null)
 	{
-		$book_info['bk_cre_time'] = date('Y-m-d H:i:s', time());
-		return $this->data($book_info)->add();
+		$condition = 'bk_apply_status == "00"';
+		if (!empty($where))
+			$condition = $where;
+		return $this->where($condition)->count();
 	}
 
 	/**
-	 * 获取作者待审核作品列表
+	 * 获取作品列表
 	 *
-	 * @param int user_id
+	 * @param String  条件
+	 * @param int 分页
+	 * @param int 显示条数
 	 */
-	public function getApplyList($user_id)
+	public function getApplyList($where = Null, $firstRow, $listRows = 10)
 	{
-		return $this->where('bk_author_id='.$user_id.' and bk_apply_status != "01"')
-				->order('bk_id DESC')->select();
-	}
-
-	/**
-	 * 获取待审核作品的信息
-	 *
-	 * @param int book_id
-	 * @param int user_id
-	 */
-	public function getInfo($book_id, $user_id)
-	{
-		return $this->where('bk_id = '.$book_id.' and bk_author_id='.$user_id.' and bk_apply_status != "01"')
-				->find();
-	}
-
-	/**
-	 * 通过name获取id
-	 * @param String name
-	 */
-	public function getIdByName($book_name)
-	{
-		return $this->field('bk_id')->where('bk_name = "'.$book_name.'"')->find();
-	}
-
-	/**
-	 * 获取作者正在审核的书籍
-	 *
-	 * @param int user_id
-	 */
-	public function getOwnBook($user_id)
-	{
-		$rs =  $this->field('bk_id')->where('bk_author_id = '.$user_id)->select();
-
-		if (!empty($rs))
-			$rs = array_map(function($val){return $val['bk_id'];}, $rs);
-		
-		return $rs;
+		$condition = 'bk_apply_status == "00"';
+		if (!empty($where))
+			$condition = $where;
+		return $this->where($condition)->limit($firstRow, $listRows)->select();
 	}
 }

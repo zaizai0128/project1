@@ -1,22 +1,8 @@
 <div class="sidebar-nav">
 	<ul class="breadcrumb">
-		<li class="active">请选择要操作的作品
-			<select name="" id="" onchange="$.selectChangeUrl(this, '{:ZU('book/book', 'ZL_AUTHOR_DOMAIN')}', 'book_id', '{:ZU('index/index', 'ZL_AUTHOR_DOMAIN')}')">
-				<?php $get_book_id = I('get.book_id')?>
-				<option value="0" <?php if(empty($get_book_id)):?>selected<?php endif;?>>--请选择--</option>
-				<option value="1" <?php if($get_book_id == 1):?>selected<?php endif;?>>【笑傲江湖】</option>
-				<option value="2" <?php if($get_book_id == 2):?>selected<?php endif;?>>【天龙八部】</option>
-				<option value="3" <?php if($get_book_id == 3):?>selected<?php endif;?>>【鹿鼎记】</option>
-			</select>
-		</li>
+		<li class="active">常用操作</li>
 	</ul>
 	<ul class="nav nav-list">
-		<li <if condition="[nav] eq 'author_info'">class="active"</if>><a href="{:ZU('author/index', 'ZL_AUTHOR_DOMAIN')}">作者信息</a></li>
-		<li <if condition="[nav] eq 'new_book'">class="active"</if>><a href="{:ZU('book/createNewBook', 'ZL_AUTHOR_DOMAIN')}">新建作品</a></li>
-		<li <if condition="[nav] eq 'book_manager'">class="active"</if>><a href="{:ZU('book/index', 'ZL_AUTHOR_DOMAIN')}">作品管理</a></li>
-		<li <if condition="[nav] eq 'book_apply_manager'">class="active"</if>><a href="{:ZU('bookApply/index', 'ZL_AUTHOR_DOMAIN')}">待审核作品管理</a></li>
-		<li <if condition="[nav] eq 'read'">class="active"</if>><a href="{:ZU('/index/read', 'ZL_AUTHOR_DOMAIN')}" target="_blank">作者必读</a></li>
-		<li <if condition="[nav] eq 'contact'">class="active"</if>><a href="#modal-contactAdmin" data-toggle="modal">联系管理员</a></li>
-		<li <if condition="[nav] eq 'bank'">class="active"</if>><a href="{:ZU('author/bank', 'ZL_AUTHOR_DOMAIN', array('book_id'=>I('book_id')))}">银行信息</a></li>
+		<li <if condition="[nav] eq 'book_apply_manager'">class="active"</if>><a href="{:ZU('bookApply/index', 'ZL_ADMIN_DOMAIN')}">待审核作品管理</a></li>
 	</ul>
 </div>
