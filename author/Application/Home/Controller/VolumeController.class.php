@@ -32,16 +32,9 @@ class VolumeController extends BaseController {
 		
 		$this->assign(array(
 			'book_info' => $this->_book_info,
+
 		));
 		$this->display();
-	}
-
-	/**
-	 * 新增分卷
-	 */
-	public function add()
-	{
-
 	}
 
 	/**
@@ -50,7 +43,8 @@ class VolumeController extends BaseController {
 	public function doAdd()
 	{
 		if (IS_POST) {
-
+			$data = I();
+			dump($data);
 		}	
 	}
 

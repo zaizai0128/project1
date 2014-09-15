@@ -36,6 +36,15 @@ return array(
 	// 作品相关
 	'BK' => array(
 
+		// 默认分卷
+		'default_volume' => array(
+			'-10' => '垃圾箱',
+			'100' => '作品相关介绍',
+		),
+
+		// 分卷开始id
+		'start_volume' => 1000,
+		
 		// 授权等级 -- 新建作品时候的授权等级
 		'auth_level' => array(
 			1 => '首发作品',

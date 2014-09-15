@@ -16,19 +16,20 @@
 		<div class="row">
 			<div class="span9">
 				<p class="text-info">现有分卷</p>
-				<p>分卷序号：　-10 	分卷名称：　垃圾箱</p>
-				<p>分卷序号：　100 	分卷名称：　作品相关介绍</p>
+				<?php foreach(C('BK.default_volume') as $key=>$val):?>
+				<p>分卷序号：　{$key} 	分卷名称：　{$val}</p>
+				<?php endforeach;?>
 			</div>
 		</div>
 		<hr />
 		<div class="row">
 			<div class="span9">
 				<p class="text-info">新增分卷</p>
-				<form action="" class="form-horizontal">
+				<form action="{:ZU('volume/doAdd', 'ZL_AUTHOR_DOMAIN', array('book_id'=>I('book_id')))}" class="form-horizontal" method="post">
 					<div class="control-group">
 						<label for="input_volume_name" class="control-label">新增的分卷名</label>
 						<div class="controls">
-							<input type="text" id="input_volume_name" placeholder="新增的分卷名" />
+							<input type="text" id="input_volume_name" name="volume_name" placeholder="新增的分卷名" />
 							<a data-original-title="说明：" class="btn btn-info pop" data-toggle="popover" title="" data-content="没有任何章节的为空卷，作品目录页不显示空卷内容；该新增分卷自身存在章节后，作品目录页，开始显示该分卷。" href="###">说明</a>
 						</div>
 					</div>
