@@ -25,19 +25,15 @@ class Chapter extends Zmodel\BaseModel {
 		return false;
 	}
 
-	public function getName(chapter_id) 
-	{
-		return name;
-	}
-
 	/**
 	 * 通过book_id获取章节表
 	 *
 	 * @param int $book_id
+	 * @return String 章节表
 	 */
-	public function getTableName($book_id)
+	static public function getName($book_id)
 	{
-		
+		return 'zl_chapter_' . sprintf('%02d', $book_id / 30000);
 	}
 
 }

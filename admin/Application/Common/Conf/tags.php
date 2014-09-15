@@ -8,4 +8,6 @@
  */
 return array(
 	
+	'book_apply' => array('Home\Behavior\BookApplyBehavior'),
+
 );

@@ -19,7 +19,7 @@ class BookApplyModel extends BaseModel {
 	 */
 	public function getTotal($where = Null)
 	{
-		$condition = 'bk_apply_status == "00"';
+		$condition = 'bk_apply_status = "00"';
 		if (!empty($where))
 			$condition = $where;
 		return $this->where($condition)->count();
@@ -34,9 +34,27 @@ class BookApplyModel extends BaseModel {
 	 */
 	public function getApplyList($where = Null, $firstRow, $listRows = 10)
 	{
-		$condition = 'bk_apply_status == "00"';
+		$condition = 'bk_apply_status = "00"';
 		if (!empty($where))
 			$condition = $where;
 		return $this->where($condition)->limit($firstRow, $listRows)->select();
+	}
+
+	/**
+	 * 获取作品的信息
+	 *
+	 * @param int book_id
+	 */
+	public function getInfo($book_id)
+	{
+		return $this->where('bk_id = '.$book_id)->find();
+	}
+
+	/**
+	 * 修改作品信息
+	 */
+	public function doEdit($book)
+	{	
+		return $this->data($book)->save();
 	}
 }

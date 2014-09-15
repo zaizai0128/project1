@@ -25,7 +25,7 @@ class BaseController extends Controller {
 		}
 
 		// 用户状态非作者提示
-		if (!in_array(session('user.user_type'), array('02', '03')) ) {
+		if (!in_array(session('user.user_type'), array('02', '03', '04')) ) {
 			$this->error('请先申请成为作者，才能继续进行操作', ZU('user/center/index'));
 		}
 

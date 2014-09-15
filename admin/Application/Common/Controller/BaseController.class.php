@@ -12,18 +12,27 @@ use Zlib\Api as Zapi;
 
 class BaseController extends Controller {
 
-	// 用户id
 	protected $user_id;
 
 	public function __construct()
 	{
 		parent::__construct();
 
+		// 未登录提示
+		if (!session('user')) {
+			$this->error('请登录', ZU('/login/index'));
+		}
+		
+		// 用户状态非作者提示
+		if (!in_array(session('user.user_type'), array('04')) ) {
+			$this->error('抱歉，您不是管理员');
+		}
+
 		$this->_init();
 	}
 
 	protected function _init()
 	{
-		
+		$this->user_id = session('user.user_id');
 	}
 }
