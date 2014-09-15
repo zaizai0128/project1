@@ -12,8 +12,9 @@ use Zlib\Api as Zapi;
 
 class BookController extends BaseController {
 
-	protected $_author;
+	private $_author;
 	private $_book;
+	private $_book_id;
 
 	public function _init()
 	{
@@ -21,6 +22,30 @@ class BookController extends BaseController {
 
 		$this->_author = new Zapi\Author;
 		$this->_book = D('Book');
+		
+		// 进行书籍与用户拥有的修改权限做比较
+		if (ACTION_NAME != 'index') {
+			$this->_book_id = I('get.book_id');
+
+			if (empty($this->_book_id)) {
+				$this->error('请选择要操作的作品');
+			}
+
+			// 验证操作书籍的权限
+			if (!in_array($this->_book_id, session('author.book'))) {
+				$this->error('您无权操作此书');
+			}
+
+			// 获取该作品的信息
+			$book = $this->_book->getBookInfo($this->_book_id, $this->user_id);
+
+			// 不存在，返回error
+			if (empty($book)) {
+				$this->error('作品不存在');
+			}
+			
+			$this->book = $book;
+		}
 	}
 
 	/**
@@ -40,17 +65,14 @@ class BookController extends BaseController {
 	/**
 	 * 每本作品的管理界面
 	 *
-	 * @param int $book_id
 	 */
 	public function book()
 	{
-		$book_id = I('book_id');
-
-		if (empty($book_id)) {
+		if (empty($this->_book_id)) {
 			$this->error('请选择要操作的作品');
 		}
 
-		$book_info = $this->_book->getBookInfo($book_id);
+		$book_info = $this->_book->getBookInfo($this->_book_id);
 
 		if (empty($book_info)) {
 			$this->error('作品不存在');
@@ -63,61 +85,33 @@ class BookController extends BaseController {
 	}
 
 	/**
-	 * 新建作品
+	 * 编辑作品
 	 */
-	public function createNewBook()
-	{	
-		$book_class = Zapi\BookClass::getInstance()->getAllClassForJson();
+	public function edit()
+	{
+		$book_info = $this->_book->getBookInfo($this->_book_id);
 
 		$this->assign(array(
-			'book_class' => $book_class,
+			'book_info' => $book_info
 		));
 		$this->display();
 	}
 
 	/**
-	 * 提交新建作品
+	 * 执行编辑作品
 	 */
-	public function doCreateNewBook()
+	public function doEdit()
 	{
 		if (IS_POST) {
-			
 			$data = I();
-			$book_service = D('Book', 'Service');
-			$state = $book_service->checkBook($data);
+			$data['bk_id'] = $this->_book_id;
 
-			if ($state['code'] < 0)
-				$this->error($state['msg']);
+			$state = $this->_book->editBookInfo($data);
 
-			$data['bk_author'] = session('author.author_name');
-			$data['bk_author_id'] = $this->user_id;
-			$data['bk_poster_id'] = $this->user_id;
-
-			$book_apply_obj = D('BookApply');
-			$book_id = $book_apply_obj->doAdd($data);
-
-			if ($book_id) {
-				
-				// 添加作品后的动作，更新书籍的权限
-				$data['bk_id'] = $book_id;
-				$tag['data'] = $data;
-				$tag['ac'] = 'after_add';
-				tag('book', $tag);
-
-				$this->success('添加成功等待审核', ZU('/book/book', 'ZL_AUTHOR_DOMAIN', array('book_id'=>$book_id)));
-			} else {
-
-				$this->error('添加失败');
-			}
+			if ($state > 0)
+				$this->success('修改成功', ZU('book/book', 'ZL_AUTHOR_DOMAIN', array('book_id'=>$this->_book_id)));
+			else
+				$this->error('修改失败');
 		}
-	}
-
-	/**
-	 * 新建作品说明
-	 */
-	public function createNewBookHelp()
-	{
-		$content = file_get_contents('http://www.zhulang.com/htmpage/zpschuan.html');
-		$this->show($content);
 	}
 }

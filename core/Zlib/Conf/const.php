@@ -29,7 +29,7 @@ return array(
 	'APPLY' => array(
 
 		// 申请作品允许上传的最多章节数
-		'max_chapter_num' => 10,
+		'max_chapter_num' => 3,
 
 	),
 	
@@ -41,6 +41,13 @@ return array(
 			1 => '首发作品',
 			2 => '驻站作品',
 			3 => '公众作品',
+		),
+
+		// 作品连载属性
+		'serial_status' => array(
+			0 => '连载',
+			1 => '全本',
+			2 => '封笔',
 		),
 
 		// 审核状态

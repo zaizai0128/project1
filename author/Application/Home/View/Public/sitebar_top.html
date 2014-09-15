@@ -1,7 +1,0 @@
-<select name="" id="" onchange="$.selectChangeUrl(this, '{:ZU('book/book', 'ZL_AUTHOR_DOMAIN')}', 'book_id', '{:ZU('index/index', 'ZL_AUTHOR_DOMAIN')}')">
-	<?php $get_book_id = I('get.book_id')?>
-	<option value="0" <?php if(empty($get_book_id)):?>selected<?php endif;?>>--请选择--</option>
-	<?php foreach($book_list as $key => $val):?>
-	<option value="{$val.bk_id}" <?php if($get_book_id == $val['bk_id']):?>selected<?php endif;?>>【{$val.bk_name}】</option>
-	<?php endforeach;?>
-</select>

@@ -12,12 +12,29 @@ use Zlib\Api as Zapi;
 
 class SurveyController extends BaseController {
 
+	protected $_author;
+	private $_book;
+	private $_book_id;
+
+	public function _init()
+	{
+		parent::_init();
+
+		$this->_author = new Zapi\Author;
+		$this->_book = D('Book');
+		$this->_book_id = I('get.book_id');
+	}
+
 	/**
 	 * 调查管理页面
 	 */
 	public function index()
 	{
-
+		$book_info = $this->_book->getBookInfo($this->_book_id);
+		
+		$this->assign(array(
+			'book_info' => $book_info,
+		));
 		$this->display();
 	}
 

@@ -15,6 +15,16 @@ class BookModel extends BaseModel {
 	protected $trueTableName = 'zl_book';
 
 	/**
+	 * 修改作品信息
+	 *
+	 * @param Array 需要修改的信息
+	 */
+	public function editBookInfo($data)
+	{
+		return $this->data($data)->save();
+	}
+
+	/**
 	 * 通过书名查找书的id
 	 */
 	public function getIdByName($book_name)
