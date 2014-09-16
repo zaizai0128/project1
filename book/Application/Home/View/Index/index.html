@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>无标题文档</title>
+<title>{$book_info.bk_name} - 目录章节页</title>
 <link href="__STYLE__/css/style.css" type="text/css" rel="stylesheet">
 <link href="__STYLE__/css/base.css" type="text/css" rel="stylesheet">
 </head>
@@ -65,7 +65,7 @@
       <ul class="nav_l">
         <li class="leftlst">
             <a href="{:C('ZL_DOMAIN')}">逐浪首页</a>>
-            <?php foreach($book_cate as $val):?><a href="{:ZU('index/category', 'ZL_DOMAIN', array('class_id'=>$val['class_id']))}">{$val.name}</a>><?php endforeach;?>《{$book_info.bk_name}》(23456)</li>
+            <?php foreach($book_cate as $val):?><a href="{:ZU('index/category', 'ZL_DOMAIN', array('class_id'=>$val['class_id']))}">{$val.name}</a>><?php endforeach;?>《{$book_info.bk_name}》({$book_info.bk_id})</li>
         <li class="rightlst"><a href="#">管理本书</a>|<a href="#">管理本书</a>|<a href="#">管理本书</a>|<a href="#">管理本书</a><a href="#">管理本书</a></li>
       </ul>
     </div>
@@ -78,7 +78,7 @@
       <h2>{$book_info.bk_name}</h2>
       <ul>
         <li>作者：<a href="#">{$book_info.bk_author}</a></li>
-        <li>最新章节：<a href="#">{$book_info.bk_public_name}</a></li>
+        <li>最新章节：<a href="{:ZU('read/index', 'ZL_BOOK_DOMAIN', array('book_id'=>$book_info['bk_id'], 'ch_id'=>$book_info['bk_public_ch_id']))}">{$book_info.bk_public_name}</a></li>
         <li>更新时间：{$book_info.bk_now_date}</li>
       </ul>
       <P><span>全文下载：</span><a href="#">HEM</a><a href="#">TXT</a></P>

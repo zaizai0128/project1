@@ -1,6 +1,6 @@
 <?php
 /**
- * 作品的目录页controller
+ * 章节阅读controller
  *
  * @author 	songmw<songmingwei@kongzhong.com>
  * @date 	2014-09-16
@@ -9,36 +9,35 @@
 namespace Home\Controller;
 use Zlib\Api as Zapi;
 
-class IndexController extends HomeController {
+class ReadController extends HomeController {
+
+	private $_chapter_info = Null;
 
 	public function __construct()
 	{
 		parent::__construct();
-
-		$this->checkBookAcl($this->book_id);
+		$this->checkChapterAcl($this->ch_id, $this->book_id);
+		$this->_chapter_info = $this->chapter_api->getChapterInfo();
 	}
 
 	/**
-	 * 普通作品的目录页
+	 * 普通作品的章节页
 	 */
 	public function index()
 	{
-		// 获取作品分类
-		$book_cate = Zapi\BookClass::getInstance()->getPathArray($this->book_info['bk_class_id']);
-		
+
 		$this->assign(array(
-			'book_cate' => $book_cate,
 			'book_info' => $this->book_info,
+			'chapter_info' => $this->_chapter_info,
 		));
 		$this->display();
 	}
 
 	/**
-	 * vip作品的目录页
+	 * vip章节页
 	 */
 	public function vip()
 	{
-
 
 	}
 }

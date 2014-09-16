@@ -68,7 +68,7 @@
         <ul class="nav_l">
           <li class="leftlst">
             <a href="{:C('ZL_DOMAIN')}">逐浪首页</a>>
-            <?php foreach($book_cate as $val):?><a href="{:ZU('index/category', 'ZL_DOMAIN', array('class_id'=>$val['class_id']))}">{$val.name}</a>><?php endforeach;?>《{$book_info.bk_name}》(23456)</li>
+            <?php foreach($book_cate as $val):?><a href="{:ZU('index/category', 'ZL_DOMAIN', array('class_id'=>$val['class_id']))}">{$val.name}</a>><?php endforeach;?>《{$book_info.bk_name}》({$book_info.bk_id})</li>
           <li class="rightlst"><a href="#">管理本书</a>|<a href="#">管理本书</a>|<a href="#">管理本书</a>|<a href="#">管理本书</a><a href="#">管理本书</a></li>
         </ul>
       </div>
@@ -98,10 +98,10 @@
               <div class="bd_item">
                 <div class="item_nav">
                   <ul class="navlst_01">
-                    <li>总点击：1234</li>
-                    <li>总人气：9876</li>
-                    <li>周人气：0987</li>
-                    <li>总字数：9876</li>
+                    <li>总点击：{$assign.rank.bk_visit_all}</li>
+                    <li>总人气：{$assign.rank.bk_com_all}</li>
+                    <li>周人气：{$assign.rank.bk_visit_week}</li>
+                    <li>总字数：{$book_info.bk_size}</li>
                   </ul>
                 </div>
                 <p class="cont">{$book_info.bk_intro}</p>
@@ -127,7 +127,7 @@
             <div class="bd_red"> 
               <span class="red_tit"><em>{$book_info.bk_public_name}</em>更新于：2013-04-01
               <p> 这一天是华夏这一天是华夏国这一天是华夏国这一天是华夏国这一天是华夏国这一天是华夏国这一天是华夏国这一天是华夏国这一天是华夏国这一天是华这一天是华这一天是华这一天是华 </p>
-              <span class="red_vip"><a href="{:ZU('vip/read', 'ZL_BOOK_DOMAIN', array('book_id'=>$book_info['bk_id'], 'ch_id'=>$book_info['bk_public_ch_id']))}">[阅读本章]</a><a href="#">升级成VIP会员</a></span></span>
+              <span class="red_vip"><a href="{:ZU('read/vip', 'ZL_BOOK_DOMAIN', array('book_id'=>$book_info['bk_id'], 'ch_id'=>$book_info['bk_public_ch_id']))}">[阅读本章]</a><a href="#">升级成VIP会员</a></span></span>
             </div>
           </div>
           <div class="nov_commt">
@@ -242,8 +242,8 @@
                 <li>作品类型：{$assign.category}</li>
                 <li>入库日期：{$book_info.bk_cre_time|substr=0,-9}</li>
                 <li>更新情况：{:ZC(C('BK.full_flag'), $book_info['bk_fullflag'])}</li>
-                <li>周点击：0</li>
-                <li>周推荐：0</li>
+                <li>周点击：{$assign.rank.bk_visit_week}</li>
+                <li>周推荐：{$assign.rank.bk_com_week}</li>
               </ul>
               <div class="oth">
                 <p class="oth_info">

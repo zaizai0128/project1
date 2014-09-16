@@ -112,6 +112,7 @@ class BookClass {
 			$result[$id]['class_id'] = $this->mBookClasses[$id]['class_id'];
 			$id = substr($id, 0, -2);
 		}
+		ksort($result);
 		return $result;
 	}
 

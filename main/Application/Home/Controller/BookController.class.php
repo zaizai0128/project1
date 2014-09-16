@@ -29,19 +29,18 @@ class BookController extends HomeController {
 	 */
 	public function index()
 	{
-		// 获取作品分类
-		$book_cate = Zapi\BookClass::getInstance()->getPathArray($this->_book_info['bk_class_id']);
-		// 获取点击排名
-		// $book_rank = 
-
 		// 其他一些赋值
-		$assign = array();
+		$assign = array();	
 
-		// 作品类型，主分类
-		$tmp = $book_cate;
-		$tmp = array_shift($tmp);
-		$assign['category'] = $tmp['name'];
+		// 获取作品分类路径
+		$book_cate = Zapi\BookClass::getInstance()->getPathArray($this->_book_info['bk_class_id']); 
 
+		// 获取作品类型
+		$assign['category'] = $book_cate[substr($this->_book_info['bk_class_id'], 0, 2)]['name']; 
+
+		// 获取点击排名
+		$assign['rank'] = $this->_book_api->getAllRank();	
+		
 		$this->assign(array(
 			'assign' => $assign,
 			'book_info' => $this->_book_info,

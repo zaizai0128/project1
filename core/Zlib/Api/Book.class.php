@@ -41,5 +41,13 @@ class Book extends BaseModel{
 		$book_info = $this->field('bk_id')->where('bk_id = '.$this->_book_id.' and bk_status = "00"')->find();
 		return empty($book_info) ? False : True ;
 	}
+
+	/**
+	 * 获取book的全部rank属性
+	 */
+	public function getAllRank()
+	{
+		return M('zl_book_rank')->where('bk_id = '.$this->_book_id)->find();
+	}
 	
 }

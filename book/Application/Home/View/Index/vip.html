@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>无标题文档</title>
+<title>{$book_info.bk_name} - 目录章节页</title>
 <link href="__STYLE__/css/style.css" type="text/css" rel="stylesheet">
 <link href="__STYLE__/css/base.css" type="text/css" rel="stylesheet">
 </head>
@@ -24,13 +24,13 @@
 <div class="header">
   <div class="wrap">
     <div class="top">
-      <div class="tp_logo"><a href="#"><img src="images/logo.jpg"></a></div>
+      <div class="tp_logo"><a href="#"><img src="__STYLE__/images/logo.jpg"></a></div>
       <ul class="tp_lst">
         <li class="tplst_01"><i class="ico_tp01"></i><a href="#">全本小说</a></li>
         <li class="tplst_02"><i class="ico_tp02"></i><a href="#">逐浪女王</a></li>
         <li class="tplst_03"><i class="ico_tp03"></i><a href="#">逐浪无线</a></li>
       </ul>
-      <div class="tp_adv"><a href="#"><img src="images/adv.jpg"></a></div>
+      <div class="tp_adv"><a href="#"><img src="__STYLE__/images/adv.jpg"></a></div>
       <div class="tp_search">
         <div class="frm">
           <input type="text" value="" class="inp">
@@ -63,8 +63,9 @@
   <div class="nov_nav">
     <div class="wrap">
       <ul class="nav_l">
-        <li class="leftlst"><a href="#">逐浪首页</a>><a href="#">小说分类</a>><a href="#">都市小说</a>><a href="#">超级大脑(23456)</a></li>
-        `
+        <li class="leftlst">
+            <a href="{:C('ZL_DOMAIN')}">逐浪首页</a>>
+            <?php foreach($book_cate as $val):?><a href="{:ZU('index/category', 'ZL_DOMAIN', array('class_id'=>$val['class_id']))}">{$val.name}</a>><?php endforeach;?>《{$book_info.bk_name}》({$book_info.bk_id})</li>
         <li class="rightlst"><a href="#">管理本书</a>|<a href="#">管理本书</a>|<a href="#">管理本书</a>|<a href="#">管理本书</a><a href="#">管理本书</a></li>
       </ul>
     </div>
@@ -74,17 +75,17 @@
 <div class="main">
   <div class="content">
     <div class="top_name">
-      <h2>异事灵武天下</h2>
+      <h2>{$book_info.bk_name}</h2>
       <ul>
-        <li>作者：<a href="#">临水界</a></li>
-        <li>最新章节：<a href="#">第三章 背负边军之名</a></li>
-        <li>更新时间：2014-6-8 10:20:59</li>
+        <li>作者：<a href="#">{$book_info.bk_author}</a></li>
+        <li>最新章节：<a href="{:ZU('index/read', 'ZL_BOOK_DOMAIN', array('book_id'=>$book_info['bk_id'], 'ch_id'=>$book_info['bk_public_ch_id']))}">{$book_info.bk_public_name}</a></li>
+        <li>更新时间：{$book_info.bk_now_date}</li>
       </ul>
       <P><span>全文下载：</span><a href="#">HEM</a><a href="#">TXT</a></P>
     </div>
     <div class="cont_main">
       <h3> <cite>作品相关介绍<a href="#">（分卷阅读）</a></cite> <span> <a href="#" target="_blank">给本书送鲜花</a>| <a href="#" target="_blank">添加全本基金</a>| <a href="#" target="_blank">我要打赏</a>| <a href="#" target="_blank">我要投票</a>| <a href="#" target="_blank">我要推荐</a>| <a href="#" target="_blank">我要评论</a> </span> </h3>
-      <p>叶扬，无意中被来自星塔系的第一超级大脑辅助系统所寄生，从此以后，便开始在它的帮助下摆脱自己平凡人的身份，扶摇直上，一步步踏上这个世界的巅峰，成为世界的霸者以后，便开始在它的帮助下摆脱自己平凡人的身份，扶摇直上，一步步踏上这个世界的巅峰，成为世界的霸者以后，便开始在它的帮助下摆脱自己平凡人的身份，扶摇直上，一步步踏上这个世界的巅峰，成为世界的霸者以后，便开始在它的帮助下摆脱世界的霸者为世界的霸者。</p>
+      <p>{$book_info.bk_intro}</p>
       <div class="ct_list"> <a href="#" target="_blank" class="bod_lt">感谢书友</a><a href="#" target="_blank">qq读者群</a><a href="#" target="_blank">关于刘飞年龄问题</a><a href="#" target="_blank"  class="bod_lt">作品推荐</a><a href="#" target="_blank">加更大礼包</a><a href="#" target="_blank">加更大礼包</a><a href="#" target="_blank" class="bod_lt">加更大礼包</a><a href="#" target="_blank">加更大礼包</a><a href="#" target="_blank">加更大礼包</a><a href="#" target="_blank" class="bod_lt">加更大礼包</a><a href="#" target="_blank">加更大礼包</a><a href="#" target="_blank">加更大礼包</a> </div>
     </div>
     <div class="cont_main">
@@ -98,25 +99,25 @@
       </div>
       <div class="bd_stor">
         <ul class="storlst">
-          <li><a href="#"><span class="pic"><img src="images/stor_img_01.jpg"/></span>
+          <li><a href="#"><span class="pic"><img src="__STYLE__/images/stor_img_01.jpg"/></span>
             <h3 class="stor_nam">官界</h3>
             </a></li>
-          <li><a href="#"><span class="pic"><img src="images/stor_img_01.jpg"/></span>
+          <li><a href="#"><span class="pic"><img src="__STYLE__/images/stor_img_01.jpg"/></span>
             <h3 class="stor_nam">官界</h3>
             </a></li>
-          <li><a href="#"><span class="pic"><img src="images/stor_img_01.jpg"/></span>
+          <li><a href="#"><span class="pic"><img src="__STYLE__/images/stor_img_01.jpg"/></span>
             <h3 class="stor_nam">官界</h3>
             </a></li>
-          <li><a href="#"><span class="pic"><img src="images/stor_img_01.jpg"/></span>
+          <li><a href="#"><span class="pic"><img src="__STYLE__/images/stor_img_01.jpg"/></span>
             <h3 class="stor_nam">官界</h3>
             </a></li>
-          <li><a href="#"><span class="pic"><img src="images/stor_img_01.jpg"/></span>
+          <li><a href="#"><span class="pic"><img src="__STYLE__/images/stor_img_01.jpg"/></span>
             <h3 class="stor_nam">官界</h3>
             </a></li>
-          <li><a href="#"><span class="pic"><img src="images/stor_img_01.jpg"/></span>
+          <li><a href="#"><span class="pic"><img src="__STYLE__/images/stor_img_01.jpg"/></span>
             <h3 class="stor_nam">官界</h3>
             </a></li>
-          <li><a href="#"><span class="pic"><img src="images/stor_img_01.jpg"/></span>
+          <li><a href="#"><span class="pic"><img src="__STYLE__/images/stor_img_01.jpg"/></span>
             <h3 class="stor_nam">官界</h3>
             </a></li>
         </ul>

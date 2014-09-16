@@ -10,14 +10,25 @@ namespace Zlib\Api;
 use Zlib\Model as Zmodel;
 
 class Chapter extends Zmodel\BaseModel {
+
+	private $_book_id = Null;
+	private $_ch_id = Null;
+	private $_chapter_obj = Null;
 	
-	public function __construct($bookid, $chapid, $connection)
+	public function __construct($book_id, $ch_id, $connection = Null)
 	{
+		parent::__construct();
+
 		$mVolume = array();
-		$m= M('zl_book_volume')->where(' volume_status = 1 and bk_id = '.$bookid)->order('volume asc')->select();
+		$m= M('zl_book_volume')->where(' volume_status = 1 and bk_id = '.$book_id)->order('volume asc')->select();
 		foreach ($m as $row) {
 			$mVolume[$row['volume_order']] = $row;
 		}
+
+		$this->_book_id = $book_id;
+		$this->_ch_id = $ch_id;
+		// 创建model对象
+		$this->_chapter_obj = M(self::getName($book_id));
 	}
 	
 	private function isVip($chapter_id) 
@@ -33,7 +44,25 @@ class Chapter extends Zmodel\BaseModel {
 	 */
 	static public function getName($book_id)
 	{
-		return 'zl_chapter_' . sprintf('%02d', $book_id / 30000);
+		return 'zl_book_chapter_' . sprintf('%02d', $book_id / 30000);
+	}
+
+	/**
+	 * 获取章节详情
+	 */
+	public function getChapterInfo()
+	{
+		return $this->_chapter_obj->where('bk_id = '.$this->_book_id.' and ch_id = '.$this->_ch_id)->find();
+	}
+
+	/**
+	 * 判断章节是否存在
+	 */
+	public function checkChapter()
+	{
+		$result = $this->_chapter_obj->field('ch_id')
+				  ->where('bk_id = '.$this->_book_id.' and ch_id = '.$this->_ch_id)->find();
+		return empty($result) ? False : True;
 	}
 
 }
