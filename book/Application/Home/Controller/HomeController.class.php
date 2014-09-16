@@ -12,12 +12,13 @@ use Zlib\Api as Zapi;
 
 class HomeController extends Controller {
 
-	protected $book_id;
-	protected $ch_id;
-	protected $book_api;
-	protected $book_class_api;
-	protected $book_info;
-	protected $chapter_api;
+	protected $book_id = Null;
+	protected $ch_id = Null;
+	protected $book_api = Null;
+	protected $book_class_api = Null;
+	protected $book_info = Null;
+	protected $chapter_api = Null;
+	protected $is_vip = False;
 
 	public function __construct()
 	{
@@ -38,12 +39,10 @@ class HomeController extends Controller {
 
 	/**
 	 * 验证 作品
-	 * @param int 		book_id
-	 * @param boolean 	是否是vip
 	 */
-	public function checkBookAcl($book_id, $is_vip = False)
+	public function checkBookAcl()
 	{
-		if (empty($book_id))
+		if (empty($this->book_id))
 			$this->error('作品不存在');
 
 		if (!$this->book_api->checkBook())
@@ -54,12 +53,10 @@ class HomeController extends Controller {
 
 	/**
 	 * 验证章节
-	 *
-	 * @param int ch_id
 	 */
-	public function checkChapterAcl($ch_id, $book_id, $is_vip = False)
+	public function checkChapterAcl()
 	{
-		if (empty($ch_id)) 
+		if (empty($this->ch_id)) 
 			$this->error('章节不存在');
 
 		// 创建chapter_api对象
@@ -69,5 +66,18 @@ class HomeController extends Controller {
 			$this->error('章节不存在');
 
 		return True;
+	}
+
+	/**
+	 * 验证vip章节信息
+	 */
+	public function checkChapterVipAcl()
+	{
+		// 验证用户是否登录
+
+		// 验证用户是否拥有看此vip章节的权限
+
+		// 验证该vip书籍 是否处于正常发布状态
+
 	}
 }

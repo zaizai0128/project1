@@ -48,6 +48,14 @@ class Chapter extends Zmodel\BaseModel {
 	}
 
 	/**
+	 * 获取vip表名
+	 */
+	static public function getVipName($ch_id)
+	{
+		return 'zl_chapter_vip_' . sprintf('%02d', $ch_id % 10);
+	}
+
+	/**
 	 * 获取章节详情
 	 */
 	public function getChapterInfo()
@@ -65,4 +73,13 @@ class Chapter extends Zmodel\BaseModel {
 		return empty($result) ? False : True;
 	}
 
+	/**
+	 * 获取vip章节信息
+	 */
+	public function getVipChapterInfo()
+	{
+		$table_name = self::getVipName($this->_ch_id);
+		$vip_obj = M($table_name);
+		return $vip_obj->where('bk_id = '.$this->_book_id.' and ch_id = '.$this->_ch_id)->find();
+	}
 }

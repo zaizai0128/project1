@@ -14,8 +14,7 @@ class IndexController extends HomeController {
 	public function __construct()
 	{
 		parent::__construct();
-
-		$this->checkBookAcl($this->book_id);
+		$this->checkBookAcl();
 	}
 
 	/**
@@ -38,7 +37,6 @@ class IndexController extends HomeController {
 	 */
 	public function vip()
 	{
-
-
+		// pass
 	}
 }

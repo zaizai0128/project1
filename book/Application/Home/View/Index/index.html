@@ -81,12 +81,16 @@
         <li>最新章节：<a href="{:ZU('read/index', 'ZL_BOOK_DOMAIN', array('book_id'=>$book_info['bk_id'], 'ch_id'=>$book_info['bk_public_ch_id']))}">{$book_info.bk_public_name}</a></li>
         <li>更新时间：{$book_info.bk_now_date}</li>
       </ul>
+      <ul>
+        <li>VIP最新章节：<a href="{:ZU('read/vip', 'ZL_BOOK_DOMAIN', array('book_id'=>$book_info['bk_id'], 'ch_id'=>$book_info['bk_vip_ch_id']))}">{$book_info.bk_vip_name}</a></li>
+        <li>更新时间：{$book_info.bk_now_date}</li>
+      </ul>
       <P><span>全文下载：</span><a href="#">HEM</a><a href="#">TXT</a></P>
     </div>
     <div class="cont_main">
       <h3> <cite>作品相关介绍<a href="#">（分卷阅读）</a></cite> <span> <a href="#" target="_blank">给本书送鲜花</a>| <a href="#" target="_blank">添加全本基金</a>| <a href="#" target="_blank">我要打赏</a>| <a href="#" target="_blank">我要投票</a>| <a href="#" target="_blank">我要推荐</a>| <a href="#" target="_blank">我要评论</a> </span> </h3>
       <p>{$book_info.bk_intro}</p>
-      <div class="ct_list"> <a href="#" target="_blank" class="bod_lt">感谢书友</a><a href="#" target="_blank">qq读者群</a><a href="#" target="_blank">关于刘飞年龄问题</a><a href="#" target="_blank"  class="bod_lt">作品推荐</a><a href="#" target="_blank">加更大礼包</a><a href="#" target="_blank">加更大礼包</a><a href="#" target="_blank" class="bod_lt">加更大礼包</a><a href="#" target="_blank">加更大礼包</a><a href="#" target="_blank">加更大礼包</a><a href="#" target="_blank" class="bod_lt">加更大礼包</a><a href="#" target="_blank">加更大礼包</a><a href="#" target="_blank">加更大礼包</a> </div>
+      <div class="ct_list"> <a href="{:ZU('read/index', 'ZL_BOOK_DOMAIN', array('book_id'=>$book_info['bk_id'], 'ch_id'=>666473))}" target="_blank" class="bod_lt">普通章节测试</a><a href="{:ZU('read/vip', 'ZL_BOOK_DOMAIN', array('book_id'=>$book_info['bk_id'], 'ch_id'=>726279))}" target="_blank">vip章节测试</a><a href="#" target="_blank">关于刘飞年龄问题</a><a href="#" target="_blank"  class="bod_lt">作品推荐</a><a href="#" target="_blank">加更大礼包</a><a href="#" target="_blank">加更大礼包</a><a href="#" target="_blank" class="bod_lt">加更大礼包</a><a href="#" target="_blank">加更大礼包</a><a href="#" target="_blank">加更大礼包</a><a href="#" target="_blank" class="bod_lt">加更大礼包</a><a href="#" target="_blank">加更大礼包</a><a href="#" target="_blank">加更大礼包</a> </div>
     </div>
     <div class="cont_main">
       <h3> <cite>异事灵武天下<a href="#">（分卷阅读）</a></cite> <span> <a href="#" target="_blank">给本书送鲜花</a>| <a href="#" target="_blank">添加全本基金</a>| <a href="#" target="_blank">我要打赏</a>| <a href="#" target="_blank">我要投票</a>| <a href="#" target="_blank">我要推荐</a>| <a href="#" target="_blank">我要评论</a> </span> </h3>

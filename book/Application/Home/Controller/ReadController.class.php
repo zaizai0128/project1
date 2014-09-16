@@ -16,7 +16,7 @@ class ReadController extends HomeController {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->checkChapterAcl($this->ch_id, $this->book_id);
+		$this->checkChapterAcl();
 		$this->_chapter_info = $this->chapter_api->getChapterInfo();
 	}
 
@@ -38,6 +38,19 @@ class ReadController extends HomeController {
 	 */
 	public function vip()
 	{
+		// 验证vip章节
+		$this->checkChapterVipAcl();
 
+		// 获取vip章节内容
+		$vip_chapter_info = $this->chapter_api->getVipChapterInfo();
+
+		dump($vip_chapter_info);
+
+
+		$this->assign(array(
+			'book_info' => $this->book_info,
+			'chapter_info' => $this->_chapter_info,
+		));
+		$this->display();
 	}
 }

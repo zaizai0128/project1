@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>内容页</title>
+<title>{$book_info.bk_name} - 阅读</title>
 <link href="__STYLE__/css/style.css" type="text/css" rel="stylesheet">
 <link href="__STYLE__/css/base.css" type="text/css" rel="stylesheet">
 <script src="jquery-1.7.2.min.js" type="text/jscript"></script>
@@ -10,8 +10,8 @@
 
 <script type="text/javascript">
 $(function(){
-	$("select").sSelect();
-	})
+    $("select").sSelect();
+    })
 </script>
 </head>
 
@@ -32,11 +32,11 @@ $(function(){
   </div>
   <!--TopbarEnd-->
 <div class="wy_cont">
-	<div class="cont_nav">
+    <div class="cont_nav">
         <h2>问天问世</h2>
         <ul class="nav_ct">
-            <li>作者：<a>临水界</a></li>
-            <li>最新章节：<a>第三章 背负边军之名</a></li>
+            <li>作者：<a>{$book_info.bk_author}</a></li>
+            <li>最新章节：<a href="{:ZU('read/index', 'ZL_BOOK_DOMAIN', array('book_id'=>$book_info['bk_id'], 'ch_id'=>$book_info['bk_public_ch_id']))}">{$book_info.bk_public_name}</a></li>
         </ul>
         <p class="bct"><b>背景：</b><span><a href="#" class="a1"></a><a href="#" class="a2"></a><a href="#" class="a3"></a><a href="#" class="a4"></a><a href="#" class="a5"></a><a href="#" class="a6"></a><a href="#" class="a7"></a></span></p>
         <strong>字体：</strong>
@@ -51,12 +51,12 @@ $(function(){
                 </li>
             </ul>
     </div>
-	<div class="top_name1">
-        <h2>异事灵武天下</h2>
+    <div class="top_name1">
+        <h2>{$chapter_info.ch_name}</h2>
         <ul class="nam_zc">
-            <li>作者：<a>临水界</a></li>
-            <li>更新时间：<a>2014-6-8 10:20:59</a></li>
-            <li>字数：<a>35454</a></li>
+            <li>作者：<a>{$chapter_info.ch_poster}</a></li>
+            <li>更新时间：<a>{$chapter_info.ch_update}</a></li>
+            <li>字数：<a>{$chapter_info.ch_size}</a></li>
         </ul>
         <p>最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大</p>
         <p>最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大</p>
@@ -86,7 +86,7 @@ $(function(){
         </div>
     </div>
     <div class="left_fc">
-    	<ul>
+        <ul>
             <li><a href="#">下载</a></li>
             <li><a href="#">目录</a></li>
             <li><a href="#">书论</a></li>
@@ -94,7 +94,7 @@ $(function(){
         </ul>
     </div>
     <div class="right_fc">
-    	<ul>
+        <ul>
             <li><a href="#">送朵鲜花</a></li>
             <li><a href="#">打赏作者</a></li>
             <li><a href="#">阅读下章</a></li>
