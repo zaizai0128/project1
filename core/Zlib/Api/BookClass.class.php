@@ -98,9 +98,27 @@ class BookClass {
 	}
 
 	/**
+	 * 获取指定分类的路径
+	 *
+	 * @param int 类别id
+	 * @return Array 数组name,class_id
+	 */
+	public function getPathArray($id)
+	{
+		$result = array();
+		while (strlen($id) > 0) {
+			$result[$id]['name'] = $this->mBookClasses[$id]['class_name'];
+			$result[$id]['short_name'] = $this->mBookClasses[$id]['class_short_name'];
+			$result[$id]['class_id'] = $this->mBookClasses[$id]['class_id'];
+			$id = substr($id, 0, -2);
+		}
+		return $result;
+	}
+
+	/**
 	 * 获取全部顶级分类
 	 */
-	public function topClass()
+	public function getTopClass()
 	{
 		$result = array();
 
@@ -111,6 +129,7 @@ class BookClass {
 
 			$result[$key]['class_id'] = $child_id['class_id'];
 			$result[$key]['class_name'] = $child_id['class_name'];
+			$result[$key]['short_name'] = $child_id['class_short_name'];
 		}	
 
 		return $result;

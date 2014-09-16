@@ -10,6 +10,7 @@
 return array(
 	
 	'ZL_DOMAIN' => 'http://zhulang.ne',					// 主站域名
+	'ZL_BOOK_DOMAIN' => 'http://book.zhulang.ne',		// 书站域名
 	'ZL_AUTHOR_DOMAIN' => 'http://author.zhulang.ne',	// 作者站域名
 	'ZL_ADMIN_DOMAIN' => 'http://admin.zhulang.ne',		// 管理站域名
 	'ZL_DOMAIN_DOT' => '.zhulang.ne',
@@ -53,7 +54,7 @@ return array(
 		),
 
 		// 作品连载属性
-		'serial_status' => array(
+		'full_flag' => array(
 			0 => '连载',
 			1 => '全本',
 			2 => '封笔',

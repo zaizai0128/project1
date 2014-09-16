@@ -21,6 +21,7 @@ $main_config = array(
     'TMPL_PARSE_STRING' => array(
         '__JS__' => '/Public/js',   // js
         '__CSS__' => '/Public/css',   // css
+        '__STYLE__' => '/Public/style',   // style
         '__UPLOAD__' => '/Uploads',   // upload
     ),
 

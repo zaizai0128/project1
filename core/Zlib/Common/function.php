@@ -55,3 +55,19 @@ if (!function_exists('ZC')) {
 		return isset($arr[$key]) ? $arr[$key] : False;
 	}
 }
+
+/**
+ * 传递作品本身的分类，和全部顶级分类，生成该作品对应的短分类
+ *
+ * @param String 作品分类id
+ * @param Array  顶级分类
+ * @return Array 返回该顶级分类信息
+ */
+if (!function_exists('z_get_short_category')) {
+	function z_get_short_category($book_class_id, $top_class)
+	{
+		if (strlen($book_class_id) > 2)
+			$book_class_id = substr($book_class_id, 0, 2);
+		return $top_class[$book_class_id];
+	}
+}

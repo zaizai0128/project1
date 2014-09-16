@@ -16,10 +16,10 @@
 		<form action="{:ZU('book/doEdit', 'ZL_AUTHOR_DOMAIN', array('book_id'=>I('book_id')))}" class="form-horizontal" method="post">
 
 			<div class="control-group">
-				<label for="input_serial_status" class="control-label">连载属性</label>
+				<label for="input_full_flag" class="control-label">连载属性</label>
 				<div class="controls">
-					<select name="bk_fullflag" id="input_serial_status">
-						<?php foreach(C('BK.serial_status') as $key=>$val):?>
+					<select name="bk_fullflag" id="input_full_flag">
+						<?php foreach(C('BK.full_flag') as $key=>$val):?>
 						<option value="{$key}" <?php if($key == $book_info['bk_fullflag']):?>selected="true"<?php endif;?>>{$val}</option>
 						<?php endforeach;?>
 					</select>

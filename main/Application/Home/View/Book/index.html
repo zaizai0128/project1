@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{$book_info.bk_name} - 逐浪封面页</title>
+<link href="__STYLE__/css/style.css" type="text/css" rel="stylesheet">
+<link href="__STYLE__/css/base.css" type="text/css" rel="stylesheet">
+<script src="__JS__/jquery.min.js"></script>
+<script src="__JS__/zlang.js"></script>
+</head>
+<body>
+<div class="container">
+  <div class="topbar">
+    <div class="wrap">
+      <div class="tpbar_usr">
+        <div class="usr_log">
+          <dl>
+            <dt>欢迎您：某某用户</dt>
+            <dd><a href="#">vip会员 书架</a><a href="#">最近阅读</a><a href="#">信箱</a><a href="#">充值</a><a href="#">彩票</a><a href="#">退出</a></dd>
+          </dl>
+          <span class="usr_info">仿佛命中注定，一场神秘的刺杀事件，让他偶然加入了国安局中！</span> </div>
+        <div class="tpbar_r"><a href="#">网站地图</a></div>
+      </div>
+    </div>
+  </div>
+  <!--TopbarEnd-->
+  <div class="header">
+    <div class="wrap">
+      <div class="top">
+        <div class="tp_logo"><a href="#"><img src="__STYLE__/images/logo.jpg"></a></div>
+        <ul class="tp_lst">
+          <li class="tplst_01"><i class="ico_tp01"></i><a href="#">全本小说</a></li>
+          <li class="tplst_02"><i class="ico_tp02"></i><a href="#">逐浪女王</a></li>
+          <li class="tplst_03"><i class="ico_tp03"></i><a href="#">逐浪无线</a></li>
+        </ul>
+        <div class="tp_adv"><a href="#"><img src="__STYLE__/images/adv.jpg"></a></div>
+        <div class="tp_search">
+          <div class="frm">
+            <input type="text" value="" class="inp">
+            <a href="#" class="btn_sear"></a></div>
+          <div class="key"><strong>热搜：</strong><a href="#">唐寅在异界</a><a href="#">唐寅在</a><a href="#">唐寅在界</a><a href="#">唐寅</a></div>
+        </div>
+      </div>
+      <!--TopEnd--> 
+    </div>
+    <div class="naver">
+      <div class="wrap">
+        <div class="nav_box">
+          <ul class="nav_lst">
+            <li class="active"><a href="#">首页</a></li>
+            <li><a href="#">书库</a></li>
+            <li><a href="#">排行榜</a></li>
+            <li><a href="#">社区</a></li>
+            <li><a href="#">会员中心</a></li>
+            <li><a href="#">充值</a></li>
+            <li><a href="#">最近阅读</a></li>
+            <li><a href="#">网络编辑</a></li>
+            <li><a href="#">作者专区</a></li>
+            <li><a href="#">福利</a></li>
+            <li><a href="#">客服帮助</a></li>
+          </ul>
+          <span class="nav_tel"><a href="#"></a></span> </div>
+      </div>
+    </div>
+    <!--Nav End-->
+    <div class="nov_nav">
+      <div class="wrap">
+        <ul class="nav_l">
+          <li class="leftlst">
+            <a href="{:C('ZL_DOMAIN')}">逐浪首页</a>>
+            <?php foreach($book_cate as $val):?><a href="{:ZU('index/category', 'ZL_DOMAIN', array('class_id'=>$val['class_id']))}">{$val.name}</a>><?php endforeach;?>《{$book_info.bk_name}》(23456)</li>
+          <li class="rightlst"><a href="#">管理本书</a>|<a href="#">管理本书</a>|<a href="#">管理本书</a>|<a href="#">管理本书</a><a href="#">管理本书</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!--Header End-->
+  <div class="main">
+    <div class="wrap">
+      <div class="novel_cont">
+      	 <div class="item_tit">
+            <ul>
+              <li class="active"><a href="#">介绍</a></li>
+              <li><a href="#">目录</a></li>
+              <li><a href="#">作者</a></li>
+              <li><a href="#">评论</a></li>
+            </ul>
+          </div>
+        <div class="novel">
+          <!--//-->
+          <div class="nov_item clearfix">
+          	<span class="lianz"></span>	
+            <div class="item_view"><img src="__STYLE__/images/nov_img01.jpg"></div>
+            <div class="item_info">
+              <div class="hd_item clearfix">
+                <h2 class="h2_tit">{$book_info.bk_name}</h2>
+                <span class="auth">作者：{$book_info.bk_author}</span></div>
+              <div class="bd_item">
+                <div class="item_nav">
+                  <ul class="navlst_01">
+                    <li>总点击：1234</li>
+                    <li>总人气：9876</li>
+                    <li>周人气：0987</li>
+                    <li>总字数：9876</li>
+                  </ul>
+                </div>
+                <p class="cont">{$book_info.bk_intro}</p>
+                <p class="new_inf"><strong class="new">[最新更新]</strong><strong class="chap">{$book_info.bk_public_name}</strong><em class="date">{$book_info.bk_now_date|substr=0,-9}</em></p>
+                <div class="bditem_nav">
+                  <ul class="navlst_02">
+                    <li class="on"><a href="{:ZU('index/index', 'ZL_BOOK_DOMAIN', array('book_id'=>$book_info['bk_id']))}" style="display:block;width:112px;height:44px;"></a></li>
+                    <li><a href="#">加入书架</a></li>
+                    <li><a href="#">加入书架</a></li>
+                    <li><a href="#">加入书架</a></li>
+                    <li><a href="#">加入书架</a></li>
+                  </ul>
+                </div>
+                <div> </div>
+              </div>
+            </div>
+          </div>
+          <!--//-->
+          <div class="nov_read">
+            <div class="hd_red">
+              <h3 class="h3_tit"><b>最新章节阅读</b></h3>
+            </div>
+            <div class="bd_red"> 
+              <span class="red_tit"><em>{$book_info.bk_public_name}</em>更新于：2013-04-01
+              <p> 这一天是华夏这一天是华夏国这一天是华夏国这一天是华夏国这一天是华夏国这一天是华夏国这一天是华夏国这一天是华夏国这一天是华夏国这一天是华这一天是华这一天是华这一天是华 </p>
+              <span class="red_vip"><a href="{:ZU('vip/read', 'ZL_BOOK_DOMAIN', array('book_id'=>$book_info['bk_id'], 'ch_id'=>$book_info['bk_public_ch_id']))}">[阅读本章]</a><a href="#">升级成VIP会员</a></span></span>
+            </div>
+          </div>
+          <div class="nov_commt">
+            <div class="hd_commt">
+              <h3 class="h3_tit_l h3_l"><b>黑道太子书评区</b></h3>
+              <ul class="tab_comm clearfix">
+                <li class="on"><a href="#">全部评论</a></li>
+                <li><a href="#">精华评论</a></li>
+              </ul>
+            </div>
+            <div class="bd_commt">
+              <div class="commt_box">
+              	<dl class="commt_dl">
+              		<dt class="tit_toux"><a href="#"><img src="__STYLE__/images/toux_img.jpg"/></a></dt>
+                    <dd class="commt_dd">
+                	<div class="commt_tit"><a href="#"><span class="nam">王杰雄 <em class="vip">(VIP)</em></span>[评论]<em class="pra">精彩，叹为观止！</em><span class="recom"><em>[推荐] [精华] [置顶]</em></span><span class="date">2013-9-10</span> </a></div>
+                <div class="commt_cont">
+                  <p class="comm_info"><a href="#">叹为观叹为观止叹为观止叹为观止叹为观止叹为观止叹为观止叹为观止叹为观止叹为观止叹为观止叹为观止叹为观止叹为观止叹为观止叹为观止止</a>
+                  <p> 
+                </div>
+                <span class="red_vip"><a href="#">【回复】</a><a href="#">【快速发表】</a></span> 
+                <dd>
+                </dl>
+                </div>
+              <!--//-->
+              <div class="commt_box">
+                <div class="commt_tit"> <a href="#"><span><em class="nam">王杰雄</em> <em class="vip">(VIP)</em></span>[评论]<strong>精彩，叹为观止！</strong><span class="recom"><em>[推荐] [精华] [置顶]</em></span><span class="date">2013-9-10</span> </a> </div>
+                <div class="commt_cont">
+                  <p class="comm_info"><a href="#">叹为观叹为观止叹为观止叹为观止叹为观止叹为观止叹为观止叹为观止叹为观止叹为观止叹为观止叹为观止叹为观止叹为观止叹为观止叹为观止止</a>
+                  <p> 
+                </div>
+                <span class="red_vip"><a href="#">【回复】</a><a href="#">【快速发表】</a></span> </div>
+              <!--//-->
+              <div class="commt_box">
+                <div class="commt_tit"> <a href="#"><span class="nam">王杰雄 <em class="vip">(VIP)</em></span>[评论]<strong>精彩，叹为观止！</strong><span class="recom"><em>[推荐] [精华] [置顶]</em></span><span class="date">2013-9-10</span> </a> </div>
+                <div class="commt_cont">
+                  <p  class="comm_info"><a href="#">叹为观叹为观止叹为观止叹为观止叹为观止叹为观止叹为观止叹为观止叹为观止叹为观止叹为观止叹为观止叹为观止叹为观止叹为观止叹为观止止</a>
+                  <p>
+                  <div class="reply">
+                    <p class="rep_info"><em class="nam">临水界</em> 回复：好的好的</p>
+                  </div>
+                </div>
+                <span class="red_vip"><a href="#">【回复】</a><a href="#">【快速发表】</a></span> </div>
+              <!--//-->
+              <div class="commt_tot"> <span class="tot">本书评共 <strong>534</strong> 条主题<strong>434</strong>条回复 <em class="apply">【申请成为版主】</em> </span>
+                <div class="page">
+                  <ul class="page_lst">
+                    <li class="first">第一页</li>
+                    <li class="on"><a href="#"> 1 </a></li>
+                    <li><a href="#"> 2 </a></li>
+                    <li><a href="#"> 3 </a></li>
+                    <li><a href="#"> 4 </a></li>
+                    <li><a href="#"> 5 </a></li>
+                    <li><a href="#">最后一页</a></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="message">
+                <div class="mess_sel">
+                  <select class="sel">
+                    <option>评论</option>
+                    <option>评论</option>
+                    <option>评论</option>
+                  </select>
+                  <input type="text" value="" name="" class="mess_inp"/>
+                </div>
+                <div class="mess_bioq">
+                  <div class="biaoq_lst"><a href="#"><img src="__STYLE__/images/biaoq_ico1.jpg"/></a><a href="#"><img src="__STYLE__/images/biaoq_ico1.jpg"/></a><a href="__STYLE__/images/biaoq_ico1.jpg"><img src="__STYLE__/images/biaoq_ico1.jpg"/></a></div>
+                  <div class="biqoq_sel"> <img src="__STYLE__/images/biaoq_Sel.jpg"/> </div>
+                </div>
+                <div class="mes_textar">
+                  <textarea>提醒：您的鼓励是作者最大的动力</textarea>
+                  <span class="btn_sumt"><a href="#"></a></span> </div>
+              </div>
+            </div>
+          </div>
+          <!--//--> 
+        </div>
+        <div class="novel_r">
+          <div class="r_sec_01 bor_sty">
+            <div class="hd_01">
+              <h3 class="h3_tit"><b>本书最新消息</b></h3>
+            </div>
+            <div class="bd_01">
+              <ul class="bdlst_01">
+                <li> <span>容绍 <em>打赏作品100元</em></span></li>
+                <li> <span>容绍 <em>打赏作品100元</em></span></li>
+                <li> <span>容绍 <em>打赏作品100元</em></span></li>
+                <li> <span>容绍 <em>打赏作品100元</em></span></li>
+                <li> <span>容绍 <em>打赏作品100元</em></span></li>
+                <li> <span>容绍 <em>打赏作品100元</em></span></li>
+                <li> <span>容绍 <em>打赏作品100元</em></span></li>
+                <li> <span>容绍 <em>打赏作品100元</em></span></li>
+              </ul>
+              <div class="oth">
+                <ul class="othlst">
+                  <li class="on"><a href="#"></a></li>
+                  <li><a href="#">我要打赏</a></li>
+                  <li><a href="#">我要打赏</a></li>
+                  <li><a href="#">我要打赏</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <!--//-->
+          <div class="r_sec_02 bor_sty">
+            <div class="hd_02">
+              <h3 class="h3_tit"><b>作品相关</b></h3>
+            </div>
+            <div class="bd_02"> <span class="nam"><strong>《{$book_info.bk_name}》</strong></span>
+              <ul class="bdlst_02">
+                <li>作品类型：{$assign.category}</li>
+                <li>入库日期：{$book_info.bk_cre_time|substr=0,-9}</li>
+                <li>更新情况：{:ZC(C('BK.full_flag'), $book_info['bk_fullflag'])}</li>
+                <li>周点击：0</li>
+                <li>周推荐：0</li>
+              </ul>
+              <div class="oth">
+                <p class="oth_info">
+                  <a href="#">《{$book_info.bk_name}》由作者{$book_info.bk_author}上传，逐浪网提供网络空间。如发现该作品上传人有侵权行为请及时与我们联系。
+                  </a> 
+                </p>
+              </div>
+            </div>
+          </div>
+          <!--//-->
+          <div class="r_sec_03 bor_sty">
+            <div class="hd_03">
+              <h3 class="h3_tit"><b>本书粉丝排行榜</b></h3>
+            </div>
+            <div class="bd_03">
+              <ul class="bdlst_03">
+                <li class="tit"><span class="w_01">排名</span><span class="w_02">昵称</span><span class="w_03">等级</span></li>
+                <li class="on"><span class="w_01"><i class="ico_num_01">1</i></span><span class="w_02">夜里听雨</span><span class="w_03">执事</span></li>
+                <li><span class="w_01"><i class="ico_num_02">2</i></span><span class="w_02">夜里听雨</span><span class="w_03">执事</span></li>
+                <li><span class="w_01"><i class="ico_num_01">3</i></span><span class="w_02">夜里听雨</span><span class="w_03">执事</span></li>
+              </ul>
+            </div>
+          </div>
+          <!--//-->
+          <div class="r_sec_04 bor_sty">
+            <div class="hd_04">
+              <h3 class="h3_tit"><b>此作者推荐小说</b></h3>
+            </div>
+            <div class="bd_04">
+              <ul class="bdlst_04">
+                <li><a href="#"><img src="__STYLE__/images/r_Sec_img01.jpg"><h3>尸血沸腾</h3></a></li>
+                <li><a href="#"><img src="__STYLE__/images/r_Sec_img01.jpg"><h3>尸血沸腾</h3></a></li>
+                <li><a href="#"><img src="__STYLE__/images/r_Sec_img01.jpg"><h3>尸血沸腾</h3></a></li>
+                <li><a href="#"><img src="__STYLE__/images/r_Sec_img01.jpg"><h3>尸血沸腾</h3></a></li>
+              </ul>
+            </div>
+          </div>
+          <!--//-->
+          <div class="r_sec_05 bor_sty">
+            <div class="hd_05">
+              <h3 class="h3_tit"><b>本周热门推荐</b></h3>
+            </div>
+            <div class="bd_05">
+              <ul class="bdlst_05">
+                <li class="on"><a href="#"><em>玄幻|</em>残刀斩天</a></li>
+                <li><a href="#"><em>玄幻|</em>残刀斩天</a></li>
+                <li><a href="#"><em>玄幻|</em>残刀斩天</a></li>
+                <li><a href="#"><em>玄幻|</em>残刀斩天</a></li>
+              </ul>
+            </div>
+          </div>
+          <!--//-->
+          <div class="r_sec_05 bor_sty">
+            <div class="hd_05">
+              <h3 class="h3_tit"><b>本类热门推荐</b></h3>
+            </div>
+            <div class="bd_05">
+              <ul class="bdlst_05">
+                <li class="on"><a href="#"><em>玄幻|</em>残刀斩天</a></li>
+                <li><a href="#"><em>玄幻|</em>残刀斩天</a></li>
+                <li><a href="#"><em>玄幻|</em>残刀斩天</a></li>
+                <li><a href="#"><em>玄幻|</em>残刀斩天</a></li>
+              </ul>
+            </div>
+          </div>
+          <!--//--> 
+          
+        </div>
+      </div>
+      <div class="store bor_sty">
+        <div class="hd_stor">
+          <h3 class="h3_tit"><b>精品收藏</b></h3>
+        </div>
+        <div class="bd_stor">
+          <ul class="storlst">
+            <li><a href="#"><span class="pic"><img src="__STYLE__/images/stor_img_01.jpg"/></span>
+              <h3 class="stor_nam">官界</h3>
+              </a></li>
+            <li><a href="#"><span class="pic"><img src="__STYLE__/images/stor_img_01.jpg"/></span>
+              <h3 class="stor_nam">官界</h3>
+              </a></li>
+            <li><a href="#"><span class="pic"><img src="__STYLE__/images/stor_img_01.jpg"/></span>
+              <h3 class="stor_nam">官界</h3>
+              </a></li>
+            <li><a href="#"><span class="pic"><img src="__STYLE__/images/stor_img_01.jpg"/></span>
+              <h3 class="stor_nam">官界</h3>
+              </a></li>
+            <li><a href="#"><span class="pic"><img src="__STYLE__/images/stor_img_01.jpg"/></span>
+              <h3 class="stor_nam">官界</h3>
+              </a></li>
+            <li><a href="#"><span class="pic"><img src="__STYLE__/images/stor_img_01.jpg"/></span>
+              <h3 class="stor_nam">官界</h3>
+              </a></li>
+            <li><a href="#"><span class="pic"><img src="__STYLE__/images/stor_img_01.jpg"/></span>
+              <h3 class="stor_nam">官界</h3>
+              </a></li>
+          </ul>
+        </div>
+      </div>
+      <!--//-->
+      <div class="map bor_sty">
+        <div class="hd_map">
+          <h3 class="h3_tit"><b>网站地图</b></h3>
+        </div>
+        <div class="bd_map">
+          <div class="maplst">
+            <ul>
+              <li> <a href="#">逐浪网</a><br>
+                <a href="#">逐浪网</a><br>
+                <a href="#">逐浪网 逐浪网逐浪 网逐浪网</a><br>
+                <a href="#">逐浪网</a><br>
+              </li>
+              <li> <a href="#">逐浪网</a><br>
+                <a href="#">逐浪网</a><br>
+                <a href="#">玄幻小说 科幻小说 网游小说</a><br>
+                <a href="#">逐浪网</a><br>
+              </li>
+              <li> <a href="#">逐浪网</a><br>
+                <a href="#">逐浪网</a><br>
+                <a href="#">玄幻小说 科幻小说 网游小说</a><br>
+                <a href="#">逐浪网</a><br>
+              </li>
+              <li> <a href="#">逐浪网</a><br>
+                <a href="#">逐浪网</a><br>
+                <a href="#">玄幻小说 科幻小说 网游小说</a><br>
+                <a href="#">逐浪网</a><br>
+              </li>
+              <li> <a href="#">逐浪网</a><br>
+                <a href="#">逐浪网</a><br>
+                <a href="#">玄幻小说 科幻小说 网游小说</a><br>
+                <a href="#">逐浪网</a><br>
+              </li>
+              <li> <a href="#">逐浪网</a><br>
+                <a href="#">逐浪网</a><br>
+                <a href="#">玄幻小说 科幻小说 网游小说</a><br>
+                <a href="#">逐浪网</a><br>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!--//-->
+      <div class="link bor_sty">
+        <div class="hd_link">
+          <h3 class="h3_tit"><b>友情链接</b></h3>
+        </div>
+        <div class="bd_link">
+          <div class="linklst"> <a href="#"><strong>逐浪小说网</strong></a>|<a href="#"><strong>逐浪小说网</strong></a>|<a href="#">逐浪小说网</a>|<a href="#">逐浪小说网</a>|<a href="#">逐浪小说网</a>|<a href="#">逐浪小说网</a>|<a href="#">逐浪小说网</a>|<a href="#">逐浪小说网</a>|<a href="#">逐浪小说网</a>|<a href="#">逐浪小说网</a>| </div>
+        </div>
+      </div>
+      <!--Footer-->
+      <div class="footer">      
+        <ul>
+          <li><a href="#" target="_blank">关于逐浪</a></li>
+          <li>|</li>
+          <li><a href="#" target="_blank">商务合作 </a></li>
+          <li>|</li>
+          <li><a href="#" target="_blank">客服中心</a></li>
+          <li>|</li>
+          <li><a href="#" target="_blank">网站地图</a></li>
+          <li>|</li>
+          <li><a href="#" target="_blank">友情链接</a></li>
+        </ul>
+        <div class="foot_line"></div>
+        <p>申明：逐浪网提供<b><a href="#">都市小说</a></b>，<b><a href="#">玄幻小说</a></b>，<b><a href="#">武侠小说</a></b>，<b><a href="#">网游小说</a></b>等作品欣赏，做最优秀的小说阅读网站。未经书面许可不得复制转载。<br>
+          <em>客服电话：025-66670800</em>　Copyright 2011 Zhulang.Com, All Rights Reserved 版权所有<a href="#">逐浪网</a> <br>
+          </p>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -7,6 +7,7 @@
  * @version 1.0
  */
 namespace Home\Controller;
+use Zlib\Api as Zapi;
 
 class IndexController extends HomeController {
 
@@ -15,6 +16,12 @@ class IndexController extends HomeController {
 	 */
 	public function index()
 	{
+		// 获取全部顶级分类
+		$assign['book_top_class'] = Zapi\BookClass::getInstance()->getTopClass();
+
+		$this->assign(array(
+			'assign' => $assign,
+		));
 		$this->display();
 	}
 	

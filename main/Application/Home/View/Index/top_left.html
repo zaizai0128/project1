@@ -1,0 +1,22 @@
+<div class="tabbable">
+	<ul class="nav nav-tabs">
+		<li class="active"><a href="#tab1" data-toggle="tab">热门推荐</a></li>
+		<li><a href="#tab2" data-toggle="tab">全本精选</a></li>
+	</ul>
+	<div class="tab-content">
+		<div class="tab-pane active" id="tab1">
+			<ul class="nav">
+				<?php foreach($top_left_hot as $key=>$val):?>
+				<li><a href="{:ZU('book/index', 'ZL_DOMAIN', array('book_id'=>$val['bk_id']))}">[{:ZC(z_get_short_category($val['bk_class_id'], $assign['book_top_class']), 'short_name')}]&nbsp;{$val.bk_name}</a></li>
+				<?php endforeach;?>
+			</ul>
+		</div>
+		<div class="tab-pane" id="tab2">
+			<ul class="nav">
+				<?php foreach($top_left_full as $key=>$val):?>
+				<li><a href="{:ZU('book/index', 'ZL_DOMAIN', array('book_id'=>$val['bk_id']))}">[{:ZC(z_get_short_category($val['bk_class_id'], $assign['book_top_class']), 'short_name')}]&nbsp;{$val.bk_name}</a></li>
+				<?php endforeach;?>
+			</ul>
+		</div>
+	</div>
+</div>

@@ -11,6 +11,17 @@ use Think\Model;
 
 class BaseModel extends Model {
 
+	public function __construct()
+	{
+		parent::__construct();
+		$this->init();
+	}
+	
+	public function init()
+	{
+
+	}
+
 	/**
 	 * 调试方法，打印上一条sql
 	 */
