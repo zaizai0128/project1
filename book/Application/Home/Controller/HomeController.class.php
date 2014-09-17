@@ -12,29 +12,26 @@ use Zlib\Api as Zapi;
 
 class HomeController extends Controller {
 
-	protected $book_id = Null;
+	protected $book_id = Null;	
 	protected $ch_id = Null;
 	protected $book_api = Null;
 	protected $book_class_api = Null;
 	protected $book_info = Null;
 	protected $chapter_api = Null;
-	protected $is_vip = False;
+	protected $is_buy = False;	// 判断用户是否已经购买
 
 	public function __construct()
 	{
 		parent::__construct();
-
 		$this->book_id = I('get.book_id');
 		$this->ch_id = I('get.ch_id');
-		$this->book_api = new Zapi\Book($this->book_id);
-		$this->book_class_api = Zapi\BookClass::getInstance();
-
 		$this->init();
 	}
 
 	public function init()
 	{
-		$this->book_info = $this->book_api->getBookInfo();
+		$this->checkBookAcl();
+		$this->book_class_api = Zapi\BookClass::getInstance();
 	}
 
 	/**
@@ -44,9 +41,20 @@ class HomeController extends Controller {
 	{
 		if (empty($this->book_id))
 			$this->error('作品不存在');
+		$this->book_api = new Zapi\Book($this->book_id);
 
 		if (!$this->book_api->checkBook())
 			$this->error('作品不存在');
+
+		// 获取作品信息
+		$this->book_info = $this->book_api->getBookInfo();
+
+		// 判断作品状态
+		if ($this->book_info['bk_status'] == '01')
+			$this->error('该作品已被关闭');
+
+		if ($this->book_info['bk_status'] == '02' || $this->book_info['bk_status'] == '03')
+			$this->error('该作品未经管理员审核');
 
 		return True;
 	}
@@ -64,6 +72,11 @@ class HomeController extends Controller {
 
 		if (!$this->chapter_api->checkChapter())
 			$this->error('章节不存在');
+
+		$this->chapter_info = $this->chapter_api->getChapterInfo();
+
+		if ($this->chapter_info['ch_status'] == 1)
+			$this->error('章节已被删除');
 
 		return True;
 	}

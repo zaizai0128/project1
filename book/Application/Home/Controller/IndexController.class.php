@@ -14,7 +14,6 @@ class IndexController extends HomeController {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->checkBookAcl();
 	}
 
 	/**
@@ -23,8 +22,8 @@ class IndexController extends HomeController {
 	public function index()
 	{
 		// 获取作品分类
-		$book_cate = Zapi\BookClass::getInstance()->getPathArray($this->book_info['bk_class_id']);
-			
+		$book_cate = $this->book_class_api->getPathArray($this->book_info['bk_class_id']);
+		
 		// 获取chapter章节 tmp
 		$chapter = M(Zapi\Chapter::getName($this->book_id))->where('bk_id = '.$this->book_id.' and ch_vip = 0')->select();
 		$vip_chapter = M(Zapi\Chapter::getName($this->book_id))->where('bk_id = '.$this->book_id.' and ch_vip = 1')->select();

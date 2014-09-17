@@ -7,7 +7,6 @@
  * @version 1.0
  */
 namespace Home\Controller;
-use Zlib\Api as Zapi;
 
 class ReadController extends HomeController {
 
@@ -17,7 +16,6 @@ class ReadController extends HomeController {
 	{
 		parent::__construct();
 		$this->checkChapterAcl();
-		$this->chapter_info = $this->chapter_api->getChapterInfo();
 	}
 
 	/**
@@ -25,6 +23,7 @@ class ReadController extends HomeController {
 	 */
 	public function index()
 	{
+
 
 		$this->assign(array(
 			'book_info' => $this->book_info,

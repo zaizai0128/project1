@@ -1,6 +1,6 @@
 <?php
 /**
- * 公共的作者api接口
+ * 章节api
  * 
  * @author 	songmw<songmingwei@kongzhong.com>
  * @date 	2014-09-09
@@ -15,25 +15,15 @@ class Chapter extends BaseModel {
 	private $_ch_id = Null;
 	private $_chapter_obj = Null;
 	
-	public function __construct($book_id, $ch_id, $connection = Null)
+	public function __construct($book_id, $ch_id)
 	{
 		parent::__construct();
-
-		$mVolume = array();
-		$m= M('zl_book_volume')->where(' volume_status = 1 and bk_id = '.$book_id)->order('volume asc')->select();
-		foreach ($m as $row) {
-			$mVolume[$row['volume_order']] = $row;
-		}
-
+		
 		$this->_book_id = $book_id;
 		$this->_ch_id = $ch_id;
-		// 创建model对象
+
+		// 创建章节model对象
 		$this->_chapter_obj = $this->getChapterObj();
-	}
-	
-	private function isVip($chapter_id) 
-	{
-		return false;
 	}
 
 	/**
