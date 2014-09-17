@@ -71,13 +71,28 @@ class HomeController extends Controller {
 	/**
 	 * 验证vip章节信息
 	 */
-	public function checkChapterVipAcl()
+	public function checkVipChapterAcl()
 	{
 		// 验证用户是否登录
+		if (!session('?user')) {
+			$this->error('请先登录', ZU('login/index'));
+		}
 
 		// 验证用户是否拥有看此vip章节的权限
 
 		// 验证该vip书籍 是否处于正常发布状态
+		if ($this->chapter_info['ch_lock'] == 1) {
+			$this->error('该章节正处于修正中');
+		}
 
+		if ($this->chapter_info['ch_status'] != 0) {
+			$this->error('该章节非对外开放');
+		}
+
+		if ($this->chapter_info['ch_vip'] != 1) {
+			$this->error('该章节非vip');
+		}
+
+		return True;
 	}
 }

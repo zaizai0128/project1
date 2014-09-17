@@ -11,13 +11,13 @@ use Zlib\Api as Zapi;
 
 class ReadController extends HomeController {
 
-	private $_chapter_info = Null;
+	protected $chapter_info = Null;
 
 	public function __construct()
 	{
 		parent::__construct();
 		$this->checkChapterAcl();
-		$this->_chapter_info = $this->chapter_api->getChapterInfo();
+		$this->chapter_info = $this->chapter_api->getChapterInfo();
 	}
 
 	/**
@@ -28,7 +28,7 @@ class ReadController extends HomeController {
 
 		$this->assign(array(
 			'book_info' => $this->book_info,
-			'chapter_info' => $this->_chapter_info,
+			'chapter_info' => $this->chapter_info,
 		));
 		$this->display();
 	}
@@ -39,17 +39,15 @@ class ReadController extends HomeController {
 	public function vip()
 	{
 		// 验证vip章节
-		$this->checkChapterVipAcl();
+		$this->checkVipChapterAcl();
 
 		// 获取vip章节内容
 		$vip_chapter_info = $this->chapter_api->getVipChapterInfo();
-
-		dump($vip_chapter_info);
-
+		$this->chapter_info = array_merge($this->chapter_info, (array)$vip_chapter_info);
 
 		$this->assign(array(
 			'book_info' => $this->book_info,
-			'chapter_info' => $this->_chapter_info,
+			'chapter_info' => $this->chapter_info,
 		));
 		$this->display();
 	}

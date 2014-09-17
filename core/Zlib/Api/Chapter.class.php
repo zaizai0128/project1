@@ -28,7 +28,7 @@ class Chapter extends Zmodel\BaseModel {
 		$this->_book_id = $book_id;
 		$this->_ch_id = $ch_id;
 		// 创建model对象
-		$this->_chapter_obj = M(self::getName($book_id));
+		$this->_chapter_obj = $this->getChapterObj();
 	}
 	
 	private function isVip($chapter_id) 
@@ -56,6 +56,22 @@ class Chapter extends Zmodel\BaseModel {
 	}
 
 	/**
+	 * 获取章节对象
+	 */
+	public function getChapterObj()
+	{
+		return M(self::getName($this->_book_id));
+	}
+
+	/**
+	 * 获取vip章节对象
+	 */
+	public function getChapterVipObj()
+	{
+		return M(self::getVipName($this->_ch_id));
+	}
+
+	/**
 	 * 获取章节详情
 	 */
 	public function getChapterInfo()
@@ -78,8 +94,7 @@ class Chapter extends Zmodel\BaseModel {
 	 */
 	public function getVipChapterInfo()
 	{
-		$table_name = self::getVipName($this->_ch_id);
-		$vip_obj = M($table_name);
+		$vip_obj = $this->getChapterVipObj();
 		return $vip_obj->where('bk_id = '.$this->_book_id.' and ch_id = '.$this->_ch_id)->find();
 	}
 }

@@ -90,12 +90,17 @@
     <div class="cont_main">
       <h3> <cite>作品相关介绍<a href="#">（分卷阅读）</a></cite> <span> <a href="#" target="_blank">给本书送鲜花</a>| <a href="#" target="_blank">添加全本基金</a>| <a href="#" target="_blank">我要打赏</a>| <a href="#" target="_blank">我要投票</a>| <a href="#" target="_blank">我要推荐</a>| <a href="#" target="_blank">我要评论</a> </span> </h3>
       <p>{$book_info.bk_intro}</p>
-      <div class="ct_list"> <a href="{:ZU('read/index', 'ZL_BOOK_DOMAIN', array('book_id'=>$book_info['bk_id'], 'ch_id'=>666473))}" target="_blank" class="bod_lt">普通章节测试</a><a href="{:ZU('read/vip', 'ZL_BOOK_DOMAIN', array('book_id'=>$book_info['bk_id'], 'ch_id'=>726279))}" target="_blank">vip章节测试</a><a href="#" target="_blank">关于刘飞年龄问题</a><a href="#" target="_blank"  class="bod_lt">作品推荐</a><a href="#" target="_blank">加更大礼包</a><a href="#" target="_blank">加更大礼包</a><a href="#" target="_blank" class="bod_lt">加更大礼包</a><a href="#" target="_blank">加更大礼包</a><a href="#" target="_blank">加更大礼包</a><a href="#" target="_blank" class="bod_lt">加更大礼包</a><a href="#" target="_blank">加更大礼包</a><a href="#" target="_blank">加更大礼包</a> </div>
+      <div class="ct_list"> 
+        <?php $i=0;?>
+        <?php foreach($chapter as $key => $val):?><a href="{:ZU('read/index', 'ZL_BOOK_DOMAIN', array('book_id'=>$book_info['bk_id'], 'ch_id'=>$val['ch_id']))}" target="_blank" <?php if($i%3==0):?>class="bod_lt"<?php endif;?>>{$val.ch_name}</a><?php ++$i;?><?php endforeach;?>
+      </div>
     </div>
     <div class="cont_main">
       <h3> <cite>异事灵武天下<a href="#">（分卷阅读）</a></cite> <span> <a href="#" target="_blank">给本书送鲜花</a>| <a href="#" target="_blank">添加全本基金</a>| <a href="#" target="_blank">我要打赏</a>| <a href="#" target="_blank">我要投票</a>| <a href="#" target="_blank">我要推荐</a>| <a href="#" target="_blank">我要评论</a> </span> </h3>
       <p>叶扬，无意中被来自星塔系的第一超级大脑辅助系统所寄生，从此以后，便开始在它的帮助下摆脱自己平凡人的身份，扶摇直上，一步步踏上这个世界的巅峰，成为世界的霸者。</p>
-      <div class="ct_list"> <a href="#" target="_blank" class="bod_lt">感谢书友</a><a href="#" target="_blank">qq读者群</a><a href="#" target="_blank">关于刘飞年龄问题</a><a href="#" target="_blank"  class="bod_lt">作品推荐</a><a href="#" target="_blank">加更大礼包</a><a href="#" target="_blank">加更大礼包</a><a href="#" target="_blank" class="bod_lt">加更大礼包</a><a href="#" target="_blank">加更大礼包</a><a href="#" target="_blank">加更大礼包</a><a href="#" target="_blank" class="bod_lt">加更大礼包</a><a href="#" target="_blank">加更大礼包</a><a href="#" target="_blank">加更大礼包</a> </div>
+      <div class="ct_list"> <?php $i=0;?>
+        <?php foreach($vip_chapter as $key => $val):?><a href="{:ZU('read/vip', 'ZL_BOOK_DOMAIN', array('book_id'=>$book_info['bk_id'], 'ch_id'=>$val['ch_id']))}" target="_blank" <?php if($i%3==0):?>class="bod_lt"<?php endif;?>>{$val.ch_name}</a><?php ++$i;?><?php endforeach;?>
+      </div>
     </div>
     <div class="store bor_sty">
       <div class="hd_stor">
