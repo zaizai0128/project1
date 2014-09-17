@@ -45,15 +45,15 @@
         {$chapter_info.ch_content|nl2br}
         <div class="page">
             <ul>
-                <li><a>（←快捷键）</a></li>
+                <li><a>（快捷键）</a></li>
                 <?php if(!empty($sibling_chapter['prev'])):?>
                 <li><a href="{:ZU('read/index', 'ZL_BOOK_DOMAIN', array('book_id'=>$book_info['bk_id'], 'ch_id'=>$sibling_chapter['prev']['ch_id']))}">上一章</a></li>
                 <?php endif;?>
-                <li><a href="#">[返回目录]</a></li>
+                <li><a href="{:ZU('index/index', 'ZL_BOOK_DOMAIN', array('book_id'=>$book_info['bk_id']))}">[返回目录]</a></li>
                 <?php if(!empty($sibling_chapter['next'])):?>
                 <li><a href="{:ZU('read/index', 'ZL_BOOK_DOMAIN', array('book_id'=>$book_info['bk_id'], 'ch_id'=>$sibling_chapter['next']['ch_id']))}">下一章</a></li>
                 <?php endif;?>
-                <li><a>（快捷键→）</a></li>
+                <li><a>（快捷键）</a></li>
             </ul>
         </div>
         <div class="fd_btoom">
@@ -69,7 +69,7 @@
     <div class="left_fc">
     	<ul>
             <li><a href="#">下载</a></li>
-            <li><a href="#">目录</a></li>
+            <li><a href="{:ZU('index/index', 'ZL_BOOK_DOMAIN', array('book_id'=>$book_info['bk_id']))}">目录</a></li>
             <li><a href="#">书论</a></li>
             <li><a href="#">首页</a></li>
         </ul>
