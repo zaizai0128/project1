@@ -1,0 +1,22 @@
+<div class="tpbar_usr">
+<div class="usr_log">
+	<?php if(session('?user')):?>
+	<dl>
+		<dt>欢迎您：{:session('user.user_name')}</dt>
+		<dd>
+			<a href="{:ZU('user/center')}">个人中心</a><a href="#">信箱</a><a href="#">充值</a><a href="#">彩票</a><a href="{:ZU('user/center/logout')}">退出</a>
+		</dd>
+	</dl>
+	<?php else:?>
+	<dl>
+		<dt>请登录</dt>
+		<dd>
+			<a href="{:ZU('login/index')}">登录</a>
+			<a href="{:ZU('login/register')}">注册</a>
+		</dd>
+	</dl>
+	<?php endif;?>
+	<span class="usr_info">仿佛命中注定，一场神秘的刺杀事件，让他偶然加入了国安局中！</span> 
+</div>
+<div class="tpbar_r"><a href="#">网站地图</a></div>
+</div>

@@ -23,7 +23,7 @@ class IndexWidget extends HomeController {
 			'top_left_hot' => $book_hot_list,
 			'top_left_full' => $book_full_list,
 		));
-		$this->display('top_left');
+		$this->display('Widget/top_left');
 	}
 
 	/**
@@ -31,6 +31,6 @@ class IndexWidget extends HomeController {
 	 */
 	public function topHot()
 	{
-		$this->display('top_hot');
+		$this->display('Widget/top_hot');
 	}
 }

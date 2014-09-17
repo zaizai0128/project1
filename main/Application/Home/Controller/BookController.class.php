@@ -11,17 +11,15 @@ use Zlib\Api as Zapi;
 
 class BookController extends HomeController {
 
-	private $_book_api = Null;
-	private $_book_id = Null;
-	private $_book_info = Null;
+	protected $book_api = Null;
+	protected $book_id = Null;
+	protected $book_info = Null;
 
 	public function __construct()
 	{
 		parent::__construct();
-		$this->_book_id = I('get.book_id');
-		$this->checkBookAcl($this->_book_id);
-		$this->_book_api = new Zapi\Book($this->_book_id);
-		$this->_book_info = $this->_book_api->getBookInfo();
+		$this->book_id = I('get.book_id');
+		$this->checkBookAcl();
 	}
 
 	/**
@@ -33,17 +31,17 @@ class BookController extends HomeController {
 		$assign = array();	
 
 		// 获取作品分类路径
-		$book_cate = Zapi\BookClass::getInstance()->getPathArray($this->_book_info['bk_class_id']); 
+		$book_cate = Zapi\BookClass::getInstance()->getPathArray($this->book_info['bk_class_id']); 
 
 		// 获取作品类型
-		$assign['category'] = $book_cate[substr($this->_book_info['bk_class_id'], 0, 2)]['name']; 
+		$assign['category'] = $book_cate[substr($this->book_info['bk_class_id'], 0, 2)]['name']; 
 
 		// 获取点击排名
-		$assign['rank'] = $this->_book_api->getAllRank();	
+		$assign['rank'] = $this->book_api->getAllRank();	
 		
 		$this->assign(array(
 			'assign' => $assign,
-			'book_info' => $this->_book_info,
+			'book_info' => $this->book_info,
 			'book_cate' => $book_cate,
 		));
 		$this->display();

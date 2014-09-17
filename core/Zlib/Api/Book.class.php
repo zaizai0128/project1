@@ -29,7 +29,7 @@ class Book extends BaseModel{
 	 */
 	public function getBookInfo()
 	{
-		$book_info = $this->where('bk_id = '.$this->_book_id.' and bk_status = "00"')->find();
+		$book_info = $this->where('bk_id = '.$this->_book_id)->find();
 		return $book_info;
 	}
 
@@ -38,7 +38,7 @@ class Book extends BaseModel{
 	 */
 	public function checkBook()
 	{
-		$book_info = $this->field('bk_id')->where('bk_id = '.$this->_book_id.' and bk_status = "00"')->find();
+		$book_info = $this->field('bk_id')->where('bk_id = '.$this->_book_id)->find();
 		return empty($book_info) ? False : True ;
 	}
 

@@ -18,19 +18,28 @@ class HomeController extends Controller {
 	}
 
 	/**
-	 * 验证书籍
+	 * 验证作品
 	 *
-	 * @param int book_id
 	 */
-	public function checkBookAcl($book_id)
+	public function checkBookAcl()
 	{
-		if (empty($book_id))
+		if (empty($this->book_id))
 			$this->error('作品不存在');
 		
-		$zapi_book = new Zapi\Book($book_id);
+		$this->book_api = new Zapi\Book($this->book_id);
 
-		if (!$zapi_book->checkBook())
+		if (!$this->book_api->checkBook())
 			$this->error('作品不存在');
+
+		// 获取作品信息
+		$this->book_info = $this->book_api->getBookInfo();
+
+		// 判断作品状态
+		if ($this->book_info['bk_status'] == '01')
+			$this->error('该作品已被关闭');
+
+		if ($this->book_info['bk_status'] == '02' || $this->book_info['bk_status'] == '03')
+			$this->error('该作品未经管理员审核');
 
 		return True;
 	}

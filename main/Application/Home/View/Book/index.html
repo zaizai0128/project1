@@ -5,61 +5,28 @@
 <title>{$book_info.bk_name} - 逐浪封面页</title>
 <link href="__STYLE__/css/style.css" type="text/css" rel="stylesheet">
 <link href="__STYLE__/css/base.css" type="text/css" rel="stylesheet">
-<script src="__JS__/jquery.min.js"></script>
-<script src="__JS__/zlang.js"></script>
+<script src="__STYLE__/js/jquery.min.js"></script>
+<script src="__STYLE__/js/zlang.js"></script>
 </head>
 <body>
 <div class="container">
+  {// 顶部工具条}
   <div class="topbar">
     <div class="wrap">
-      <div class="tpbar_usr">
-        <div class="usr_log">
-          <dl>
-            <dt>欢迎您：某某用户</dt>
-            <dd><a href="#">vip会员 书架</a><a href="#">最近阅读</a><a href="#">信箱</a><a href="#">充值</a><a href="#">彩票</a><a href="#">退出</a></dd>
-          </dl>
-          <span class="usr_info">仿佛命中注定，一场神秘的刺杀事件，让他偶然加入了国安局中！</span> </div>
-        <div class="tpbar_r"><a href="#">网站地图</a></div>
-      </div>
+      <include file="Public/topbar" />
     </div>
   </div>
   <!--TopbarEnd-->
   <div class="header">
+    {// logo工具条}
     <div class="wrap">
-      <div class="top">
-        <div class="tp_logo"><a href="#"><img src="__STYLE__/images/logo.jpg"></a></div>
-        <ul class="tp_lst">
-          <li class="tplst_01"><i class="ico_tp01"></i><a href="#">全本小说</a></li>
-          <li class="tplst_02"><i class="ico_tp02"></i><a href="#">逐浪女王</a></li>
-          <li class="tplst_03"><i class="ico_tp03"></i><a href="#">逐浪无线</a></li>
-        </ul>
-        <div class="tp_adv"><a href="#"><img src="__STYLE__/images/adv.jpg"></a></div>
-        <div class="tp_search">
-          <div class="frm">
-            <input type="text" value="" class="inp">
-            <a href="#" class="btn_sear"></a></div>
-          <div class="key"><strong>热搜：</strong><a href="#">唐寅在异界</a><a href="#">唐寅在</a><a href="#">唐寅在界</a><a href="#">唐寅</a></div>
-        </div>
-      </div>
+      <include file="Public/logobar" />
       <!--TopEnd--> 
     </div>
     <div class="naver">
+      {// menu工具条}
       <div class="wrap">
-        <div class="nav_box">
-          <ul class="nav_lst">
-            <li class="active"><a href="#">首页</a></li>
-            <li><a href="#">书库</a></li>
-            <li><a href="#">排行榜</a></li>
-            <li><a href="#">社区</a></li>
-            <li><a href="#">会员中心</a></li>
-            <li><a href="#">充值</a></li>
-            <li><a href="#">最近阅读</a></li>
-            <li><a href="#">网络编辑</a></li>
-            <li><a href="#">作者专区</a></li>
-            <li><a href="#">福利</a></li>
-            <li><a href="#">客服帮助</a></li>
-          </ul>
-          <span class="nav_tel"><a href="#"></a></span> </div>
+        <include file="Public/menubar" nav="book"/>
       </div>
     </div>
     <!--Nav End-->
@@ -313,104 +280,23 @@
           
         </div>
       </div>
+      {// 精品收藏}
       <div class="store bor_sty">
-        <div class="hd_stor">
-          <h3 class="h3_tit"><b>精品收藏</b></h3>
-        </div>
-        <div class="bd_stor">
-          <ul class="storlst">
-            <li><a href="#"><span class="pic"><img src="__STYLE__/images/stor_img_01.jpg"/></span>
-              <h3 class="stor_nam">官界</h3>
-              </a></li>
-            <li><a href="#"><span class="pic"><img src="__STYLE__/images/stor_img_01.jpg"/></span>
-              <h3 class="stor_nam">官界</h3>
-              </a></li>
-            <li><a href="#"><span class="pic"><img src="__STYLE__/images/stor_img_01.jpg"/></span>
-              <h3 class="stor_nam">官界</h3>
-              </a></li>
-            <li><a href="#"><span class="pic"><img src="__STYLE__/images/stor_img_01.jpg"/></span>
-              <h3 class="stor_nam">官界</h3>
-              </a></li>
-            <li><a href="#"><span class="pic"><img src="__STYLE__/images/stor_img_01.jpg"/></span>
-              <h3 class="stor_nam">官界</h3>
-              </a></li>
-            <li><a href="#"><span class="pic"><img src="__STYLE__/images/stor_img_01.jpg"/></span>
-              <h3 class="stor_nam">官界</h3>
-              </a></li>
-            <li><a href="#"><span class="pic"><img src="__STYLE__/images/stor_img_01.jpg"/></span>
-              <h3 class="stor_nam">官界</h3>
-              </a></li>
-          </ul>
-        </div>
+        <include file="Book/store" />
       </div>
       <!--//-->
+      {// 网站地图}
       <div class="map bor_sty">
-        <div class="hd_map">
-          <h3 class="h3_tit"><b>网站地图</b></h3>
-        </div>
-        <div class="bd_map">
-          <div class="maplst">
-            <ul>
-              <li> <a href="#">逐浪网</a><br>
-                <a href="#">逐浪网</a><br>
-                <a href="#">逐浪网 逐浪网逐浪 网逐浪网</a><br>
-                <a href="#">逐浪网</a><br>
-              </li>
-              <li> <a href="#">逐浪网</a><br>
-                <a href="#">逐浪网</a><br>
-                <a href="#">玄幻小说 科幻小说 网游小说</a><br>
-                <a href="#">逐浪网</a><br>
-              </li>
-              <li> <a href="#">逐浪网</a><br>
-                <a href="#">逐浪网</a><br>
-                <a href="#">玄幻小说 科幻小说 网游小说</a><br>
-                <a href="#">逐浪网</a><br>
-              </li>
-              <li> <a href="#">逐浪网</a><br>
-                <a href="#">逐浪网</a><br>
-                <a href="#">玄幻小说 科幻小说 网游小说</a><br>
-                <a href="#">逐浪网</a><br>
-              </li>
-              <li> <a href="#">逐浪网</a><br>
-                <a href="#">逐浪网</a><br>
-                <a href="#">玄幻小说 科幻小说 网游小说</a><br>
-                <a href="#">逐浪网</a><br>
-              </li>
-              <li> <a href="#">逐浪网</a><br>
-                <a href="#">逐浪网</a><br>
-                <a href="#">玄幻小说 科幻小说 网游小说</a><br>
-                <a href="#">逐浪网</a><br>
-              </li>
-            </ul>
-          </div>
-        </div>
+        <include file="Public/map" />
       </div>
       <!--//-->
+      {// 友情连接}
       <div class="link bor_sty">
-        <div class="hd_link">
-          <h3 class="h3_tit"><b>友情链接</b></h3>
-        </div>
-        <div class="bd_link">
-          <div class="linklst"> <a href="#"><strong>逐浪小说网</strong></a>|<a href="#"><strong>逐浪小说网</strong></a>|<a href="#">逐浪小说网</a>|<a href="#">逐浪小说网</a>|<a href="#">逐浪小说网</a>|<a href="#">逐浪小说网</a>|<a href="#">逐浪小说网</a>|<a href="#">逐浪小说网</a>|<a href="#">逐浪小说网</a>|<a href="#">逐浪小说网</a>| </div>
-        </div>
+        <include file="Public/link" />
       </div>
       <!--Footer-->
       <div class="footer">      
-        <ul>
-          <li><a href="#" target="_blank">关于逐浪</a></li>
-          <li>|</li>
-          <li><a href="#" target="_blank">商务合作 </a></li>
-          <li>|</li>
-          <li><a href="#" target="_blank">客服中心</a></li>
-          <li>|</li>
-          <li><a href="#" target="_blank">网站地图</a></li>
-          <li>|</li>
-          <li><a href="#" target="_blank">友情链接</a></li>
-        </ul>
-        <div class="foot_line"></div>
-        <p>申明：逐浪网提供<b><a href="#">都市小说</a></b>，<b><a href="#">玄幻小说</a></b>，<b><a href="#">武侠小说</a></b>，<b><a href="#">网游小说</a></b>等作品欣赏，做最优秀的小说阅读网站。未经书面许可不得复制转载。<br>
-          <em>客服电话：025-66670800</em>　Copyright 2011 Zhulang.Com, All Rights Reserved 版权所有<a href="#">逐浪网</a> <br>
-          </p>
+        <include file="Public/footer" />
       </div>
     </div>
   </div>
