@@ -12,12 +12,12 @@ use Zlib\Api as Zapi;
 
 class BookApplyController extends BaseController {
 
-	protected $_book_apply;
+	protected $book_apply;
 
-	protected function _init()
+	protected function init()
 	{
-		parent::_init();
-		$this->_book_apply = D('BookApply');
+		parent::init();
+		$this->book_apply = D('BookApply');
 	}
 
 	/**
@@ -25,11 +25,11 @@ class BookApplyController extends BaseController {
 	 */
 	public function index()
 	{
-		$total = $this->_book_apply->getTotal();
-		$limit = 10;
-		$Page = new \Think\Page($total, $limit);
+		$total = $this->book_apply->getTotal();
+		$size = C('ADMIN.apply_list_size');
+		$Page = new \Think\Page($total, $size);
 		$show = $Page->show();
-		$book_apply = $this->_book_apply->getApplyList('', $Page->firstRow, $Page->listRows);
+		$book_apply = $this->book_apply->getApplyList('', $Page->firstRow, $Page->listRows);
 
 		$this->assign(array(
 			'book_apply' => $book_apply,
@@ -40,12 +40,11 @@ class BookApplyController extends BaseController {
 	
 	/**
 	 * 审核界面
-	 *
 	 */
 	public function check()
 	{
 		$book_id = I('get.bk_apply_id');
-		$book = $this->_book_apply->getInfo($book_id);
+		$book = $this->book_apply->getInfo($book_id);
 
 		$this->assign(array(
 			'book' => $book,
@@ -67,7 +66,7 @@ class BookApplyController extends BaseController {
 			$data = I();
 			$data['bk_apply_user'] = session('user.user_id');
 			$data['bk_apply_name'] = session('user.user_name');
-			$state = $this->_book_apply->doEdit($data);
+			$state = $this->book_apply->doEdit($data);
 
 			if ($state > 0) {
 
@@ -86,5 +85,4 @@ class BookApplyController extends BaseController {
 			}
 		}
 	}
-
 }

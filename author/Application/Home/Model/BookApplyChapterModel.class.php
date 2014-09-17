@@ -43,9 +43,9 @@ class BookApplyChapterModel extends BaseModel {
 	 * 获取章节的内容
 	 * @param int $ch_id
 	 */
-	public function getInfo($ch_id)
+	public function getApplyChapterInfo($book_id, $ch_id)
 	{
-		return $this->where('ch_id = '.$ch_id)->find();
+		return $this->where('ch_id = '.$ch_id.' and bk_id = '.$book_id)->find();
 	}
 
 	/**

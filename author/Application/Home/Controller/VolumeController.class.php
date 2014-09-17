@@ -15,9 +15,9 @@ class VolumeController extends BaseController {
 	private $_book_id;
 	private $_book_info;
 
-	public function _init()
+	protected function _init()
 	{
-		parent::_init();
+		parent::init();
 
 		$this->_book_id = I('get.book_id');
 		$this->checkBookAcl($this->_book_id);

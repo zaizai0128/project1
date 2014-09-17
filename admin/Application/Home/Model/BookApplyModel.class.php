@@ -53,8 +53,8 @@ class BookApplyModel extends BaseModel {
 	/**
 	 * 修改作品信息
 	 */
-	public function doEdit($book)
+	public function doEdit($book_info)
 	{	
-		return $this->data($book)->save();
+		return $this->data($book_info)->save();
 	}
 }

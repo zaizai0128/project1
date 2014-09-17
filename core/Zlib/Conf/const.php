@@ -32,6 +32,15 @@ return array(
 		// 申请作品允许上传的最多章节数
 		'max_chapter_num' => 3,
 
+
+	),
+
+	// 后台
+	'ADMIN' => array(
+
+		// 后台待审核作品的列表
+		'apply_list_size' => 10,
+
 	),
 	
 	// 作品相关

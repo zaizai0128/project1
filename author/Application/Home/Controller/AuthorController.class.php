@@ -13,11 +13,11 @@ use Zlib\Api\Author;
 class AuthorController extends BaseController {
 
 	// 作者api
-	protected $_author;
+	private $_author;
 
-	public function _init()
+	protected function init()
 	{
-		parent::_init();
+		parent::init();
 		$this->_author = new Author;
 	}
 
@@ -60,7 +60,7 @@ class AuthorController extends BaseController {
 	public function bank()
 	{
 		// 获取该用户的银行信息
-		$bank_info = $this->_author->getBankById($this->user_id);
+		$bank_info = D('AuthorBank')->getBankById($this->user_id);
 
 		$this->assign(array(
 			'bank_info' => $bank_info,
@@ -76,15 +76,18 @@ class AuthorController extends BaseController {
 		if (IS_POST) {
 			$data = I();
 
+			// 创建作者银行的服务层
+			$bank_service = D('AuthorBank', 'Service');
+			
 			// 如果存在银行信息，则修改
-			if ($id = $this->_author->checkBankInfo($this->user_id)) {
-				$data['id'] = $id;
-				$state = $this->_author->updateBankInfo($data);
+			if ($bank_id = $bank_service->checkBankInfo($this->user_id)) {
+				$data['id'] = $bank_id;
+				$state = $bank_service->updateBankInfo($data);
 
 			// 否则添加一条新数据
 			} else {
 				$data['user_id'] = $this->user_id;
-				$state = $this->_author->updateBankInfo($data, False);
+				$state = $bank_service->updateBankInfo($data, False);
 			}
 
 			if ($state['code'] > 0)
@@ -93,5 +96,4 @@ class AuthorController extends BaseController {
 				$this->error($state['msg']);
 		}
 	}
-	
 }

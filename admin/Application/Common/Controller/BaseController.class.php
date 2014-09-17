@@ -28,10 +28,10 @@ class BaseController extends Controller {
 			$this->error('抱歉，您不是管理员');
 		}
 
-		$this->_init();
+		$this->init();
 	}
 
-	protected function _init()
+	protected function init()
 	{
 		$this->user_id = session('user.user_id');
 	}

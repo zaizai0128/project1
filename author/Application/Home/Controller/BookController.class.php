@@ -12,18 +12,18 @@ use Zlib\Api as Zapi;
 
 class BookController extends BaseController {
 
-	private $_book_obj;		// db对象
-	private $_book_id;		// 书籍id 
-	private $_book_info;	// 书籍信息
+	protected $book_obj;	
+	protected $book_id;		// 书籍id 
+	protected $book_info;	// 书籍信息
 
-	public function _init()
+	protected function init()
 	{
-		parent::_init();
+		parent::init();
 
-		$this->_book_obj = D('Book');
-		$this->_book_id = I('get.book_id');
-		$this->checkBookAcl($this->_book_id);
-		$this->_book_info = $this->_book_obj->getBookInfo($this->_book_id);
+		$this->book_obj = D('Book', 'Service');
+		$this->book_id = I('get.book_id');
+		$this->checkBookAcl($this->book_id);
+		$this->book_info = $this->book_obj->getBookInfo($this->book_id);
 	}
 
 	/**
@@ -32,7 +32,7 @@ class BookController extends BaseController {
 	public function index()
 	{
 		// 获取该作者已经审核通过的作品		
-		$book_list = $this->_book_obj->getBookListByUid($this->user_id);
+		$book_list = $this->book_obj->getBookListByUid($this->user_id);
 
 		$this->assign(array(
 			'book_list' => $book_list
@@ -48,7 +48,7 @@ class BookController extends BaseController {
 	{
 
 		$this->assign(array(
-			'book_info' => $this->_book_info,
+			'book_info' => $this->book_info,
 		));
 		$this->display();
 	}
@@ -60,7 +60,7 @@ class BookController extends BaseController {
 	{
 
 		$this->assign(array(
-			'book_info' => $this->_book_info
+			'book_info' => $this->book_info
 		));
 		$this->display();
 	}
@@ -72,12 +72,13 @@ class BookController extends BaseController {
 	{
 		if (IS_POST) {
 			$data = I();
-			$data['bk_id'] = $this->_book_id;
+			$data['bk_id'] = $this->book_id;
 
-			$state = $this->_book_obj->editBookInfo($data);
+			$state = $this->book_obj->editBookInfo($data);
 
 			if ($state > 0)
-				$this->success('修改成功', ZU('book/book', 'ZL_AUTHOR_DOMAIN', array('book_id'=>$this->_book_id)));
+				$this->success('修改成功', ZU('book/book', 'ZL_AUTHOR_DOMAIN'
+								, array('book_id'=>$this->book_id)));
 			else
 				$this->error('修改失败');
 		}

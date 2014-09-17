@@ -25,6 +25,7 @@ class IndexController extends BaseController {
 	 */
 	public function createNewBook()
 	{
+		// 获取类别json
 		$book_class = Zapi\BookClass::getInstance()->getAllClassForJson();
 
 		$this->assign(array(
@@ -39,32 +40,28 @@ class IndexController extends BaseController {
 	public function doCreateNewBook()
 	{
 		if (IS_POST) {
-			
 			$data = I();
-			$book_service = D('Book', 'Service');
-			$state = $book_service->checkBook($data);
-
-			if ($state['code'] < 0)
-				$this->error($state['msg']);
+			$book_apply_service = D('BookApply', 'Service');
+			$state = $book_apply_service->checkBook($data);
+			
+			if ($state['code'] < 0) $this->error($state['msg']);
 
 			$data['bk_author'] = session('author.author_name');
 			$data['bk_author_id'] = $this->user_id;
 			$data['bk_poster_id'] = $this->user_id;
 
-			$book_apply_obj = D('BookApply');
-			$book_id = $book_apply_obj->doAdd($data);
+			$book_id = $book_apply_service->doAdd($data);
 
 			if ($book_id) {
-				
+
 				// 添加作品后的动作，更新书籍的权限
 				// $data['bk_id'] = $book_id;
 				// $tag['data'] = $data;
 				// $tag['ac'] = 'after_add';
 				// tag('book', $tag);
-
-				$this->success('添加成功等待审核', ZU('bookApply/book', 'ZL_AUTHOR_DOMAIN', array('bk_apply_id'=>$book_id)));
+				$this->success('添加成功等待审核', ZU('bookApply/book', 'ZL_AUTHOR_DOMAIN'
+								, array('bk_apply_id'=>$book_id)));
 			} else {
-
 				$this->error('添加失败');
 			}
 		}

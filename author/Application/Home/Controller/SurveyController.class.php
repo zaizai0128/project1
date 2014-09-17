@@ -16,9 +16,9 @@ class SurveyController extends BaseController {
 	private $_book;
 	private $_book_id;
 
-	public function _init()
+	protected function init()
 	{
-		parent::_init();
+		parent::init();
 
 		$this->_author = new Zapi\Author;
 		$this->_book = D('Book');
@@ -48,5 +48,4 @@ class SurveyController extends BaseController {
 			dump(I());
 		}
 	}
-
 }

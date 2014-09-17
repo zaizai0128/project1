@@ -41,7 +41,7 @@ class BookApplyModel extends BaseModel {
 	 *
 	 * @param int book_id
 	 */
-	public function getInfo($book_id)
+	public function getApplyInfo($book_id)
 	{
 		return $this->where('bk_id = '.$book_id.' and bk_apply_status != "01"')
 				->find();
@@ -65,9 +65,7 @@ class BookApplyModel extends BaseModel {
 	{
 		$rs =  $this->field('bk_id')->where('bk_author_id = '.$user_id)->select();
 
-		if (!empty($rs))
-			$rs = array_map(function($val){return $val['bk_id'];}, $rs);
-		
+		if (!empty($rs)) $rs = array_map(function($val){return $val['bk_id'];}, $rs);
 		return $rs;
 	}
 }

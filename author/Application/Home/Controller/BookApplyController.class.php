@@ -12,19 +12,19 @@ use Zlib\Api as Zapi;
 
 class BookApplyController extends BaseController {
 
-	private $_apply_obj;
-	private $_book_id;					// 作品id
-	private $_book_info;				// 作品的信息
+	protected $book_apply_obj;
+	protected $book_id;					// 作品id
+	protected $book_info;				// 作品的信息
 
-	protected function _init()
+	protected function init()
 	{
-		parent::_init();
-		$this->_apply_obj = D('BookApply');
-		$this->_book_id = I('get.bk_apply_id');
+		parent::init();
+		$this->book_apply_obj = D('BookApply', 'Service');
+		$this->book_id = I('get.bk_apply_id');
 
 		// 验证权限
 		$this->checkBookApplyAcl($this->_book_id);
-		$this->_book_info = $this->_apply_obj->getInfo($this->_book_id);
+		$this->book_info = $this->book_apply_obj->getApplyInfo($this->book_id);
 	}
 
 	/**
@@ -33,7 +33,7 @@ class BookApplyController extends BaseController {
 	public function index()
 	{
 		// 获取该用户待审核作品列表
-		$book = $this->_apply_obj->getApplyList($this->user_id);
+		$book = $this->book_apply_obj->getApplyList($this->user_id);
 
 		$this->assign(array(
 			'book' => $book
@@ -50,7 +50,7 @@ class BookApplyController extends BaseController {
 	{
 		
 		$this->assign(array(
-			'book' => $this->_book_info,
+			'book' => $this->book_info,
 		));
 		$this->display();
 	}
