@@ -18,7 +18,7 @@ class Chapter extends BaseModel {
 	public function __construct($book_id, $ch_id)
 	{
 		parent::__construct();
-		
+
 		$this->_book_id = $book_id;
 		$this->_ch_id = $ch_id;
 
@@ -28,7 +28,7 @@ class Chapter extends BaseModel {
 
 	/**
 	 * 通过book_id获取章节表
-	 *
+	 * 
 	 * @param int $book_id
 	 * @return String 章节表
 	 */
@@ -39,6 +39,7 @@ class Chapter extends BaseModel {
 
 	/**
 	 * 获取vip表名
+	 * 通过章节id % 10
 	 */
 	static public function getVipName($ch_id)
 	{
@@ -86,5 +87,22 @@ class Chapter extends BaseModel {
 	{
 		$vip_obj = $this->getChapterVipObj();
 		return $vip_obj->where('bk_id = '.$this->_book_id.' and ch_id = '.$this->_ch_id)->find();
+	}
+
+	/**
+	 * 获取上一章节 & 下一章节
+	 */
+	public function getSiblingChapter()
+	{
+		$sibling = array();
+		$sibling['prev'] = $this->_chapter_obj
+					->field('ch_id,ch_name,ch_vip')
+					->where('bk_id = '.$this->_book_id.' and ch_id < '.$this->_ch_id.' and ch_status = 0')
+					->order('ch_id desc')->find();		
+		$sibling['next'] = $this->_chapter_obj
+					->field('ch_id,ch_name,ch_vip')
+					->where('bk_id = '.$this->_book_id.' and ch_id > '.$this->_ch_id.' and ch_status = 0')
+					->order('ch_id asc')->find();
+		return $sibling;		
 	}
 }

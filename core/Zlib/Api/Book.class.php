@@ -19,9 +19,24 @@ class Book extends BaseModel{
 	public function __construct($book_id)
 	{
 		parent::__construct();
-		// $this->volume = new Volume($bookid);
-		// $this->chapter = new Chapter($bookid);
 		$this->_book_id = $book_id;
+	}
+
+	/**
+	 * 获取作品目录
+	 */
+	public function getCatalog()
+	{
+		$catalog = array();
+		$cached_chapter = new CachedChapter($this->_book_id);
+		$volume = $cached_chapter->getVolumes();
+
+		foreach ($volume as $volume_id => $volume_name) {
+			$catalog[$volume_id]['volume_id'] = $volume_id;
+			$catalog[$volume_id]['volume_name'] = $volume_name;
+			$catalog[$volume_id]['volume_chapter'] = $cached_chapter->getVolumeChapters($volume_id);
+		}
+		return $catalog;
 	}
 	
 	/**
@@ -49,5 +64,4 @@ class Book extends BaseModel{
 	{
 		return M('zl_book_rank')->where('bk_id = '.$this->_book_id)->find();
 	}
-	
 }

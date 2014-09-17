@@ -5,31 +5,15 @@
 <title>{$book_info.bk_name} - 阅读</title>
 <link href="__STYLE__/css/style.css" type="text/css" rel="stylesheet">
 <link href="__STYLE__/css/base.css" type="text/css" rel="stylesheet">
-<script src="jquery-1.7.2.min.js" type="text/jscript"></script>
-<script src="jquery.select-1.3.6.js" type="text/jscript"></script>
-
-<script type="text/javascript">
-$(function(){
-	$("select").sSelect();
-	})
-</script>
 </head>
 
 <body style="background:#e6e6e6">
+{// 顶部工具条}
 <div class="topbar">
     <div class="wrap">
-      <div class="tpbar_usr">
-        <div class="usr_log">
-        <a href="#" class="zhul_logo"><img src="images/zhul_logo.jpg" /></a>
-          <dl>
-            <dt>欢迎您：某某用户</dt>
-            <dd><a href="#">vip会员 书架</a><a href="#">最近阅读</a><a href="#">信箱</a><a href="#">充值</a><a href="#">彩票</a><a href="#">退出</a></dd>
-          </dl>
-        </div>
-        <div class="tpbar_r"><a href="#">网站地图</a></div>
-      </div>
+      <include file="Public/topbar" />
     </div>
-  </div>
+</div>
   <!--TopbarEnd-->
 <div class="wy_cont">
 	<div class="cont_nav">
@@ -58,20 +42,17 @@ $(function(){
             <li>更新时间：<a>{$chapter_info.ch_update}</a></li>
             <li>字数：<a>{$chapter_info.ch_size}</a></li>
         </ul>
-        <p>最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大</p>
-        <p>最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大</p>
-        <p>最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大</p>
-        <p>最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大</p>
-        <p>最最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大</p>
-        <p>最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最最大最大最大最大最大最大最大最大最大</p>
-        <p>最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大</p>
-        <p>最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大最大大最大最大最大最大</p>
+        {$chapter_info.ch_content|nl2br}
         <div class="page">
             <ul>
                 <li><a>（←快捷键）</a></li>
-                <li><a href="#">上一章</a></li>
+                <?php if(!empty($sibling_chapter['prev'])):?>
+                <li><a href="{:ZU('read/index', 'ZL_BOOK_DOMAIN', array('book_id'=>$book_info['bk_id'], 'ch_id'=>$sibling_chapter['prev']['ch_id']))}">上一章</a></li>
+                <?php endif;?>
                 <li><a href="#">[返回目录]</a></li>
-                <li><a href="#">下一章</a></li>
+                <?php if(!empty($sibling_chapter['next'])):?>
+                <li><a href="{:ZU('read/index', 'ZL_BOOK_DOMAIN', array('book_id'=>$book_info['bk_id'], 'ch_id'=>$sibling_chapter['next']['ch_id']))}">下一章</a></li>
+                <?php endif;?>
                 <li><a>（快捷键→）</a></li>
             </ul>
         </div>
