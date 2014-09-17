@@ -7,9 +7,9 @@
  * @version 1.0
  */
 namespace Zlib\Api;
-use Zlib\Model as Zmodel;
+use Zlib\Model\BaseModel;
 
-class Chapter extends Zmodel\BaseModel {
+class Chapter extends BaseModel {
 
 	private $_book_id = Null;
 	private $_ch_id = Null;

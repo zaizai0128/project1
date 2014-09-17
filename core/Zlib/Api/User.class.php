@@ -7,9 +7,9 @@
  * @version 1.1
  */
 namespace Zlib\Api;
-use Zlib\Model as Zmodel;
+use Zlib\Model\BaseModel;
 
-class User extends Zmodel\BaseModel {
+class User extends BaseModel {
 
 	protected $trueTableName = 'zl_user';
 

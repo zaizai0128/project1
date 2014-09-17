@@ -68,12 +68,12 @@ class CachedChapter {
 		}
 	}
 	
-        private function getChapterTable($bookId)
+    private function getChapterTable($bookId)
 	{
 		$indexNum = str_pad(floor($bookId / $this->mTableInciseSize), 2, "0", STR_PAD_LEFT);
 		$tableName = "zl_book_chapter_".$indexNum;
 		return $tableName;
-        }
+    }
 
 	public function getVolumes() 
 	{	
