@@ -36,7 +36,8 @@ class BookApplyChapterModel extends BaseModel {
 		$data['ch_update'] = date('Y-m-d H:i:s', time());
 		$data['ch_size'] = mb_strlen($data['ch_content']);
 
-		return $this->data($data)->save();
+		return $this->where('ch_id = '.$data['ch_id'].' and bk_id = '.$data['bk_id'])
+					->data($data)->save();
 	}
 
 	/**

@@ -24,7 +24,7 @@ class BookApplyChapterController extends BaseController {
 		$this->book_apply_obj = D('BookApply', 'Service');
 		$this->apply_chapter_obj = D('BookApplyChapter', 'Service');
 		$this->book_id = I('get.bk_apply_id');
-		$this->checkBookApplyAcl($this->book_id);
+		$this->checkChapterApplyAcl($this->book_id);
 		$this->book_info = $this->book_apply_obj->getApplyInfo($this->book_id);
 	}
 

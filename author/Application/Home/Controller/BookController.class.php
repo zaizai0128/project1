@@ -22,7 +22,7 @@ class BookController extends BaseController {
 
 		$this->book_obj = D('Book', 'Service');
 		$this->book_id = I('get.book_id');
-		$this->checkBookAcl($this->book_id);
+		$this->checkBookAcl();
 		$this->book_info = $this->book_obj->getBookInfo($this->book_id);
 	}
 

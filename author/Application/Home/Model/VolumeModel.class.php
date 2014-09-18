@@ -59,6 +59,7 @@ class VolumeModel extends BaseModel {
 	 */
 	public function doEdit($volume_info)
 	{
-		return $this->data($volume_info)->save();
+		return $this->where('bk_id = '.$volume_info['bk_id'].' and volume_id = '.$volume_info['volume_id'])
+					->data($volume_info)->save();
 	}
 }

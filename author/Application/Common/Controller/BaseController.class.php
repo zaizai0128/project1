@@ -55,28 +55,35 @@ class BaseController extends Controller {
 
 	/**
 	 * 验证作品操作权限
-	 * 
-	 * @param int book_id
 	 */
-	public function checkBookAcl($book_id)
+	public function checkBookAcl()
 	{
 		// 添加忽略权限验证的操作
 		if (in_array(CONTROLLER_NAME.'.'.ACTION_NAME, array('Book.index')))
 			return True;
 		
-		if (empty($book_id))
+		if (empty($this->book_id))
 			$this->error('请选择要操作的作品');
 
 		// 获取该作者所拥有的书籍
 		$author_book = $this->book_obj->getOwnBook($this->user_id);
 
-		if (!in_array($book_id, $author_book))
+		if (!in_array($this->book_id, $author_book))
 			$this->error('您无权操作此书');
 
 		if (!$this->book_obj->checkBookExist($this->book_id) )
 			$this->error('作品不存在');
 		
 		return True;
+	}
+
+	/**
+	 * 验证章节操作权限
+	 */
+	protected function checkChapterAcl()
+	{
+		$this->checkBookAcl();
+		
 	}
 
 	/**
@@ -102,5 +109,15 @@ class BaseController extends Controller {
 			$this->error('作品不存在');
 		
 		return True;
+	}
+
+	/**
+	 * 验证申请作品章节的操作权限
+	 */
+	protected function checkChapterApplyAcl()
+	{
+		$this->checkBookApplyAcl();
+
+
 	}
 }
