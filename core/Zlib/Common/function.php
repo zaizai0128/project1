@@ -38,6 +38,7 @@ if (!function_exists('de')) {
 if (!function_exists('ZU')) {
 	function ZU($url_param, $domain = Null, $param = array())
 	{
+		$url_param = '/'.ltrim($url_param, '/');
 		$http = empty($domain) ? C('ZL_DOMAIN') : !C($domain) ? C('ZL_DOMAIN') : C($domain);
 		return $http . U($url_param, $param);
 	}

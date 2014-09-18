@@ -106,7 +106,8 @@ class ReadController extends HomeController {
 
 		// 验证用户是否拥有看此vip章节的权限
 		if (!in_array($this->ch_id, array('935171','935172'))) {
-			$this->error('请先购买该章节');
+			$this->error('请先购买该章节', ZU('buy/index/chapter', 'ZL_DOMAIN', 
+						array('book_id'=>$this->book_id, 'ch_id'=>$this->ch_id)));
 		}
 		
 		return True;
