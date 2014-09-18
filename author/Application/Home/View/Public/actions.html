@@ -1,6 +1,6 @@
 <div class="page-header">
 	<p class="text-error">常用操作</p>
-	<a href="{:ZU('survey/index', 'ZL_AUTHOR_DOMAIN', array('book_id'=>I('get.book_id')))}" class="btn <if condition="[ac] eq 'new_survey'">btn-danger</if>">新建调查问卷</a>
+	<!-- <a href="{:ZU('survey/index', 'ZL_AUTHOR_DOMAIN', array('book_id'=>I('get.book_id')))}" class="btn <if condition="[ac] eq 'new_survey'">btn-danger</if>">新建调查问卷</a> -->
 	<a href="{:ZU('book/edit', 'ZL_AUTHOR_DOMAIN', array('book_id'=>I('get.book_id')))}" class="btn <if condition="[ac] eq 'edit_book_info'">btn-danger</if>">修改作品信息</a>
 	<a href="{:ZU('volume/index', 'ZL_AUTHOR_DOMAIN', array('book_id'=>I('get.book_id')))}" class="btn <if condition="[ac] eq 'manager_volume'">btn-danger</if>">管理分卷</a>
 	<a href="###" class="btn <if condition="[ac] eq 'tmp'">btn-danger</if>">上传新章节</a>

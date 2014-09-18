@@ -84,8 +84,9 @@ class BaseController extends Controller {
 	 */
 	protected function checkBookApplyAcl()
 	{
-		// 添加不忽略的文件
-		if (!in_array(CONTROLLER_NAME.'.'.ACTION_NAME, array('BookApplyChapter.index'))) 
+		// 添加忽略的文件
+		if (in_array(CONTROLLER_NAME.'.'.ACTION_NAME,
+			array('BookApplyChapter.index', 'BookApply.index'))) 
 			return True;
 
 		if (empty($this->book_id))
