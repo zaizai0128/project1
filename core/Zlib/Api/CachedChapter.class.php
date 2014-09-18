@@ -60,8 +60,11 @@ class CachedChapter {
 			}
 
 			$table = $this->getChapterTable($book_id);
-			$m = M($table)->where(' ch_status=0 and bk_id = '.$book_id)->order('ch_roll asc')->select();
+			$m = M($table)->where(' ch_status=0 and bk_id = '.$book_id)->order('ch_roll asc, ch_order asc')->select();
+			$ch_order = 0;
 			foreach ($m as $row) {
+				$row['ch_order'] = $ch_order;
+				$ch_order ++;
 				$this->mChapter[$row['ch_id']] = $row;
 				array_push($this->mVolume[$row['ch_roll']][$this->mVolumeChaptersIndex], $row['ch_id']);
 			} 
@@ -143,6 +146,11 @@ class CachedChapter {
 	public function getName($chapter_id) 
 	{
 		return $mChapter[$chapter_id]["ch_name"];
+	}
+
+	public function getChapterOrder($chapter_id) 
+	{
+		return $mChapter[$chapter_id]["ch_order"];
 	}
 
 	/**
