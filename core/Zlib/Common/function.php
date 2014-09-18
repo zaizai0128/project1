@@ -57,6 +57,23 @@ if (!function_exists('ZC')) {
 }
 
 /**
+ * 获取通过设置的常量，获取session的值
+ *
+ * @param String C方法获取的session前缀
+ * @param String session方法正常获取方法  .分割
+ * @param string 设置的值
+ */
+if (!function_exists('ZS')) {
+	function ZS($prefix, $dot, $val = Null)
+	{
+		if (!isset($val))
+			return session(C($prefix).'.'.$dot);
+		else
+			return session(C($prefix).'.'.$dot, $val);
+	}
+}
+
+/**
  * 传递作品本身的分类，和全部顶级分类，生成该作品对应的短分类
  *
  * @param String 作品分类id

@@ -30,11 +30,18 @@ class Book extends BaseModel{
 		$catalog = array();
 		$cached_chapter = new CachedChapter($this->_book_id);
 		$volume = $cached_chapter->getVolumes();
-
+		
 		foreach ($volume as $volume_id => $volume_name) {
 			$catalog[$volume_id]['volume_id'] = $volume_id;
 			$catalog[$volume_id]['volume_name'] = $volume_name;
-			$catalog[$volume_id]['volume_chapter'] = $cached_chapter->getVolumeChapters($volume_id);
+			$vol = $cached_chapter->getVolumeChapters($volume_id);
+
+			foreach ($vol as $chapter_id => &$chapter_name) {
+				$tmp['chapter_name'] = $chapter_name;
+				$tmp['chapter_vip'] = $cached_chapter->isVip($chapter_id);
+				$chapter_name = $tmp;
+			}
+			$catalog[$volume_id]['volume_chapter'] = $vol;
 		}
 		return $catalog;
 	}

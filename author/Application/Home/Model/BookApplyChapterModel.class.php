@@ -77,10 +77,10 @@ class BookApplyChapterModel extends BaseModel {
 	 */
 	public function getLastChapterOrder($book_id)
 	{
-		$rs = $this->field('ch_order')->where('bk_id = '.$book_id)
+		$rs = $this->field('max(ch_order) as max_order')->where('bk_id = '.$book_id)
 				->order('ch_order desc')
 				->find();
-		return empty($rs) ? 1 : $rs['ch_order']+1;
+		return empty($rs) ? 1 : $rs['max_order']+1;
 	}
 
 }

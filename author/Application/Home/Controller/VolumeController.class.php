@@ -53,7 +53,6 @@ class VolumeController extends BaseController {
 			$data['volume_name'] = I('post.volume_name');
 			$data['volume_intro'] = I('post.volume_intro');
 			$data['volume_order'] = $this->volume_obj->getLastVolumeOrder($this->book_id);
-			
 			$state = $this->volume_obj->checkVolume($data);
 
 			if ($state['code'] < 0)

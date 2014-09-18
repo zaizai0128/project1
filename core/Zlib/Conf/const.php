@@ -15,6 +15,13 @@ return array(
 	'ZL_ADMIN_DOMAIN' => 'http://admin.zhulang.ne',		// 管理站域名
 	'ZL_DOMAIN_DOT' => '.zhulang.ne',
 
+	// session相关
+	'S' => array(
+		'user' => 'user',		//前台用户的session存放key
+		'author' => 'author',	//作者的session存放key
+		'admin' => 'admin',		//管理员的session存放key
+	),
+
 	// 用户相关
 	'USER' => array(
 		'type' => array(
@@ -40,6 +47,14 @@ return array(
 
 		// 后台待审核作品的列表
 		'apply_list_size' => 10,
+
+	),
+
+	// 作者
+	'AUTHOR' => array(
+
+		// 正式作品章节的列表条数
+		'chapter_list_size' => 10,
 
 	),
 	

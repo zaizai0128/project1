@@ -17,7 +17,7 @@ class BookApplyChapterService extends BookApplyChapterModel {
 	 * @param String $book_name
 	 * @param boolean 是否是添加操作
 	 */
-	public function checkChapter($chapter, $isAdd = True)
+	public function checkChapter($chapter, $is_add = True)
 	{
 		if (empty($chapter['bk_id']))
 			return array('code'=>-1, 'msg'=>'作品id不允许为空');
@@ -26,7 +26,7 @@ class BookApplyChapterService extends BookApplyChapterModel {
 		if (empty($chapter['ch_content']))
 			return array('code'=>-21, 'msg'=>'章节内容不允许为空');
 
-		if ($isAdd) {
+		if ($is_add) {
 
 			$rs = $this->where('bk_id='.$chapter['bk_id'].' and ch_name = "'.$chapter['ch_name'].'"')->find();
 			if (!empty($rs))

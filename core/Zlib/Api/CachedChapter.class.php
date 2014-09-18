@@ -138,9 +138,9 @@ class CachedChapter {
 		return $result;
 	}
 	
-	private function isVip($chapter_id) 
+	public function isVip($chapter_id) 
 	{
-		return $mChapter[$chapter_id]["ch_vip"] == 1;
+		return $this->mChapter[$chapter_id]["ch_vip"] == 1;
 	}
 
 	public function getName($chapter_id) 
@@ -152,15 +152,4 @@ class CachedChapter {
 	{
 		return $mChapter[$chapter_id]["ch_order"];
 	}
-
-	/**
-	 * 通过book_id获取章节表
-	 *
-	 * @param int $book_id
-	 */
-	public function getTableName($book_id)
-	{
-		
-	}
-
 }

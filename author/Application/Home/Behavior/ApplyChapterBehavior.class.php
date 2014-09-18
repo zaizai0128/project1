@@ -64,9 +64,8 @@ class ApplyChapterBehavior {
 		$book_apply = M('zl_book_apply');
 		$rs = $book_apply->where('bk_id = '.$this->data['bk_id'])->find();
 
-		if (!$rs)
-			return False;
-
+		if (!$rs) return False;
+		
 		// 获取章节的信息
 		$chapter_info = M('zl_book_apply_chapter')->where('ch_id = '.$this->data['ch_id'])->find();
 

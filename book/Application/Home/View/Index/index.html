@@ -62,7 +62,7 @@
       <p>{$book_info.bk_intro}</p>
       <div class="ct_list"> 
         <?php $i=0;?>
-        <?php foreach($val['volume_chapter'] as $chapter_id => $chapter_name):?><a href="{:ZU('read/index', 'ZL_BOOK_DOMAIN', array('book_id'=>$book_info['bk_id'], 'ch_id'=>$chapter_id))}" target="_blank" <?php if($i%3==0):?>class="bod_lt"<?php endif;?>>{$chapter_name}</a><?php ++$i;?><?php endforeach;?>
+        <?php foreach($val['volume_chapter'] as $chapter_id => $chapter):?><a <?php if($chapter['chapter_vip']):?>style="color:red;"<?php endif;?> href="{:ZU('read/index', 'ZL_BOOK_DOMAIN', array('book_id'=>$book_info['bk_id'], 'ch_id'=>$chapter_id))}" target="_blank" <?php if($i%3==0):?>class="bod_lt"<?php endif;?>>{$chapter.chapter_name}<?php if($chapter['chapter_vip']):?>[vip]<?php endif;?></a><?php ++$i;?><?php endforeach;?>
       </div>
     </div>
     <?php endforeach;?>

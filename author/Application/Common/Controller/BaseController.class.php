@@ -93,7 +93,7 @@ class BaseController extends Controller {
 	{
 		// 添加忽略的文件
 		if (in_array(CONTROLLER_NAME.'.'.ACTION_NAME,
-			array('BookApplyChapter.index', 'BookApply.index'))) 
+			array('BookApply.index'))) 
 			return True;
 
 		if (empty($this->book_id))

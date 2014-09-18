@@ -15,18 +15,31 @@ class VolumeService extends VolumeModel {
 	 * 获取书的现有卷
 	 *
 	 * @param book_id
+	 * @param boolean is_intro 是否获取描述
 	 */
-	public function getVolumeList($book_id)
+	public function getVolumeList($book_id, $is_intro = True)
 	{
 		$volume_list = C('BK.default_volume');
 		$result = (array)self::getVolumeById($book_id);
 		if (!empty($result)) {
-			foreach ($result as $val) {
-				$volume_list[$val['volume_order']] = array(
-					'volume_id' => $val['volume_id'],
-					'volume_name' => $val['volume_name'],
-					'volume_intro' => $val['volume_intro'],
-				);
+
+			if ($is_intro) {
+				foreach ($result as $val) {
+					$volume_list[$val['volume_order']] = array(
+						'volume_id' => $val['volume_id'],
+						'volume_name' => $val['volume_name'],
+						'volume_intro' => $val['volume_intro'],
+					);
+				}
+			} else {
+				$tmp = array();
+				foreach ($result as $val) {
+					$tmp[$val['volume_order']] = $val['volume_name'];
+				}
+				foreach ($volume_list as $key => $val) {
+					$tmp[$key] = $val;
+				}
+				$volume_list = $tmp;
 			}
 		}
 		return $volume_list;
@@ -39,13 +52,14 @@ class VolumeService extends VolumeModel {
 	 */
 	public function getLastVolumeOrder($book_id)
 	{
-		$volume = $this->field('volume_order')->where('bk_id = '.$book_id.' and volume_status = 0')
-				->order('volume_order desc')->find();
-
-		if (empty($volume)) {
+		$volume = $this->field('max(volume_order) as max')
+				->where('bk_id = '.$book_id.' and volume_status = 0')
+				->find();
+				
+		if (empty($volume['max'])) {
 			return C('BK.start_volume');
 		} else {
-			return $volume['volume_order']+1;
+			return $volume['max']+1;
 		}
 	}
 
