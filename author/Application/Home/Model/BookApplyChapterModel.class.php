@@ -69,4 +69,17 @@ class BookApplyChapterModel extends BaseModel {
 				->order('ch_id DESC')->limit($firstRow, $listRows)->select();
 	}
 
+	/**
+	 * 获取章节的最后ch_order
+	 *
+	 * @param int book_id
+	 */
+	public function getLastChapterOrder($book_id)
+	{
+		$rs = $this->field('ch_order')->where('bk_id = '.$book_id)
+				->order('ch_order desc')
+				->find();
+		return empty($rs) ? 1 : $rs['ch_order']+1;
+	}
+
 }

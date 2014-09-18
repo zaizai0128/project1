@@ -75,6 +75,9 @@ class BookApplyChapterController extends BaseController {
 				$this->error($state['msg']);
 			}
 
+			// 获取最后一个ch_order
+			$data['ch_order'] = $this->apply_chapter_obj->getLastChapterOrder($this->book_id);
+			
 			// 上传新章节
 			$rs = $this->apply_chapter_obj->doAdd($data);
 

@@ -9,6 +9,7 @@
  */
 namespace Home\Model;
 use Zlib\Model\BaseModel;
+use Zlib\Api as Zapi;
 
 class ChapterModel extends BaseModel {
 
@@ -17,11 +18,12 @@ class ChapterModel extends BaseModel {
 	/**
 	 * 初始化数据库对象
 	 *
-	 * @param Array
+	 * @param int $book_id
 	 */
-	public function init($tableName)
+	public function init($book_id)
 	{
-		$this->_chapter_obj = M($tableName);
+		$chapter_table_name = Zapi\Chapter::getName($book_id);
+		$this->_chapter_obj = M($chapter_table_name);
 		return $this;
 	}
 

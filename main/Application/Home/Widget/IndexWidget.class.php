@@ -31,6 +31,11 @@ class IndexWidget extends HomeController {
 	 */
 	public function topHot()
 	{
+		$book_new_list = D('Book')->where('bk_status = "00"')->order('bk_id desc')->limit(3)->select();
+
+		$this->assign(array(
+			'book_new_list' => $book_new_list,
+		));
 		$this->display('Widget/top_hot');
 	}
 }

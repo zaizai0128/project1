@@ -15,6 +15,31 @@ jQuery(function(){
 		},
 
 		/**
+		 * 通过select选择内容后，下面的input显示对应的名称
+		 *
+		 * @param String 主select类名
+		 * show的input类名 必须为主类名后加_name和_intro
+		 */
+		selectedShow : function(main_selected)
+		{
+			var main_obj = $('.'+main_selected);
+			var name_obj = $('.'+main_selected+'_name');	
+			var intro_obj = $('.'+main_selected+'_intro');	
+
+			main_obj.on('change', function(){
+				var name = '';
+				var intro = '';
+
+				if ($(this).find('option:selected').val() != 0) 
+					name = $(this).find('option:selected').attr('data-name');
+					intro = $(this).find('option:selected').attr('data-intro');
+
+				name_obj.val(name);
+				intro_obj.val(intro);
+			});
+		},
+
+		/**
 		 * 生成关联select选择就
 		 *
 		 * @param String 主select类名

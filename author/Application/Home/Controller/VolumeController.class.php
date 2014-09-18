@@ -12,16 +12,20 @@ use Zlib\Api as Zapi;
 
 class VolumeController extends BaseController {
 
-	private $_book_id;
-	private $_book_info;
+	protected $book_obj;	
+	protected $book_id;		// 书籍id 
+	protected $book_info;
+	protected $volume_obj;
 
-	protected function _init()
+	protected function init()
 	{
 		parent::init();
 
-		$this->_book_id = I('get.book_id');
-		$this->checkBookAcl($this->_book_id);
-		$this->_book_info = D('Book')->getBookInfo($this->_book_id);
+		$this->volume_obj = D('Volume', 'Service');
+		$this->book_obj = D('Book', 'Service');
+		$this->book_id = I('get.book_id');
+		$this->checkBookAcl($this->book_id);
+		$this->book_info = $this->book_obj->getBookInfo($this->book_id);
 	}
 
 	/**
@@ -29,10 +33,12 @@ class VolumeController extends BaseController {
 	 */
 	public function index()
 	{
-		
-		$this->assign(array(
-			'book_info' => $this->_book_info,
+		// 获取现有的卷
+		$volume_list = $this->volume_obj->getVolumeList($this->book_id);
 
+		$this->assign(array(
+			'book_info' => $this->book_info,
+			'volume_list' => $volume_list
 		));
 		$this->display();
 	}
@@ -43,17 +49,24 @@ class VolumeController extends BaseController {
 	public function doAdd()
 	{
 		if (IS_POST) {
-			$data = I();
-			dump($data);
-		}	
-	}
+			$data['bk_id'] = $this->book_id;
+			$data['volume_name'] = I('post.volume_name');
+			$data['volume_intro'] = I('post.volume_intro');
+			$data['volume_order'] = $this->volume_obj->getLastVolumeOrder($this->book_id);
+			
+			$state = $this->volume_obj->checkVolume($data);
 
-	/**
-	 * 修改分卷
-	 */
-	public function edit()
-	{
-		
+			if ($state['code'] < 0)
+				$this->error($state['msg']);
+
+			$state = $this->volume_obj->doAdd($data);
+
+			if (empty($state))
+				$this->error('添加失败');
+			else
+				$this->success('添加成功', ZU('volume/index', 'ZL_AUTHOR_DOMAIN'
+				, array('book_id'=>$this->book_id)));
+		}	
 	}
 
 	/**
@@ -62,7 +75,21 @@ class VolumeController extends BaseController {
 	public function doEdit()
 	{
 		if (IS_POST) {
+			$data = I();
+			$data['bk_id'] = $this->book_id;
+			
+			$state = $this->volume_obj->checkVolume($data, True);
 
+			if ($state['code'] < 0)
+				$this->error($state['msg']);
+
+			$state = $this->volume_obj->doEdit($data);
+
+			if (empty($state))
+				$this->error('修改失败');
+			else
+				$this->success('修改成功', ZU('volume/index', 'ZL_AUTHOR_DOMAIN'
+				, array('book_id'=>$this->book_id)));
 		}
 	}
 

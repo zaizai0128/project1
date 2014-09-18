@@ -61,25 +61,25 @@ class BookApplyBehavior {
 		$book['ch_total'] = $book_apply['ch_total'];
 
 		$book_obj = D('Book');
+
 		// 创建新的作品
 		$book_id = $book_obj->createNewBook($book);
 
 		if ($book_id <= 0)
 			return False;
 
-		$chapter_table_name = Zapi\Chapter::getName($book_id);
-
 		// 创建章节对象
-		$chapter_obj = D('Chapter')->init($chapter_table_name);
+		$chapter_obj = D('Chapter')->init($book_id);
 
 		// 获取该书的审核章节
 		$book_chapters = D('BookApplyChapter')->getChapterList($this->data['bk_id']);
-
+		
 		// 更新章节到正式表
 		foreach ($book_chapters as $key => $val) {
 			$val['ch_poster_id'] = $book_apply['bk_author_id'];
 			$val['ch_poster'] = $book_apply['bk_author'];
 			$val['bk_id'] = $book_id;
+			$val['ch_roll'] = C('BK.start_volume');
 			$chapter_obj->createChapter($val);
 		}
 

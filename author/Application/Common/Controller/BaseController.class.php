@@ -60,10 +60,10 @@ class BaseController extends Controller {
 	 */
 	public function checkBookAcl($book_id)
 	{
-		// 忽略的action
-		if (in_array(ACTION_NAME, array('index'))) 
+		// 添加忽略权限验证的操作
+		if (in_array(CONTROLLER_NAME.'.'.ACTION_NAME, array('Book.index')))
 			return True;
-
+		
 		if (empty($book_id))
 			$this->error('请选择要操作的作品');
 
@@ -84,11 +84,9 @@ class BaseController extends Controller {
 	 */
 	protected function checkBookApplyAcl()
 	{
-		// 忽略的action
-		if (!in_array(CONTROLLER_NAME, array('BookApplyChapter'))) {
-			if (in_array(ACTION_NAME, array('index'))) 
-				return True;
-		}
+		// 添加不忽略的文件
+		if (!in_array(CONTROLLER_NAME.'.'.ACTION_NAME, array('BookApplyChapter.index'))) 
+			return True;
 
 		if (empty($this->book_id))
 			$this->error('请选择要操作的作品');

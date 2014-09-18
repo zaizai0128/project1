@@ -16,8 +16,12 @@
 		<div class="row">
 			<div class="span9">
 				<p class="text-info">现有分卷</p>
-				<?php foreach(C('BK.default_volume') as $key=>$val):?>
-				<p>分卷序号：　{$key} 	分卷名称：　{$val}</p>
+				<?php foreach($volume_list as $key=>$val):?>
+					<?php if(!is_array($val)):?>
+						<p>分卷名称：　{$val} <span class="text-error">[系统默认]</span></p>			
+					<?php else:?>
+						<p>分卷名称：　{$val.volume_name}</p>
+					<?php endif;?>
 				<?php endforeach;?>
 			</div>
 		</div>
@@ -33,7 +37,12 @@
 							<a data-original-title="说明：" class="btn btn-info pop" data-toggle="popover" title="" data-content="没有任何章节的为空卷，作品目录页不显示空卷内容；该新增分卷自身存在章节后，作品目录页，开始显示该分卷。" href="###">说明</a>
 						</div>
 					</div>
-
+					<div class="control-group">
+						<label for="" class="control-label">分卷描述</label>
+						<div class="controls">
+							<textarea name="volume_intro" id="" cols="30" rows="10" placeholder="前端会优先使用分卷描述里面的文字来介绍该分卷主要的内容"></textarea>
+						</div>
+					</div>
 					<button class="btn btn-danger">确认增加分卷</button>
 				</form>
 			</div>
@@ -42,25 +51,31 @@
 		<div class="row">
 			<div class="span9">
 				<p class="text-info">修改分卷</p>
-				<form action="" class="form-horizontal">
-					
+				<form action="{:ZU('volume/doEdit', 'ZL_AUTHOR_DOMAIN', array('book_id'=>I('book_id')))}" class="form-horizontal" method="post">
 					<div class="control-group">
 						<label for="" class="control-label">选择要修改的分卷</label>
 						<div class="controls">
-							<select name="" id="">
-								<option value="100">作品相关</option>
-								<option value="1000">正文</option>
+							<select name="volume_id" id="volume_id" class="select_volume">
+								<option value="0">--请选择--</option>
+								<?php foreach($volume_list as $key=>$val):?>
+								<?php if(!is_array($val)) continue;?>
+									<option value="{$val.volume_id}" data-name="{$val.volume_name}" data-intro="{$val.volume_intro}">{$val.volume_name}</option>
+								<?php endforeach;?>
 							</select>
 						</div>
 					</div>
-
 					<div class="control-group">
 						<label for="input_volume_name_edit" class="control-label">分卷名修改为</label>
 						<div class="controls">
-							<input type="text" id="input_volume_name_edit" placeholder="分卷名修改为" />
+							<input class="select_volume_name" type="text" name="volume_name" id="input_volume_name_edit" placeholder="分卷名修改为" />
 						</div>
 					</div>
-
+					<div class="control-group">
+						<label for="" class="control-label">分卷描述</label>
+						<div class="controls">
+							<textarea class="select_volume_intro" name="volume_intro" id="" cols="30" rows="10" placeholder="前端会优先使用分卷描述里面的文字来介绍该分卷主要的内容"></textarea>
+						</div>
+					</div>
 					<button class="btn btn-danger">确认修改分卷</button>
 				</form>
 			</div>
@@ -68,4 +83,14 @@
 
 	</div>
 </div>
+</block>
+
+<block name="js">
+<script type="text/javascript">
+jQuery(function($){
+
+	$.selectedShow('select_volume');
+
+});
+</script>
 </block>
