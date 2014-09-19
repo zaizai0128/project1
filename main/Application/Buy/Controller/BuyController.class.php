@@ -26,7 +26,7 @@ class BuyController extends Controller {
 		$this->chapter_id = I('get.ch_id');
 		$this->book_obj = new Zapi\Book($this->book_id);
 		$this->chapter_obj = new Zapi\Chapter($this->book_id, $this->chapter_id);
-
+		
 		// 初始化操作
 		$this->init();
 	}

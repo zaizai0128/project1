@@ -7,6 +7,7 @@
  * @version 1.0
  */
 namespace Buy\Controller;
+use Zlib\Api as Zapi;
 
 class IndexController extends BuyController {
 
@@ -21,12 +22,19 @@ class IndexController extends BuyController {
 		
 		// 获取卷章节
 		$volume_list = $this->book_obj->getCatalog();
+
+		// 如果用户存在，则获取该用户的account
+		if (ZS('S.user', '?')) {
+			$user_api = new Zapi\User(ZS('S.user', 'user_id'));
+			$account = $user_api->getAccountInfo();
+		}
 		
 		$this->assign(array(
 			'assign' => $assign,
 			'chapter_info' => $this->chapter_info,
 			'book_info' => $this->book_info,
 			'volume_list' => $volume_list,
+			'account_info' => $account,
 		));
 		$this->display();
 	}
