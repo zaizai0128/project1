@@ -65,12 +65,19 @@ if (!function_exists('ZC')) {
  * @param string 设置的值
  */
 if (!function_exists('ZS')) {
-	function ZS($prefix, $dot, $val = Null)
+	function ZS($prefix, $dot = Null, $val = Null)
 	{
-		if (!isset($val))
-			return session(C($prefix).'.'.$dot);
-		else
+		if (!isset($val)) {
+			if ($dot == '?') {
+				return session('?'.C($prefix));
+			} elseif(!isset($dot)) {
+				return session(C($prefix));
+			} else {
+				return session(C($prefix).'.'.$dot);
+			}
+		} else {
 			return session(C($prefix).'.'.$dot, $val);
+		}
 	}
 }
 
@@ -87,5 +94,19 @@ if (!function_exists('z_get_short_category')) {
 		if (strlen($book_class_id) > 2)
 			$book_class_id = substr($book_class_id, 0, 2);
 		return $top_class[$book_class_id];
+	}
+}
+
+/**
+ * 通过作品的字数获取该作品所需的逐浪币为多少
+ *
+ * @param int word_num
+ * @param int 活动类型 不同活动对应不同的价格促销
+ */
+if (!function_exists('z_word_to_money')) {
+	function z_word_to_money($word_num, $active_type = 0)
+	{
+		$price = ceil( $word_num / 1000 * C('MONEY.1000word') );
+		return $price;
 	}
 }

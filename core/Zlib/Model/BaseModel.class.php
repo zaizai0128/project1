@@ -17,7 +17,7 @@ class BaseModel extends Model {
 		$this->init();
 	}
 	
-	public function init()
+	protected function init()
 	{
 
 	}

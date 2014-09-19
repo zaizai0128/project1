@@ -14,6 +14,7 @@ class ReadController extends HomeController {
 	protected $chapter_api = Null;
 	protected $chapter_info = Null;
 	protected $is_vip = False; 	// 判断章节是否是vip
+	protected $isBuy = False;	// 判断是否已经购买
 
 	public function __construct()
 	{
@@ -48,7 +49,9 @@ class ReadController extends HomeController {
 	 */
 	private function _getChapterContent()
 	{
-		// pass
+		// 获取普通章节内容
+		$chapter_content = $this->chapter_api->getChapterContent();
+		$this->chapter_info = array_merge($this->chapter_info, (array)$chapter_content);
 	}
 
 	/**
@@ -100,15 +103,19 @@ class ReadController extends HomeController {
 		$this->is_vip = True;
 
 		// 验证用户是否登录
-		if (!session('?user')) {
+		if (!ZS('S.user', '?')) {
 			$this->error('请先登录', ZU('login/index'));
 		}
 
-		// 验证用户是否拥有看此vip章节的权限
-		if (!in_array($this->ch_id, array('935171','935172'))) {
+		// 验证用户是否已购买该章节
+		$vip = new Zapi\UserVipBuy(ZS('S.user', 'user_id'), $this->book_id);
+		$is_buy = $vip->isBuyByOrder($this->chapter_info['ch_order']);
+
+		if (!$is_buy) {
 			$this->error('请先购买该章节', ZU('buy/index/chapter', 'ZL_DOMAIN', 
 						array('book_id'=>$this->book_id, 'ch_id'=>$this->ch_id)));
 		}
+		$this->isBuy = $is_buy;
 		
 		return True;
 	}

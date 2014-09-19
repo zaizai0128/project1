@@ -14,12 +14,19 @@ return array(
 	'ZL_AUTHOR_DOMAIN' => 'http://author.zhulang.ne',	// 作者站域名
 	'ZL_ADMIN_DOMAIN' => 'http://admin.zhulang.ne',		// 管理站域名
 	'ZL_DOMAIN_DOT' => '.zhulang.ne',
+	'ZL_NGINX_MODULE' => 'http://172.16.6.200',	// nginx module 地址 [用来对文件进行操作]
 
 	// session相关
 	'S' => array(
 		'user' => 'user',		//前台用户的session存放key
 		'author' => 'author',	//作者的session存放key
 		'admin' => 'admin',		//管理员的session存放key
+	),
+
+	// 金额相关
+	'MONEY' => array(
+		'fen' => 1, // 一分钱(人民币) = 多少逐浪币 
+		'1000word' => 3, // 1000字多少逐浪币
 	),
 
 	// 用户相关
@@ -55,6 +62,15 @@ return array(
 
 		// 正式作品章节的列表条数
 		'chapter_list_size' => 10,
+
+	),
+
+	// 章节相关
+	'CH' => array(
+		// 普通章节的操作地址
+		'read' => 'http://172.16.6.200/book/read',	// [get]读/book_id/chapter_id
+		'set' => 'http://172.16.6.200/book/set',	// [post]生成/book_id/chapter_id
+		'rm' => 'http://172.16.6.200/book/rm',		// [get]删除/book_id/chapter_id
 
 	),
 	

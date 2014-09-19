@@ -10,37 +10,25 @@ namespace Buy\Controller;
 
 class IndexController extends BuyController {
 
+	protected $volume_list = array();
+
 	/**
 	 * 购买单个章节的界面
 	 */
 	public function chapter()
-	{
+	{	
+		$assign = array();
 		
-
-
-		dump($this->chapter_info);
-
+		// 获取卷章节
+		$volume_list = $this->book_obj->getCatalog();
+		
+		$this->assign(array(
+			'assign' => $assign,
+			'chapter_info' => $this->chapter_info,
+			'book_info' => $this->book_info,
+			'volume_list' => $volume_list,
+		));
 		$this->display();
-	}
-
-	/**
-	 * 执行购买流程
-	 */
-	public function doCost()
-	{
-		// 开启事务
-
-			// 用户zl_accounts 减 对应的价钱
-
-			// 作者zl_accounts 加 对应的价钱	
-
-			// 记录到流水
-
-		// commit执行
-
-		// 将 该章节的 ch_order 存到 zl_user_vipby表中
-
-		// 购买结束？
 	}
 
 	/**

@@ -143,13 +143,18 @@ class CachedChapter {
 		return $this->mChapter[$chapter_id]["ch_vip"] == 1;
 	}
 
+	public function getSize($chapter_id)
+	{
+		return $this->mChapter[$chapter_id]['ch_size'];
+	}
+
 	public function getName($chapter_id) 
 	{
-		return $mChapter[$chapter_id]["ch_name"];
+		return $this->mChapter[$chapter_id]["ch_name"];
 	}
 
 	public function getChapterOrder($chapter_id) 
 	{
-		return $mChapter[$chapter_id]["ch_order"];
+		return $this->mChapter[$chapter_id]["ch_order"];
 	}
 }

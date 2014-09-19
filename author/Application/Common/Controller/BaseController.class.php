@@ -21,7 +21,7 @@ class BaseController extends Controller {
 		parent::__construct();
 
 		// 未登录提示
-		if (!session('user')) {
+		if (!session('?user')) {
 			$this->error('请登录', ZU('login/index'));
 		}
 

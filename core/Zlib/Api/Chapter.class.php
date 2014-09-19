@@ -71,6 +71,23 @@ class Chapter extends BaseModel {
 	}
 
 	/**
+	 * 获取章节内容详情
+	 */
+	public function getChapterContent()
+	{
+		$chapter_read = C('CH.read') . '/'.$this->_book_id.'/'.$this->_ch_id;
+		$content = file_get_contents($chapter_read);
+		// 获取头4位编码, 用来判断获取状态
+		$status = substr($content, 0, 3);
+		// 如果前3位不为000 ，则返回False
+		if ($status != '000')
+			return False;
+		
+		// 返回内容
+		return array('ch_content'=>substr($content, 4));
+	}
+
+	/**
 	 * 判断章节是否存在
 	 */
 	public function checkChapter()
@@ -87,6 +104,29 @@ class Chapter extends BaseModel {
 	{
 		$vip_obj = $this->getChapterVipObj();
 		return $vip_obj->where('bk_id = '.$this->_book_id.' and ch_id = '.$this->_ch_id)->find();
+	}
+
+	/**
+	 * 获取vip商品章节信息
+	 */
+	public function getVipChapterCommodityInfo()
+	{
+		// 获取vip基础信息
+		$chapter_info = $this->_chapter_obj
+						->where('bk_id = '.$this->_book_id.' and ch_id = '.$this->_ch_id.' and ch_vip = 1')
+						->find();
+
+		// 计算章节的价格
+		$chapter_info['ch_price'] = z_word_to_money($chapter_info['ch_size']);
+
+		// 获取vip内容信息
+		$vip_obj = $this->getChapterVipObj();
+		$chapter_content_info = $vip_obj->where('bk_id = '.$this->_book_id.' and ch_id = '.$this->_ch_id)
+								->find();
+		$chapter_info = array_merge($chapter_info, $chapter_content_info);
+		$chapter_info['ch_intro'] = \Org\Util\String::msubstr($chapter_info['ch_content'], 0, 100);
+		
+		return $chapter_info;
 	}
 
 	/**

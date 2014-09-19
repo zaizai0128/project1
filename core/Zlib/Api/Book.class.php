@@ -39,6 +39,8 @@ class Book extends BaseModel{
 			foreach ($vol as $chapter_id => &$chapter_name) {
 				$tmp['chapter_name'] = $chapter_name;
 				$tmp['chapter_vip'] = $cached_chapter->isVip($chapter_id);
+				$tmp['chapter_size'] = $cached_chapter->getSize($chapter_id);
+				$tmp['chapter_price'] = z_word_to_money($cached_chapter->getSize($chapter_id));
 				$chapter_name = $tmp;
 			}
 			$catalog[$volume_id]['volume_chapter'] = $vol;

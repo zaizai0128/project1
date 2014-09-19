@@ -1,5 +1,5 @@
-<?
-namespace ZLib\Api;
+<?php
+namespace Zlib\Api;
 use Zlib\Model as Zmodel;
 
 class UserVipBuy {
@@ -27,7 +27,6 @@ class UserVipBuy {
 		}
 
 		if ($this->mChapterBuyBits != null) {
-			require("CachedChapter.class.php");
 			if ($this->mCachedChapter == null)
 				$this->mCachedChapter = new CachedChapter($book_id); 
 		}
@@ -58,7 +57,7 @@ class UserVipBuy {
 			$this->mCachedChapter = new CachedChapter($book_id);
 		}
 		$ch_order = $this->mCachedChapter->getChapterOrder($chapter_id);
-		return setBuyByOrder($ch_order);
+		return $this->setBuyByOrder($ch_order);
 	}
 
 	public function setBuyByOrder($ch_order) 
@@ -82,7 +81,7 @@ class UserVipBuy {
 		$this->mVipMaxOrder = ($this->mVipMaxOrder > $ch_order)? $this->mVipMaxOrder : $ch_order;
 		// echo "setting: ".bin2hex($this->mChapterBuyBits)."<br>";
 		// set memcache:
-		// $this->saveToDb();
+		return $this->saveToDb();
 	}
 
 	public function setBuyByOrder2($ch_order_from, $ch_order_to ) 
@@ -125,7 +124,6 @@ class UserVipBuy {
 		$data['vip_max_order'] = $this->mVipMaxOrder;
 		$data['vip_chapters'] = base64_encode($this->mChapterBuyBits);
 		// echo "chapter: ". base64_encode($this->mChapterBuyBits)."<br>";
-		M('zl_user_vipbuy')->add($data, array(), true);
+		return M('zl_user_vipbuy')->add($data, array(), true);
 	}
-};
-?>
+}

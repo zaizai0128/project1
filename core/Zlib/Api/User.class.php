@@ -12,6 +12,13 @@ use Zlib\Model\BaseModel;
 class User extends BaseModel {
 
 	protected $trueTableName = 'zl_user';
+	private $_user_id;
+
+	public function __construct($user_id = Null)
+	{
+		parent::__construct();
+		$this->_user_id = $user_id;
+	}
 
 	/**
 	 * 通过用户名获取用户id
@@ -159,5 +166,13 @@ class User extends BaseModel {
 
 		$state = $this->save($user);
 		return $state > 0 ? array('code'=>1, 'msg'=>'修改成功') : array('code'=>-1, 'msg'=>'内容未修改或修改失败');
+	}
+
+	/**
+	 * 获取用户的金钱账户信息
+	 */
+	public function getAccountInfo()
+	{
+		return M('zl_accounts')->where('oid = '.$this->_user_id)->find();
 	}
 }
