@@ -65,6 +65,6 @@ class ZlibChapterVipModel extends BaseModel {
 	 */
 	public function getTableName()
 	{
-		return 'zl_chapter_vip_' . sprintf('%02d', $this->chapter_id % 10);
+		return 'zl_chapter_vip_' . sprintf('%02d', $this->chapterId % 10);
 	}	
 }

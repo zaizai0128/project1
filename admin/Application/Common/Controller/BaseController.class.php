@@ -13,6 +13,7 @@ use Zlib\Api as Zapi;
 class BaseController extends Controller {
 
 	protected $user_id;
+	protected $adminInfo;
 
 	public function __construct()
 	{
@@ -28,11 +29,13 @@ class BaseController extends Controller {
 			$this->error('抱歉，您不是管理员');
 		}
 
+		// 初始化一些变量
 		$this->init();
 	}
 
 	protected function init()
 	{
 		$this->user_id = session('user.user_id');
+		$this->adminInfo = ZS('S.admin');
 	}
 }

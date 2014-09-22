@@ -146,3 +146,11 @@ function z_info($code, $msg)
 {
 	return array('code'=>$code, 'msg'=>$msg);
 }
+
+/**
+ * 获取当前时间
+ */
+function z_now()
+{
+	return date('Y-m-d H:i:s', time());
+}

@@ -8,16 +8,12 @@
  * @version 1.0
  */
 namespace Home\Model;
-use Zlib\Model\BaseModel;
+use Zlib\Model\ZlibBookModel;
 
-class BookModel extends BaseModel {
-
-	protected $trueTableName = 'zl_book';
+class BookModel extends ZlibBookModel {
 
 	/**
 	 * 创建新的作品，审核通过后创建的作品
-	 *
-	 *
 	 * @return int 返回书籍的id
 	 */
 	public function createNewBook($book)

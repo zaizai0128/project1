@@ -1,0 +1,32 @@
+<div class="control-group">
+	<label class="control-label">审核状态</label>
+	<div class="controls">
+		<select name="status">
+			<?php foreach(C('BK.check_status') as $key=>$val):?>
+			<option value="{$key}">{$val}</option>
+			<?php endforeach;?>
+		</select>
+	</div>
+</div>
+<div class="control-group">
+	<label class="control-label">签约类型</label>
+	<div class="controls">
+		<select name="bk_commision">
+			<?php foreach(C('BK.commision') as $key=>$val):?>
+			<option value="{$key}">{$val}</option>
+			<?php endforeach;?>
+		</select>
+	</div>
+</div>
+<div class="control-group">
+	<label for="input_comments" class="control-label">签约意见</label>
+	<div class="controls">
+		<textarea name="action_comments" id="input_comments" rows="10" placeholder="签约意见"></textarea>
+	</div>
+</div>
+<input type="hidden" name="id" value="{$data.id}" />
+<input type="hidden" name="bk_id" value="{$data.bk_id}" />
+
+{// 添加modal的属性}
+<input type="hidden" class="modal-action" value="{:ZU('BookApplyVip/doCheck', 'ZL_ADMIN_DOMAIN')}" />
+<input type="hidden" class="modal-title" value="管理作品 - 《{$data.bk_name}》" />

@@ -23,6 +23,31 @@ class ZlibBookApplyVipModel extends BaseModel {
 	}
 
 	/**
+	 * 获取总数
+	 *
+	 * @param array 条件数组
+	 */
+	public function getTotal($where = Null)
+	{
+		$condition = 'status = "00"';
+		return $this->where($condition)->count();
+	}
+
+	/**
+	 * 获取列表
+	 *
+	 * @param int Page->firstRow
+	 * @param int Page->listsRows
+	 * @param array 条件数组
+	 */
+	public function getList($firstRow = 0, $listsRows = 10, $where = Null)
+	{
+		$condition = 'status = "00"';
+		$order = 'id desc';
+		return $this->where($condition)->order($order)->limit($firstRow, $listsRows)->select();
+	}
+
+	/**
 	 * 添加数据
 	 */
 	public function doAdd($data)
@@ -36,7 +61,7 @@ class ZlibBookApplyVipModel extends BaseModel {
 	public function doEdit($data)
 	{
 		$condition = 'id = '.$data['id'];
-		return $this->where($condition)->data($data)->save();
+	 	return $this->where($condition)->data($data)->save();
 	}
 
 	/**

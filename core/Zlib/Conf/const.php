@@ -24,7 +24,7 @@ return array(
 	'S' => array(
 		'user' => 'user',		//前台用户的session存放key
 		'author' => 'author',	//作者的session存放key
-		'admin' => 'admin',		//管理员的session存放key
+		'admin' => 'user',		//管理员的session存放key
 	),
 
 	// 金额相关

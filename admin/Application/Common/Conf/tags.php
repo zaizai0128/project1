@@ -9,5 +9,6 @@
 return array(
 	
 	'book_apply' => array('Home\Behavior\BookApplyBehavior'),
+	'book_apply_vip' => array('Home\Behavior\BookApplyVipBehavior'),
 
 );
