@@ -25,7 +25,7 @@
 				<?php foreach($book_list as $key => $val):?>
 				<tr>
 					<th>{$val.bk_id}</th>
-					<th>《{$val.bk_name}》</th>
+					<th><a href="{:ZU('book/index', 'ZL_DOMAIN', array('book_id'=>$val['bk_id']))}" target="_blank">《{$val.bk_name}》</a></th>
 					<th>{$val.bk_public_name}</th>
 					<th>{$val.bk_now_date}</th>
 					<th><a href="{:ZU('book/book', 'ZL_AUTHOR_DOMAIN', array('book_id'=>$val['bk_id']))}">管理</a></th>

@@ -71,4 +71,13 @@ class ChapterModel extends BaseModel {
 	{
 		return $this->chapter_obj->data($data)->add();
 	}
+
+	/**
+	 * 执行编辑操作
+	 */
+	public function doEdit($data)
+	{
+		return $this->chapter_obj->where('ch_id = '.$data['ch_id'].' and bk_id = '.$data['bk_id'])
+					->data($data)->save();
+	}
 }

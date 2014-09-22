@@ -1,0 +1,17 @@
+<div class="control-group">
+	<label for="input_chapter_name" class="control-label">章节标题</label>
+	<div class="controls">
+		<input type="text" name="ch_name" placeholder="章节标题" id="input_chapter_name" value="{$chapter_info.ch_name}"/>
+	</div>
+</div>
+<div class="control-group">
+	<label for="input_chapter_content" class="control-label">章节内容</label>
+	<div class="controls">
+		<textarea name="ch_content" id="input_chapter_content" rows="10" placeholder="新增作品首次上传章节总字数需在2000至30000间">{$chapter_info.ch_content}</textarea>
+	</div>
+</div>
+<input type="hidden" name="ch_id" value="{$chapter_info.ch_id}" />
+
+{// 添加modal的属性}
+<input type="hidden" class="modal-action" value="{:ZU('chapter/doEdit', 'ZL_AUTHOR_DOMAIN', array('book_id'=>I('book_id')))}" />
+<input type="hidden" class="modal-title" value="修改章节 - {$chapter_info.ch_name}" />

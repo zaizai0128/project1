@@ -8,6 +8,12 @@
 	<a href="{:ZU('chapter/index', 'ZL_AUTHOR_DOMAIN', array('book_id'=>I('get.book_id')))}" class="btn <if condition="[ac] eq 'manager_chapter'">btn-danger</if>">章节修改调卷</a>
 	<a href="###" class="btn <if condition="[ac] eq 'tmp'">btn-danger</if>">公众版存稿箱</a>
 	<a href="###" class="btn <if condition="[ac] eq 'tmp'">btn-danger</if>">书评管理</a>
-	<a href="###" class="btn <if condition="[ac] eq 'tmp'">btn-danger</if>">申请签约</a>
+	<a href="{:ZU('Book/applyVip', 'ZL_AUTHOR_DOMAIN', array('book_id'=>I('get.book_id')))}" class="btn <if condition="[ac] eq 'apply_vip'">btn-danger</if>">申请签约</a>
 	{// <a href="###" class="btn <if condition="[ac] eq 'tmp'">btn-danger</if>">申请出版</a>}
+	
+	{// 签约作品。获取vip操作权限}
+	<?php if($book_info['bk_commision'] != 'D'):?>
+	<a href="###" class="btn <if condition="[ac] eq 'tmp'">btn-danger</if>">vip版存稿箱</a>
+	<a href="###" class="btn <if condition="[ac] eq 'tmp'">btn-danger</if>">vip订阅管理</a>
+	<?php endif;?>
 </div>

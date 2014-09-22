@@ -16,11 +16,14 @@ class ChapterController extends BaseController {
 	protected $book_id;		// 书籍id 
 	protected $book_info;	// 书籍信息
 	protected $chapter_obj;
+	protected $chapterId;	// 章节id
+	protected $chapterInfo; // 章节信息 
 
 	public function init()
 	{
 		parent::init();
 
+		$this->chapterId = I('get.ch_id');
 		$this->book_obj = D('Book', 'Service');
 		$this->book_id = I('get.book_id');
 		$this->checkChapterAcl();
@@ -84,6 +87,39 @@ class ChapterController extends BaseController {
 			} else {
 				$this->error('添加失败');
 			}
+		}
+	}
+
+	/**
+	 * 章节修改
+	 */
+	public function edit()
+	{
+		$chapter_info = $this->chapter_obj->getChapterInfo($this->chapterId);
+
+		if (empty($chapter_info))
+			$this->error('章节不存在'); 
+
+		$this->assign(array(
+			'chapter_info' => $chapter_info,
+		));
+		$this->display();
+	}
+
+	/**
+	 * 执行章节修改
+	 */
+	public function doEdit()
+	{
+		if (IS_POST) {
+			$data = I();
+			$data['bk_id'] = $this->book_id;
+			$rs = $this->chapter_obj->doEdit($data);
+			
+			if (!empty($rs))
+				$this->success('修改成功');
+			else
+				$this->error('修改失败');
 		}
 	}
 }

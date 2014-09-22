@@ -83,7 +83,6 @@ class BaseController extends Controller {
 	protected function checkChapterAcl()
 	{
 		$this->checkBookAcl();
-		
 	}
 
 	/**

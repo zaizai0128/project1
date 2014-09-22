@@ -1,0 +1,35 @@
+<extend name="Public/base" />
+
+<block name="main">
+<div class="row">
+	<div class="span3">
+		<include file="Public/sidebar" nav="book_manager"/>
+	</div>
+	<div class="span9">
+		<ul class="breadcrumb">
+			<li><a href="{:ZU('book/index', 'ZL_AUTHOR_DOMAIN')}">作品管理</a><span class="divider">/</span></li><li><a href="{:ZU('book/book', 'ZL_AUTHOR_DOMAIN', array('book_id'=>I('book_id')))}">{$book_info.bk_name}</a><span class="divider">/</span></li><li class="active">上传新章节</li>
+		</ul>
+
+		{// 书的常用管理操作 }
+		<include file="Public/actions" ac="apply_vip" />
+		
+		<?php if($assign['is_show']):?>
+		<form action="{:ZU('book/doApplyVip', 'ZL_AUTHOR_DOMAIN', array('book_id'=>I('book_id')))}" method="post" class="form form-horizontal">
+			
+			<div class="control-group">
+				<label class="control-label">申请签约描述</label>
+				<div class="controls">
+					<textarea class="input-block-level span5" name="apply_comments" rows="18" placeholder="申请签约描述"></textarea>
+				</div>
+			</div>
+			
+			<button class="btn btn-danger">提交</button>
+		</form>	
+		<?php else:?>					
+			您的作品已经等待审核中了，请稍等。<br/>
+			提交时间：{$apply_info.create_time}
+			等待状态：{:ZC(C('APPLY.vip_status'), $apply_info['status'])}
+		<?php endif;?>
+	</div>
+</div>
+</block>

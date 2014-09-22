@@ -1,6 +1,6 @@
 <?php
 /**
- * 公共Model类
+ * Model 父类
  * 
  * @author 	songmw<songmingwei@kongzhong.com>
  * @date 	2014-09-09
@@ -17,6 +17,9 @@ class BaseModel extends Model {
 		$this->init();
 	}
 	
+	/**
+	 * model初始化方法
+	 */
 	protected function init()
 	{
 

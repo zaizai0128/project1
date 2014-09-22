@@ -15,11 +15,13 @@ class ReadController extends HomeController {
 	protected $chapter_info = Null;
 	protected $is_vip = False; 	// 判断章节是否是vip
 	protected $isBuy = False;	// 判断是否已经购买
+	protected $chapterInstance = Null;
 
 	public function __construct()
 	{
 		parent::__construct();
 		$this->_checkChapterAcl();
+		$this->chapterInstance = D('Chapter', 'Service')->getInstance($this->book_id, $this->ch_id);
 	}
 
 	/**
@@ -32,9 +34,9 @@ class ReadController extends HomeController {
 			$this->_getVipChapterContent();
 		else
 			$this->_getChapterContent();
-
+		
 		// 获取相邻章节
-		$sibling_chapter = $this->chapter_api->getSiblingChapter();
+		$sibling_chapter = $this->chapterInstance->getSiblingChapter($this->chapter_info['ch_roll']);
 
 		$this->assign(array(
 			'book_info' => $this->book_info,

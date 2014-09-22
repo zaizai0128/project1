@@ -16,6 +16,10 @@ return array(
 	'ZL_DOMAIN_DOT' => '.zhulang.ne',
 	'ZL_NGINX_MODULE' => 'http://172.16.6.200',	// nginx module 地址 [用来对文件进行操作]
 
+	// 系统相关
+	'SYSTEM' => array(
+		'encoded' => 'utf-8',	// 系统编码
+	),
 	// session相关
 	'S' => array(
 		'user' => 'user',		//前台用户的session存放key
@@ -46,7 +50,14 @@ return array(
 		// 申请作品允许上传的最多章节数
 		'max_chapter_num' => 3,
 
-
+		// 申请vip的作品字数条件
+		'vip_book_size' => 30000,
+		'vip_book_size_zh' => '3万',
+		'vip_status' => array(
+			'00' => '等待审核',
+			'01' => '审核通过',
+			'02' => '审核未通过',
+		),
 	),
 
 	// 后台

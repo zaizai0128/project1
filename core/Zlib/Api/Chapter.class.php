@@ -115,7 +115,6 @@ class Chapter extends BaseModel {
 		$chapter_info = $this->_chapter_obj
 						->where('bk_id = '.$this->_book_id.' and ch_id = '.$this->_ch_id.' and ch_vip = 1')
 						->find();
-
 		// 计算章节的价格
 		$chapter_info['ch_price'] = z_word_to_money($chapter_info['ch_size']);
 
@@ -123,26 +122,9 @@ class Chapter extends BaseModel {
 		$vip_obj = $this->getChapterVipObj();
 		$chapter_content_info = $vip_obj->where('bk_id = '.$this->_book_id.' and ch_id = '.$this->_ch_id)
 								->find();
-		$chapter_info = array_merge($chapter_info, $chapter_content_info);
+		$chapter_info = array_merge($chapter_info, (array)$chapter_content_info);
 		$chapter_info['ch_intro'] = \Org\Util\String::msubstr($chapter_info['ch_content'], 0, 100);
 		
 		return $chapter_info;
-	}
-
-	/**
-	 * 获取上一章节 & 下一章节
-	 */
-	public function getSiblingChapter()
-	{
-		$sibling = array();
-		$sibling['prev'] = $this->_chapter_obj
-					->field('ch_id,ch_name,ch_vip')
-					->where('bk_id = '.$this->_book_id.' and ch_id < '.$this->_ch_id.' and ch_status = 0')
-					->order('ch_id desc')->find();		
-		$sibling['next'] = $this->_chapter_obj
-					->field('ch_id,ch_name,ch_vip')
-					->where('bk_id = '.$this->_book_id.' and ch_id > '.$this->_ch_id.' and ch_status = 0')
-					->order('ch_id asc')->find();
-		return $sibling;		
 	}
 }

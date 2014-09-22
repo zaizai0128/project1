@@ -23,7 +23,7 @@
 				<?php foreach($val['volume_chapter'] as $chapter_id=>$chapter_val):?>
 				<tr>
 					<th>《{$chapter_val.chapter_name}》</th>
-					<th><a data-target="#modal-edit" data-toggle="modal" data-backdrop="static" href="{:ZU('bookApplyChapter/edit','ZL_AUTHOR_DOMAIN', array('book_id'=>I('book_id'), 'ch_id'=>$chapter_id))}">编辑</a>|<a href="{:ZU('bookApply/book', 'ZL_AUTHOR_DOMAIN', array('book_id'=>I('book_id'), 'ch_id'=>$chapter_id))}">调卷</a></th>
+					<th><a data-target="#modal-edit" data-toggle="modal" data-backdrop="static" href="{:ZU('chapter/edit','ZL_AUTHOR_DOMAIN', array('book_id'=>I('book_id'), 'ch_id'=>$chapter_id))}">编辑</a>|<a href="{:ZU('bookApply/book', 'ZL_AUTHOR_DOMAIN', array('book_id'=>I('book_id'), 'ch_id'=>$chapter_id))}">调卷</a></th>
 				</tr>
 				<?php endforeach;?>
 			</tbody>

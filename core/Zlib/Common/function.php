@@ -110,3 +110,39 @@ if (!function_exists('z_word_to_money')) {
 		return $price;
 	}
 }
+
+/**
+ * curl 模拟post提交
+ *
+ * @param String $url
+ * @param Array $post
+ */
+if (!function_exists('z_request_post')) {
+	function z_request_post($url, $post)
+	{
+		if (is_array($post))
+			$post = http_build_query($post);
+
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_POST, True);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, True);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+		$info = curl_exec($ch);
+		curl_close($ch);
+		
+		return $info;
+	}
+}
+
+/**
+ * service层 返回的状态码，以及说明
+ *
+ * @param int code 信息码
+ * @param String 信息提示
+ * @return array('code'=>信息码, 'msg'=>信息提示);
+ */
+function z_info($code, $msg)
+{
+	return array('code'=>$code, 'msg'=>$msg);
+}

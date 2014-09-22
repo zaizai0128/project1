@@ -83,4 +83,43 @@ class BookController extends BaseController {
 				$this->error('修改失败');
 		}
 	}
+
+	/**
+	 * 申请签约
+	 *
+	 */
+	public function applyVip()
+	{
+		$assign = array();
+
+		// 获取签约状态，已经签约，则显示审核状态
+		$apply_info = D('BookApplyVip', 'Service')->getInfoByBookId($this->book_id);
+		$assign['is_show'] = empty($apply_info) ? True : False;
+
+		$this->assign(array(
+			'assign' => $assign,
+			'apply_info' => $apply_info,
+			'book_info' => $this->book_info,
+		));
+		$this->display();
+	}
+
+	/**
+	 * 执行申请签约
+	 */
+	public function doApplyVip()
+	{
+		if (IS_POST) {
+			$data = $this->book_info;
+			$data['apply_comments'] = I('post.apply_comments');
+
+			$state = D('BookApplyVip', 'Service')->doAdd($data);
+
+			if ($state['code'] > 0) {
+				$this->success($state['msg']);
+			} else {
+				$this->error($state['msg']);
+			}
+		}
+	}
 }

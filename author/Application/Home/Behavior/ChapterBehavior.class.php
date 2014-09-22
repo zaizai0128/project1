@@ -50,9 +50,15 @@ class ChapterBehavior {
 		
 		if (!$rs) return False;
 
+		// 如果是vip则更新vip章节
+		if ($chapter_info['ch_vip'] == 1) {
+			$book->bk_vip_name = $chapter_info['ch_name'];
+			$book->bk_vip_ch_id = $chapter_info['ch_id'];
+		} else {
+			$book->bk_public_name = $chapter_info['ch_name'];
+			$book->bk_public_ch_id = $chapter_info['ch_id'];
+		}
 		$book->bk_now_date = $chapter_info['ch_update'];
-		$book->bk_public_name = $chapter_info['ch_name'];
-		$book->bk_public_ch_id = $chapter_info['ch_id'];
 		$book->ch_total += 1;
 		$book->save();
 	}

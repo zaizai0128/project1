@@ -30,6 +30,11 @@
 				<label for="input_chapter_name" class="control-label">章节标题</label>
 				<div class="controls">
 					<input type="text" name="ch_name" placeholder="章节标题" id="input_chapter_name"/>
+					
+					{// 如果是vip作品，则有权利设置为vip章节 }
+					<?php if($book_info['bk_commision'] != 'D'):?>
+					<input type="checkbox" value="1" name="ch_vip"/>vip章节
+					<?php endif;?>
 				</div>
 			</div>
 			<div class="control-group">
