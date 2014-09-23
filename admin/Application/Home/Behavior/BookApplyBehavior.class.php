@@ -79,7 +79,7 @@ class BookApplyBehavior {
 			$val['ch_poster_id'] = $book_apply['bk_author_id'];
 			$val['ch_poster'] = $book_apply['bk_author'];
 			$val['bk_id'] = $book_id;
-			$val['ch_roll'] = C('BK.start_volume');
+			$val['ch_roll'] = C('BOOK.start_volume');
 			$chapter_obj->createChapter($val);
 		}
 

@@ -19,7 +19,7 @@ class VolumeService extends VolumeModel {
 	 */
 	public function getVolumeList($book_id, $is_intro = True)
 	{
-		$volume_list = C('BK.default_volume');
+		$volume_list = C('BOOK.default_volume');
 		$result = (array)self::getVolumeById($book_id);
 		if (!empty($result)) {
 
@@ -57,7 +57,7 @@ class VolumeService extends VolumeModel {
 				->find();
 				
 		if (empty($volume['max'])) {
-			return C('BK.start_volume');
+			return C('BOOK.start_volume');
 		} else {
 			return $volume['max']+1;
 		}

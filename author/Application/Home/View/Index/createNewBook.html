@@ -29,7 +29,7 @@
 				<label for="book_accredit" class="control-label">授权等级</label>
 				<div class="controls">
 					<select name="bk_accredit" id="book_accredit">
-						<?php foreach(C('BK.auth_level') as $key=>$val):?>
+						<?php foreach(C('BOOK.auth_level') as $key=>$val):?>
 						<option value="{$key}">{$val}</option>
 						<?php endforeach;?>
 					</select>

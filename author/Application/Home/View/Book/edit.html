@@ -19,7 +19,7 @@
 				<label for="input_full_flag" class="control-label">连载属性</label>
 				<div class="controls">
 					<select name="bk_fullflag" id="input_full_flag">
-						<?php foreach(C('BK.full_flag') as $key=>$val):?>
+						<?php foreach(C('BOOK.full_flag') as $key=>$val):?>
 						<option value="{$key}" <?php if($key == $book_info['bk_fullflag']):?>selected="true"<?php endif;?>>{$val}</option>
 						<?php endforeach;?>
 					</select>

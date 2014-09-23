@@ -208,7 +208,7 @@
               <ul class="bdlst_02">
                 <li>作品类型：{$assign.category}</li>
                 <li>入库日期：{$book_info.bk_cre_time|substr=0,-9}</li>
-                <li>更新情况：{:ZC(C('BK.full_flag'), $book_info['bk_fullflag'])}</li>
+                <li>更新情况：{:ZC(C('BOOK.full_flag'), $book_info['bk_fullflag'])}</li>
                 <li>周点击：{$assign.rank.bk_visit_week}</li>
                 <li>周推荐：{$assign.rank.bk_com_week}</li>
               </ul>

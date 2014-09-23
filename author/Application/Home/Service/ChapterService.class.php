@@ -23,7 +23,7 @@ class ChapterService extends ChapterModel {
 		$rs = parent::doEdit($data);
 
 		// 修改章节内容文件
-		$nginx_module_set = C('CH.set').'/'.$data['bk_id'].'/'.$data['ch_id'];
+		$nginx_module_set = C('CHAPTER.set').'/'.$data['bk_id'].'/'.$data['ch_id'];
 		z_request_post($nginx_module_set, $chapter_content);
 		
 		return $rs;
@@ -35,7 +35,7 @@ class ChapterService extends ChapterModel {
 	public function getChapterInfo($chapter_id)
 	{
 		$chapter_info = parent::getChapterInfo($chapter_id);
-		$get_content_url = C('CH.read').'/'.$this->book_id.'/'.$chapter_id;
+		$get_content_url = C('CHAPTER.read').'/'.$this->book_id.'/'.$chapter_id;
 		$chapter_info['ch_content'] = file_get_contents($get_content_url);
 		$chapter_info['ch_content'] = substr($chapter_info['ch_content'], 4);
 		return $chapter_info;
@@ -70,7 +70,7 @@ class ChapterService extends ChapterModel {
 	public function createNewChapter($chapter_info)
 	{
 		$chapter_info = array_filter($chapter_info);
-		$chapter_info['ch_roll'] = empty($chapter_info['ch_roll']) ? C('BK.start_volume') : (int)$chapter_info['ch_roll'];
+		$chapter_info['ch_roll'] = empty($chapter_info['ch_roll']) ? C('BOOK.start_volume') : (int)$chapter_info['ch_roll'];
 		$chapter_info['ch_cre_time'] = date('Y-m-d H:i:s', time());
 		$chapter_info['ch_update'] = date('Y-m-d H:i:s', time());
 		$chapter_info['ch_order'] = $this->getLastChapterOrder();
@@ -98,7 +98,7 @@ class ChapterService extends ChapterModel {
 
 		// 普通章节处理
 		} else {
-			$nginx_module_set = C('CH.set').'/'.$book_id.'/'.$chapter_id;
+			$nginx_module_set = C('CHAPTER.set').'/'.$book_id.'/'.$chapter_id;
 			$info = z_request_post($nginx_module_set, $chapter_content);
 		}
 

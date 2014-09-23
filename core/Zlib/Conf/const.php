@@ -167,11 +167,11 @@ return array(
 		'default_volume' => array(
 			'-10' => '垃圾箱',
 			'100' => '作品相关介绍',
-			'1000' => '正文',
+			// '1000' => '正文',
 		),
 
 		// 分卷开始id
-		'start_volume' => 1000,
+		'start_volume' => 1000,		// 对应的是上面的 正文
 		
 		// 授权等级 -- 新建作品时候的授权等级
 		'auth_level' => array(
@@ -192,13 +192,13 @@ return array(
 			'00' => '未审核',
 			'01' => '审核通过',
 			'02' => '审核未通过',
-			'03' => '审核未通过',		// 兼容之前定义,
+			'03' => '审核暂时通过',		// 兼容之前定义,
 		),
 
 		// 签约类型
 		'commision' => array(
-			'A' => array ("name" => "A级签约","show" => 'A级签约' );
-			'B' => array ("name" => "准A级签约","show" => "本站首发" );
+			'A' => array("name" => "A级签约","show" => 'A级签约' ),
+			'B' => array("name" => "准A级签约","show" => "本站首发" ),
 			'C' => 'C',
 			'D' => 'D',
 			'E' => 'E',
@@ -215,9 +215,10 @@ return array(
 			'C' => '签约',
 		),
 
-		'commision_vip_chapter' => array ('A', 'T', 'X', 'Y', 'Z'),		// 允许发VIP章节 
+		'commision_vip_chapter' => array('A', 'T', 'X', 'Y', 'Z'),		// 允许发VIP章节 
 
-		'intro_ban_words' => array('中国作者素材库',
+		'intro_ban_words' => array(
+				'中国作者素材库',
 				'zzsck.com',
 				'飞卢',
 				'起点',

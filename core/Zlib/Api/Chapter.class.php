@@ -75,7 +75,7 @@ class Chapter extends BaseModel {
 	 */
 	public function getChapterContent()
 	{
-		$chapter_read = C('CH.read') . '/'.$this->_book_id.'/'.$this->_ch_id;
+		$chapter_read = C('CHAPTER.read') . '/'.$this->_book_id.'/'.$this->_ch_id;
 		$content = file_get_contents($chapter_read);
 		// 获取头4位编码, 用来判断获取状态
 		$status = substr($content, 0, 3);
