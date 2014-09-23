@@ -63,8 +63,8 @@ class CachedChapter {
 			$m = M($table)->where(' ch_status=0 and bk_id = '.$book_id)->order('ch_roll asc, ch_order asc')->select();
 			$ch_order = 0;
 			foreach ($m as $row) {
-				$row['ch_order'] = $ch_order;
-				$ch_order ++;
+				// $row['ch_order'] = $ch_order;
+				// $ch_order ++;
 				$this->mChapter[$row['ch_id']] = $row;
 				array_push($this->mVolume[$row['ch_roll']][$this->mVolumeChaptersIndex], $row['ch_id']);
 			} 
