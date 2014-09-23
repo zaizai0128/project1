@@ -9,6 +9,7 @@
 
 return array(
 	
+	'ZL_WWW' => 'http://www.zhulang.ne',				// www域名
 	'ZL_DOMAIN' => 'http://zhulang.ne',					// 主站域名
 	'ZL_BOOK_DOMAIN' => 'http://book.zhulang.ne',		// 书站域名
 	'ZL_AUTHOR_DOMAIN' => 'http://author.zhulang.ne',	// 作者站域名
@@ -86,9 +87,9 @@ return array(
 	// 章节相关
 	'CH' => array(
 		// 普通章节的操作地址
-		'read' => 'http://172.16.6.200/book/read',	// [get]读/book_id/chapter_id
-		'set' => 'http://172.16.6.200/book/set',	// [post]生成/book_id/chapter_id
-		'rm' => 'http://172.16.6.200/book/rm',		// [get]删除/book_id/chapter_id
+		'read' => 'http://172.16.6.200/books/read',	// [get]读/book_id/chapter_id
+		'set' => 'http://172.16.6.200/books/set',	// [post]生成/book_id/chapter_id
+		'rm' => 'http://172.16.6.200/books/rm',		// [get]删除/book_id/chapter_id
 
 	),
 	

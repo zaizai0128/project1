@@ -12,6 +12,35 @@ use Zlib\Model\ZlibUserModel;
 class UserService extends ZlibUserModel {
 
 	/**
+	 * 用户登录
+	 */
+	public function doLogin($data)
+	{
+		if (empty($data['username'])) return z_info(-1, '用户名不允许为空');
+		if (empty($data['password'])) return z_info(-2, '密码不允许为空');
+
+		// 通过用户名查找用户信息
+		$user_info = parent::getUserInfoByUserName($data['username']);
+
+		if (empty($user_info)) 
+			return z_info(-3, '用户不存在');
+		if ($user_info['user_state'] == 1) 
+			return z_info(-4, '该用户已被禁用');
+		if ($user_info['user_pwd'] != md5($data['password']))
+			return z_info(-5, '密码不正确');
+
+		// 销毁密码
+		unset($user_info['user_pwd']);
+
+		// 登录成功 .. 设置一些操作
+
+		// 保存session
+		ZS('S.user', Null, $user_info);
+
+		return z_info(1, '登录成功');
+	}
+
+	/**
 	 * 个性化添加用户
 	 */
 	public function doAdd($data)
@@ -29,8 +58,7 @@ class UserService extends ZlibUserModel {
 		
 		$final_data['user_name'] = $data['username'];
 		$final_data['user_pwd'] = md5($data['password']);
-		// 个性化注册为0
-		$final_data['reg_type'] = 0;
+		$final_data['reg_type'] = 0;		// 个性化注册为0
 		$final_data['user_state'] = 0;
 		$final_data['user_type'] = '00';
 		$final_data['user_join'] = z_now();
@@ -40,6 +68,15 @@ class UserService extends ZlibUserModel {
 		if ($user_id) {
 			return z_info(1, '添加成功');
 		}
+	}
+
+	/**
+	 * 用户退出
+	 */
+	public function logout()
+	{
+		ZS('S.user', Null, Null, -1);
+		return True;
 	}
 
 }

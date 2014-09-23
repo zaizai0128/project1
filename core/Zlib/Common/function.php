@@ -63,20 +63,40 @@ if (!function_exists('ZC')) {
  * @param String C方法获取的session前缀
  * @param String session方法正常获取方法  .分割
  * @param string 设置的值
+ * @param String 生存时间， 为 -1 则销毁session
  */
 if (!function_exists('ZS')) {
-	function ZS($prefix, $dot = Null, $val = Null)
+	function ZS($prefix, $dot = Null, $val = Null, $life = Null)
 	{
+		$prefix = C($prefix);
+
+		// 销毁session
+		if (isset($life) && $life == -1) {
+			return session($prefix, Null);
+		}
+
+		// 获取session
 		if (!isset($val)) {
+			// 判断是否存在
 			if ($dot == '?') {
-				return session('?'.C($prefix));
+				return session('?'.$prefix);
+			// 获取全部
 			} elseif(!isset($dot)) {
-				return session(C($prefix));
+				return session($prefix);
+			// 获取带.的
 			} else {
-				return session(C($prefix).'.'.$dot);
+				return session($prefix.'.'.$dot);
 			}
+
+		// 设置session
 		} else {
-			return session(C($prefix).'.'.$dot, $val);
+			// 设置带 .的
+			if (isset($dot)) {
+				return session($prefix.'.'.$dot, $val);
+			} else {
+			// 设置全部的
+				session($prefix, $val);
+			}
 		}
 	}
 }

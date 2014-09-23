@@ -22,7 +22,7 @@ class BaseModel extends Model {
 	 */
 	protected function init()
 	{
-
+		
 	}
 
 	/**

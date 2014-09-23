@@ -20,7 +20,7 @@ class UserService extends ZlibUserModel {
 		// 判断用户名是否含有非法字符等...
 
 		// 判断用户名是否已存在
-		$user = $this->getUserInfoByUsername($username, 'user_id');
+		$user = $this->getUserInfoByUserName($username, 'user_id');
 
 		if (!empty($user)) return array('code'=>-1, 'msg'=>'用户名已存在'); 
 

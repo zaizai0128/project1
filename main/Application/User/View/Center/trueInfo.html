@@ -28,25 +28,25 @@
             <div class="control-group">
               <label for="inputAuthorName" class="control-label">笔名</label>
               <div class="controls">
-                <input type="text" name="author_name" placeholder="笔名" id="inputAuthorName" value="{$true_info.author_name}"/>
+                <input type="text" name="name" placeholder="笔名" id="inputAuthorName" value="{$author_info.author_name}"/>
               </div>
             </div>
 
             <div class="control-group">
               <label for="inputIdCard" class="control-label">身份证号</label>
               <div class="controls">
-                <input type="text" id="inputIdCard" name="user_idcard" placeholder="身份证号" value="{$true_info.user_idcard}" />
+                <input type="text" id="inputIdCard" name="idcard" placeholder="身份证号" value="{$author_info.user_idcard}" />
               </div>
             </div>
 
             <div class="control-group">
               <label for="inputTrueName" class="control-label">真实姓名</label>  
               <div class="controls">
-                <input type="text" name="user_true_name" placeholder="真实姓名" id="inputTrueName" value="{$true_info.user_true_name}" />
+                <input type="text" name="true_name" placeholder="真实姓名" id="inputTrueName" value="{$author_info.user_true_name}" />
               </div>
             </div>
                         
-            <button class="btn btn-danger"><?php if(empty($true_info)):?>提交<?php else:?>修改<?php endif;?></button>
+            <button class="btn btn-danger"><?php if(empty($author_info)):?>提交<?php else:?>修改<?php endif;?></button>
           </form>
 
     		</div>

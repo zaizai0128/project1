@@ -1,32 +1,30 @@
 <?php
 /**
- * 用户中心controller
+ * 用户中心 
  *
  * @author 	songmw<songmingwei@kongzhong.com>
  * @date 	2014-09-09
  * @version 1.0
  */
 namespace User\Controller;
-use Zlib\Api as Zapi;
 
 class CenterController extends UserController {
 
-	protected $_user;
+	protected $userInstance = Null;
+	public $userInfo = Null;
 
 	public function __construct()
 	{
 		parent::__construct();
-
-		$this->_user = new Zapi\User;
-		$this->_author = new Zapi\Author;
-		$this->_init();
+		$this->userInstance = D('User', 'Service');
+		$this->init();
 	}
 
-	public function _init()
+	public function init()
 	{
-		$info = $this->_user->getInfo($this->user_id);
+		$this->userInfo = $this->userInstance->getUserInfoByUserId($this->userId);
 		$this->assign(array(
-			'info' => $info
+			'user_info' => $this->userInfo,
 		));
 	}
 
@@ -44,9 +42,8 @@ class CenterController extends UserController {
 	public function doAddExt()
 	{
 		if (IS_POST) {
-			$data = I();
-			$data['user_id'] = $this->user_id;
-			$state = $this->_user->updateExt($data);
+			$data = array_merge($this->userInfo, I());
+			$state = $this->userInstance->doEditExt($data);
 
 			if ($state['code'] > 0)
 				$this->success($state['msg'], ZU('user/center/index')); 
@@ -61,30 +58,26 @@ class CenterController extends UserController {
 	public function apply()
 	{	
 		// 判断是否需要补充个人真实信息
-		if (!$this->_author->checkTrueInfo($this->user_id))
-			$this->error('请先补充个人真实信息', ZU('user/center/trueInfo'));
+		$state = D('UserAuthor', 'Service')->checkUserAuthorInfo($this->userId);
 
-		$full_info = array();
+		// 调到补充个人真实信息页
+		if ($state['code'] <=0)
+			$this->error($state['msg'], ZU('user/center/trueInfo'));
+
+		// 获取个人申请信息
+		$info = $this->userInstance->getApplyInfoByUserId($this->userId);
+
+		// 判断显示申请界面还是进度界面
 		$assign['is_show'] = True;
-
-		// 获取申请信息
-		$info = $this->_author->getApplyById($this->user_id);
-
-		// 如果没有申请作者的信息，则显示申请界面
-		if (empty($info)) {
-
-			// 获取作者的全部信息[包含真实信息]
-			$full_info = $this->_author->getInfo($this->user_id, True);
-
-		// 否则显示申请进度
-		} else {
+		// 如果没有个人信息，则读取个人全部信息，并显示申请界面
+		if (empty($info))
+			$info = $this->userInstance->getUserFullInfoByUserId($this->userId);
+		else
 			$assign['is_show'] = False;
-			$full_info = $info;
-		}
-		
+
 		$this->assign(array(
 			'assign' => $assign,
-			'full_info' => $full_info,
+			'full_info' => $info,
 		));
 		$this->display();
 	}
@@ -95,20 +88,13 @@ class CenterController extends UserController {
 	public function doApply()
 	{
 		if (IS_POST) {
+			$data = array_merge($this->userInfo, I());
+			$state = $this->userInstance->doAddApply($data);
 
-			$info = $this->_author->getApplyById($this->user_id);
-			if (!empty($info)) {
-				$this->error('您已经提交了申请，正在审核阶段', ZU('user/center/apply'));
-			}
-
-			$data = I();
-			$data['user_id'] = $this->user_id;
-			$state = $this->_author->apply($data);
-			
-			if ($state['code'] > 0) 
-				$this->success($state['msg'], ZU('user/center/index'));
-			else 
+			if ($state['code'] <=0 ) {
 				$this->error($state['msg']);
+			}
+			$this->success($state['msg'], ZU('user/center/index'));
 		}
 	}
 
@@ -116,11 +102,11 @@ class CenterController extends UserController {
 	 * 更新真实信息
 	 */
 	public function trueInfo()
-	{	
-		$true_info = $this->_author->getTrueInfo($this->user_id);
+	{
+		$author_info = D('UserAuthor', 'Service')->getAuthorInfoByUserId($this->userId);
 
 		$this->assign(array(
-			'true_info' => $true_info
+			'author_info' => $author_info
 		));
 		$this->display();
 	}
@@ -131,17 +117,9 @@ class CenterController extends UserController {
 	public function doTrueInfo()
 	{
 		if (IS_POST) {
-			$data = I();
-			$data['user_id'] = $this->user_id;
+			$data = array_merge($this->userInfo, I());
 			
-			// 编辑
-			if ($this->_author->checkTrueInfo($this->user_id)) {
-				$state = $this->_author->updateTrueInfo($data);
-
-			// 创建 
-			} else {
-				$state = $this->_author->updateTrueInfo($data, False);
-			}
+			$state = D('UserAuthor', 'Service')->doEdit($data);
 
 			if ($state['code'] > 0)
 				$this->success($state['msg'], ZU('user/center/index'));
@@ -168,14 +146,5 @@ class CenterController extends UserController {
 
 			dump(I());
 		}
-	}
-
-	/**
-	 * 用户退出
-	 */
-	public function logout()
-	{
-		$state = $this->_user->logout();		
-		$this->success('退出成功', ZU('/index/index'));
 	}
 }

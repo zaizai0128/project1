@@ -11,16 +11,15 @@ use Think\Controller;
 
 class UserController extends Controller {
 
-	protected $user_id;
+	protected $userId = Null;
 
 	public function __construct()
 	{
 		parent::__construct();
 
-		if (!session('user')) {
-			$this->error('请登录', U('/login/index'));
-		}
-
-		$this->user_id = session('user.user_id');
+		// 权限验证机制
+		\Zlib\Api\Acl::run();
+		
+		$this->userId = ZS('S.user', 'user_id');
 	}
 }

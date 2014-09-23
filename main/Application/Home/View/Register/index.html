@@ -12,7 +12,7 @@
 <div class="container">
   <div class="wrap">
     <div class="header">
-      <h1 class="logo"><a href="#"><img src="__STYLE__/login/images/logo.jpg" /></a></h1>
+      <h1 class="logo"><a href="{:C('ZL_WWW')}"><img src="__STYLE__/login/images/logo.jpg" /></a></h1>
       <h2 class="top_sub">会员注册</h2>
     </div>
     <div class="main">
@@ -22,7 +22,7 @@
             {// 注册按钮}
             <include file="p_reg_sidebar" nav="index"/>                
            </div>
-           <form action="{:ZU('register/doRegister')}" onsubmit="return $.checkSubmit();" method="post">
+           <form action="{:ZU('register/doRegister')}" onsubmit="return $.checkRegsiter();" method="post">
             <ul class="frm_lst JQ_Box JQ_Frmlst" style="display:block">
               <li class="frm">
                 <div class="frm_inp">
@@ -79,8 +79,8 @@
         </div>
         <div class="reg_tips">
         	<div class="reg_acc">
-               <a href="#" class="acc_no">还没有逐浪网账号?</a>
-               <a href="#" class="sbtn_01">立即登录</a>
+               <a href="{:ZU('login/index')}" class="acc_no">已经有逐浪网账号?</a>
+               <a href="{:ZU('login/index')}" class="sbtn_01">立即登录</a>
             </div>
             <dl class="tird_acc">
             	<dt>也可使用下列第三方账号登录</dt>
@@ -144,7 +144,7 @@
       /**
       * 验证提交
       */
-      checkSubmit : function()
+      checkRegsiter : function()
       {
         // 错误信息存放
         var err = $('.error-info');

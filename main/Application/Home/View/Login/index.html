@@ -1,74 +1,106 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<meta charset="utf-8">
-	<title>{$seo.title}</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link href="__CSS__/bootstrap.min.css" rel="stylesheet" media="screen">
-	<link href="__CSS__/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
-	<style>
-	body {
-		padding-top: 80px;
-        padding-bottom: 40px;
-	}
-	.form-signin {
-        max-width: 300px;
-        padding: 19px 29px 29px;
-        margin: 0 auto 20px;
-        background-color: #fff;
-        border: 1px solid #e5e5e5;
-        -webkit-border-radius: 5px;
-           -moz-border-radius: 5px;
-                border-radius: 5px;
-        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-           -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-                box-shadow: 0 1px 2px rgba(0,0,0,.05);
-      }
-      .form-signin .form-signin-heading,
-      .form-signin .checkbox {
-        margin-bottom: 10px;
-      }
-      .form-signin input[type="text"],
-      .form-signin input[type="password"] {
-        font-size: 16px;
-        height: auto;
-        margin-bottom: 15px;
-        padding: 7px 9px;
-      }
-	</style>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>用户登录</title>
+<link href="__STYLE__/login/css/user.css" type="text/css" rel="stylesheet">
+<link href="__STYLE__/login/css/base.css" type="text/css" rel="stylesheet">
+<script src="__JS__/jquery.min.js"></script>
+<script src="__JS__/zlang.js"></script>
 </head>
 <body>
-
-	  <!-- 公共头部 -->
-    <include file="Common@Public/header" />
-
-    <div class="container">
-
-		<form action="{:U('Login/doLogin')}" class="form-signin" method="post">
-			
-			<h2 class="form-signin-heading">请登录</h2>	
-			<input type="text" placeholder="用户名" name="username" class="input-block-level" />
-			<input type="password" placeholder="密码" name="password" class="input-block-level" />
-			<button class="btn btn-large btn-primary">登录</button>
-      <a class="btn btn-large btn-info" href="{:U('login/register')}">注册</a>
-		</form>
-
-	    <hr>
-	    
-		  <!-- 公共底部 -->
-      <include file="Common@Public/footer" />
-
+<div class="container">
+  <div class="wrap">
+    <div class="header">
+      <h1 class="logo"><a href="#"><img src="__STYLE__/login/images/logo.jpg" /></a></h1>
+      <h2 class="top_sub">会员登录</h2>
     </div>
+    <div class="main">
+      <div class="reg_login">
+        <div class="login_frm">
+          <form action="{:ZU('login/doLogin')}" onsubmit="return $.checkLogin();" method="post">
+            <ul class="frm_lst JQ_Frmlst">
+              <li class="frm">
+                <div class="frm_inp"> 
+                  	<input type="text" name="username" value="" placeholder="手机号/邮箱/用户名" class="inp i-username" />
+                </div>
+                <div class="frm_tip">
+                	<span class="txt"></span>
+                </div>
+              </li>
+              <li class="frm">
+                <div class="frm_inp">
+                	<span class="frm_inp_wrap">
+                    <input type="password" name="password" value="" class="inp i-password"/>
+                  </span> 	
+                </div>
+                <div class="frm_tip">
+                	<span class="txt"></span>
+                </div>
+              </li>
+              <li class="frm">
+              	<div class="frm_inp frm_chk">
+                   <label><input type="checkbox" />自动登录</label>
+                   <a href="javascript:;" class="fgt_link">忘记密码?</a>
+                </div>
+              </li>
+              <li class="frm">
+              	<div class="frm_inp">
+                	<!-- <a href="#" class="sbtn_01">登录</a> -->
+                  <button type="submit" class="sbtn_01">提交注册</button>
+                </div>
+              </li>
+            </ul>
+          </form>
+        </div>
+        <div class="reg_tips">
+        	<div class="reg_acc">
+               <a href="{:ZU('register/index')}" class="acc_no">还没有逐浪网账号?</a>
+               <a href="{:ZU('register/index')}" class="sbtn_01">3秒注册新账号</a>
+            </div>
+            <dl class="tird_acc">
+            	<dt>也可使用下列第三方账号登录</dt>
+                <dd>
+                	<a href="#"><img src="__STYLE__/login/images/thid_img01.jpg" /></a>
+                    <a href="#"><img src="__STYLE__/login/images/thid_img02.jpg" /></a>
+                    <a href="#"><img src="__STYLE__/login/images/thid_img03.jpg" /></a>
+                </dd>
+            </dl>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+        <p>Copyright © 2014 ZHULANG.COM All rights Reserved 逐浪网版权所有<br />
+           客服电话：025-66670800
+        </p>
+    </div>
+  </div>
+</div>
 
+<script type="text/javascript">
+jQuery(function($){
 
-	<script src="__JS__/jquery.min.js"></script>
-	<script src="__JS__/bootstrap.min.js"></script>
-	<script src="__JS__/zlang.js"></script>
-	<script type="text/javascript">
-		jQuery(function(){
+  $.extend({
 
-			$.debug('登录');
-		});
-	</script>
+    /**
+     * 验证登录js
+     *
+     */
+    checkLogin : function()
+    {
+      var username = $('.i-username').val().replace(/\s+/, '');
+      var password = $('.i-password').val().replace(/\s+/, '');
+
+      if (username == '') return false;
+      if (password == '') return false;
+
+      // ajax验证... 待写
+      return true;
+    }
+
+  });
+
+});
+</script>
 </body>
 </html>
