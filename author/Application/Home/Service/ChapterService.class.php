@@ -21,7 +21,10 @@ class ChapterService extends ChapterModel {
 		$data['ch_size'] = mb_strlen($data['ch_content'], C('SYSTEM.encoded'));
 		unset($data['ch_content']);
 		$rs = parent::doEdit($data);
-		z_request_post(C('CH.set'), array('ch_content'=>$chapter_content));
+
+		// 修改章节内容文件
+		$nginx_module_set = C('CH.set').'/'.$data['bk_id'].'/'.$data['ch_id'];
+		z_request_post($nginx_module_set, $chapter_content);
 		
 		return $rs;
 	}
@@ -96,7 +99,7 @@ class ChapterService extends ChapterModel {
 		// 普通章节处理
 		} else {
 			$nginx_module_set = C('CH.set').'/'.$book_id.'/'.$chapter_id;
-			$info = z_request_post($nginx_module_set, 'content='.$chapter_content);
+			$info = z_request_post($nginx_module_set, $chapter_content);
 		}
 
 		return $chapter_id;

@@ -54,7 +54,6 @@ class ChapterController extends BaseController {
 		$volume_obj = D('Volume', 'Service');
 		$volume_list = $volume_obj->getVolumeList($this->book_id, False);
 
-
 		$this->assign(array(
 			'volume_list' => $volume_list,
 			'book_info' => $this->book_info,
