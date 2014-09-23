@@ -166,3 +166,121 @@ function z_check_verify($code, $id = '')
 	$verify = new \Think\Verify();
 	return $verify->check($code, $id);
 }
+
+// by libin from old 
+function z_get_initial($str) 
+{
+        $str = iconv("UTF-8", "GBK", $str);
+        $asc = ord(substr( $str, 0, 1));
+        if ($asc < 160) { // 非中文 
+                if ($asc >= 48 && $asc <= 57) { // 数字
+                        return "1";
+                } elseif ($asc >= 65 && $asc <= 90) { // A--Z
+                        return chr ( $asc );
+                } elseif ($asc >= 97 && $asc <= 122) { // a--z
+                        return chr ( $asc - 32 );
+                } else {
+                        return "}"; //其他
+                }
+        } else { //中文
+                $asc = $asc * 1000 + ord ( substr ( $str, 1, 1 ) );
+                if ($asc >= 176161 && $asc < 176197) { //获取拼音首字母A--Z
+                        return "A";
+                } elseif ($asc >= 176197 && $asc < 178193) {
+                        return "B";
+                } elseif ($asc >= 178193 && $asc < 180238) {
+                        return "C";
+                } elseif ($asc >= 180238 && $asc < 182234) {
+                        return "D";
+		} elseif ($asc >= 182234 && $asc < 183162) {
+			return "E";
+		} elseif ($asc >= 183162 && $asc < 184193) {
+			return "F";
+		} elseif ($asc >= 184193 && $asc < 185254) {
+			return "G";
+		} elseif ($asc >= 185254 && $asc < 187247) {
+			return "H";
+		} elseif ($asc >= 187247 && $asc < 191166) {
+			return "J";
+		} elseif ($asc >= 191166 && $asc < 192172) {
+			return "K";
+		} elseif ($asc >= 192172 && $asc < 194232) {
+			return "L";
+		} elseif ($asc >= 194232 && $asc < 196195) {
+			return "M";
+		} elseif ($asc >= 196195 && $asc < 197182) {
+			return "N";
+		} elseif ($asc >= 197182 && $asc < 197190) {
+			return "O";
+		} elseif ($asc >= 197190 && $asc < 198218) {
+			return "P";
+		} elseif ($asc >= 198218 && $asc < 200187) {
+			return "Q";
+		} elseif ($asc >= 200187 && $asc < 200246) {
+			return "R";
+		} elseif ($asc >= 200246 && $asc < 203250) {
+			return "S";
+		} elseif ($asc >= 203250 && $asc < 205218) {
+			return "T";
+		} elseif ($asc >= 205218 && $asc < 206244) {
+			return "W";
+		} elseif ($asc >= 206244 && $asc < 209185) {
+			return "X";
+		} elseif ($asc >= 209185 && $asc < 212209) {
+			return "Y";
+		} elseif ($asc >= 212209) {
+			return "Z";
+		} else {
+			return "}";
+		}
+	}
+}
+
+function z_cut_str($string, $sublen, $start = 0, $code = 'UTF-8') 
+{
+        if ($code == 'UTF-8') {
+                $pa = "/[\x01-\x7f]|[\xc2-\xdf][\x80-\xbf]|\xe0[\xa0-\xbf][\x80-\xbf]|[\xe1-\xef][\x80-\xbf][\x80-\xbf]|\xf0[\x90-\x
+bf][\x80-\xbf][\x80-\xbf]|[\xf1-\xf7][\x80-\xbf][\x80-\xbf][\x80-\xbf]/";
+                preg_match_all ( $pa, $string, $t_string );
+                if (count ( $t_string [0] ) - $start > $sublen)
+                        return join ( '', array_slice ( $t_string [0], $start, $sublen ) ) . "...";
+                return join ( '', array_slice ( $t_string [0], $start, $sublen ) );
+        } else {
+                $start = $start * 2;
+                $sublen = $sublen * 2;
+                $strlen = strlen ( $string );
+                $tmpstr = '';
+                for($i = 0; $i < $strlen; $i ++) {
+                        if ($i >= $start && $i < ($start + $sublen)) {
+                                if (ord ( substr ( $string, $i, 1 ) ) > 129) {
+                                        $tmpstr .= substr ( $string, $i, 2 );
+                                } else {
+                                        $tmpstr .= substr ( $string, $i, 1 );
+                                }
+                        }
+                        if (ord ( substr ( $string, $i, 1 ) ) > 129)
+                                $i ++;
+                }
+                if (strlen ( $tmpstr ) < $strlen)
+                        $tmpstr .= "......";
+                return $tmpstr;
+        }
+}
+
+function z_chen_substr($str, $start, $len)  //字符位置从0开始
+{
+        $strlen = strlen ( $str );
+        for($i = 0; $i < $strlen; $i ++) {
+                if ($i >= $start && $i < ($start + $len)) {
+                        if (ord ( substr ( $str, $i, 1 ) ) > 0xa1) {
+                                $tmpstr .= substr ( $str, $i, 2 );
+                        } else {
+                                $tmpstr .= substr ( $str, $i, 1 );
+                        }
+                }
+                if (ord ( substr ( $str, $i, 1 ) ) > 0xa1) {
+                        $i ++;
+                }
+        }
+        return $tmpstr;
+}
