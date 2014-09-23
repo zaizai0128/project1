@@ -7,9 +7,22 @@
  * @version 1.0
  */
 namespace Home\Service;
-use Home\Model\ChapterVipModel;
+use Zlib\Model\ZlibChapterVipModel;
 
-class ChapterVipService extends ChapterVipModel {
+class ChapterVipService extends ZlibChapterVipModel {
+
+	/**
+	 * 编辑
+	 */
+	public function doEdit($data)
+	{
+		$final_data['ch_name'] = $data['ch_name'];
+		$final_data['ch_content'] = $data['ch_content'];
+		$final_data['bk_id'] = $data['bk_id'];
+		$final_data['ch_id'] = $data['ch_id'];
+		
+		return parent::doEdit($final_data);
+	}
 
 	/**
 	 * override

@@ -20,12 +20,21 @@ class ChapterService extends ChapterModel {
 		$data['ch_update'] = date('Y-m-d H:i:s', time());
 		$data['ch_size'] = mb_strlen($data['ch_content'], C('SYSTEM.encoded'));
 		unset($data['ch_content']);
+		$info = $this->getChapterInfo($data['ch_id']);
 		$rs = parent::doEdit($data);
 
-		// 修改章节内容文件
-		$nginx_module_set = C('CHAPTER.set').'/'.$data['bk_id'].'/'.$data['ch_id'];
-		z_request_post($nginx_module_set, $chapter_content);
-		
+		if ($info['ch_vip'] == 1) {
+			// 更新vip章节
+			$data['ch_content'] = $chapter_content;
+			$vip_chapter = D('ChapterVip', 'Service')->getInstance($data['bk_id'], $data['ch_id']);
+			$vip_chapter->doEdit($data);
+
+		} else {
+			// 修改章节内容文件
+			$nginx_module_set = C('CHAPTER.set').'/'.$data['bk_id'].'/'.$data['ch_id'];
+			z_request_post($nginx_module_set, $chapter_content);
+		}
+
 		return $rs;
 	}
 
@@ -35,9 +44,16 @@ class ChapterService extends ChapterModel {
 	public function getChapterInfo($chapter_id)
 	{
 		$chapter_info = parent::getChapterInfo($chapter_id);
-		$get_content_url = C('CHAPTER.read').'/'.$this->book_id.'/'.$chapter_id;
-		$chapter_info['ch_content'] = file_get_contents($get_content_url);
-		$chapter_info['ch_content'] = substr($chapter_info['ch_content'], 4);
+
+		if ($chapter_info['ch_vip'] == 1) {
+			$vip_chapter = D('ChapterVip', 'Service')->getInstance($chapter_info['bk_id'], $chapter_info['ch_id']);
+			$chapter_info['ch_content'] = $vip_chapter->getChapterContent();
+		} else {
+			$get_content_url = C('CHAPTER.read').'/'.$this->book_id.'/'.$chapter_id;
+			$chapter_info['ch_content'] = file_get_contents($get_content_url);
+			$chapter_info['ch_content'] = substr($chapter_info['ch_content'], 4);
+		}
+		
 		return $chapter_info;
 	}
 	

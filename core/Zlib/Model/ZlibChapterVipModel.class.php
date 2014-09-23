@@ -27,11 +27,14 @@ class ZlibChapterVipModel extends BaseModel {
 
 	/**
 	 * 获取vip内容
+	 *
+	 * @return string 
 	 */
 	public function getChapterContent()
 	{
 		$condition = 'bk_id = '.$this->bookId.' and ch_id = '.$this->chapterId;
-		return $this->instance->field('ch_content')->where($condition)->find();
+		$content = $this->instance->field('ch_content')->where($condition)->find();
+		return empty($content) ? '' : $content['ch_content'];
 	}
 
 	/**

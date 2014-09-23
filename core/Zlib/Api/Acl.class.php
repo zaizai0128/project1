@@ -1,6 +1,6 @@
 <?php
 /**
- * acl权限验证机制
+ * 前台acl权限验证机制
  *
  * @author 	songmw<songmingwei@kongzhong.com>
  * @date 	2014-09-23
