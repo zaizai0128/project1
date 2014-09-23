@@ -33,7 +33,7 @@ class ChapterModel extends BaseModel {
 		$rs = $this->chapter_obj->field('max(ch_order) as max_order')->where('bk_id = '.$this->book_id)
 				->order('ch_order desc')
 				->find();
-		return empty($rs) ? 1 : $rs['max_order']+1;
+		return empty($rs) ? 0 : $rs['max_order']+1;
 	}
 
 	/**
