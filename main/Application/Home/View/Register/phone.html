@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>会员注册 - 手机注册</title>
+<link href="__STYLE__/login/css/user.css" type="text/css" rel="stylesheet">
+<link href="__STYLE__/login/css/base.css" type="text/css" rel="stylesheet">
+<script src="__JS__/jquery.min.js"></script>
+<script src="__JS__/zlang.js"></script>
+</head>
+<body>
+<div class="container">
+  <div class="wrap">
+    <div class="header">
+      <h1 class="logo"><a href="#"><img src="__STYLE__/login/images/logo.jpg" /></a></h1>
+      <h2 class="top_sub">会员注册</h2>
+    </div>
+    <div class="main">
+      <div class="reg_login">
+        <div class="login_frm JQ_Rtab">
+             <div class="frm_way">
+             	 {// 注册按钮}
+                <include file="p_reg_sidebar" nav="phone"/>                
+             </div>
+            <ul class="frm_lst JQ_Box JQ_Frmlst" style="display:block">
+              <li class="frm frm_resed err">
+                <div class="frm_inp resed_err"> 
+                  	<input type="text" name="" value="请输入手机号码" class="re_inp" />
+                    <a href="#" class="resed_btn">59秒后重新发送</a> 
+                </div>
+                <div class="frm_tip"  style="display:block">
+                	<span class="txt">手机号输入错误</span>
+                </div>
+              </li>
+              <li class="frm">
+                <div class="frm_inp">
+                  	<input type="text" name="" value="请输入手机中收到的短信验证码" class="inp"/>	
+                </div>
+                <div class="frm_tip">
+                	<span class="txt">验证码错误</span>
+                </div>
+              </li>
+              <li class="frm">
+                <div class="frm_inp">
+                  		<input type="text" name="" value="请输入设置密码" class="inp"/>
+                  	</span> 	
+                </div>
+                <div class="frm_tip">
+                	<span class="txt"></span>
+                </div>
+              </li>
+              <li class="frm">
+                <div class="frm_inp">
+                  		<input type="text" name="" value="请再次输入设置密码" class="inp"/>
+                  	</span> 	
+                </div>
+                <div class="frm_tip">
+                	<span class="txt"></span>
+                </div>
+              </li>
+              <li class="frm">
+              	<div class="frm_inp frm_chk">
+                   <label><input type="checkbox" />我已阅读并同意</label>
+                   <a href="#">逐浪网注册协议?</a>
+                </div>
+              </li>
+              <li class="frm">
+              	<div class="frm_inp">
+                	<a href="#" class="sbtn_01">提交注册</a>
+                </div>
+              </li>
+            </ul>
+        </div>
+        <div class="reg_tips">
+        	<div class="reg_acc">
+               <a href="#" class="acc_no">还没有逐浪网账号?</a>
+               <a href="#" class="sbtn_01">立即登录</a>
+            </div>
+            <dl class="tird_acc">
+            	<dt>也可使用下列第三方账号登录</dt>
+                <dd>
+                	<a href="#"><img src="__STYLE__/login/images/thid_img01.jpg" /></a>
+                    <a href="#"><img src="__STYLE__/login/images/thid_img02.jpg" /></a>
+                    <a href="#"><img src="__STYLE__/login/images/thid_img03.jpg" /></a>
+                </dd>
+            </dl>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+    	<p>Copyright © 2014 ZHULANG.COM All rights Reserved 逐浪网版权所有<br />
+           客服电话：025-66670800
+        </p>
+    </div>
+  </div>
+</div>
+</body>
+</html>

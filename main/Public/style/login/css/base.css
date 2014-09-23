@@ -1,0 +1,29 @@
+@charset "utf-8";
+/* CSS Document */
+
+body,h1,h2,h3,h4,h5,h6,hr,p,pre,dl,dt,dd,ul,ol,li,th,td,form,fieldset,legend,button,input,textarea{margin:0;padding:0;}h1,h2,h3,h4,h5,h6,button,input,select,textarea{font-size:100%;font-weight:normal;}li{list-style:none;}img,fieldset{border:0;}table{border-collapse:collapse;border-spacing:0;}em,i{font-style:normal;}u,ins{text-decoration:none;}:focus{outline:none;}
+body {font:12px/1.5 tahoma,arial,\5b8b\4f53;background:#f2f2f2;color:#333333;word-break:break-all;word-wrap:break-word;}
+a {color:#3d84b8;text-decoration:none;}
+a:hover {text-decoration:underline;}
+.wrap {width:980px;margin:0 auto;}
+.wrap, .clearfix {*zoom:1;}
+.wrap:after, .clearfix:after {content:'';display:block;height:0;clear:both;}
+.b {font-weight:bold;}
+.u {text-decoration:underline;}
+.clear{clear:both}
+/*Header*/
+.header{ overflow:hidden;*zoom:1; padding:20px 0}
+.header .logo img{ width:115px; height:47px; float:left}
+.header .top_sub{ float:left; color:#333333; font-size:24px; font-family:"Microsoft Yahei"}
+
+/*Main*/
+.main{ background:#ffffff; height:auto; border:1px solid #cccccc; padding:80px 0 80px 60px;}
+/*Frm*/
+.login_frm .frm_lst li.frm{padding-bottom:20px;}
+
+/*Btn*/
+a.sbtn_01,a.sbtn_01:visited{ width:362px; height:39px; background:#0894ec; display:block; text-align:center; line-height:39px; color:#ffffff; font-size:16px; text-decoration:none;}
+ {text-decoration:none;background:#0689dc;color:#ffffff;}
+a.sbtn_01:active{text-decoration:none; background:#0689dc; color:#ffffff}
+/*Footer*/
+.footer p{ text-align:center; padding:58px 0}

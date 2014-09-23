@@ -14,7 +14,7 @@ $app_config = array(
 	
 	
 	// 设置module列表
-    'MODULE_ALLOW_LIST' => array('Home', 'User', 'Buy'),        
+    'MODULE_ALLOW_LIST' => array('Home', 'User', 'Buy', 'Ajax'),        
 );
 
 return array_merge($zlib_config, $app_config);

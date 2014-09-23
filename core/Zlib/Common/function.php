@@ -154,3 +154,15 @@ function z_now()
 {
 	return date('Y-m-d H:i:s', time());
 }
+
+/**
+ * 验证验证码
+ *
+ * @param code
+ * @param id
+ */
+function z_check_verify($code, $id = '')
+{
+	$verify = new \Think\Verify();
+	return $verify->check($code, $id);
+}

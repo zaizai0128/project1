@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>会员注册 - 个性化注册</title>
+<link href="__STYLE__/login/css/user.css" type="text/css" rel="stylesheet">
+<link href="__STYLE__/login/css/base.css" type="text/css" rel="stylesheet">
+<script src="__JS__/jquery.min.js"></script>
+<script src="__JS__/zlang.js"></script>
+</head>
+<body>
+<div class="container">
+  <div class="wrap">
+    <div class="header">
+      <h1 class="logo"><a href="#"><img src="__STYLE__/login/images/logo.jpg" /></a></h1>
+      <h2 class="top_sub">会员注册</h2>
+    </div>
+    <div class="main">
+      <div class="reg_login">
+        <div class="login_frm JQ_Rtab">
+           <div class="frm_way">
+            {// 注册按钮}
+            <include file="p_reg_sidebar" nav="index"/>                
+           </div>
+           <form action="{:ZU('register/doRegister')}" onsubmit="return $.checkSubmit();" method="post">
+            <ul class="frm_lst JQ_Box JQ_Frmlst" style="display:block">
+              <li class="frm">
+                <div class="frm_inp">
+                  	<input type="text" name="username" value="" placeholder="请输入用户名" class="inp i-username"/>	
+                </div>
+                <div class="frm_tip i-username-error">
+                	<span class="txt"></span>
+                </div>
+              </li>
+              <li class="frm">
+                <div class="frm_inp">
+                  		<input type="password" name="password" value="" placeholder="设置密码" class="inp i-password"/>
+                </div>
+                <div class="frm_tip">
+                	<span class="txt"></span>
+                </div>
+              </li>
+              <li class="frm">
+                <div class="frm_inp">
+                  <input type="password" name="repassword" value="" placeholder="请再次输入设置密码" class="inp i-repassword"/>
+                </div>
+                <div class="frm_tip">
+                	<span class="txt"></span>
+                </div>
+              </li>
+              <li class="frm">
+                <div class="frm_inp">
+                  <img class="verify_img" src="{:ZU('register/verify')}" onclick="$.changeVerify('verify_img');" title="看不清点击"/>  
+                  <a href="javascript:;" onclick="$.changeVerify('verify_img');">看不清点击</a>
+                </div>
+              </li>
+              <li class="frm">
+                <div class="frm_inp">
+                 <input type="text" name="verify" value="" placeholder="验证码" class="inp i-verify" maxlength="5"/>
+                </div>
+              </li>
+              <li class="frm">
+              	<div class="frm_inp frm_chk">
+                   <label><input type="checkbox" class="iagree" name="iagree" value="1"/>我已阅读并同意</label>
+                   <a href="http://passport.kongzhong.com/rules.jsp" target="_blank">逐浪网注册协议?</a>
+                </div>
+              </li>
+              <li class="frm">
+                <div class="frm_tip" style="display:block;"><span class="txt error-info"></span></div>
+              </li>
+              <li class="frm">
+              	<div class="frm_inp">
+                	<!-- <a href="#" class="sbtn_01">提交注册</a> -->
+                  <button type="submit" class="sbtn_01">提交注册</button>
+                </div>
+              </li>
+            </ul>
+          </form>
+        </div>
+        <div class="reg_tips">
+        	<div class="reg_acc">
+               <a href="#" class="acc_no">还没有逐浪网账号?</a>
+               <a href="#" class="sbtn_01">立即登录</a>
+            </div>
+            <dl class="tird_acc">
+            	<dt>也可使用下列第三方账号登录</dt>
+                <dd>
+                	<a href="#"><img src="__STYLE__/login/images/thid_img01.jpg" /></a>
+                    <a href="#"><img src="__STYLE__/login/images/thid_img02.jpg" /></a>
+                    <a href="#"><img src="__STYLE__/login/images/thid_img03.jpg" /></a>
+                </dd>
+            </dl>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+    	<p>Copyright © 2014 ZHULANG.COM All rights Reserved 逐浪网版权所有<br />
+           客服电话：025-66670800
+        </p>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  
+  var userErr = new Array();
+
+  jQuery(function($){
+
+    $.extend({
+
+      /**
+       * 验证用户名
+       */
+      checkUsername : function(url, class_name)
+      {
+        var username = $('.'+class_name).val().replace(/\s+/, '');
+
+        if (username == '') return false;
+
+        $.ajax({
+          url : url,
+          data : 'username='+username,
+          type : 'post',
+          async: false,
+          success : function(response)
+          {
+            var err = $('.i-username-error');
+            if (response.code <= 0) {
+
+              // 将错误放到数组中
+              userErr.push(response.msg);
+              err.css('display', 'block')
+              err.find('.txt').html(response.msg);
+            } else {
+              userErr.pop();
+              err.find('.txt').html('');
+              err.css('display', 'none')
+            }
+          }
+        });
+      },
+
+      /**
+      * 验证提交
+      */
+      checkSubmit : function()
+      {
+        // 错误信息存放
+        var err = $('.error-info');
+        var msg = new Array();
+        var isOk = false; // 判断是否允许提交
+
+        var username = $('.i-username').val().replace(/\s+/, '');
+        var password = $('.i-password').val().replace(/\s+/, '');
+        var repassword = $('.i-repassword').val().replace(/\s+/, '');
+        var verify = $('.i-verify').val().replace(/\s+/, '');
+
+        if (username == '') msg.push('用户名不允许为空');
+        if (password == '') msg.push('密码不允许为空');
+        if (repassword == '') msg.push('确认密码不允许为空');
+        if (password != repassword) msg.push('二次密码不一致');
+        if (verify == '') msg.push('验证码不允许为空');
+
+        var iagree = $('.iagree:checked').val();
+        if (iagree == undefined) msg.push('未选中我同意');
+
+        if (msg.length > 0 || userErr.length > 0) {
+          var err_html = '';
+          $.each(msg, function(i, v){
+            err_html += v+'|';
+          });
+          err.html(err_html);
+          isOk = false;
+        } else {
+          isOk = true;
+        }
+        
+        return isOk;
+      }
+
+    });
+
+    $('.i-username').blur(function(){
+      $.checkUsername('{:ZU('ajax/user/checkUsername')}', 'i-username');
+    });
+
+  });
+</script>
+</body>
+</html>
