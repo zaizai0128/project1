@@ -23,7 +23,7 @@ class BookApplyChapterModel extends BaseModel {
 	{
 		$data['ch_cre_time'] = date('Y-m-d H:i:s', time());
 		$data['ch_update'] = date('Y-m-d H:i:s', time());
-		$data['ch_size'] = mb_strlen($data['ch_content']);
+		$data['ch_size'] = mb_strlen($data['ch_content'], C('SYSTEM.encoded'));
 
 		return $this->data($data)->add();
 	}
@@ -34,7 +34,7 @@ class BookApplyChapterModel extends BaseModel {
 	public function doEdit($data)
 	{
 		$data['ch_update'] = date('Y-m-d H:i:s', time());
-		$data['ch_size'] = mb_strlen($data['ch_content']);
+		$data['ch_size'] = mb_strlen($data['ch_content'], C('SYSTEM.encoded'));
 
 		return $this->where('ch_id = '.$data['ch_id'].' and bk_id = '.$data['bk_id'])
 					->data($data)->save();

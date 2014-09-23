@@ -76,7 +76,7 @@ class ChapterService extends ChapterModel {
 		$chapter_info['ch_order'] = $this->getLastChapterOrder();
 		$chapter_info['ch_poster_id'] = ZS('S.author', 'user_id');
 		$chapter_info['ch_poster'] = ZS('S.author','author_name');
-		$chapter_info['ch_size'] = mb_strlen($chapter_info['ch_content']);
+		$chapter_info['ch_size'] = mb_strlen($chapter_info['ch_content'], C('SYSTEM.encoded'));
 
 		// 保存到文件or其他地方
 		$chapter_content = $chapter_info['ch_content'];
