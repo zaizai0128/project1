@@ -77,10 +77,10 @@ class BookController extends BaseController {
 			$state = $this->book_obj->editBookInfo($data);
 
 			if ($state > 0)
-				$this->success('修改成功', ZU('book/book', 'ZL_AUTHOR_DOMAIN'
+				z_redirect('修改成功', ZU('book/book', 'ZL_AUTHOR_DOMAIN'
 								, array('book_id'=>$this->book_id)));
 			else
-				$this->error('修改失败');
+				z_redirect('修改失败');
 		}
 	}
 
@@ -116,9 +116,9 @@ class BookController extends BaseController {
 			$state = D('BookApplyVip', 'Service')->doAdd($data);
 
 			if ($state['code'] > 0) {
-				$this->success($state['msg']);
+				z_redirect($state['msg']);
 			} else {
-				$this->error($state['msg']);
+				z_redirect($state['msg']);
 			}
 		}
 	}

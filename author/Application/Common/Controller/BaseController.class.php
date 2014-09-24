@@ -22,12 +22,12 @@ class BaseController extends Controller {
 
 		// 未登录提示
 		if (!session('?user')) {
-			$this->error('请登录', ZU('login/index'));
+			z_redirect('请登录', ZU('login/index'));
 		}
 
 		// 用户状态非作者提示
 		if (!in_array(session('user.user_type'), array('02', '03', '04')) ) {
-			$this->error('请先申请成为作者，才能继续进行操作', ZU('user/center/index'));
+			z_redirect('请先申请成为作者，才能继续进行操作', ZU('user/center/index'));
 		}
 
 		// 初始化一些动作
@@ -63,16 +63,16 @@ class BaseController extends Controller {
 			return True;
 		
 		if (empty($this->book_id))
-			$this->error('请选择要操作的作品');
+			z_redirect('请选择要操作的作品');
 
 		// 获取该作者所拥有的书籍
 		$author_book = $this->book_obj->getOwnBook($this->user_id);
 
 		if (!in_array($this->book_id, $author_book))
-			$this->error('您无权操作此书');
+			z_redirect('您无权操作此书');
 
 		if (!$this->book_obj->checkBookExist($this->book_id) )
-			$this->error('作品不存在');
+			z_redirect('作品不存在');
 		
 		return True;
 	}
@@ -96,16 +96,16 @@ class BaseController extends Controller {
 			return True;
 
 		if (empty($this->book_id))
-			$this->error('请选择要操作的作品');
+			z_redirect('请选择要操作的作品');
 
 		// 获取该作者正在审核的书籍
 		$author_book_apply = $this->book_apply_obj->getOwnBook($this->user_id);
 
 		if (!in_array($this->book_id, $author_book_apply))
-			$this->error('您无权操作此书');
+			z_redirect('您无权操作此书');
 
 		if (!$this->book_apply_obj->checkBookExist($this->book_id) )
-			$this->error('作品不存在');
+			z_redirect('作品不存在');
 		
 		return True;
 	}

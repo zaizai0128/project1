@@ -72,22 +72,22 @@ class ReadController extends HomeController {
 	private function _checkChapterAcl()
 	{
 		if (empty($this->ch_id)) 
-			$this->error('章节不存在');
+			z_redirect('章节不存在');
 
 		// 创建chapter_api对象
 		$this->chapter_api = new Zapi\Chapter($this->book_id, $this->ch_id);
 
 		if (!$this->chapter_api->checkChapter())
-			$this->error('章节不存在');
+			z_redirect('章节不存在');
 
 		$this->chapter_info = $this->chapter_api->getChapterInfo();
 
 		if ($this->chapter_info['ch_lock'] == 1) {
-			$this->error('该章节正处于修正中');
+			z_redirect('该章节正处于修正中');
 		}
 
 		if ($this->chapter_info['ch_status'] != 0) {
-			$this->error('该章节非对外开放');
+			z_redirect('该章节非对外开放');
 		}
 
 		// 如果是vip章节，则继续验证
@@ -106,7 +106,7 @@ class ReadController extends HomeController {
 
 		// 验证用户是否登录
 		if (!ZS('S.user', '?')) {
-			$this->error('请先登录', ZU('login/index'));
+			z_redirect('请先登录', ZU('login/index'));
 		}
 
 		// 验证用户是否已购买该章节
@@ -114,7 +114,7 @@ class ReadController extends HomeController {
 		$is_buy = $vip->isBuyByOrder($this->chapter_info['ch_order']);
 
 		if (!$is_buy) {
-			$this->error('请先购买该章节', ZU('buy/index/chapter', 'ZL_DOMAIN', 
+			z_redirect('请先购买该章节', ZU('buy/index/chapter', 'ZL_DOMAIN', 
 						array('book_id'=>$this->book_id, 'ch_id'=>$this->ch_id)));
 		}
 		$this->isBuy = $is_buy;

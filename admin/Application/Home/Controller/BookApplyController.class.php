@@ -60,7 +60,7 @@ class BookApplyController extends BaseController {
 		if (IS_POST) {
 
 			if (I('bk_apply_status') == '00') {
-				$this->error('请选择审核状态');
+				z_redirect('请选择审核状态');
 			}
 
 			$data = I();
@@ -79,9 +79,9 @@ class BookApplyController extends BaseController {
 					tag('book_apply', $tag);	// 审核通过或失败后，更新对应的数据表信息
 				}
 
-				$this->success('修改成功', ZU('bookApply/index', 'ZL_ADMIN_DOMAIN'));
+				z_redirect('修改成功', ZU('bookApply/index', 'ZL_ADMIN_DOMAIN'));
 			} else {
-				$this->error('修改失败');
+				z_redirect('修改失败');
 			}
 		}
 	}

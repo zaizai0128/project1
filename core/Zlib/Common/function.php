@@ -304,3 +304,41 @@ function z_chen_substr($str, $start, $len)  //字符位置从0开始
         }
         return $tmpstr;
 }
+
+/**
+ * 封装redirect函数
+ *
+ * @param string $msg 跳转提示信息
+ * @param string $url 跳转的URL 通过ZU生成的url
+ * @param integer $delay 延时跳转的时间 单位为秒
+ * @param int 	 type 跳转的类型 默认成功1 失败0
+ */
+function z_redirect($msg, $url = '', $delay = Null, $type = 1)
+{
+	header("Content-type:text/html;charset=".C('SYSTEM.encoded'));
+
+	// 成功的跳转
+	if ($type == 1 && !empty($url)) {
+		$delay = (int)$delay;
+		redirect($url,$delay,$msg);
+
+	// 失败的跳转
+	} else if(empty($url) || $type == 2) {
+		// $delay = !isset($delay) ? 1 : (int)$delay ;
+
+		// 失败及时跳转到上一页
+		if (empty($delay) && empty($url)) {
+			echo '<script type="text/javascript">history.go(-1);</script>';
+
+		// 失败 返回上一页
+		} else if (!empty($delay) && empty($url)) {
+			$url = $_SERVER['HTTP_REFERER'];
+			redirect($url, $delay, $msg);
+
+		// 失败 跳转到指定界面
+		} else {
+			redirect($url, $delay, $msg);
+		}
+	}
+	return True;
+}

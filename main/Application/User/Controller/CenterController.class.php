@@ -46,9 +46,9 @@ class CenterController extends UserController {
 			$state = $this->userInstance->doEditExt($data);
 
 			if ($state['code'] > 0)
-				$this->success($state['msg'], ZU('user/center/index')); 
+				z_redirect($state['msg'], ZU('user/center/index')); 
 			else
-				$this->error($state['msg']);
+				z_redirect($state['msg']);
 		}
 	}
 
@@ -62,7 +62,7 @@ class CenterController extends UserController {
 
 		// 调到补充个人真实信息页
 		if ($state['code'] <=0)
-			$this->error($state['msg'], ZU('user/center/trueInfo'));
+			z_redirect($state['msg'], ZU('user/center/trueInfo'));
 
 		// 获取个人申请信息
 		$info = $this->userInstance->getApplyInfoByUserId($this->userId);
@@ -92,9 +92,9 @@ class CenterController extends UserController {
 			$state = $this->userInstance->doAddApply($data);
 
 			if ($state['code'] <=0 ) {
-				$this->error($state['msg']);
+				z_redirect($state['msg']);
 			}
-			$this->success($state['msg'], ZU('user/center/index'));
+			z_redirect($state['msg'], ZU('user/center/index'));
 		}
 	}
 
@@ -122,9 +122,9 @@ class CenterController extends UserController {
 			$state = D('UserAuthor', 'Service')->doEdit($data);
 
 			if ($state['code'] > 0)
-				$this->success($state['msg'], ZU('user/center/index'));
+				z_redirect($state['msg'], ZU('user/center/index'));
 			else
-				$this->error($state['msg']);
+				z_redirect($state['msg']);
 		}
 	}
 

@@ -72,7 +72,7 @@ class BookApplyChapterController extends BaseController {
 			$state = $this->apply_chapter_obj->checkChapter($data);
 
 			if ($state['code'] < 0) {
-				$this->error($state['msg']);
+				z_redirect($state['msg']);
 			}
 
 			// 获取最后一个ch_order
@@ -88,10 +88,10 @@ class BookApplyChapterController extends BaseController {
 				$tag['ac'] = 'after_add';	// 行为名称
 				tag('apply_chapter', $tag);	// 章节上传成功后，更新对应的数据表信息
 				
-				$this->success('添加成功，审核通过后才会看到', ZU('bookApply/book', 'ZL_AUTHOR_DOMAIN'
+				z_redirect('添加成功，审核通过后才会看到', ZU('bookApply/book', 'ZL_AUTHOR_DOMAIN'
 								, array('bk_apply_id'=>$this->book_id)));
 			} else {
-				$this->error('添加失败，重新尝试');
+				z_redirect('添加失败，重新尝试');
 			}
 		}
 	}
@@ -122,7 +122,7 @@ class BookApplyChapterController extends BaseController {
 		$state = $this->apply_chapter_obj->checkChapter($data, False);
 
 		if ($state['code'] < 0) {
-			$this->error($state['msg']);
+			z_redirect($state['msg']);
 		}
 
 		// 修改章节
@@ -135,10 +135,10 @@ class BookApplyChapterController extends BaseController {
 			// $tag['ac'] = 'after_edit';	// 行为名称
 			// tag('apply_chapter', $tag);	// 章节编辑成功后，更新对应的数据表信息
 
-			$this->success('修改成功，审核通过后才会看到', ZU('bookApply/book', 'ZL_AUTHOR_DOMAIN'
+			z_redirect('修改成功，审核通过后才会看到', ZU('bookApply/book', 'ZL_AUTHOR_DOMAIN'
 							, array('bk_apply_id'=>$this->book_id)));
 		} else {
-			$this->error('修改失败，重新尝试');
+			z_redirect('修改失败，重新尝试');
 		}
 	}
 }

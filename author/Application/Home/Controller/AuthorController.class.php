@@ -91,9 +91,9 @@ class AuthorController extends BaseController {
 			}
 
 			if ($state['code'] > 0)
-				$this->success($state['msg'], ZU('author/bank', 'ZL_AUTHOR_DOMAIN'));
+				z_redirect($state['msg'], ZU('author/bank', 'ZL_AUTHOR_DOMAIN'));
 			else
-				$this->error($state['msg']);
+				z_redirect($state['msg']);
 		}
 	}
 }

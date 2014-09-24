@@ -62,7 +62,7 @@ class BookApplyVipController extends BaseController {
 			$data = array_merge($data, $this->adminInfo);
 			$state = $this->instance->doEdit($data);
 
-			if ($state['code'] <=0) $this->error($state['msg']);
+			if ($state['code'] <=0) z_redirect($state['msg']);
 
 			$tag = array();
 
@@ -73,7 +73,7 @@ class BookApplyVipController extends BaseController {
 			$tag['data'] = $data;
 			tag('book_apply_vip', $tag);
 
-			$this->success('修改成功', ZU('BookApplyVip/index', 'ZL_ADMIN_DOMAIN'));
+			z_redirect('修改成功', ZU('BookApplyVip/index', 'ZL_ADMIN_DOMAIN'));
 		}
 	}
 }

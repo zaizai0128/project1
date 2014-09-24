@@ -295,7 +295,7 @@
 	                return $this->response($response);
 	            }
 	        } else {
-	            $this->error($header , $body);
+	            z_redirect($header , $body);
 	            return false;
 	        }
 	    }

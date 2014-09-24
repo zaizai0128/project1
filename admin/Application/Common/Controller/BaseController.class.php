@@ -21,12 +21,12 @@ class BaseController extends Controller {
 
 		// 未登录提示
 		if (!session('user')) {
-			$this->error('请登录', ZU('/login/index'));
+			z_redirect('请登录', ZU('/login/index'));
 		}
 		
 		// 用户状态非作者提示
 		if (!in_array(session('user.user_type'), array('04')) ) {
-			$this->error('抱歉，您不是管理员');
+			z_redirect('抱歉，您不是管理员');
 		}
 
 		// 初始化一些变量

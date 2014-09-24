@@ -89,12 +89,12 @@ class CostController extends BuyController {
 		if (array_product($result) >= 1)
 		{
 			$db->commit();
-			$this->success('购买成功', ZU('read/index', 'ZL_BOOK_DOMAIN', 
+			z_redirect('购买成功', ZU('read/index', 'ZL_BOOK_DOMAIN', 
 							array('book_id'=>$this->book_id, 'ch_id'=>$this->chapter_id)));
 		} else {
 			$db->rollback();
 			// 记录到error_log中
-			$this->error('购买失败，请重新尝试');
+			z_redirect('购买失败，请重新尝试');
 		}
 	}
 }

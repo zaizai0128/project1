@@ -185,7 +185,7 @@ class Bcs {
                 return count($data) > 0 ? $data : true;
             }
         } else {
-            $this->error($header);
+            z_redirect($header);
             return false;
         }
     }

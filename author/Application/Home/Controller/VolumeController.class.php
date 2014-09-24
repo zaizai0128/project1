@@ -56,14 +56,14 @@ class VolumeController extends BaseController {
 			$state = $this->volume_obj->checkVolume($data);
 
 			if ($state['code'] < 0)
-				$this->error($state['msg']);
+				z_redirect($state['msg']);
 
 			$state = $this->volume_obj->doAdd($data);
 
 			if (empty($state))
-				$this->error('添加失败');
+				z_redirect('添加失败');
 			else
-				$this->success('添加成功', ZU('volume/index', 'ZL_AUTHOR_DOMAIN'
+				z_redirect('添加成功', ZU('volume/index', 'ZL_AUTHOR_DOMAIN'
 				, array('book_id'=>$this->book_id)));
 		}	
 	}
@@ -80,14 +80,14 @@ class VolumeController extends BaseController {
 			$state = $this->volume_obj->checkVolume($data, True);
 
 			if ($state['code'] < 0)
-				$this->error($state['msg']);
+				z_redirect($state['msg']);
 
 			$state = $this->volume_obj->doEdit($data);
 
 			if (empty($state))
-				$this->error('修改失败');
+				z_redirect('修改失败');
 			else
-				$this->success('修改成功', ZU('volume/index', 'ZL_AUTHOR_DOMAIN'
+				z_redirect('修改成功', ZU('volume/index', 'ZL_AUTHOR_DOMAIN'
 				, array('book_id'=>$this->book_id)));
 		}
 	}

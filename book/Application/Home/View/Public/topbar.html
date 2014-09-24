@@ -4,7 +4,7 @@
 	<dl>
 		<dt>欢迎您：{:session('user.user_name')}</dt>
 		<dd>
-			<a href="{:ZU('user/center')}">个人中心</a><a href="#">信箱</a><a href="#">充值</a><a href="#">彩票</a><a href="{:ZU('user/center/logout')}">退出</a>
+			<a href="{:ZU('user/center')}">个人中心</a><a href="#">信箱</a><a href="#">充值</a><a href="#">彩票</a><a href="{:ZU('login/logout')}">退出</a>
 		</dd>
 	</dl>
 	<?php else:?>
@@ -12,7 +12,7 @@
 		<dt>请登录</dt>
 		<dd>
 			<a href="{:ZU('login/index')}">登录</a>
-			<a href="{:ZU('login/register')}">注册</a>
+			<a href="{:ZU('register/index')}">注册</a>
 		</dd>
 	</dl>
 	<?php endif;?>

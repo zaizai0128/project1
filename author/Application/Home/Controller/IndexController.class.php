@@ -44,7 +44,7 @@ class IndexController extends BaseController {
 			$book_apply_service = D('BookApply', 'Service');
 			$state = $book_apply_service->checkBook($data);
 			
-			if ($state['code'] < 0) $this->error($state['msg']);
+			if ($state['code'] < 0) z_redirect($state['msg']);
 
 			$data['bk_author'] = session('author.author_name');
 			$data['bk_author_id'] = $this->user_id;
@@ -59,10 +59,10 @@ class IndexController extends BaseController {
 				// $tag['data'] = $data;
 				// $tag['ac'] = 'after_add';
 				// tag('book', $tag);
-				$this->success('添加成功等待审核', ZU('bookApply/book', 'ZL_AUTHOR_DOMAIN'
+				z_redirect('添加成功等待审核', ZU('bookApply/book', 'ZL_AUTHOR_DOMAIN'
 								, array('bk_apply_id'=>$book_id)));
 			} else {
-				$this->error('添加失败');
+				z_redirect('添加失败');
 			}
 		}
 	}

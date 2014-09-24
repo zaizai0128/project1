@@ -72,7 +72,7 @@ class ChapterController extends BaseController {
 			$state = $this->chapter_obj->checkChapter($data);
 
 			if ($state['code'] < 0) {
-				$this->error($state['msg']);
+				z_redirect($state['msg']);
 			}
 			$last_id = $this->chapter_obj->createNewChapter($data);
 
@@ -82,9 +82,9 @@ class ChapterController extends BaseController {
 				$tag['ac'] = 'after_add';	// 行为名称
 				tag('chapter', $tag);	// 章节上传成功后，更新对应的数据表信息
 
-				$this->success('添加成功', ZU('chapter/index', 'ZL_AUTHOR_DOMAIN', array('book_id'=>$this->book_id)));
+				z_redirect('添加成功', ZU('chapter/index', 'ZL_AUTHOR_DOMAIN', array('book_id'=>$this->book_id)));
 			} else {
-				$this->error('添加失败');
+				z_redirect('添加失败');
 			}
 		}
 	}
@@ -97,7 +97,7 @@ class ChapterController extends BaseController {
 		$chapter_info = $this->chapter_obj->getChapterInfo($this->chapterId);
 
 		if (empty($chapter_info))
-			$this->error('章节不存在'); 
+			z_redirect('章节不存在'); 
 
 		$this->assign(array(
 			'chapter_info' => $chapter_info,
@@ -116,9 +116,9 @@ class ChapterController extends BaseController {
 			$rs = $this->chapter_obj->doEdit($data);
 			
 			if (!empty($rs))
-				$this->success('修改成功');
+				z_redirect('修改成功');
 			else
-				$this->error('修改失败');
+				z_redirect('修改失败');
 		}
 	}
 }

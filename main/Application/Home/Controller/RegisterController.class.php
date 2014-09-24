@@ -36,9 +36,9 @@ class RegisterController extends HomeController {
 			$state = $this->userInstance->doAdd($data);
 
 			if ($state['code'] > 0) {
-				$this->success('注册成功', ZU('login/index'));
+				z_redirect('注册成功', ZU('login/index'));
 			} else {
-				$this->error($state['msg']);
+				z_redirect($state['msg']);
 			}
 		}
 	}

@@ -41,23 +41,23 @@ class BuyController extends Controller {
 	protected function checkAcl()
 	{
 		if (empty($this->book_id))
-			$this->error('作品序号不允许为空'); 
+			z_redirect('作品序号不允许为空'); 
 		if (empty($this->chapter_id)) 
-			$this->error('章节序号不允许为空'); 
+			z_redirect('章节序号不允许为空'); 
 		if(!$this->book_obj->checkBook()) 
-			$this->error('作品不存在');
+			z_redirect('作品不存在');
 		if(!$this->chapter_obj->checkChapter()) 
-			$this->error('章节不存在');
+			z_redirect('章节不存在');
 
 		$this->book_info = $this->book_obj->getBookInfo();
 		$this->chapter_info = $this->chapter_obj->getVipChapterCommodityInfo();
 
 		if ($this->chapter_info['ch_lock'] != 0)
-			$this->error('该章节已经被锁，无法购买');
+			z_redirect('该章节已经被锁，无法购买');
 		if ($this->chapter_info['ch_status'] != 0)
-			$this->error('该章节无法购买');
+			z_redirect('该章节无法购买');
 		if ($this->chapter_info['ch_vip'] != 1)
-			$this->error('该章节不是vip，无需购买', ZU('read/index', 'ZL_BOOK_DOMAIN', 
+			z_redirect('该章节不是vip，无需购买', ZU('read/index', 'ZL_BOOK_DOMAIN', 
 						array('book_id'=>$this->book_id, 'ch_id'=>$this->chapter_id)));
 
 		return True;
@@ -67,14 +67,14 @@ class BuyController extends Controller {
 	protected function checkUserAcl()
 	{
 		if (!ZS('S.user','?'))
-			$this->error('请先登录', ZU('login/index'));
+			z_redirect('请先登录', ZU('login/index'));
 
 		$this->user_id = ZS('S.user', 'user_id');
 		$this->user_obj = new Zapi\User($this->user_id);
 		$account_info = $this->user_obj->getAccountInfo();
 
 		if (empty($account_info))
-			$this->error('对不起，您的余额不足，请先充值');
+			z_redirect('对不起，您的余额不足，请先充值');
 
 		$now = date('Y-m-d', time());
 
@@ -89,7 +89,7 @@ class BuyController extends Controller {
 			if ($account_info['amount'] >= $this->chapter_info['ch_price']) {
 				$this->cost_type = 1;
 			} else {
-				$this->error('对不起，您的余额不足，请先充值');
+				z_redirect('对不起，您的余额不足，请先充值');
 			}
 		}
 
@@ -98,7 +98,7 @@ class BuyController extends Controller {
 		$is_buy = $this->vipBuy->isBuyByOrder($this->chapter_info['ch_order']);
 
 		if ($is_buy) {
-			$this->error('您已购买此章节，无需购买', ZU('read/index', 'ZL_BOOK_DOMAIN',
+			z_redirect('您已购买此章节，无需购买', ZU('read/index', 'ZL_BOOK_DOMAIN',
 					array('book_id'=>$this->book_id, 'ch_id'=>$this->chapter_id)));
 		}
 

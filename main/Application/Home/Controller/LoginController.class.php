@@ -37,9 +37,9 @@ class LoginController extends HomeController {
 
 			// 登录成功，跳转到用户中心
 			if ($state['code'] > 0) {
-				$this->success('登录成功', ZU('user/center/index'));
+				z_redirect('登录成功', ZU('user/center/index'));
 			} else {
-				$this->error($state['msg']);
+				z_redirect($state['msg']);
 			}
 		}
 	}
@@ -50,6 +50,6 @@ class LoginController extends HomeController {
 	public function logout()
 	{
 		$this->userInstance->logout();
-		$this->success('退出成功', ZU('index/index'));
+		z_redirect('退出成功', ZU('index/index'));
 	}
 }
