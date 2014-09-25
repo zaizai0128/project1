@@ -145,9 +145,30 @@ return array(
 
 	// 作者
 	'AUTHOR' => array(
+		'max_book_apply_day' => 3,
+		'chapter_list_size' => 10,
 
 		// 正式作品章节的列表条数
-		'chapter_list_size' => 10,
+		'auther_com_ban_words' => array('中国作者素材库',  // 推荐作品禁止包含
+				'zzsck.com',
+				'飞卢',
+				'起点',
+				'www.cmfu.com',
+				'首发',
+				'qq',
+				'QQ',
+				'逐浪币',
+				'http',
+				'第九中文网',
+				'看书网',
+				'网',
+				'世纪文学',
+				'炸弹',
+				'炸药',
+				'原子弹',
+				'傲宇文学',
+				'签约',
+				),
 		
 
 	),
@@ -217,26 +238,5 @@ return array(
 
 		'commision_vip_chapter' => array('A', 'T', 'X', 'Y', 'Z'),		// 允许发VIP章节 
 
-		'intro_ban_words' => array(
-				'中国作者素材库',
-				'zzsck.com',
-				'飞卢',
-				'起点',
-				'www.cmfu.com',
-				'首发',
-				'qq',
-				'QQ',
-				'逐浪币',
-				'http',
-				'第九中文网',
-				'看书网',
-				'网',
-				'世纪文学',
-				'炸弹',
-				'炸药',
-				'原子弹',
-				'傲宇文学',
-				'签约',
-				),
 	) 
 );
