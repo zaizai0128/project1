@@ -7,10 +7,51 @@
  * @version 1.0
  */
 namespace Home\Service;
-use Home\Model\VolumeModel;
+use Zlib\Model\ZlibBookVolumeModel;
 
-class VolumeService extends VolumeModel {
+class VolumeService extends ZlibBookVolumeModel {
 
+	/**
+	 * 添加卷
+	 */
+	public function doAdd($data)
+	{
+		$state = $this->_checkVolume($data);
+		if ($state['code'] <= 0) return $state;
+
+		$final_data['bk_id'] = $data['bk_id'];
+		$final_data['volume_name'] = $data['volume_name'];
+		$final_data['volume_intro'] = $data['volume_intro'];
+		$final_data['volume_order'] = parent::getLastVolumeOrder($data['bk_id']);
+		$final_data['volume_status'] = 0;
+		$result = parent::doAdd($final_data);
+
+		if ($result > 0)
+			return z_info($result, '添加成功');
+		else
+			return z_info($result, '添加失败');
+	}
+
+	/**
+	 * 修改卷
+	 */
+	public function doEdit($data)
+	{
+		$state = $this->_checkVolume($data, True);
+		if ($state['code'] <= 0) return $state;
+
+		$final_data['bk_id'] = $data['bk_id'];
+		$final_data['volume_name'] = $data['volume_name'];
+		$final_data['volume_intro'] = $data['volume_intro'];
+		$final_data['volume_id'] = $data['volume_id'];
+		$result = parent::doEdit($final_data);
+
+		if ($result > 0)
+			return z_info($result, '添加成功');
+		else
+			return z_info($result, '添加失败');
+	}
+	
 	/**
 	 * 获取书的现有卷
 	 *
@@ -20,7 +61,7 @@ class VolumeService extends VolumeModel {
 	public function getVolumeList($book_id, $is_intro = True)
 	{
 		$volume_list = C('BOOK.default_volume');
-		$result = (array)self::getVolumeById($book_id);
+		$result = (array)parent::getVolumeById($book_id);
 		if (!empty($result)) {
 
 			if ($is_intro) {
@@ -44,55 +85,37 @@ class VolumeService extends VolumeModel {
 		}
 		return $volume_list;
 	}
-
-	/**
-	 * 获取最后卷id
-	 * 
-	 * @param book_id
-	 */
-	public function getLastVolumeOrder($book_id)
-	{
-		$volume = $this->field('max(volume_order) as max')
-				->where('bk_id = '.$book_id.' and volume_status = 0')
-				->find();
-				
-		if (empty($volume['max'])) {
-			return C('BOOK.start_volume');
-		} else {
-			return $volume['max']+1;
-		}
-	}
-
+	
 	/**
 	 * 验证卷信息是否通过
 	 *
 	 * @param array 
 	 * @param boolean 是否是编辑
 	 */
-	public function checkVolume($volume_info, $is_edit = False)
+	private function _checkVolume($volume_info, $is_edit = False)
 	{
 		if (empty($volume_info['bk_id']))
-			return array('code'=>-1, 'msg'=>'书号不存在');
+			return z_info(-1, '书号不存在');
 
 		if (empty($volume_info['volume_name']))
-			return array('code'=>-11, 'msg'=>'卷名不存在');
+			return z_info(-11, '卷名不存在');
 
 		if (in_array($volume_info['volume_name'], array('垃圾箱', '作品相关介绍')))
-			return array('code'=>-3, 'msg'=>'禁止使用系统默认卷名');
+			return z_info(-3, '禁止使用系统默认卷名');
 
 		if ($is_edit) {
 			if (empty($volume_info['volume_id']))
-				return array('code'=>-12, '卷id不存在');
+				return z_info(-12, '卷id不存在');
 
 			$extend_where = 'volume_id != '.$volume_info['volume_id'];
-			$volume_id = self::getVolumeIdByName($volume_info['bk_id'], $volume_info['volume_name'], $extend_where);	
+			$volume_id = parent::getVolumeByName($volume_info['bk_id'], $volume_info['volume_name'], 'volume_id', $extend_where);	
 		} else {
-			$volume_id = self::getVolumeIdByName($volume_info['bk_id'], $volume_info['volume_name']);	
+			$volume_id = parent::getVolumeByName($volume_info['bk_id'], $volume_info['volume_name'], 'volume_id');	
 		}
 
 		if (!empty($volume_id))
-			return array('code'=>-2, 'msg'=>'该卷名已存在');
-		
-		return array('code'=>1, 'msg'=>'验证通过');
+			return z_info(-2, '卷名已经存在');
+
+		return z_info(1, '验证通过');		
 	}
 }

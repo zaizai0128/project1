@@ -43,7 +43,7 @@ class BookApplyController extends BaseController {
 	 */
 	public function check()
 	{
-		$book_id = I('get.bk_apply_id');
+		$book_id = I('get.apply_id');
 		$book = $this->book_apply->getInfo($book_id);
 
 		$this->assign(array(

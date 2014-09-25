@@ -10,8 +10,7 @@
 		<textarea name="ch_content" id="input_chapter_content" rows="10" placeholder="新增作品首次上传章节总字数需在2000至30000间">{$chapter.ch_content}</textarea>
 	</div>
 </div>
-<input type="hidden" name="ch_id" value="{$chapter.ch_id}" />
 
 {// 添加modal的属性}
-<input type="hidden" class="modal-action" value="{:ZU('bookApplyChapter/doEdit', 'ZL_AUTHOR_DOMAIN', array('bk_apply_id'=>I('bk_apply_id')))}" />
+<input type="hidden" class="modal-action" value="{:ZU('bookApplyChapter/doEdit', 'ZL_AUTHOR_DOMAIN', array('apply_id'=>I('apply_id'), 'ch_id'=>I('ch_id')))}" />
 <input type="hidden" class="modal-title" value="修改章节 - {$chapter.ch_name}" />

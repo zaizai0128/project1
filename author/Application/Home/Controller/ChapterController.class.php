@@ -8,27 +8,26 @@
  */
 namespace Home\Controller;
 use Common\Controller\BaseController;
-use Zlib\Api as Zapi;
 
 class ChapterController extends BaseController {
 
-	protected $book_obj;	
-	protected $book_id;		// 书籍id 
-	protected $book_info;	// 书籍信息
-	protected $chapter_obj;
-	protected $chapterId;	// 章节id
-	protected $chapterInfo; // 章节信息 
+	protected $bookId = Null;
+	protected $chapterId = Null;
+	protected $bookInstance = Null;
+	protected $chapterInstance = Null;
+	protected $volumeInstance = Null;
+	protected $bookApi = Null;
 
 	public function init()
 	{
 		parent::init();
-
+		$this->bookId = I('get.book_id');
 		$this->chapterId = I('get.ch_id');
-		$this->book_obj = D('Book', 'Service');
-		$this->book_id = I('get.book_id');
-		$this->checkChapterAcl();
-		$this->book_info = $this->book_obj->getBookInfo($this->book_id);
-		$this->chapter_obj = D('Chapter', 'Service')->init($this->book_id);
+		\Zlib\Api\Acl::check($this->authorInfo, $this->bookId);
+		$this->bookInstance = D('Book', 'Service');
+		$this->chapterInstance = D('Chapter', 'Service')->getInstance($this->bookId, $this->chapterId);
+		$this->volumeInstance = D('Volume', 'Service');
+		$this->bookApi = new \Zlib\Api\Book($this->bookId);
 	}
 
 	/**
@@ -36,12 +35,12 @@ class ChapterController extends BaseController {
 	 */
 	public function index()
 	{
-		$book_api = new Zapi\Book($this->book_id);
-		$chapter_list = $book_api->getCatalog();
+		$book_info = $this->bookInstance->getBookByBookId($this->bookId, 'bk_id,bk_name');
+		$chapter_list = $this->bookApi->getCatalog();
 
 		$this->assign(array(
 			'chapter_list' => $chapter_list,
-			'book_info' => $this->book_info,
+			'book_info' => $book_info,
 		));
 		$this->display();
 	}
@@ -49,14 +48,13 @@ class ChapterController extends BaseController {
 	/**
 	 * 添加新的章节
 	 */
-	public function newChapter()
+	public function add()
 	{	
-		$volume_obj = D('Volume', 'Service');
-		$volume_list = $volume_obj->getVolumeList($this->book_id, False);
-
+		$book_info = $this->bookInstance->getBookByBookId($this->bookId, 'bk_id,bk_name');
+		$volume_list = $this->volumeInstance->getVolumeList($this->bookId, False);
 		$this->assign(array(
 			'volume_list' => $volume_list,
-			'book_info' => $this->book_info,
+			'book_info' => $book_info,
 		));
 		$this->display();
 	}
@@ -64,25 +62,19 @@ class ChapterController extends BaseController {
 	/**
 	 * 执行添加新的章节
 	 */
-	public function doNewChapter()
+	public function doAdd()
 	{
 		if (IS_POST) {
-			$data = I();
-			$data['bk_id'] = $this->book_id;
-			$state = $this->chapter_obj->checkChapter($data);
+			$data = array_merge($this->authorInfo, I(), array('bk_id'=>$this->bookId));
+			$state = $this->chapterInstance->doAdd($data);
 
-			if ($state['code'] < 0) {
-				z_redirect($state['msg']);
-			}
-			$last_id = $this->chapter_obj->createNewChapter($data);
-
-			if ($last_id) {
-				$data['ch_id'] = $last_id;
+			if ($state['code'] > 0) {
+				$data['ch_id'] = $state['code'];
 				$tag['data'] = $data;
 				$tag['ac'] = 'after_add';	// 行为名称
 				tag('chapter', $tag);	// 章节上传成功后，更新对应的数据表信息
 
-				z_redirect('添加成功', ZU('chapter/index', 'ZL_AUTHOR_DOMAIN', array('book_id'=>$this->book_id)));
+				z_redirect('添加成功', ZU('chapter/index', 'ZL_AUTHOR_DOMAIN', array('book_id'=>$this->bookId)));
 			} else {
 				z_redirect('添加失败');
 			}
@@ -94,10 +86,9 @@ class ChapterController extends BaseController {
 	 */
 	public function edit()
 	{
-		$chapter_info = $this->chapter_obj->getChapterInfo($this->chapterId);
+		$chapter_info = $this->chapterInstance->getChapterInfo();
 
-		if (empty($chapter_info))
-			z_redirect('章节不存在'); 
+		if (empty($chapter_info)) z_redirect('章节不存在'); 
 
 		$this->assign(array(
 			'chapter_info' => $chapter_info,
@@ -111,14 +102,49 @@ class ChapterController extends BaseController {
 	public function doEdit()
 	{
 		if (IS_POST) {
-			$data = I();
-			$data['bk_id'] = $this->book_id;
-			$rs = $this->chapter_obj->doEdit($data);
-			
-			if (!empty($rs))
-				z_redirect('修改成功');
-			else
+			$data = array_merge($this->authorInfo, I(), array('bk_id'=>$this->bookId, 'ch_id'=>$this->chapterId));
+			$state = $this->chapterInstance->doEdit($data);
+
+			if ($state['code'] > 0) {
+				$tag['data'] = $data;
+				$tag['ac'] = 'after_edit';	// 行为名称
+				tag('chapter', $tag);		// 章节修改成功后，更新对应的数据表信息
+				
+				z_redirect('修改成功', ZU('chapter/index', 'ZL_AUTHOR_DOMAIN', array('book_id'=>$this->bookId)));
+			} else {
 				z_redirect('修改失败');
+			}
+		}
+	}
+
+	/**
+	 * 调卷
+	 */
+	public function editVolume()
+	{
+		$chapter_info = $this->chapterInstance->getChapterInfo();
+		$volume_list = $this->volumeInstance->getVolumeList($this->bookId, False);
+
+		$this->assign(array(
+			'volume_list' => $volume_list,
+			'chapter_info' => $chapter_info,
+		));
+		$this->display();
+	}
+
+	public function doEditVolume()
+	{
+		if (IS_POST) {
+			$data = array_merge($this->authorInfo, I(), array('bk_id'=>$this->bookId,'ch_id'=>$this->chapterId));
+
+			$state = $this->chapterInstance->doEditBookVolume($data);
+			
+			if ($state['code'] > 0) {
+
+				z_redirect('修改成功', ZU('chapter/index', 'ZL_AUTHOR_DOMAIN', array('book_id'=>$this->bookId)));
+			} else {
+				z_redirect('修改失败');
+			}
 		}
 	}
 }

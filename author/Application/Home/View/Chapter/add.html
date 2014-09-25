@@ -13,7 +13,7 @@
 		{// 书的常用管理操作 }
 		<include file="Public/actions" ac="new_chapter" />
 		
-		<form action="{:ZU('chapter/doNewChapter', 'ZL_AUTHOR_DOMAIN', array('book_id'=>I('book_id')))}" method="post" class="form form-horizontal">
+		<form action="{:ZU('chapter/doAdd', 'ZL_AUTHOR_DOMAIN', array('book_id'=>I('book_id')))}" method="post" class="form form-horizontal">
 			<?php if(count($volume_list) > 2):?>
 			<div class="control-group">
 				<label for="" class="control-label">分卷</label>

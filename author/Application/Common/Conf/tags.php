@@ -13,7 +13,4 @@ return array(
 
 	// 章节一系列
 	'chapter' => array('Home\Behavior\ChapterBehavior'),
-
-	// 作品的一系列，执行的操作
-	'book' => array('Home\Behavior\BookBehavior'),
 );

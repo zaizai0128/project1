@@ -34,7 +34,7 @@
 					<th>{$val.bk_public_name|default="暂无更新章节"}</th>
 					<th>{$val.bk_now_date}</th>
 					<th>{$val.bk_cre_time}</th>
-					<th><a data-target="#modal-edit" data-toggle="modal" data-backdrop="static" href="{:ZU('bookApply/check', 'ZL_ADMIN_DOMAIN', array('bk_apply_id'=>$val['bk_id']))}">审核</a></th>
+					<th><a data-target="#modal-edit" data-toggle="modal" data-backdrop="static" href="{:ZU('bookApply/check', 'ZL_ADMIN_DOMAIN', array('apply_id'=>$val['bk_id']))}">审核</a></th>
 				</tr>
 				<?php endforeach;?>
 			</tbody>

@@ -7,9 +7,9 @@
 	</div>
 	<div class="span9">
 		<ul class="breadcrumb">
-			<li><li class="active">新建作品<span class="divider">-</span><a href="{:ZU('index/createNewBookHelp', 'ZL_AUTHOR_DOMAIN')}" target="_blank">[帮助指南]</a></li>
+			<li><li class="active">新建作品<span class="divider">-</span><a href="###">[帮助指南]</a></li>
 		</ul>
-		<form action="{:ZU('index/doCreateNewBook', 'ZL_AUTHOR_DOMAIN')}" class="form-horizontal" method="post">
+		<form action="{:ZU('bookApply/doAdd', 'ZL_AUTHOR_DOMAIN')}" class="form-horizontal" method="post">
 			<div class="control-group">
 				<label class="control-label">作品类别</label>				
 				<div class="controls">
@@ -38,7 +38,7 @@
 			<div class="control-group">
 				<label class="control-label">作&nbsp;者</label>
 				<div class="controls">
-					<input type="text" value="{:session('author.author_name')}" disabled/>		
+					<input type="text" value="{$author_info.author_name}" disabled/>		
 				</div>
 			</div>
 			<div class="control-group">

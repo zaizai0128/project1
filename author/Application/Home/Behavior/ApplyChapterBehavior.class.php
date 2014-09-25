@@ -10,8 +10,16 @@ namespace Home\Behavior;
 
 class ApplyChapterBehavior {
 
-	protected $data;
-	protected $ac;
+	protected $data = Null;
+	protected $ac = Null;
+	protected $bookApplyInstance = Null;
+	protected $chapterInstance = Null;
+
+	public function __construct()
+	{
+		$this->bookApplyInstance = D('BookApply', 'Service');
+		$this->chapterInstance = D('BookApplyChapter', 'Service');
+	}
 
 	/**
 	 * 行为入口程序
@@ -39,21 +47,16 @@ class ApplyChapterBehavior {
 	 */
 	protected function afterAdd()
 	{
-		$book_apply = M('zl_book_apply');
-		$rs = $book_apply->where('bk_id = '.$this->data['bk_id'])->find();
+		$chapter_info = $this->chapterInstance->getChapterInfo($this->data['bk_id'], $this->data['ch_id']);
 
-		if (!$rs)
-			return False;
-
-		// 获取章节的信息
-		$chapter_info = M('zl_book_apply_chapter')->where('ch_id = '.$this->data['ch_id'])->find();
-
-		// 保存章节更新时间
-		$book_apply->bk_now_date = $chapter_info['ch_update'];
-		$book_apply->bk_public_name = $chapter_info['ch_name'];
-		$book_apply->bk_public_ch_id = $chapter_info['ch_id'];
-		$book_apply->ch_total += 1;
-		$book_apply->save();
+		$final_data['bk_now_date'] = $chapter_info['ch_update'];
+		$final_data['bk_public_name'] = $chapter_info['ch_name'];
+		$final_data['bk_public_ch_id'] = $chapter_info['ch_id'];
+		$final_data['ch_total'] = $this->chapterInstance->getTotalChapterNum($this->data['bk_id']);
+		$final_data['bk_id'] = $chapter_info['bk_id'];
+		$final_data['bk_size'] = $this->chapterInstance->getTotalSizeChapter($this->data['bk_id']);
+		
+		$this->bookApplyInstance->doEdit($final_data);
 	}
 
 	/**
@@ -61,18 +64,12 @@ class ApplyChapterBehavior {
 	 */
 	protected function afterEdit()
 	{
-		$book_apply = M('zl_book_apply');
-		$rs = $book_apply->where('bk_id = '.$this->data['bk_id'])->find();
+		$chapter_info = $this->chapterInstance->getChapterInfo($this->data['bk_id'], $this->data['ch_id']);
 
-		if (!$rs) return False;
+		$final_data['bk_id'] = $this->data['bk_id'];
+		$final_data['bk_size'] = $this->chapterInstance->getTotalSizeChapter($this->data['bk_id']);
 		
-		// 获取章节的信息
-		$chapter_info = M('zl_book_apply_chapter')->where('ch_id = '.$this->data['ch_id'])->find();
-
-		// 保存章节更新时间
-		$book_apply->bk_now_date = $chapter_info['ch_update'];
-		$book_apply->bk_public_name = $chapter_info['ch_name'];
-		$book_apply->save();
+		$this->bookApplyInstance->doEdit($final_data);
 	}
 
 }

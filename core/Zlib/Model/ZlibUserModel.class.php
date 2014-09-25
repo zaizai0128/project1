@@ -20,7 +20,7 @@ class ZlibUserModel extends BaseModel {
 	}
 
 	/**
-	 * 获取用户全部信息by user_id
+	 * 获取用户全部信息
 	 *
 	 * @param int user_id
 	 */
@@ -29,7 +29,8 @@ class ZlibUserModel extends BaseModel {
 		// 用户基础信息
 		$user_info = $this->getUserInfoByUserId($user_id);
 		// 用户作者信息
-		$author_info = M('ZlUserAuthor')->where('user_id = '.$user_id)->find();
+		$user_author = new ZlibUserAuthorModel;
+		$author_info = $user_author->getAuthorInfoByUserId($user_id);
 		return array_merge($user_info, $author_info);
 	}
 

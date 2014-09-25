@@ -7,13 +7,13 @@
 	</div>
 	<div class="span9">
 		<ul class="breadcrumb">
-			<li><a href="{:ZU('bookApply/index', 'ZL_AUTHOR_DOMAIN')}">待审核作品管理</a><span class="divider">/</span></li><li><a href="{:ZU('bookApply/book', 'ZL_AUTHOR_DOMAIN', array('bk_apply_id'=>I('bk_apply_id')))}">{$book.bk_name}</a><span class="divider">/</span></li><li class="active">上传新章节</li>
+			<li><a href="{:ZU('bookApply/index', 'ZL_AUTHOR_DOMAIN')}">待审核作品管理</a><span class="divider">/</span></li><li><a href="{:ZU('bookApply/book', 'ZL_AUTHOR_DOMAIN', array('apply_id'=>I('apply_id')))}">{$book.bk_name}</a><span class="divider">/</span></li><li class="active">上传新章节</li>
 		</ul>
 
 		{// 书的常用管理操作 }
 		<include file="Public/apply_actions" ac="createNewChapter" />
 		
-		<form action="{:ZU('bookApplyChapter/doCreateNewChapter', 'ZL_AUTHOR_DOMAIN', array('bk_apply_id'=>I('bk_apply_id')))}" method="post" class="form form-horizontal">
+		<form action="{:ZU('bookApplyChapter/doAdd', 'ZL_AUTHOR_DOMAIN', array('apply_id'=>I('apply_id')))}" method="post" class="form form-horizontal">
 			<div class="control-group">
 				<label for="input_chapter_name" class="control-label">章节标题</label>
 				<div class="controls">

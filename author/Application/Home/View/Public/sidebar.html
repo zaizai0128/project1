@@ -6,7 +6,7 @@
 	</ul>
 	<ul class="nav nav-list">
 		<li <if condition="[nav] eq 'author_info'">class="active"</if>><a href="{:ZU('author/index', 'ZL_AUTHOR_DOMAIN')}">作者信息</a></li>
-		<li <if condition="[nav] eq 'new_book'">class="active"</if>><a href="{:ZU('index/createNewBook', 'ZL_AUTHOR_DOMAIN')}">新建作品</a></li>
+		<li <if condition="[nav] eq 'new_book'">class="active"</if>><a href="{:ZU('bookApply/add', 'ZL_AUTHOR_DOMAIN')}">新建作品</a></li>
 		<li <if condition="[nav] eq 'book_manager'">class="active"</if>><a href="{:ZU('book/index', 'ZL_AUTHOR_DOMAIN')}">作品管理</a></li>
 		<li <if condition="[nav] eq 'book_apply_manager'">class="active"</if>><a href="{:ZU('bookApply/index', 'ZL_AUTHOR_DOMAIN')}">待审核作品管理</a></li>
 		<li <if condition="[nav] eq 'read'">class="active"</if>><a href="{:ZU('/index/read', 'ZL_AUTHOR_DOMAIN')}" target="_blank">作者必读</a></li>

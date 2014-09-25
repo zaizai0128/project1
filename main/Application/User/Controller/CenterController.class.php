@@ -60,7 +60,7 @@ class CenterController extends UserController {
 		// 判断是否需要补充个人真实信息
 		$state = D('UserAuthor', 'Service')->checkUserAuthorInfo($this->userId);
 
-		// 调到补充个人真实信息页
+		// 跳到补充个人真实信息页
 		if ($state['code'] <=0)
 			z_redirect($state['msg'], ZU('user/center/trueInfo'));
 

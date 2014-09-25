@@ -11,14 +11,7 @@ namespace Zlib\Model;
 class ZlibUserAuthorModel extends BaseModel {
 
 	protected $trueTableName = 'zl_user_author';
-	protected $userAuthorBankInstance = Null;	// 用户银行数据对象
-
-	public function init()
-	{
-		parent::init();
-		$this->userAuthorBankInstance = M('ZlUserAuthorBank');
-	}
-
+	
 	/**
 	 * 编辑
 	 */

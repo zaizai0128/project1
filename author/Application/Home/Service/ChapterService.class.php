@@ -7,117 +7,164 @@
  * @version 1.0
  */
 namespace Home\Service;
-use Home\Model\ChapterModel;
+use Zlib\Model\ZlibChapterModel;
 
-class ChapterService extends ChapterModel {
+class ChapterService extends ZlibChapterModel {
 
 	/**
-	 * 修改章节内容
+	 * 修改章节所属的卷
 	 */
-	public function doEdit($data)
+	public function doEditBookVolume($data)
 	{
-		$chapter_content = $data['ch_content'];
-		$data['ch_update'] = date('Y-m-d H:i:s', time());
-		$data['ch_size'] = mb_strlen($data['ch_content'], C('SYSTEM.encoded'));
-		unset($data['ch_content']);
-		$info = $this->getChapterInfo($data['ch_id']);
-		$rs = parent::doEdit($data);
+		if (empty($data['bk_id'])) return z_info(-1, '作品不存在');
+		if (empty($data['ch_id'])) return z_info(-2, '章节不存在');
+		if (empty($data['ch_roll'])) return z_info(-3, '卷号不存在');
 
-		if ($info['ch_vip'] == 1) {
-			// 更新vip章节
-			$data['ch_content'] = $chapter_content;
-			$vip_chapter = D('ChapterVip', 'Service')->getInstance($data['bk_id'], $data['ch_id']);
-			$vip_chapter->doEdit($data);
+		$final_data['bk_id'] = $data['bk_id'];
+		$final_data['ch_id'] = $data['ch_id'];
+		$final_data['ch_roll'] = $data['ch_roll'];
 
-		} else {
-			// 修改章节内容文件
-			$nginx_module_set = C('CHAPTER.set').'/'.$data['bk_id'].'/'.$data['ch_id'];
-			z_request_post($nginx_module_set, $chapter_content);
-		}
+		$result = parent::doEdit($final_data);
 
-		return $rs;
+		if ($result)
+			return z_info(1, '修改成功');
+		else
+			return z_info(0, '修改失败');
 	}
 
 	/**
 	 * override
 	 */
-	public function getChapterInfo($chapter_id)
+	public function getChapterInfo()
 	{
-		$chapter_info = parent::getChapterInfo($chapter_id);
+		$chapter_info = parent::getChapterInfo();
 
 		if ($chapter_info['ch_vip'] == 1) {
 			$vip_chapter = D('ChapterVip', 'Service')->getInstance($chapter_info['bk_id'], $chapter_info['ch_id']);
 			$chapter_info['ch_content'] = $vip_chapter->getChapterContent();
 		} else {
-			$get_content_url = C('CHAPTER.read').'/'.$this->book_id.'/'.$chapter_id;
+			$get_content_url = C('CHAPTER.read').'/'.$chapter_info['bk_id'].'/'.$chapter_info['ch_id'];
 			$chapter_info['ch_content'] = file_get_contents($get_content_url);
-			$chapter_info['ch_content'] = substr($chapter_info['ch_content'], 4);
+			$chapter_info['ch_content'] = parent::getChapterContent();
 		}
 		
 		return $chapter_info;
 	}
 	
 	/**
-	 * 检测chapter数据
-	 *
-	 * @param array chapter_info
-	 * @param boolean 是否是添加操作
+	 * 修改章节内容
 	 */
-	public function checkChapter($chapter_info, $is_add = True)
+	public function doEdit($data)
 	{
-		if (empty($chapter_info['bk_id']))
-			return array('code'=>-1, 'msg'=>'作品序号不允许为空');
+		$data = array_filter($data);
+		$state = $this->_checkChapter($data, True);
+		if ($state['code'] <= 0) return $state;
 
-		if (empty($chapter_info['ch_name'])) 
-			return array('code'=>-2, 'msg'=>'章节名称不允许为空');
+		$vip = parent::getChapterInfo('ch_vip');
+		if (empty($vip)) return z_info(0, '章节不存在');
 
-		if (empty($chapter_info['ch_content']))
-			return array('code'=>-3, 'msg'=>'章节内容不允许为空');
+		$chapter_info['ch_update'] = z_now();
+		$chapter_info['ch_size'] = z_strlen($data['ch_content']);
+		$chapter_info['ch_name'] = $data['ch_name'];
+		$chapter_info['ch_id'] = $data['ch_id'];
+		$chapter_info['bk_id'] = $data['bk_id'];
+		$result = parent::doEdit($chapter_info);
 
+		if ($result) {
 
-		return array('code'=>1, 'msg'=>'验证通过');
+			// 更新内容
+			if ($vip['ch_vip'] == 1) {
+
+				$vip_chapter = D('ChapterVip', 'Service')->getInstance($chapter_info['bk_id'], $chapter_info['ch_id']);
+				$vip_chapter->doEdit($data);
+			} else {
+
+				// 更新内容
+				parent::setChapterContent($chapter_info['ch_id'], $data['ch_content']);
+			}
+
+			return z_info($result, '修改成功');
+		} else {
+
+			return z_info($result, '修改失败');
+		}
 	}
 
 	/**
 	 * 创建新的章节
 	 *
-	 * @param array chapter_info
 	 */
-	public function createNewChapter($chapter_info)
-	{
-		$chapter_info = array_filter($chapter_info);
-		$chapter_info['ch_roll'] = empty($chapter_info['ch_roll']) ? C('BOOK.start_volume') : (int)$chapter_info['ch_roll'];
-		$chapter_info['ch_cre_time'] = date('Y-m-d H:i:s', time());
-		$chapter_info['ch_update'] = date('Y-m-d H:i:s', time());
-		$chapter_info['ch_order'] = $this->getLastChapterOrder();
-		$chapter_info['ch_poster_id'] = ZS('S.author', 'user_id');
-		$chapter_info['ch_poster'] = ZS('S.author','author_name');
-		$chapter_info['ch_size'] = mb_strlen($chapter_info['ch_content'], C('SYSTEM.encoded'));
+	public function doAdd($data)
+	{	
+		$data = array_filter($data);
+		$state = $this->_checkChapter($data);
+		if ($state['code'] <= 0) return $state;
 
-		// 保存到文件or其他地方
-		$chapter_content = $chapter_info['ch_content'];
-		unset($chapter_info['ch_content']);
-		$book_id = $chapter_info['bk_id'];
+		$chapter_info['bk_id'] = $data['bk_id'];
+		$chapter_info['ch_roll'] = empty($data['ch_roll']) ? C('BOOK.start_volume') : (int)$data['ch_roll'];
+		$chapter_info['ch_cre_time'] = z_now();
+		$chapter_info['ch_update'] = z_now();
+		$chapter_info['ch_order'] = parent::getLastChapterOrder();
+		$chapter_info['ch_size'] = z_strlen($data['ch_content']);
+		$chapter_info['ch_name'] = $data['ch_name'];
+		$chapter_info['ch_status'] = 0;
+		$chapter_info['ch_vip'] = (int)$data['ch_vip'];
+		$chapter_content = $data['ch_content'];
 
-		// 保存到db中
 		$chapter_id = parent::doAdd($chapter_info);
-
-		if (empty($chapter_id))
-			return False;
+		
+		if (empty($chapter_id)) return z_info(0, '添加失败');
 
 		// 如果是vip，则将内容存放到数据库中，如果是普通章节，则生成静态页
 		if ($chapter_info['ch_vip'] == 1) {
 			$chapter_info['ch_content'] = $chapter_content;
 			$chapter_info['ch_id'] = $chapter_id;
-			$vip_chapter = D('ChapterVip', 'Service')->getInstance($book_id, $chapter_id);
+			$vip_chapter = D('ChapterVip', 'Service')->getInstance($data['bk_id'], $chapter_id);
 			$vip_chapter->doAdd($chapter_info);
 
 		// 普通章节处理
 		} else {
-			$nginx_module_set = C('CHAPTER.set').'/'.$book_id.'/'.$chapter_id;
-			$info = z_request_post($nginx_module_set, $chapter_content);
+			
+			parent::setChapterContent($chapter_id, $chapter_content);
 		}
 
-		return $chapter_id;
+		return z_info($chapter_id, '添加成功');
+	}
+
+	/**
+	 * 检测chapter数据
+	 *
+	 * @param array 
+	 * @param boolean 是否是修改操作
+	 */
+	private function _checkChapter($data, $is_edit = False)
+	{
+		if (empty($data['bk_id']))
+			return z_info(-1, '作品序号不允许为空');
+
+		if (empty($data['ch_name'])) 
+			return z_info(-2, '章节名称不允许为空');
+
+		if (empty($data['ch_content']))
+			return z_info(-3, '章节内容不允许为空');
+
+		// 其他验证 ...
+
+		if ($is_edit) {
+			if (empty($data['ch_id']))
+				return z_info(-11, '章节id不允许为空');
+
+			// 判断章节名是否重复
+			$chapter_info = parent::getChapterInfoByName($data['ch_name'], 'ch_name', ' and ch_id != '.$data['ch_id']);
+		} else {
+
+			// 判断章节名是否重复
+			$chapter_info = parent::getChapterInfoByName($data['ch_name'], 'ch_name');
+		}
+
+		if (!empty($chapter_info))
+			return z_info(-4, '章节名重复');
+
+		return array('code'=>1, 'msg'=>'验证通过');
 	}
 }

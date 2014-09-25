@@ -13,6 +13,42 @@ class ZlibBookModel extends BaseModel {
 	protected $trueTableName = 'zl_book';
 
 	/**
+	 * 获取作者的书籍
+	 * @param int user_id
+	 * @param String field
+	 * @param String where
+	 */
+	public function getBookByUserId($user_id, $field='*', $where='')
+	{
+		$condition = 'bk_author_id = '.$user_id.$where;
+		return $this->field($field)->where($condition)->order('bk_cre_time DESC')->select();
+	}
+
+	/**
+	 * 获取作品信息通过名称
+	 * @param String book_name
+	 * @param String field
+	 * @param String where
+	 */
+	public function getBookByName($book_name, $field='*', $where='')
+	{
+		$condition = 'bk_name = "'.$book_name.'"'.$where;
+		return $this->field($field)->where($condition)->find();
+	}
+
+	/**
+	 *  获取作品信息通过作品id
+	 * @param String book_id
+	 * @param String field
+	 * @param String where
+	 */
+	public function getBookByBookId($book_id, $field='*', $where='')
+	{
+		$condition = 'bk_id = "'.$book_id.'"'.$where;
+		return $this->field($field)->where($condition)->find();
+	}
+
+	/**
 	 * 添加
 	 */
 	public function doAdd($data)

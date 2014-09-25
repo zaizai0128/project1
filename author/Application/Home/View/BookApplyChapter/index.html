@@ -7,7 +7,7 @@
 	</div>
 	<div class="span9">
 		<ul class="breadcrumb">
-			<li><a href="{:ZU('bookApply/index', 'ZL_AUTHOR_DOMAIN')}">待审核作品管理</a><span class="divider">/</span></li><li><a href="{:ZU('bookApply/book', 'ZL_AUTHOR_DOMAIN', array('bk_apply_id'=>I('bk_apply_id')))}">{$book.bk_name}</a><span class="divider">/</span></li><li class="active">章节列表</li>
+			<li><a href="{:ZU('bookApply/index', 'ZL_AUTHOR_DOMAIN')}">待审核作品管理</a><span class="divider">/</span></li><li><a href="{:ZU('bookApply/book', 'ZL_AUTHOR_DOMAIN', array('apply_id'=>I('apply_id')))}">{$book.bk_name}</a><span class="divider">/</span></li><li class="active">章节列表</li>
 		</ul>
 		{// 书的常用管理操作 }
 		<include file="Public/apply_actions" ac="editChapter" />
@@ -27,12 +27,11 @@
 					<th>{$val.ch_id}</th>
 					<th>《{$val.ch_name}》</th>
 					<th>{$val.ch_update}</th>
-					<th><a data-target="#modal-edit" data-toggle="modal" data-backdrop="static" href="{:ZU('bookApplyChapter/edit','ZL_AUTHOR_DOMAIN', array('bk_apply_id'=>$val['bk_id'], 'ch_id'=>$val['ch_id']))}">编辑</a>|<a href="{:ZU('bookApply/book', 'ZL_AUTHOR_DOMAIN', array('bk_apply_id'=>$val['bk_id']))}">删除</a></th>
+					<th><a data-target="#modal-edit" data-toggle="modal" data-backdrop="static" href="{:ZU('bookApplyChapter/edit','ZL_AUTHOR_DOMAIN', array('apply_id'=>$val['bk_id'], 'ch_id'=>$val['ch_id']))}">编辑</a></th>
 				</tr>
 				<?php endforeach;?>
 			</tbody>
 		</table>
-		<div class="pagination">{$page}</div>
 	</div>
 </div>
 </block>

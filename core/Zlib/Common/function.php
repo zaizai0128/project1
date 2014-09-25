@@ -342,3 +342,15 @@ function z_redirect($msg, $url = '', $delay = Null, $type = 1)
 	}
 	return True;
 }
+
+/**
+ * 封装一下 mb_strlen函数 获取字符串长度
+ *
+ * @param String
+ * @param String encoded
+ */
+function z_strlen($str, $charset=Null)
+{
+	$charset = isset($charset) ? $charset : C('SYSTEM.encoded') ;
+	return mb_strlen($str, $charset);
+}

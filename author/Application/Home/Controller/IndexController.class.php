@@ -21,53 +21,6 @@ class IndexController extends BaseController {
 	}
 
 	/**
-	 * 新建作品
-	 */
-	public function createNewBook()
-	{
-		// 获取类别json
-		$book_class = Zapi\BookClass::getInstance()->getAllClassForJson();
-
-		$this->assign(array(
-			'book_class' => $book_class,
-		));
-		$this->display();
-	}
-
-	/**
-	 * 提交新建作品
-	 */
-	public function doCreateNewBook()
-	{
-		if (IS_POST) {
-			$data = I();
-			$book_apply_service = D('BookApply', 'Service');
-			$state = $book_apply_service->checkBook($data);
-			
-			if ($state['code'] < 0) z_redirect($state['msg']);
-
-			$data['bk_author'] = session('author.author_name');
-			$data['bk_author_id'] = $this->user_id;
-			$data['bk_poster_id'] = $this->user_id;
-
-			$book_id = $book_apply_service->doAdd($data);
-
-			if ($book_id) {
-
-				// 添加作品后的动作，更新书籍的权限
-				// $data['bk_id'] = $book_id;
-				// $tag['data'] = $data;
-				// $tag['ac'] = 'after_add';
-				// tag('book', $tag);
-				z_redirect('添加成功等待审核', ZU('bookApply/book', 'ZL_AUTHOR_DOMAIN'
-								, array('bk_apply_id'=>$book_id)));
-			} else {
-				z_redirect('添加失败');
-			}
-		}
-	}
-
-	/**
 	 * 作者必读
 	 */
 	public function read()

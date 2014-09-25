@@ -23,12 +23,60 @@ class ZlibChapterModel extends BaseModel {
 	}
 
 	/**
-	 * 获取章节内容
+	 * 获取申请作品的章节个数
 	 */
-	public function getChapterInfo()
+	public function getTotalChapterNum()
+	{
+		$condition = 'bk_id = '.$this->bookId;
+		return (int)$this->instance->where($condition)->count();
+	}
+
+	/**
+	 * 获取申请作品章节的总数
+	 */
+	public function getTotalSizeChapter()
+	{
+		$condition = 'bk_id = '.$this->bookId;
+		return (int)$this->instance->where($condition)->sum('ch_size');
+	}
+
+	/**
+	 * 保存
+	 */
+	public function doAdd($data)
+	{
+		return $this->instance->data($data)->add();
+	}
+
+	/**
+	 * 编辑
+	 */
+	public function doEdit($data)
+	{
+		$condition = 'bk_id = '.$data['bk_id'].' and ch_id = '.$data['ch_id'];
+		return $this->instance->where($condition)->data($data)->save(); 
+	}
+
+	/**
+	 * 获取章节内容
+	 * @param string field
+	 */
+	public function getChapterInfo($field = '*')
 	{
 		$condition = 'bk_id = '.$this->bookId.' and ch_id = '.$this->chapterId;
-		return $this->instance->where($condition)->find();
+		return $this->instance->field($field)->where($condition)->find();
+	}
+
+	/**
+	 * 通过章节名称，获取章节内容
+	 *
+	 * @param String name
+	 * @param String field
+	 */
+	public function getChapterInfoByName($name, $field='*', $where='')
+	{
+		$condition = 'bk_id = '.$this->bookId.' and ch_name = "'.$name.'"'.$where;
+		return $this->instance->field($field)->where($condition)->find();
 	}
 
 	/**
@@ -53,11 +101,13 @@ class ZlibChapterModel extends BaseModel {
 	}
 
 	/**
-	 * 获取普通章节内容
+	 * 获取最后章节order
 	 */
-	public function getChapterContent()
+	public function getLastChapterOrder()
 	{
-
+		$condition = 'bk_id = '.$this->bookId;
+		$max = $this->instance->where($condition)->max('ch_order');
+		return empty($max) ? 0 : $max+1 ;
 	}
 
 	/**
@@ -66,6 +116,37 @@ class ZlibChapterModel extends BaseModel {
 	public function getTableName()
 	{
 		return 'zl_book_chapter_' . sprintf('%02d', $this->bookId / 30000);
+	}
+
+	/**
+	 * 获取普通章节内容详情
+	 */
+	public function getChapterContent()
+	{
+		$chapter_read = C('CHAPTER.read') . '/'.$this->bookId.'/'.$this->chapterId;
+		$content = file_get_contents($chapter_read);
+		// 获取头4位编码, 用来判断获取状态
+		$status = substr($content, 0, 3);
+		// 如果前3位不为000 ，则返回False
+		if ($status != '000')
+			return False;
+		
+		// 返回内容
+		return substr($content, 4);
+	}
+
+	/**
+	 * 设置普通章节内容静态文件
+	 *
+	 * @param int chapter_id
+	 * @param String 内容
+	 */
+	public function setChapterContent($chapter_id, $content)
+	{
+		$chapter_set = C('CHAPTER.set') . '/'.$this->bookId.'/'.$chapter_id;
+		$info = z_request_post($chapter_set, $content);
+		// 判断 info返回的内容
+		return True;
 	}
 
 }

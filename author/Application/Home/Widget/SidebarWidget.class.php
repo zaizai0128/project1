@@ -17,7 +17,7 @@ class SidebarWidget extends BaseController {
 	public function top()
 	{
 		// 获取用户拥有的作品列表
-		$book_list = D('Book')->getBookListByUid($this->user_id);
+		$book_list = D('Book', 'Service')->getBookByUserId($this->authorInfo['user_id'], 'bk_id,bk_name');
 
 		$this->assign(array(
 			'sidebar_top_list' => $book_list,

@@ -1,22 +1,24 @@
 <?php
 /**
- * 申请成为vip model
+ * 申请成为vip service
  *
  * @author 	songmw<songmingwei@kongzhong.com>
  * @date 	2014-09-22
  * @version 1.0
  */
-
 namespace Home\Service;
-use Home\Model\BookApplyVipModel;
+use Zlib\Model\ZlibBookApplyVipModel;
 
-class BookApplyVipService extends BookApplyVipModel {
+class BookApplyVipService extends ZlibBookApplyVipModel {
 
 	/**
 	 * override
 	 */
 	public function doAdd($data)
 	{
+		$apply_info = parent::getInfoByBookId($data['bk_id'],'bk_id');
+		if (!empty($apply_info)) return z_info(-1, '已经存在');
+
 		// 判断填充内容是否合格。。具体 待定
 
 		$final_data = array();
@@ -32,8 +34,8 @@ class BookApplyVipService extends BookApplyVipModel {
 		$result = parent::doAdd($final_data);
 
 		if ($result)
-			return z_info(1, '提交成功');
+			return z_info($result, '提交成功');
 		else
-			return z_info(0, '提交失败'); 
+			return z_info($result, '提交失败'); 
 	}
 }

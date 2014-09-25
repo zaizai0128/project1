@@ -16,10 +16,11 @@ class ZlibBookApplyVipModel extends BaseModel {
 	 * 获取数据
 	 *
 	 * @param int book_id
+	 * @param String field
 	 */
-	public function getInfoByBookId($book_id)
+	public function getInfoByBookId($book_id, $field='*')
 	{
-		return $this->where('bk_id = '.$book_id)->find();
+		return $this->field($field)->where('bk_id = '.$book_id)->find();
 	}
 
 	/**

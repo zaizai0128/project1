@@ -8,23 +8,51 @@
  */
 namespace Home\Controller;
 use Common\Controller\BaseController;
-use Zlib\Api as Zapi;
 
 class BookApplyController extends BaseController {
 
-	protected $book_apply_obj;
-	protected $book_id;					// 作品id
-	protected $book_info;				// 作品的信息
+	protected $bookId = Null;
+	protected $bookApplyInstance = Null;
 
 	protected function init()
 	{
 		parent::init();
-		$this->book_apply_obj = D('BookApply', 'Service');
-		$this->book_id = I('get.bk_apply_id');
+		$this->bookId = I('get.apply_id');
+		\Zlib\Api\Acl::apply($this->authorInfo, $this->bookId);
+		$this->bookApplyInstance = D('BookApply', 'Service');
+	}
 
-		// 验证权限
-		$this->checkBookApplyAcl($this->_book_id);
-		$this->book_info = $this->book_apply_obj->getApplyInfo($this->book_id);
+	/**
+	 * 新建作品
+	 */
+	public function add()
+	{
+		// 获取类别json
+		$book_class = \Zlib\Api\BookClass::getInstance()->getAllClassForJson();
+
+		$this->assign(array(
+			'book_class' => $book_class,
+			'author_info' => $this->authorInfo,
+		));
+		$this->display();
+	}
+
+	/**
+	 * 提交新建作品
+	 */
+	public function doAdd()
+	{
+		if (IS_POST) {
+			$data = array_merge($this->authorInfo, I());
+			$state = $this->bookApplyInstance->doAdd($data);
+
+			if ($state['code'] > 0) {
+				$book_id = $state['code'];
+				z_redirect('添加成功', ZU('bookApply/book', 'ZL_AUTHOR_DOMAIN', array('apply_id'=>$book_id)));
+			} else {
+				z_redirect('添加失败');
+			}
+		}
 	}
 
 	/**
@@ -33,10 +61,10 @@ class BookApplyController extends BaseController {
 	public function index()
 	{
 		// 获取该用户待审核作品列表
-		$book = $this->book_apply_obj->getApplyList($this->user_id);
+		$book_list = $this->bookApplyInstance->getApplyBookByUserId($this->authorInfo['user_id']);
 
 		$this->assign(array(
-			'book' => $book
+			'book_list' => $book_list
 		));
 		$this->display();
 	}
@@ -48,34 +76,11 @@ class BookApplyController extends BaseController {
 	 */
 	public function book()
 	{
-		
+		$book_info = $this->bookApplyInstance->getOneApplyBook($this->authorInfo['user_id'], $this->bookId);
+
 		$this->assign(array(
-			'book' => $this->book_info,
+			'book_info' => $book_info,
 		));
 		$this->display();
 	}
-
-	/**
-	 * 编辑作品信息
-	 */
-	public function edit()
-	{
-
-		$this->assign(array(
-			'book' => $this->_book_info,
-		));
-		$this->display();	
-	}
-
-	/**
-	 * 执行编辑
-	 */
-	public function doEdit()
-	{
-		if (IS_POST) {
-
-			dump(I());
-		}
-	}
-
 }

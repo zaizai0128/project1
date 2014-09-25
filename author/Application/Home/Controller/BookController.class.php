@@ -8,22 +8,18 @@
  */
 namespace Home\Controller;
 use Common\Controller\BaseController;
-use Zlib\Api as Zapi;
 
 class BookController extends BaseController {
 
-	protected $book_obj;	
-	protected $book_id;		// 书籍id 
-	protected $book_info;	// 书籍信息
+	protected $bookId = Null;
+	protected $bookInstance = Null;
 
 	protected function init()
 	{
 		parent::init();
-
-		$this->book_obj = D('Book', 'Service');
-		$this->book_id = I('get.book_id');
-		$this->checkBookAcl();
-		$this->book_info = $this->book_obj->getBookInfo($this->book_id);
+		$this->bookId = I('get.book_id');
+		\Zlib\Api\Acl::check($this->authorInfo, $this->bookId);
+		$this->bookInstance = D('Book', 'Service');
 	}
 
 	/**
@@ -32,7 +28,7 @@ class BookController extends BaseController {
 	public function index()
 	{
 		// 获取该作者已经审核通过的作品		
-		$book_list = $this->book_obj->getBookListByUid($this->user_id);
+		$book_list = $this->bookInstance->getBookByUserId($this->authorInfo['user_id']);
 
 		$this->assign(array(
 			'book_list' => $book_list
@@ -46,9 +42,10 @@ class BookController extends BaseController {
 	 */
 	public function book()
 	{
+		$book_info = $this->bookInstance->getBookByBookId($this->bookId);
 
 		$this->assign(array(
-			'book_info' => $this->book_info,
+			'book_info' => $book_info,
 		));
 		$this->display();
 	}
@@ -58,9 +55,10 @@ class BookController extends BaseController {
 	 */
 	public function edit()
 	{
+		$book_info = $this->bookInstance->getBookByBookId($this->bookId);
 
 		$this->assign(array(
-			'book_info' => $this->book_info
+			'book_info' => $book_info
 		));
 		$this->display();
 	}
@@ -71,14 +69,12 @@ class BookController extends BaseController {
 	public function doEdit()
 	{
 		if (IS_POST) {
-			$data = I();
-			$data['bk_id'] = $this->book_id;
+			$data = array_merge($this->authorInfo, I(), array('bk_id'=>$this->bookId));
+			$state = $this->bookInstance->doEditBookInfo($data);
 
-			$state = $this->book_obj->editBookInfo($data);
-
-			if ($state > 0)
+			if ($state['code'] > 0)
 				z_redirect('修改成功', ZU('book/book', 'ZL_AUTHOR_DOMAIN'
-								, array('book_id'=>$this->book_id)));
+								, array('book_id'=>$this->bookId)));
 			else
 				z_redirect('修改失败');
 		}
@@ -91,15 +87,15 @@ class BookController extends BaseController {
 	public function applyVip()
 	{
 		$assign = array();
-
+		$book_info = $this->bookInstance->getBookByBookId($this->bookId, 'bk_id,bk_name');
 		// 获取签约状态，已经签约，则显示审核状态
-		$apply_info = D('BookApplyVip', 'Service')->getInfoByBookId($this->book_id);
+		$apply_info = D('BookApplyVip', 'Service')->getInfoByBookId($this->bookId);
 		$assign['is_show'] = empty($apply_info) ? True : False;
 
 		$this->assign(array(
 			'assign' => $assign,
 			'apply_info' => $apply_info,
-			'book_info' => $this->book_info,
+			'book_info' => $book_info,
 		));
 		$this->display();
 	}
@@ -110,13 +106,12 @@ class BookController extends BaseController {
 	public function doApplyVip()
 	{
 		if (IS_POST) {
-			$data = $this->book_info;
+			$data = $this->bookInstance->getBookByBookId($this->bookId);
 			$data['apply_comments'] = I('post.apply_comments');
-
 			$state = D('BookApplyVip', 'Service')->doAdd($data);
 
 			if ($state['code'] > 0) {
-				z_redirect($state['msg']);
+				z_redirect($state['msg'], ZU('book/applyVip', 'ZL_AUTHOR_DOMAIN', array('book_id'=>$this->bookId)));
 			} else {
 				z_redirect($state['msg']);
 			}

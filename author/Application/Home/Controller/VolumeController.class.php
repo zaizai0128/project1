@@ -8,24 +8,20 @@
  */
 namespace Home\Controller;
 use Common\Controller\BaseController;
-use Zlib\Api as Zapi;
 
 class VolumeController extends BaseController {
 
-	protected $book_obj;	
-	protected $book_id;		// 书籍id 
-	protected $book_info;
-	protected $volume_obj;
+	protected $bookId = Null;
+	protected $bookInstance = Null;
+	protected $volumeInstance = Null;
 
 	protected function init()
 	{
 		parent::init();
-
-		$this->volume_obj = D('Volume', 'Service');
-		$this->book_obj = D('Book', 'Service');
-		$this->book_id = I('get.book_id');
-		$this->checkBookAcl($this->book_id);
-		$this->book_info = $this->book_obj->getBookInfo($this->book_id);
+		$this->bookId = I('get.book_id');
+		\Zlib\Api\Acl::check($this->authorInfo, $this->bookId);
+		$this->bookInstance = D('Book', 'Service');
+		$this->volumeInstance = D('Volume', 'Service');
 	}
 
 	/**
@@ -33,11 +29,12 @@ class VolumeController extends BaseController {
 	 */
 	public function index()
 	{
+		$book_info = $this->bookInstance->getBookByBookId($this->bookId);
 		// 获取现有的卷
-		$volume_list = $this->volume_obj->getVolumeList($this->book_id);
+		$volume_list = $this->volumeInstance->getVolumeList($this->bookId);
 
 		$this->assign(array(
-			'book_info' => $this->book_info,
+			'book_info' => $book_info,
 			'volume_list' => $volume_list
 		));
 		$this->display();
@@ -49,22 +46,14 @@ class VolumeController extends BaseController {
 	public function doAdd()
 	{
 		if (IS_POST) {
-			$data['bk_id'] = $this->book_id;
-			$data['volume_name'] = I('post.volume_name');
-			$data['volume_intro'] = I('post.volume_intro');
-			$data['volume_order'] = $this->volume_obj->getLastVolumeOrder($this->book_id);
-			$state = $this->volume_obj->checkVolume($data);
+			$data = array_merge(I(), array('bk_id'=>$this->bookId));
+			$state = $this->volumeInstance->doAdd($data);
 
-			if ($state['code'] < 0)
-				z_redirect($state['msg']);
-
-			$state = $this->volume_obj->doAdd($data);
-
-			if (empty($state))
-				z_redirect('添加失败');
-			else
+			if ($state['code'] > 0)
 				z_redirect('添加成功', ZU('volume/index', 'ZL_AUTHOR_DOMAIN'
-				, array('book_id'=>$this->book_id)));
+				, array('book_id'=>$this->bookId)));
+			else
+				z_redirect($state['msg']);
 		}	
 	}
 
@@ -74,21 +63,14 @@ class VolumeController extends BaseController {
 	public function doEdit()
 	{
 		if (IS_POST) {
-			$data = I();
-			$data['bk_id'] = $this->book_id;
-			
-			$state = $this->volume_obj->checkVolume($data, True);
+			$data = array_merge(I(), array('bk_id'=>$this->bookId));
+			$state = $this->volumeInstance->doEdit($data);
 
-			if ($state['code'] < 0)
-				z_redirect($state['msg']);
-
-			$state = $this->volume_obj->doEdit($data);
-
-			if (empty($state))
-				z_redirect('修改失败');
-			else
+			if ($state['code'] > 0)
 				z_redirect('修改成功', ZU('volume/index', 'ZL_AUTHOR_DOMAIN'
-				, array('book_id'=>$this->book_id)));
+				, array('book_id'=>$this->bookId)));
+			else
+				z_redirect($state['msg']);
 		}
 	}
 
@@ -98,7 +80,7 @@ class VolumeController extends BaseController {
 	public function delete()
 	{
 		if (IS_POST) {
-
+			
 		}
 	}
 

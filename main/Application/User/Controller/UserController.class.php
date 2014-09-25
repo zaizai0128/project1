@@ -18,7 +18,7 @@ class UserController extends Controller {
 		parent::__construct();
 
 		// 权限验证机制
-		\Zlib\Api\Acl::run();
+		\Zlib\Api\Acl::user();
 		
 		$this->userId = ZS('S.user', 'user_id');
 	}
