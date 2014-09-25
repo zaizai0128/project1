@@ -259,12 +259,22 @@ function z_get_initial($str)
 function z_cut_str($string, $sublen, $start = 0, $code = 'UTF-8') 
 {
         if ($code == 'UTF-8') {
-                $pa = "/[\x01-\x7f]|[\xc2-\xdf][\x80-\xbf]|\xe0[\xa0-\xbf][\x80-\xbf]|[\xe1-\xef][\x80-\xbf][\x80-\xbf]|\xf0[\x90-\x
-bf][\x80-\xbf][\x80-\xbf]|[\xf1-\xf7][\x80-\xbf][\x80-\xbf][\x80-\xbf]/";
-                preg_match_all ( $pa, $string, $t_string );
-                if (count ( $t_string [0] ) - $start > $sublen)
-                        return join ( '', array_slice ( $t_string [0], $start, $sublen ) ) . "...";
-                return join ( '', array_slice ( $t_string [0], $start, $sublen ) );
+                $pa = "/[\x01-\x7f]|[\xc2-\xdf][\x80-\xbf]|\xe0[\xa0-\xbf][\x80-\xbf]";
+                $pa.= "|[\xe1-\xef][\x80-\xbf][\x80-\xbf]|\xf0[\x90-\xbf][\x80-\xbf][\x80-\xbf]";
+                $pa.= "|[\xf1-\xf7][\x80-\xbf][\x80-\xbf][\x80-\xbf]/";
+
+                preg_match_all( $pa, $string, $t_string );
+
+                $size = count($t_string [0] );
+                $h = "!.,?。，？";
+                $i = 0;
+		$max = $size > $sublen * 2 + $start ? $sublen * 2 + $start : $size;
+                for ($i = $start + $sublen; $i < $max; $i++) {
+                        if (strstr($h, $t_string[0][$i])) break;
+                }
+                if ($i < $size)
+                        return join ('', array_slice($t_string [0], $start, $i - $start)) . "...";
+                return join ( '', array_slice ( $t_string [0], $start, $i) );
         } else {
                 $start = $start * 2;
                 $sublen = $sublen * 2;
