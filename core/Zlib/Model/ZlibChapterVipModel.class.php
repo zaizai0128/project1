@@ -38,6 +38,32 @@ class ZlibChapterVipModel extends BaseModel {
 	}
 
 	/**
+	 * 获取vip描述
+	 */
+	public function getChapterIntro()
+	{
+		$content = $this->getChapterContent();
+		return z_cut_str($content, C('CHAPTER.intro_num'));
+	}
+
+	/**
+	 * 获取vip商品章节信息
+	 */
+	public function getVipCommodityInfo()
+	{
+		$chapter_instance = new ZlibChapterModel;
+		$chapter_instance = $chapter_instance->getInstance($this->bookId, $this->chapterId);
+
+		// 获取vip基础信息
+		$chapter_info = $chapter_instance->getChapterInfo();
+
+		// 计算章节的价格
+		$chapter_info['ch_price'] = z_word_to_money($chapter_info['ch_size']);
+		$chapter_info['ch_intro'] = $this->getChapterIntro();
+		return $chapter_info;
+	}
+
+	/**
 	 * 创建
 	 */
 	public function doAdd($data)

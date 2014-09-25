@@ -1,25 +1,20 @@
 <?php
 /**
- * 用户视角下的书
+ * 作品管理
  * 
  * @author 	songmw<songmingwei@kongzhong.com>
  * @date 	2014-09-09
  * @version 1.0
  */
 namespace Zlib\Api;
-use Zlib\Model\BaseModel;
 
-class Book extends BaseModel{
+class Book {
 
-	private $_book_id = Null;
-	private $volume = null;
-	private $chapter = null;
-	protected $trueTableName = 'zl_book';
+	private $_bookId = Null;
 
 	public function __construct($book_id)
 	{
-		parent::__construct();
-		$this->_book_id = $book_id;
+		$this->_bookId = $book_id;
 	}
 
 	/**
@@ -28,8 +23,8 @@ class Book extends BaseModel{
 	public function getCatalog($user_id = Null)
 	{
 		$catalog = array();
-		$cached_chapter = new CachedChapter($this->_book_id);
-		$vip = new UserVipBuy($user_id, $this->_book_id);
+		$cached_chapter = new CachedChapter($this->_bookId);
+		$vip = new UserVipBuy($user_id, $this->_bookId);
 		$volume = $cached_chapter->getVolumes();
 
 		foreach ($volume as $volume_id => $volume_name) {
@@ -51,31 +46,5 @@ class Book extends BaseModel{
 			$catalog[$volume_id]['volume_chapter'] = $vol;
 		}
 		return $catalog;
-	}
-	
-	/**
-	 * 获取book信息
-	 */
-	public function getBookInfo()
-	{
-		$book_info = $this->where('bk_id = '.$this->_book_id)->find();
-		return $book_info;
-	}
-
-	/**
-	 * 判断book存不存在
-	 */
-	public function checkBook()
-	{
-		$book_info = $this->field('bk_id')->where('bk_id = '.$this->_book_id)->find();
-		return empty($book_info) ? False : True ;
-	}
-
-	/**
-	 * 获取book的全部rank属性
-	 */
-	public function getAllRank()
-	{
-		return M('zl_book_rank')->where('bk_id = '.$this->_book_id)->find();
 	}
 }

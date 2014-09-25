@@ -73,4 +73,16 @@ class ZlibBookModel extends BaseModel {
 		$condition = 'bk_id = '.$data['bk_id'];
 		return $this->where($condition)->delete();
 	}
+
+	/**
+	 * 获取点击排行数据
+	 *
+	 * @param int book_id
+	 * @param String field
+	 */
+	public function getRank($book_id, $field='*')
+	{
+		$condition = 'bk_id = '.$book_id;
+		return M('ZlBookRank')->field($field)->where($condition)->find();
+	}
 }

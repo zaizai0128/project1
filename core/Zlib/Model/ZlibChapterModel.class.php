@@ -78,7 +78,7 @@ class ZlibChapterModel extends BaseModel {
 		$condition = 'bk_id = '.$this->bookId.' and ch_name = "'.$name.'"'.$where;
 		return $this->instance->field($field)->where($condition)->find();
 	}
-
+	
 	/**
 	 * 获取同卷下的相邻章节内容
 	 *
@@ -116,6 +116,15 @@ class ZlibChapterModel extends BaseModel {
 	public function getTableName()
 	{
 		return 'zl_book_chapter_' . sprintf('%02d', $this->bookId / 30000);
+	}
+
+	/**
+	 * 获取普通章节内容详情的简介
+	 */
+	public function getChapterIntro()
+	{
+		$content = $this->getChapterContent();
+		return z_cut_str($content, C('CHAPTER.intro_num'));
 	}
 
 	/**

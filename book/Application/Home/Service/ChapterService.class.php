@@ -8,9 +8,9 @@
  * @version 1.0
  */
 namespace Home\Service;
-use Home\Model\ChapterModel;
+use Zlib\Model\ZlibChapterModel;
 
-class ChapterService extends ChapterModel {
+class ChapterService extends ZlibChapterModel {
 
 	
 }

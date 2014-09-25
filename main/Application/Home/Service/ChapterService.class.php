@@ -1,16 +1,16 @@
 <?php
 /**
- * 章节 model
- * 
+ * 章节 service
  *
  * @author 	songmw<songmingwei@kongzhong.com>
- * @date 	2014-09-22
+ * @date 	2014-09-25
  * @version 1.0
  */
-namespace Home\Model;
+namespace Home\Service;
 use Zlib\Model\ZlibChapterModel;
 
-class ChapterModel extends ZlibChapterModel {
+class ChapterService extends ZlibChapterModel {
 
+	
 	
 }

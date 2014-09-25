@@ -178,6 +178,8 @@ return array(
 		'set' => 'http://172.16.6.200/books/set',	// [post]生成/book_id/chapter_id
 		'rm' => 'http://172.16.6.200/books/rm',		// [get]删除/book_id/chapter_id
 
+		// 章节描述的字符数
+		'intro_num' => 200,
 	),
 	
 	// 作品相关

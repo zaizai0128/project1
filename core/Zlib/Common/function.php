@@ -19,6 +19,8 @@
 if (!function_exists('de')) {
 	function de($var = Null)
 	{
+		header('Content-type:text/html;charset='.C('SYSTEM.encoded'));
+
 		if (!isset($var))
 			$txt = 'going...here';
 		else
@@ -297,6 +299,15 @@ function z_cut_str($string, $sublen, $start = 0, $code = 'UTF-8')
         }
 }
 
+/**
+ * 截取封装函数
+ */
+function z_substr($str, $length, $start=0, $charset="utf-8", $suffix=true)
+{
+	$slice = mb_substr($str, $start, $length, $charset);
+	return $suffix ? $slice.'...' : $slice;
+}
+
 function z_chen_substr($str, $start, $len)  //字符位置从0开始
 {
         $strlen = strlen ( $str );
@@ -364,3 +375,4 @@ function z_strlen($str, $charset=Null)
 	$charset = isset($charset) ? $charset : C('SYSTEM.encoded') ;
 	return mb_strlen($str, $charset);
 }
+

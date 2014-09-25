@@ -92,8 +92,8 @@
               <h3 class="h3_tit"><b>最新章节阅读</b></h3>
             </div>
             <div class="bd_red"> 
-              <span class="red_tit"><em>{$book_info.bk_public_name}</em>更新于：2013-04-01
-              <p> 这一天是华夏这一天是华夏国这一天是华夏国这一天是华夏国这一天是华夏国这一天是华夏国这一天是华夏国这一天是华夏国这一天是华夏国这一天是华这一天是华这一天是华这一天是华 </p>
+              <span class="red_tit"><em>{$book_info.bk_public_name}</em>更新于：{$book_info.bk_now_date|substr=0,-9}
+              <p>{$book_info.public_ch_intro}</p>
               <span class="red_vip"><a href="{:ZU('read/vip', 'ZL_BOOK_DOMAIN', array('book_id'=>$book_info['bk_id'], 'ch_id'=>$book_info['bk_public_ch_id']))}">[阅读本章]</a><a href="#">升级成VIP会员</a></span></span>
             </div>
           </div>

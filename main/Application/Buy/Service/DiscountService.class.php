@@ -7,9 +7,9 @@
  * @version 1.0
  */
 namespace Buy\Service;
-use Buy\Model\DiscountModel;
+use Zlib\Model\ZlibBookDiscountModel;
 
-class DiscountService extends DiscountModel {
+class DiscountService extends ZlibBookDiscountModel {
 
 	/**
 	 * 获取折扣信息

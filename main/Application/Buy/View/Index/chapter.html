@@ -42,7 +42,7 @@
 					<p class="text-success">更新时间：{$chapter_info.ch_update}</p>
 					<p class="text-success">内容预览：{$chapter_info.ch_intro}</p>
 					<p class="text-center">本次将消耗：{$chapter_info.ch_price}
-						<?php if(!empty($account_info)):?>，账户余额：逐浪金币{$account_info.amount}，逐浪银币{$account_info.bonus}<?php endif;?>
+						<?php if(!empty($user_info)):?>，账户余额：逐浪金币{$user_info.amount}，逐浪银币{$user_info.bonus}<?php endif;?>
 					</p>
 					<p class="text-center text-info"><a href="{:ZU('buy/cost/doCost', 'ZL_DOMAIN', array('book_id'=>$book_info['bk_id'], 'ch_id'=>$chapter_info['ch_id']))}" class="btn">订阅本章</a><a href="" class="btn">订阅全部章节</a></p>
 				</div>
@@ -83,7 +83,7 @@
 					<?php endif;?>
 					<?php endforeach;?>
 				</table>
-				<p class="text-center text-info"><a href="" class="btn">订阅本章</a><a href="" class="btn">订阅全部章节</a></p>
+				<p class="text-center text-info"><a href="{:ZU('buy/cost/doCost', 'ZL_DOMAIN', array('book_id'=>$book_info['bk_id'], 'ch_id'=>$chapter_info['ch_id']))}" class="btn">订阅本章</a><a href="###" class="btn">订阅全部章节</a></p>
 			</div>
 		</div>
 
