@@ -8,8 +8,28 @@
  */
 namespace User\Service;
 use Zlib\Model\ZlibUserModel;
+use Zlib\Model\ZlibAccountsModel;
 
 class UserService extends ZlibUserModel {
+
+	protected $accountInstance = Null;
+
+	public function init()
+	{
+		parent::init();
+		$this->accountInstance = new ZlibAccountsModel;
+	}
+
+	/**
+	 * 获取个人信息和账户余额
+	 * @param int user_id
+	 */
+	public function getUserInfo($user_id)
+	{
+		$user_info = $this->getUserFullInfoByUserId($user_id);
+		$account = $this->accountInstance->getAccountByUserId($user_id);
+		return array_merge($user_info, $account);
+	}
 
 	/**
 	 * 申请成为作者
@@ -52,7 +72,7 @@ class UserService extends ZlibUserModel {
 	public function doEditExt($data)
 	{
 		// 一些验证 ...
-
+		
 		$final_data['user_email'] = $data['email'];
 		$final_data['user_qq'] = $data['qq'];
 		$final_data['user_mobile'] = $data['phone'];

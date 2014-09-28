@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<block name="title"><title>{$user_info.user_name} - 个人中心主页 - 逐浪网</title></block>
+{// 公共部分}
+<link  href="{:z_css('user/css/user')}" type="text/css" rel="stylesheet">
+<link href="{:z_css('user/css/base')}" type="text/css" rel="stylesheet">
+<script src="{:z_js()}"></script>
+<script src="{:z_js('zlang')}"></script>
+</head>
+<body>
+<div class="container">
+   <div class="topbar">
+      {// 顶部}
+    	<block name="top"><include file="Public/top"/></block>
+   </div>
+   <div class="header">
+       {// 导航菜单}
+       <block name="header"><include file="Public/header" nav="index"/></block>
+   </div>
+    <div class="main">
+	  <div class="wrap">
+    	<div class="user_detail">
+          {// 用户中心左侧}
+        	<div class="user_side">
+            	<div class="side_top">
+                    <p class="pic">
+                       <a href="#"><img src="{:z_img('user/images/tou_img')}"/></a>
+                    </p>
+                    <h3 class="tit">
+                    	<a href="#" class="nam_usr">{$user_info.user_name}</a>
+                      <a href="#" class="ico_edit"></a>
+                    </h3>
+                </div>
+                <div class="side_info">
+                	  <div class="info_value">
+                    	<p class="tit"><em class="nam_vip">VIP等级：</em><i class="ico_val"></i></p>
+                      <span class="bar"><i style="width:70%"></i></span>
+                      <span class="val_up">成长值：7/10</span>
+                    </div>
+                    <span class="info_ctr"><a href="###" class="sbtn_02">签到</a></span>
+                    <span class="info_msg"><a href="###" class="sbtn_02">站内短信</a></span>
+                    <span class="info_tim">注册时间：<em>{$user_info.user_join}</em></span>
+                </div>
+            </div>
+            <!--//-->
+            <div class="user_cnt">
+            	<block name="main"></block>
+            </div>
+            <!--//-->
+        </div>
+    </div>
+   <div class="footer">
+        <p>Copyright © 2014 ZHULANG.COM All rights Reserved 逐浪网版权所有<br />
+           客服电话：025-66670800
+        </p>
+    </div>  
+</div>
+</div>
+<block name="js"></block>
+</body>
+</html>

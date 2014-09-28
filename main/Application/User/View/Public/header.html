@@ -1,0 +1,13 @@
+<div class="wrap">	
+	  <h1 class="logo"><a href="#"><img src="{:z_img('images/logo')}"  /></a></h1>
+	  <h2 class="top_sub">个人中心</h2>
+	  <div class="hd_nav">
+	  	  <ul class="nav_lst">
+    	  	 <li <if condition="[nav] eq 'shelf'">class="on"</if>><a href="#">我的书架</a></li>
+           <li <if condition="[nav] eq 'comment'">class="on"</if>><a href="#">我的书评</a></li>
+           <li <if condition="[nav] eq 'author'">class="on"</if>><a href="#">作家专区</a></li>
+           <li <if condition="[nav] eq 'money'">class="on"</if>><a href="#">财务中心</a></li>
+           <li <if condition="[nav] eq 'account'">class="on"</if>><a href="{:ZU('user/account/index')}">账号管理</a></li>
+    	  </ul>	
+	 </div>
+</div>

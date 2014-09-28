@@ -1,0 +1,45 @@
+<extend name="Public/base" />
+
+<block name="header">
+<include file="Public/header" nav="account"/>
+</block>
+
+<block name="main">
+<div class="u_my_photo">
+<div class="hd_usr">
+  <ul class="hd_nav"><include file="menu" ac="avatar" /></ul>
+</div>
+<div class="bd">
+<!--头像上传控件-->
+  <div class="u_phto_uplod">
+       <div class="phto_tit">
+           VIP1级以上且绑定安全手机的用户可上传自定义头像，您尚未满足条件，
+           <a href="{:ZU('user/account/pic')}" class="colr_02">请使用系统头像</a>
+         </div>                             
+         <div class="phto_cnt">
+          <div class="pic"></div>
+            <div class="phto_info">
+               <em class="pht_size">您上传的头像会自动生成三种尺寸，请注意中小
+                  尺寸的头像是否清晰
+               </em>
+                <dl>
+                  <dt>
+                      <span class="size pic_big"><img src="#" /></span>
+                        <h3 class="tit">大尺寸头像</h3>
+                    </dt>
+                    <dd>
+                      <span class="size pic_mid"><img src="#" /></span>
+                        <h3 class="tit">中尺寸头像</h3>
+                    </dd>
+                    <dd>
+                      <span class="size pic_smal"><img src="#" /></span>
+                        <h3 class="tit">小尺寸头像</h3>
+                    </dd>
+                </dl>
+            </div>
+         </div>                      
+    </div>
+   <!--//-->                     
+</div>
+</div>  
+</block>

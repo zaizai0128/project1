@@ -23,7 +23,6 @@ class LoginController extends HomeController {
 	 */
 	public function index()
 	{	
-		echo cookie('zl_back');
 		$this->display();
 	}
 

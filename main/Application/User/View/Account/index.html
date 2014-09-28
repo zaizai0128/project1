@@ -1,0 +1,194 @@
+<extend name="Public/base" />
+
+<block name="header">
+<include file="Public/header" nav="account"/>
+</block>
+
+<block name="main">
+<div class="u_my_bshelf">
+<div class="hd_usr">
+  <ul class="hd_nav"><include file="menu" ac="account" /></ul>
+</div>
+<div class="bd">
+  <div class="u_acc_lst">
+    <form action="{:ZU('user/account/doAddExt')}" method="POST" onsubmit="return $.submitAccount();">
+      <ul class="form_lst form_acc_top">
+          <li class="frm">
+              <span class="frm_tit">
+                  您的账号：
+                </span>
+                <div class="frm_val">{$user_info.user_name}</div>
+            </li>
+            <li class="frm">
+                <span class="frm_tit">
+                  性别：
+                </span>
+                <!-- <div class="frm_val">男</div> -->
+                <select name="sex">
+                  <?php foreach(C('USER.sex') as $key=>$val):?>
+                  <option value="{$key}" <?php if($key == $user_info['user_sex']):?>selected<?php endif;?>>{$val}</option>
+                  <?php endforeach;?>
+                </select>
+            </li>
+            <li class="frm">
+              <span class="frm_tit">
+                  安全邮箱：
+                </span>
+                <div class="frm_val">
+                    <input type="text" name="email" value="{$user_info.user_email}" />
+                    <em class="colr_01">未认证</em>
+                    <a href="javascript:;" class="colr_02 ctr_iden">点击认证</a>
+                </div>
+            </li>
+            <li class="frm">
+              <span class="frm_tit">
+                  安全手机：
+                </span>
+                <div class="frm_val">
+                    <input type="text" name="phone" value="{$user_info.user_mobile}" />
+                    <em class="colr_01">未认证</em>
+                    <a href="javascript:;" class="colr_02 ctr_iden">点击认证</a>
+                </div>
+            </li>
+            <li class="frm">
+              <span class="frm_tit">
+                  账号昵称：
+                </span>
+                <div class="frm_inp">
+                   <input type="text" value="{$user_info.user_nickname|default=$user_info['user_name']}" name="nickname"  class="inp"/>
+                     <span class="tip colr_01">提醒：昵称修改后不可更换</span>
+                </div>  
+            </li>
+            <li class="frm">
+              <span class="frm_tit">
+                  出生日期：
+                </span>
+                <div class="frm_inp">
+                   <input type="text" value="{$user_info.user_birtyday}" name="birthday" class="inp"/>
+                </div>                                    
+            </li>
+            <li class="frm">
+              <span class="frm_tit">
+                  常用QQ：
+                </span>
+                <div class="frm_inp">
+                   <input type="text" value="{$user_info.user_qq}" name="qq" class="inp"/>
+                </div>                                    
+            </li>
+             <li class="frm frm_xingq">
+              <span class="frm_tit">
+                  喜欢的小说类型：
+                </span>
+                <div class="frm_val JQ_Frm" style="display:block">
+                     <div class="tag_del JQ_Del">
+                          <span class="tag JQ_Tag">
+                              <i class="ico_tag01"></i>
+                              <span class="span_l">
+                                   <span  class="tag_nam">武侠</span>
+                                   <a  href="javascript:;" class="ico_tag02"></a>
+                               </span>
+                            </span>
+                        </div> 
+                         <div class="tag_add">
+                             <dl>
+                              <dt>你可能感兴趣的小说类型:</dt>
+                                <dd>
+                                   <span class="tag JQ_Tag">
+                                       <i class="ico_tag01"></i>
+                                       <span class="span_l clearfix">
+                                          <a  href="javascript:;" class="ico_tag03"></a>
+                                          <span class="tag_nam">武侠武侠</span>
+                                       </span>
+                                   </span>
+                                   <span class="tag JQ_Tag">
+                                       <i class="ico_tag01"></i>
+                                       <span class="span_l clearfix">
+                                           <a  href="javascript:;" class="ico_tag03"></a>
+                                          <span  class="tag_nam">武侠武侠</span>
+                                       </span>
+                                   </span> 
+                                   <span class="tag JQ_Tag">
+                                       <i class="ico_tag01"></i>
+                                       <span class="span_l clearfix">
+                                           <a  href="javascript:;" class="ico_tag03"></a>
+                                          <span  class="tag_nam">武侠武侠</span>
+                                       </span>
+                                   </span>
+                                   <span class="tag JQ_Tag">
+                                       <i class="ico_tag01"></i>
+                                       <span class="span_l clearfix">
+                                           <a  href="javascript:;" class="ico_tag03"></a>
+                                          <span  class="tag_nam">武侠武侠</span>
+                                       </span>
+                                   </span>
+                                   <span class="tag JQ_Tag">
+                                       <i class="ico_tag01"></i>
+                                       <span class="span_l clearfix">
+                                           <a  href="javascript:;" class="ico_tag03"></a>
+                                          <span  class="tag_nam">武侠武侠</span>
+                                       </span>
+                                   </span>
+                                   <span class="tag JQ_Tag">
+                                       <i class="ico_tag01"></i>
+                                       <span class="span_l clearfix">
+                                           <a  href="javascript:;" class="ico_tag03"></a>
+                                          <span  class="tag_nam">武侠武侠</span>
+                                       </span>
+                                   </span>                                    
+                              </dd>
+                            </dl>                      
+                         </div>
+                        <span class="btn_chag"><a href="#">换一换</a></span>  
+                  </div>                                   
+            </li>
+        </ul> 
+        <ul class="form_lst form_acc_inp">
+          <li class="frm">
+              <span class="frm_tit">真实姓名：</span>
+                <div class="frm_inp">
+                  <input type="text" value="{$user_info.user_true_name}" name="name" class="inp" />
+                </div>
+            </li>
+            <li class="frm">
+              <span class="frm_tit">联系地址：</span>
+                <div class="frm_inp">
+                  <input type="text" value="{$user_info.user_address}" name="address" class="inp"/>
+                </div>
+            </li>
+            <li class="frm">
+              <span class="frm_tit">邮政编码：</span>
+                <div class="frm_inp">
+                  <input type="text" value="{$user_info.user_zipcode}" name="postnum" class="inp"/>
+                </div>
+            </li>
+            <li class="frm">
+                <div class="frm_inp frm_btn">
+                  <button type="submit" class="sbtn sbtn_03">更新</button>
+                  <button type="reset" class="sbtn sbtn_03">取消</button>
+                  <!-- <a href="#" class="sbtn sbtn_03">更新</a> -->
+                  <!-- <a href="javascript:;" class="sbtn sbtn_03">取消</a> -->
+                </div>
+            </li>
+        </ul>  
+    </form>                     
+    </div>                    
+</div>
+</div>
+</block>
+
+<block name="js">
+<script type="text/javascript">
+  jQuery(function($){
+
+    $.extend({
+      submitAccount : function()
+      {
+        var isOk = false;
+
+        $.debug();
+        return true;
+      }
+    })
+  });
+</script>
+</block>

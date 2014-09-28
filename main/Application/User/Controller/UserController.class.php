@@ -12,6 +12,8 @@ use Think\Controller;
 class UserController extends Controller {
 
 	protected $userId = Null;
+	protected $userInfo = Null;
+	protected $userInstance = Null;
 
 	public function __construct()
 	{
@@ -19,7 +21,9 @@ class UserController extends Controller {
 
 		// 权限验证机制
 		\Zlib\Api\Acl::user();
-		
+		$this->userInstance = D('User', 'Service');
 		$this->userId = ZS('SESSION.user', 'user_id');
+		// 获取基础用户信息
+		$htis->userInfo = $this->userInstance->getUserInfoByUserId($this->userId);
 	}
 }

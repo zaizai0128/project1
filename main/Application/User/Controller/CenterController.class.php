@@ -10,19 +10,15 @@ namespace User\Controller;
 
 class CenterController extends UserController {
 
-	protected $userInstance = Null;
-	public $userInfo = Null;
-
 	public function __construct()
 	{
 		parent::__construct();
-		$this->userInstance = D('User', 'Service');
 		$this->init();
 	}
 
 	public function init()
 	{
-		$this->userInfo = $this->userInstance->getUserInfoByUserId($this->userId);
+		$this->userInfo = $this->userInstance->getUserInfo($this->userId);
 		$this->assign(array(
 			'user_info' => $this->userInfo,
 		));
@@ -35,23 +31,7 @@ class CenterController extends UserController {
 	{
 		$this->display();
 	}
-
-	/**
-	 * 补充用户信息
-	 */
-	public function doAddExt()
-	{
-		if (IS_POST) {
-			$data = array_merge($this->userInfo, I());
-			$state = $this->userInstance->doEditExt($data);
-
-			if ($state['code'] > 0)
-				z_redirect($state['msg'], ZU('user/center/index')); 
-			else
-				z_redirect($state['msg']);
-		}
-	}
-
+	
 	/**
 	 * 申请成为作者
 	 */
@@ -95,56 +75,6 @@ class CenterController extends UserController {
 				z_redirect($state['msg']);
 			}
 			z_redirect($state['msg'], ZU('user/center/index'));
-		}
-	}
-
-	/**
-	 * 更新真实信息
-	 */
-	public function trueInfo()
-	{
-		$author_info = D('UserAuthor', 'Service')->getAuthorInfoByUserId($this->userId);
-
-		$this->assign(array(
-			'author_info' => $author_info
-		));
-		$this->display();
-	}
-
-	/**
-	 * 补充真实信息
-	 */
-	public function doTrueInfo()
-	{
-		if (IS_POST) {
-			$data = array_merge($this->userInfo, I());
-			
-			$state = D('UserAuthor', 'Service')->doEdit($data);
-
-			if ($state['code'] > 0)
-				z_redirect($state['msg'], ZU('user/center/index'));
-			else
-				z_redirect($state['msg']);
-		}
-	}
-
-	/**
-	 * 升级成为vip
-	 */
-	public function vip()
-	{
-
-		$this->display();
-	}
-
-	/**
-	 * 执行成为vip
-	 */
-	public function doVip()
-	{
-		if (IS_POST) {
-
-			dump(I());
 		}
 	}
 }
