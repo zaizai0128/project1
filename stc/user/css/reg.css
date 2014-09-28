@@ -1,0 +1,80 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+/*Login*/
+.reg_login{ overflow:hidden;*zoom:1}
+.login_frm{width:362px; float:left; padding-right:60px; border-right:1px solid #dddddd; }
+.login_frm .frm_lst{width:362px}
+.login_frm .frm_lst .inp{ width:346px;background:#fff; padding:10px 7px;vertical-align:middle; color:#333333; font-size:14px;border:1px solid #cccccc;}
+.login_frm .frm_lst .inp_01{ color:#999999}
+.login_frm .frm_lst .frm_tip{ display:none;margin-top:10px}
+.login_frm .frm_lst .frm_tip .txt{color:#F00;font:12px'宋体';}
+.login_frm .frm_lst .err .frm_inp .inp{border:1px solid #F00;}
+.login_frm .frm_lst .frm_chk{overflow:hidden;*zoom:1;}
+.frm_chk label{ float:left}
+.login_frm .frm_lst .frm_chk input{ vertical-align:-3px; margin-right:8px}
+.frm_chk  a{ color:#0099ff}
+.frm_chk .fgt_link{ float:right;}
+.reg_tips{ float:left; width:425px;height:220px;padding-left:60px}
+.reg_tips .acc_no{margin-bottom:20px; display:block; color:#333333}
+.reg_tips .tird_acc{ margin-top:36px}
+.reg_tips .tird_acc dd{ margin-top:20px}
+.reg_tips .tird_acc dd a{ padding:0 3px}
+.reg_tips .tird_acc dd img{ width:114px; height:45px}
+/*Register*/
+.frm_tab{ font-size:14px; font-weight:bold; margin-bottom:20px;}
+.frm_tab .eml_btn{ padding-left:75px}
+.frm_tab input{ margin-right:10px}
+
+.way_tab{ overflow:hidden;*zoom:1; margin-bottom:20px}
+.way_tab li{ float:left; margin-right:30px; font-size:14px; overflow:hidden;*zoom:1; cursor:pointer}
+.way_tab li i{ background:url(../images/radio.jpg) 0 -19px no-repeat;width:17px; height:17px; float:left; margin:3px 10px 0 0}
+.way_tab li.on i{ background:url(../images/radio.jpg) 0 0 no-repeat; }
+.way_tab li .tit{float:left}
+
+.login_frm .frm_lst .frm_resed .frm_inp {overflow:hidden;*zoom:1; border:1px solid #cccccc}
+.login_frm .frm_lst .frm_resed .frm_inp .re_inp{ width:206px; border:none; float:left;background:#fff; padding:10px 7px;vertical-align:middle;font-size:14px;}
+.login_frm .frm_lst .err .resed_err{ border:1px solid #F00}
+.frm_resed .resed_btn{ float:left;width:139px; height:36px;line-height:36px;background:#eaeaea; text-align:center;color:#333333; border-left:1px solid #cccccc; }
+.frm_resed .resed_btn:hover{text-decoration:none}
+.frm_resed .resed_btn:active{ color:#999999}
+/*Msg_info*/
+.msg_info{ padding:10px 0 0 45px}
+.info_suc .tit{ overflow:hidden;*zoom:1;  padding-left:232px;}
+.info_suc .suc_tit{ font-size:16px; font-weight:bold; float:left; padding:8px 0 0 10px}
+.info_suc .suc_tit em{ color:#ff0000}
+.info_suc .ico_tip{ background:url(../images/suc_ico.jpg) no-repeat; width:43px; height:43px; float:left}
+.info_suc .txt{ width:736px; margin:25px 0 40px 0}
+.info_suc .txt p{font:14px/30px '宋体';}
+.info_suc .btn{ padding-left:200px; margin-bottom:40px}
+.info_tip dt{ margin-bottom:5px}
+.info_tip dd{ font:12px/25px '宋体';}
+.info_tip a{ color:#0099ff}
+/*Regsuc_frm*/
+.regsuc_frm{ margin-top:80px}
+.regsuc_frm .frm{ overflow:hidden;*zoom:1; margin-bottom:20px}
+.regsuc_frm .frm .tit_nam{ float:left; width:168px; text-align:right; font-size:14px}
+.regsuc_frm .frm_info{ float:left;}
+.frm_sex .sex_lst{ overflow:hidden;*zoom:1}
+.frm_sex .sex_lst li{width:76px; height:36px; background:#0894ec; color:#FFF; text-align:center; line-height:36px; font-size:14px; float:left; margin-right:10px}
+.frm_sex .sex_lst li a{ color:#ffffff; display:block}
+.frm_sex .sex_lst li a:hover{ text-decoration:none}
+.frm_sex .sex_lst li.on{ background:url(../images/sex_bg1.jpg) no-repeat; width:76px; height:36px; color:#333333}
+.frm_sex .sex_lst li.on a{ color:#333333}
+.frm_xingq .frm_info{width:594px}
+.regsuc_frm .frm_info .tag_del{ width:594px; border:1px solid #cccccc; height:auto; padding:5px 0; overflow:hidden;*zoom:1;white-space:nowrap;}
+.regsuc_frm .frm_info .tag{ overflow:hidden;*zoom:1;height:22px; float:left;margin:5px 8px}
+.regsuc_frm .tag .span_l{border-top:1px solid #cccccc;border-bottom:1px solid #cccccc;border-right:1px solid #cccccc; overflow:hidden;*zoom:1; float:left;}
+.regsuc_frm .tag .tag_nam{ float:left; padding:1px 5px}
+.regsuc_frm .tag .ico_tag01{ background:url(../images/ico_bg01.jpg) 0 1px no-repeat; float:left; width:6px; height:22px}
+.regsuc_frm .tag .ico_tag02{ background:url(../images/ico_bg01.jpg) 0 -22px no-repeat; float:left; width:7px; height:7px; margin:6px 10px 0 5px}
+.regsuc_frm .tag .ico_tag03{ background:url(../images/ico_bg01.jpg) 0 -37px no-repeat; width:8px; height:8px; float:left; margin:6px 0 0 5px}
+.regsuc_frm .frm_info .tag_add{ overflow:hidden;*zoom:1}
+.regsuc_frm .tag_add dl dt{ width:594px; margin:20px 0 15px 0}
+.regsuc_frm .tag_add dl dd{ margin-left:-5px}
+.regsuc_frm .btn_chag{ float:right; width:36px; margin-top:12px}
+.regsuc_frm .btn_chag a{color:#0894ec}
+.regsuc_frm .frm_btn{ margin-left:168px; margin-top:53px}
+/*Tab*/
+.JQ_Box,.JQ_Frm{display:none}

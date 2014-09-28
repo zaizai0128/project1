@@ -376,3 +376,39 @@ function z_strlen($str, $charset=Null)
 	return mb_strlen($str, $charset);
 }
 
+/**
+ * 获取样式服务器
+ * @param String css路径
+ */
+function z_css($path)
+{
+	$path = '/'.$path.'.css';
+	return C('ZL_STYLE_DOMAIN') . $path;
+}
+
+/**
+ * 获取js
+ * @param String js路径，如果为空则加载jquery
+ */
+function z_js($path = Null)
+{
+	$domain = C('ZL_STYLE_DOMAIN');
+
+	# 为空的话，加载jquery
+	if (!isset($path))
+		return $domain . '/js/jquery.min.js';
+	$path = $domain . '/js/' . $path . '.js';
+	return $path;
+}
+
+/**
+ * 获取img
+ * @param String img路径
+ * @param String 图片后缀，默认为 jpeg
+ */
+function z_img($path, $fix = 'jpg')
+{
+	$domain = C('ZL_STYLE_DOMAIN');
+	$path = $domain . '/' . $path . '.' . $fix;
+	return $path;
+}

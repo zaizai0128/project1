@@ -14,6 +14,7 @@ return array(
 	'ZL_BOOK_DOMAIN' => 'http://book.zhulang.ne',		// 书站域名
 	'ZL_AUTHOR_DOMAIN' => 'http://author.zhulang.ne',	// 作者站域名
 	'ZL_ADMIN_DOMAIN' => 'http://admin.zhulang.ne',		// 管理站域名
+	'ZL_STYLE_DOMAIN' => 'http://stc.zhulang.ne',		// 静态样式文件域名
 	'ZL_DOMAIN_DOT' => '.zhulang.ne',
 	'ZL_NGINX_MODULE' => 'http://172.16.6.200',	// nginx module 地址 [用来对文件进行操作]
 

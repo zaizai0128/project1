@@ -54,7 +54,7 @@ function inp_efft(){
 	  
 $(function(){
    tab();//选项卡
-   // radio();//注册方式选项
+   radio();//注册方式选项
    apped();//作品添加和删除卡
    inp_efft();//鼠标滑过效果
  })

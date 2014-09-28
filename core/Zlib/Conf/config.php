@@ -19,6 +19,8 @@ $main_config = array(
 
     // 增加模板解析变量
     'TMPL_PARSE_STRING' => array(
+
+        // 项目目录下的样式路径
         '__JS__' => '/Public/js',   // js
         '__CSS__' => '/Public/css',   // css
         '__STYLE__' => '/Public/style',   // style
