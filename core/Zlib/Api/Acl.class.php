@@ -34,7 +34,7 @@ class Acl {
 	static public function cost($user_info, $chapter_info)
 	{
 		if (empty($user_info))
-			z_redirect('未登录');
+			z_redirect('未登录', ZU('login/index', 'ZL_DOMAIN', array('setback'=>z_referer())));
 
 		$now = date('Y-m-d', time());
 
@@ -93,7 +93,7 @@ class Acl {
 	{
 		// 用户必须登录
 		if (!ZS('SESSION.user', '?'))
-			z_redirect('请先登录', ZU('login/index'));
+			z_redirect('请先登录', ZU('login/index', 'ZL_DOMAIN', array('setback'=>z_referer())));
 
 		// 用户状态必须为 启用中
 		if (ZS('SESSION.user', 'user_state') != 0)
@@ -111,7 +111,7 @@ class Acl {
 	{
 		// 用户必须登录
 		if (!ZS('SESSION.user', '?'))
-			z_redirect('请先登录', ZU('login/index'));
+			z_redirect('请先登录', ZU('login/index', 'ZL_DOMAIN', array('setback'=>ZU('index/index', 'ZL_AUTHOR_DOMAIN'))));
 
 		// 用户状态必须为 启用中
 		if (ZS('SESSION.user', 'user_state') != 0)

@@ -36,10 +36,29 @@ if (!function_exists('de')) {
  *
  * @param String U方法传递参数
  * @param String 域名的配置名
+ * @param array | String 跳转参数
  */
 if (!function_exists('ZU')) {
 	function ZU($url_param, $domain = Null, $param = array())
-	{
+	{	
+		// 设置 存放cookie的key
+		$cookie_back = 'zl_back';
+		$back_url = '';
+
+		// 设置跳转参数
+		if (is_array($param) && isset($param['setback']))
+		{
+			cookie($cookie_back, $param['setback']);
+			unset($param['setback']);
+
+		// 说明为跳到back地址
+		} else if (is_string($param) && $param = 'back') {
+			$back_url = cookie($cookie_back);
+			cookie($cookie_back, Null);
+		}
+
+		if (!empty($back_url)) return $back_url;
+
 		$url_param = '/'.ltrim($url_param, '/');
 		$http = empty($domain) ? C('ZL_DOMAIN') : !C($domain) ? C('ZL_DOMAIN') : C($domain);
 		return $http . U($url_param, $param);
@@ -411,4 +430,13 @@ function z_img($path, $fix = 'jpg')
 	$domain = C('ZL_STYLE_DOMAIN');
 	$path = $domain . '/' . $path . '.' . $fix;
 	return $path;
+}
+
+/**
+ * 获取上一页地址
+ *
+ */
+function z_referer()
+{
+	return $_SERVER['HTTP_REFERER'];
 }

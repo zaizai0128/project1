@@ -22,7 +22,8 @@ class LoginController extends HomeController {
 	 * 登录界面
 	 */
 	public function index()
-	{
+	{	
+		echo cookie('zl_back');
 		$this->display();
 	}
 
@@ -37,7 +38,7 @@ class LoginController extends HomeController {
 			
 			// 登录成功，跳转到用户中心
 			if ($state['code'] > 0) {
-				z_redirect('登录成功', ZU('user/center/index'));
+				z_redirect('登录成功', ZU('user/center/index', Null, 'back'));
 			} else {
 				z_redirect($state['msg']);
 			}
