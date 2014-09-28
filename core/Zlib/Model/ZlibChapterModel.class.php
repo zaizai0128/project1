@@ -111,6 +111,15 @@ class ZlibChapterModel extends BaseModel {
 	}
 
 	/**
+	 * 获取最后章节信息
+	 */
+	public function getLastChapter($field='*')
+	{
+		$condition = 'bk_id = '.$this->bookId;
+		return $this->instance->field($field)->where($condition)->order('ch_id DESC')->find();
+	}
+
+	/**
 	 * 获取章节表名
 	 */
 	public function getTableName()

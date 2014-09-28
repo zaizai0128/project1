@@ -8,9 +8,9 @@
  */
 
 namespace Home\Service;
-use Home\Model\BookApplyVipModel;
+use Zlib\Model\ZlibBookApplyVipModel;
 
-class BookApplyVipService extends BookApplyVipModel {
+class BookApplyVipService extends ZlibBookApplyVipModel {
 
 	/**
 	 * 编辑

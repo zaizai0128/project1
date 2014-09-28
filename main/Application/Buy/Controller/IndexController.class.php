@@ -18,9 +18,9 @@ class IndexController extends BuyController {
 	{
 		parent::__construct();
 
-		if (ZS('S.user', '?')) {
+		if (ZS('SESSION.user', '?')) {
 			$this->userInstance = D('User', 'Service');
-			$this->userInfo = $this->userInstance->getAccountInfo(ZS('S.user', 'user_id'));
+			$this->userInfo = $this->userInstance->getAccountInfo(ZS('SESSION.user', 'user_id'));
 		}
 	}
 	

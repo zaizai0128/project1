@@ -25,8 +25,8 @@ class BaseController extends Controller {
 
 	protected function init()
 	{
-		$user_id = ZS('S.user', 'user_id');
+		$user_id = ZS('SESSION.user', 'user_id');
 		$this->authorInfo = $this->authorInstance->getAuthorInfoByUserId($user_id);
-		ZS('S.author', Null, $this->authorInfo);
+		ZS('SESSION.author', Null, $this->authorInfo);
 	}
 }

@@ -35,7 +35,7 @@ class UserService extends ZlibUserModel {
 		// 登录成功 .. 设置一些操作
 
 		// 保存session
-		ZS('S.user', Null, $user_info);
+		ZS('SESSION.user', Null, $user_info);
 
 		return z_info(1, '登录成功');
 	}
@@ -75,7 +75,7 @@ class UserService extends ZlibUserModel {
 	 */
 	public function logout()
 	{
-		ZS('S.user', Null, Null, -1);
+		ZS('SESSION.user', Null, Null, -1);
 		return True;
 	}
 

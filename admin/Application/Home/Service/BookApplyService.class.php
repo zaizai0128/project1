@@ -7,9 +7,9 @@
  * @version 1.0
  */
 namespace Home\Service;
-use Home\Model\BookApplyModel;
+use Zlib\Model\ZlibBookApplyModel;
 
-class BookApplyService extends BookApplyModel {
+class BookApplyService extends ZlibBookApplyModel {
 
 	
 }

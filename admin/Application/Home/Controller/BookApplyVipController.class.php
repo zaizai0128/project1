@@ -14,9 +14,9 @@ class BookApplyVipController extends BaseController {
 	protected $bookId = Null;
 	protected $instance = Null;
 
-	protected function init()
+	public function __construct()
 	{
-		parent::init();
+		parent::__construct();
 		$this->bookId = I('get.book_id');
 		$this->instance = D('BookApplyVip', 'Service');
 	}
@@ -64,12 +64,9 @@ class BookApplyVipController extends BaseController {
 
 			if ($state['code'] <=0) z_redirect($state['msg']);
 
-			$tag = array();
-
 			// 如果审核通过 执行动作
-			if ($data['status'] == "01") {
-				$tag['ac'] = 'after_check_allow';	// 行为名称
-			}
+			$tag = array();
+			$tag['ac'] = 'after_check_allow';	
 			$tag['data'] = $data;
 			tag('book_apply_vip', $tag);
 

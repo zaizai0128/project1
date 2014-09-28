@@ -12,12 +12,12 @@ use Zlib\Api as Zapi;
 
 class BookApplyController extends BaseController {
 
-	protected $book_apply;
+	protected $bookApplyInstance = Null;
 
-	protected function init()
+	public function __construct()
 	{
-		parent::init();
-		$this->book_apply = D('BookApply');
+		parent::__construct();
+		$this->bookApplyInstance = D('BookApply', 'Service');
 	}
 
 	/**
@@ -25,11 +25,11 @@ class BookApplyController extends BaseController {
 	 */
 	public function index()
 	{
-		$total = $this->book_apply->getTotal();
+		$total = $this->bookApplyInstance->getTotal();
 		$size = C('ADMIN.apply_list_size');
 		$Page = new \Think\Page($total, $size);
 		$show = $Page->show();
-		$book_apply = $this->book_apply->getApplyList('', $Page->firstRow, $Page->listRows);
+		$book_apply = $this->bookApplyInstance->getApplyList('', $Page->firstRow, $Page->listRows);
 
 		$this->assign(array(
 			'book_apply' => $book_apply,
@@ -44,7 +44,7 @@ class BookApplyController extends BaseController {
 	public function check()
 	{
 		$book_id = I('get.apply_id');
-		$book = $this->book_apply->getInfo($book_id);
+		$book = $this->bookApplyInstance->getApplyBookByBookId($book_id, 'bk_id, bk_name');
 
 		$this->assign(array(
 			'book' => $book,
@@ -62,11 +62,11 @@ class BookApplyController extends BaseController {
 			if (I('bk_apply_status') == '00') {
 				z_redirect('请选择审核状态');
 			}
-
+					
 			$data = I();
-			$data['bk_apply_user'] = session('user.user_id');
-			$data['bk_apply_name'] = session('user.user_name');
-			$state = $this->book_apply->doEdit($data);
+			$data['bk_apply_user'] = $this->adminInfo['user_id'];
+			$data['bk_apply_name'] = $this->adminInfo['user_name'];
+			$state = $this->bookApplyInstance->doEdit($data);
 
 			if ($state > 0) {
 

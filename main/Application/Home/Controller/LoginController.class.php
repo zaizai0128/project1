@@ -34,7 +34,7 @@ class LoginController extends HomeController {
 		if (IS_POST) {
 			$data = I();
 			$state = $this->userInstance->doLogin($data);
-
+			
 			// 登录成功，跳转到用户中心
 			if ($state['code'] > 0) {
 				z_redirect('登录成功', ZU('user/center/index'));

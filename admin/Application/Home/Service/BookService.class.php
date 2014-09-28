@@ -7,17 +7,9 @@
  * @version 1.0
  */
 namespace Home\Service;
-use Home\Model\BookModel;
+use Zlib\Model\ZlibBookModel;
 
-class BookService extends BookModel {
-
-	/**
-	 * 编辑
-	 */
-	public function doEdit($data)
-	{
-		
-	}
+class BookService extends ZlibBookModel {
 
 	/**
 	 * 编辑签约状态

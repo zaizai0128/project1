@@ -21,7 +21,7 @@ class CostController extends BuyController {
 	{
 		parent::__construct();
 		$this->userInstance = D('User', 'Service');
-		$this->userInfo = $this->userInstance->getAccountInfo(ZS('S.user', 'user_id'));
+		$this->userInfo = $this->userInstance->getAccountInfo(ZS('SESSION.user', 'user_id'));
 		$this->costType = \Zlib\Api\Acl::cost($this->userInfo, $this->chapterInfo);
 		$this->discountInstance = D('Discount', 'Service');
 		$this->billInstance = D('Bill', 'Service');

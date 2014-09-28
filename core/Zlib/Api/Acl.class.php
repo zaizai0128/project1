@@ -11,6 +11,22 @@ namespace Zlib\Api;
 class Acl {
 
 	/**
+	 * 后台管理员验证操作权限
+	 *
+	 * @param array admin_info
+	 */
+	static public function admin($admin_info)
+	{
+		if (empty($admin_info))
+			z_redirect('未登录');
+
+		if ($admin_info['user_type'] != '04')
+			z_redirect('不是管理员');
+
+		return True;
+	}
+
+	/**
 	 * 购买验证机制
 	 *
 	 * @return 消费的类型
@@ -76,11 +92,11 @@ class Acl {
 	static public function user()
 	{
 		// 用户必须登录
-		if (!ZS('S.user', '?'))
+		if (!ZS('SESSION.user', '?'))
 			z_redirect('请先登录', ZU('login/index'));
 
 		// 用户状态必须为 启用中
-		if (ZS('S.user', 'user_state') != 0)
+		if (ZS('SESSION.user', 'user_state') != 0)
 			z_redirect('账号被禁用', C('ZL_WWW')); 
 
 		// 其他验证 待...
@@ -94,15 +110,15 @@ class Acl {
 	static public function author()
 	{
 		// 用户必须登录
-		if (!ZS('S.user', '?'))
+		if (!ZS('SESSION.user', '?'))
 			z_redirect('请先登录', ZU('login/index'));
 
 		// 用户状态必须为 启用中
-		if (ZS('S.user', 'user_state') != 0)
+		if (ZS('SESSION.user', 'user_state') != 0)
 			z_redirect('账号被禁用', ZU('user/center/index')); 
 
 		// 判断用户级别 02 03 作者
-		if (!in_array(ZS('S.user', 'user_type'), array('02', '03', '04'))) {
+		if (!in_array(ZS('SESSION.user', 'user_type'), array('02', '03', '04'))) {
 			z_redirect('非作者', ZU('user/center/index'));
 		}
 
@@ -199,7 +215,7 @@ class Acl {
 	static public function chapterVip($chapter_info)
 	{
 		// 验证用户是否已购买该章节
-		$vip = new \Zlib\Api\UserVipBuy(ZS('S.user', 'user_id'), $chapter_info['bk_id']);
+		$vip = new \Zlib\Api\UserVipBuy(ZS('SESSION.user', 'user_id'), $chapter_info['bk_id']);
 		$buy = $vip->isBuyByOrder($chapter_info['ch_order']);
 
 		if (!$buy) {

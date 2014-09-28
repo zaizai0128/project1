@@ -20,6 +20,6 @@ class UserController extends Controller {
 		// 权限验证机制
 		\Zlib\Api\Acl::user();
 		
-		$this->userId = ZS('S.user', 'user_id');
+		$this->userId = ZS('SESSION.user', 'user_id');
 	}
 }

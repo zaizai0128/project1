@@ -19,7 +19,7 @@ class IndexController extends HomeController {
 		$book_cate = $this->bookClassApi->getPathArray($this->bookInfo['bk_class_id']);
 
 		// 获取章节分卷加目录
-		$catalog = $this->bookApi->getCatalog(ZS('S.user', 'user_id'));
+		$catalog = $this->bookApi->getCatalog(ZS('SESSION.user', 'user_id'));
 
 		$this->assign(array(
 			'book_cate' => $book_cate,

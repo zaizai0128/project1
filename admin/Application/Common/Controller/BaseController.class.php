@@ -8,7 +8,6 @@
  */
 namespace Common\Controller;
 use Think\Controller;
-use Zlib\Api as Zapi;
 
 class BaseController extends Controller {
 
@@ -18,24 +17,7 @@ class BaseController extends Controller {
 	public function __construct()
 	{
 		parent::__construct();
-
-		// 未登录提示
-		if (!session('user')) {
-			z_redirect('请登录', ZU('/login/index'));
-		}
-		
-		// 用户状态非作者提示
-		if (!in_array(session('user.user_type'), array('04')) ) {
-			z_redirect('抱歉，您不是管理员');
-		}
-
-		// 初始化一些变量
-		$this->init();
-	}
-
-	protected function init()
-	{
-		$this->user_id = session('user.user_id');
-		$this->adminInfo = ZS('S.admin');
+		$this->adminInfo = ZS('SESSION.admin');
+		\Zlib\Api\Acl::admin($this->adminInfo);
 	}
 }
