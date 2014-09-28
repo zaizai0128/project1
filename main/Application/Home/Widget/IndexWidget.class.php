@@ -16,8 +16,8 @@ class IndexWidget extends HomeController {
 	 */
 	public function topLeft()
 	{
-		$book_hot_list = D('Book')->where('bk_status = "00" AND bk_id BETWEEN 270000 AND 279999')->order('ch_total desc')->limit(50)->select();
-		$book_full_list = D('Book')->where('bk_status = "00" and bk_fullflag=1 AND bk_id BETWEEN 270000 AND 279999')->order('bk_id DESC')->limit(50)->select();
+		$book_hot_list = M('ZlBook')->where('bk_status = "00" AND bk_id BETWEEN 270000 AND 279999')->order('ch_total desc')->limit(50)->select();
+		$book_full_list = M('ZlBook')->where('bk_status = "00" and bk_fullflag=1 AND bk_id BETWEEN 270000 AND 279999')->order('bk_id DESC')->limit(50)->select();
 
 		$this->assign(array(
 			'top_left_hot' => $book_hot_list,
@@ -31,7 +31,7 @@ class IndexWidget extends HomeController {
 	 */
 	public function topHot()
 	{
-		$book_new_list = D('Book')->where('bk_status = "00"')->order('bk_id desc')->limit(50)->select();
+		$book_new_list = M('ZlBook')->where('bk_status = "00"')->order('bk_id desc')->limit(50)->select();
 
 		$this->assign(array(
 			'book_new_list' => $book_new_list,
