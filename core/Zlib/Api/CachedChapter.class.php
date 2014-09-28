@@ -49,20 +49,17 @@ class CachedChapter {
 		if ($this->isDirty($this->mBookId)) { 
 			 return false; 
 		}
-
 		$str = S(self::$mKeyName.$this->mBookId."##VOLUME");
 		if ($str == null && $str == false)
 			return false;	
-		echo "loadFromCache();";
 		$this->mVolume = json_decode($str, true);
 		if ($this->mVolume== null && $this->mVlume == false)
 			return false;
 
-		$str = S($this->mKeyName.$this->mBookId."##CHAPTER");
+		$str = S(self::$mKeyName.$this->mBookId."##CHAPTER");
 		if ($str != null && $str != false) 
 			$this->mChapter = json_decode($str, true);
-		echo "name".$this->mChapter[0]['ch_name'];
-		if ($this->mChapter == null || $this->mChapter == false);
+		if ($this->mChapter == null || $this->mChapter == false)
 			$this->mChapter = array();
 		return true;
 	}
@@ -77,16 +74,16 @@ class CachedChapter {
 
 		S(self::$mLockPrefix.self::$mKeyName.$this->mBookId, "1");
 
-		echo "loadFromDababase();";
+		// echo "loadFromDababase();";
 		if (true) {
 			$temp = array();
-			array_push($temp, '垃圾箱');
+			array_push($temp, base64_encode('垃圾箱'));
 			array_push($temp, '');
 			array_push($temp, array());
 			$this->mVolume[-10] = $temp;
 
 			$temp1 = array();
-			array_push($temp1, '作品相关介绍');
+			array_push($temp1, base64_encode('作品相关介绍'));
 			array_push($temp1, '');
 			array_push($temp1, array());
 			$this->mVolume[100] = $temp1; 
@@ -95,15 +92,15 @@ class CachedChapter {
 		$vols = 0;	
 		foreach ($m as $row) {	
 			$temp = array();
-			array_push($temp, $row['volume_name']);
-			array_push($temp, $row['volume_intro']);
+			array_push($temp, base64_encode($row['volume_name']));
+			array_push($temp, base64_encode($row['volume_intro']));
 			array_push($temp, array());
 			$this->mVolume[$row['volume_order']] = $temp;
 			$vols++;
 		}
 		if ($vols == 0) {
 			$temp1 = array();
-			array_push($temp1, '正文');
+			array_push($temp1, base64_encode('正文'));
 			array_push($temp1, '');
 			array_push($temp1, array());
 			$this->mVolume[1000] = $temp1;
@@ -115,6 +112,7 @@ class CachedChapter {
 		foreach ($m as $row) {
 			// $row['ch_order'] = $ch_order;
 			// $ch_order ++;	
+			$row['ch_name'] = base64_encode($row['ch_name']);
 			$this->mChapter[$row['ch_id']] = $row;
 			array_push($this->mVolume[$row['ch_roll']][$this->mVolumeChaptersIndex], $row['ch_id']);
 		}
@@ -147,7 +145,7 @@ class CachedChapter {
 				continue;
 
 			if (count($volume_array[$this->mVolumeChaptersIndex])) {
-				$result[$volume_id] = $volume_array[$this->mVolumeNameIndex];
+				$result[$volume_id] =  base64_decode($volume_array[$this->mVolumeNameIndex]);
 			}
 		}
 		return $result;
@@ -157,7 +155,7 @@ class CachedChapter {
 	{	
 		if ($this->mVolume[$volume_id] == null)
 			return '';
-		return $this->mVolume[$volume_id][$this->mVolumeIntroIndex];
+		return base64_decode($this->mVolume[$volume_id][$this->mVolumeIntroIndex]);
 	}
 
 	public function getVolumeChapters($volume_id) 
@@ -170,8 +168,9 @@ class CachedChapter {
 
 		foreach ($this->mVolume[$volume_id][$this->mVolumeChaptersIndex] as  $chapter_id) {
 			// echo "test".$this->mChapter[$chapter_id]['ch_effect_time']."\n";
-			if ($this->mChapter['ch_effect_time'] <= $now)
-				$result[$chapter_id] = $this->mChapter[$chapter_id]['ch_name'];
+			if ($this->mChapter['ch_effect_time'] <= $now) {
+				$result[$chapter_id] = base64_decode($this->mChapter[$chapter_id]['ch_name']);
+			}
 		}
 		return $result;
 	}
@@ -187,18 +186,19 @@ class CachedChapter {
 		foreach ($this->mChapter as  $chapter) {
 			if ($chapter['ch_vip'] == 1 && $vip) {
 				$result[$chaper_id] = $this->mVolume[$chapter['ch_roll']][$this->mVolumeNameIndex]
-					. ' ' .$this->mChapter['ch_name'];
+					. ' ' .base64_decode($this->mChapter['ch_name']);
 			}
 			if ($chapter['ch_vip'] == 0 && !$vip) {
-				//			$result[$chaper_id] = $this->mVolume[$chapter['ch_roll']][$this->mVolumeName] . ' ' .$this->mChapter['ch_name'];
-				$result[$chaper_id] = $this->mChapter['ch_name'];
+				//			$result[$chaper_id] = $this->mVolume[$chapter['ch_roll']][$this->mVolumeName] . ' ' .base64_decode($this->mChapter['ch_name']);
+				$result[$chaper_id] = base64_decode($this->mChapter['ch_name']);
 			}
 		}
 		return $result;
 	}
 
 	public function isVip($chapter_id) 
-	{ return $this->mChapter[$chapter_id]["ch_vip"] == 1;
+	{
+		return $this->mChapter[$chapter_id]["ch_vip"] == 1;
 	}
 
 	public function getSize($chapter_id)
@@ -208,7 +208,7 @@ class CachedChapter {
 
 	public function getName($chapter_id) 
 	{
-		return $this->mChapter[$chapter_id]["ch_name"];
+		return base64_decode($this->mChapter[$chapter_id]["ch_name"]);
 	}
 
 	public function getChapterOrder($chapter_id) 
