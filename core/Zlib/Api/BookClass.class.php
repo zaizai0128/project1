@@ -9,32 +9,85 @@
 namespace Zlib\Api;
 
 class BookClass {
-	public $mBookClasses = array(); 
+	public $mBookClasses = null;
 	private static $mInstance =  null;
+	
+	public static $mKeyName = "GLOAL##BOOKCLASS";
+	public static $mLockPrefix = "LOCK##";
+	public static $mDirtyPrefix = "DIRTY##";
 
 	// php单例需要把造函数封装起来
 	private function __construct(){}
 
 	// 未来考虑从memcache中读取
-	public static function getInstance() {
+	public static function getInstance() 
+	{
 		if (!isset(self::$mInstance)) {
 			self::$mInstance =  new BookClass();
-			$m = M("zl_book_class")->where("class_status=1")->order("class_id asc")->select();
-			foreach ($m as $row) {
-				if ($row["class_is_leaf"] == 0) {
-					$row["class_children"] = array();
+			$mRetry = 3;
+			while ($mRetry -- > 0) {
+				$succ = self::$mInstance->loadFromCache();
+				if (!$succ) {	
+					$succ = self::$mInstance->loadFromDatabase();
 				}
-
-				if (strlen($row["class_id"] > 2)) {
-					array_push(self::$mInstance->mBookClasses[substr($row["class_id"], 0, 2)]["class_children"], $row["class_id"]); }
-				self::$mInstance->mBookClasses[$row["class_id"]] = $row;
+				if (!$succ) sleep(1); else break;
 			}
 		}
 		return self::$mInstance;
 	}
 
-	public function getName($id) 
+	private function loadFromCache() 
 	{
+		if ($this->isDirty()) { 
+			// echo "dirty";
+			 return false; 
+		}
+
+		$str = S($this->mKeyName);
+		if (!$str) {
+			// echo "memcache is null".$this->mKeyName;
+			return false;
+		}
+		
+		// echo "loadFromCache();";
+		$this->mBookClasses = json_decode($str, true);	
+		// de($this->mBookClasses);
+		if ($this->mBookClasses == null || $this->mBookClasses == false) {
+			// echo "load from cache faild";
+			return false;
+		}
+		return true;
+	}
+	
+	private function loadFromDatabase() 
+	{	
+		// echo "loadFromDababase();";
+		if (S(self::$mLockPrefix.self::$mKeyName) == "1") {// 加载锁定
+			// echo "locked";
+			return false;
+		}
+		$this->mBookClassses = array();
+		$m = M("zl_book_class")->where("class_status=1")->order("class_id asc")->select();
+		foreach ($m as $row) {
+			if ($row["class_is_leaf"] == 0) {
+				$row["class_children"] = array();
+			}
+
+			if (strlen($row["class_id"] > 2)) {
+				array_push(self::$mInstance->mBookClasses[substr($row["class_id"], 0, 2)]["class_children"], $row["class_id"]); }
+			self::$mInstance->mBookClasses[$row["class_id"]] = $row;
+		}
+		S($this->mKeyName, json_encode($this->mBookClasses));
+		if ($this->isDirty()) $this->setDirty(false);
+		S(self::$mLockPrefix.self::$mKeyName, null);
+			
+		return true;
+	}
+
+	public function getName($id) 
+	{	
+		// de($this->mBookClasses[$id]);
+		
 		return $this->mBookClasses[$id]["class_name"];
 	}
 
@@ -152,5 +205,25 @@ class BookClass {
 		}
 		
 		return json_encode($result);
+	}	
+	
+
+	public function print_r()
+	{
+		echo json_encode($this->mBookClasses);
 	}
+
+	public static function setDirty($dirty = true) 
+	{
+		if ($dirty) {
+			S(self::$mDirtyPrefix.self::$mKeyName, "1");
+			S(self::$mLockPrefix.self::$mKeyName, null);
+		} else
+			S(self::$mDirtyPrefix.self::$mKeyName, null);
+	}
+
+	public static function isDirty() {
+		return S(self::$mDirtyPrefix.self::$mKeyName) == "1";
+	}
+	
 }

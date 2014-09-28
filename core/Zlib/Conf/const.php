@@ -22,7 +22,7 @@ return array(
 		'encoded' => 'utf-8',	// 系统编码
 	),
 	// session相关
-	'S' => array(
+	'SESSION' => array(
 		'user' => 'user',		//前台用户的session存放key
 		'author' => 'user',		//作者的session存放key
 		'admin' => 'user',		//管理员的session存放key
@@ -32,6 +32,11 @@ return array(
 	'MONEY' => array(
 		'fen' => 1, // 一分钱(人民币) = 多少逐浪币 
 		'1000word' => 3, // 1000字多少逐浪币
+	),
+
+	// 关键词过滤相关
+	'FILTER' => array(			
+		'filter_scale' => 1,		// 严打时置成2
 	),
 
 	// 用户相关
