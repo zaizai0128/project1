@@ -13,11 +13,13 @@ use Zlib\Model\ZlibAccountsModel;
 class UserService extends ZlibUserModel {
 
 	protected $accountInstance = Null;
+	protected $userAuthorInstance = Null;
 
 	public function init()
 	{
 		parent::init();
 		$this->accountInstance = new ZlibAccountsModel;
+		$this->userAuthorInstance = D('UserAuthor', 'Service');
 	}
 
 	/**
@@ -29,6 +31,60 @@ class UserService extends ZlibUserModel {
 		$user_info = $this->getUserFullInfoByUserId($user_id);
 		$account = $this->accountInstance->getAccountByUserId($user_id);
 		return array_merge($user_info, $account);
+	}
+
+	/**
+	 * 修改个人信息
+	 */
+	public function doEditInfo($data)
+	{
+		// 验证
+		$state = $this->_checkEditInfo($data);
+		if ($state['code'] <= 0) return $state;
+
+		// 修改主表信息
+		$final_data = array();
+		$final_data['user_id'] = $data['user_id'];
+		$final_data['user_sex'] = $data['sex'];
+		$final_data['user_email'] = $data['email'];
+		$final_data['user_qq'] = $data['qq'];
+		$final_data['user_birthday'] = $data['birthday'];
+		$final_data['user_mobile'] = $data['phone'];
+
+		if (isset($data['nickname']) && !empty($data['nickname']))
+			$final_data['user_nickname'] = $data['nickname'];
+
+		// 修改主表信息
+		$result = parent::doEdit($final_data);
+
+		// 修改真实信息表信息
+		$reuslt = $this->userAuthorInstance->doEdit($data);
+
+		return z_info(1, '修改成功');
+	}
+
+	/**
+	 * 验证修改个人信息
+	 */
+	private function _checkEditInfo($data)
+	{	
+		if (empty($data['user_id'])) return z_info(-1, '用户id不允许为空');
+		if (isset($data['nickname']) && empty($data['nickname'])) return z_info(-11, '昵称不允许为空');
+
+		$user = parent::getUserInfoByUserId($data['user_id'], 'user_id, user_nickname');
+		if (empty($user)) return z_info(-2, '用户不存在');
+
+		// 验证昵称是否允许被修改
+		if (!empty($user['user_nickname']) && !empty($data['nickname'])) 
+			return z_info(-3, '昵称不允许修改');
+
+		// 验证昵称是否重复
+		if (isset($data['nickname'])) {
+			$user = parent::getUserInfoByNickName($data['nickname'], 'user_id');
+			if (!empty($user)) return z_info(-4, '昵称不允许重复');
+		}
+
+		return z_info(1, '验证通过');
 	}
 
 	/**
@@ -65,25 +121,4 @@ class UserService extends ZlibUserModel {
 		else
 			return z_info(0, '添加失败');
 	}
-	
-	/**
-	 * 补充个人信息
-	 */
-	public function doEditExt($data)
-	{
-		// 一些验证 ...
-		
-		$final_data['user_email'] = $data['email'];
-		$final_data['user_qq'] = $data['qq'];
-		$final_data['user_mobile'] = $data['phone'];
-		$final_data['user_id'] = $data['user_id'];
-
-		$result = parent::doEdit($final_data);
-
-		if ($result > 0) 
-			return z_info(1, '修改成功');
-		else
-			return z_info(0, '修改失败');
-	}
-
 }

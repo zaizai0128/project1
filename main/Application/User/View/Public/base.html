@@ -2,12 +2,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<block name="title"><title>{$user_info.user_name} - 个人中心主页 - 逐浪网</title></block>
+<block name="title"><title>{$user_info.user_nickname|default=$user_info['user_name']} - 个人中心主页 - 逐浪网</title></block>
 {// 公共部分}
 <link  href="{:z_css('user/css/user')}" type="text/css" rel="stylesheet">
 <link href="{:z_css('user/css/base')}" type="text/css" rel="stylesheet">
 <script src="{:z_js()}"></script>
-<script src="{:z_js('zlang')}"></script>
 </head>
 <body>
 <div class="container">
@@ -58,6 +57,9 @@
     </div>  
 </div>
 </div>
+
+<script src="{:z_js('zlang')}"></script>
+<script src="{:z_js('zl.user')}"></script>
 <block name="js"></block>
 </body>
 </html>

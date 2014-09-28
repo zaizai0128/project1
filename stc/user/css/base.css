@@ -18,7 +18,7 @@ a:hover {text-decoration:underline;}
 .topbar{ background:#2c2c2c; height:37px;margin-bottom:10px;color:#ffffff;}
 .tpbar_l{ float:left; margin-top:10px}
 .tpbar_l a{color:#ffffff;padding:0 10px}
-.tpbar_usr{ float:right; width:568px}
+.tpbar_usr{ float:right;}
 .tpbar_usr .usr_nav li{ float:left; height:27px; margin:0 2px; padding-top:10px}
 .tpbar_usr .usr_nav li a{ color:#ffffff;}
 .tpbar_usr .usr_nav li.usr_li a{ padding:0 24px}

@@ -15,14 +15,14 @@
                             <em class="colr_01">(VIP)</em>
                             <?php endif;?>
                         </span>
-                        <span class="frm_ctr"><a href="#">修改密码</a></span>
+                        <span class="frm_ctr"><a href="{:ZU('user/account/password')}">修改密码</a></span>
                     </div>
                  </li>
                  <li class="frm">
                      <span class="frm_tit">用户昵称：</span>
                       <div class="frm_val">
                           <span class="val">{$user_info.user_nickname|default=$user_info['user_name']}</span>
-                           <span class="frm_ctr"><a href="#">修改昵称</a></span>
+                           <span class="frm_ctr"><a href="{:ZU('user/account/index')}">修改昵称</a></span>
                       </div>
                   </li>
                   <li class="frm">
@@ -38,13 +38,18 @@
               </ul>  
         </div>
       <div class="info_set">
-        <h4 class="tit_h4 clearfix"><i class="ico_acc"></i>账号设置</h4>
+        <h4 class="tit_h4 clearfix"><i class="ico_acc"></i><a href="{:ZU('user/account/index')}">账号设置</a></h4>
           <ul class="set_lst">
                <li>
                   <span class="set_tit">当前余额：</span>  
                   <div class="set_val">
                      <span class="val">
                        <em class="colr_01">{$user_info.amount}</em> 逐浪金币
+                     </span>
+                  </div>
+                  <div class="set_val">
+                     <span class="val">
+                       <em class="colr_01">{$user_info.bonus}</em> 逐浪银币[过期时间:{$user_info.bonus_expire}]
                      </span>
                   </div>
                    </li>

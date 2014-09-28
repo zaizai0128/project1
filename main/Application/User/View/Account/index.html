@@ -11,7 +11,7 @@
 </div>
 <div class="bd">
   <div class="u_acc_lst">
-    <form action="{:ZU('user/account/doAddExt')}" method="POST" onsubmit="return $.submitAccount();">
+    <form action="{:ZU('user/account/doEditInfo')}" method="POST" onsubmit="return $.submitAccount();">
       <ul class="form_lst form_acc_top">
           <li class="frm">
               <span class="frm_tit">
@@ -54,17 +54,21 @@
               <span class="frm_tit">
                   账号昵称：
                 </span>
+                <?php if(empty($user_info['user_nickname'])):?>
                 <div class="frm_inp">
-                   <input type="text" value="{$user_info.user_nickname|default=$user_info['user_name']}" name="nickname"  class="inp"/>
+                   <input type="text" value="{$user_info.user_nickname}" name="nickname" class="inp"/>
                      <span class="tip colr_01">提醒：昵称修改后不可更换</span>
-                </div>  
+                </div>
+                <?php else:?>
+                <div class="frm_val">{$user_info.user_nickname}</div>
+                <?php endif;?>
             </li>
             <li class="frm">
               <span class="frm_tit">
                   出生日期：
                 </span>
                 <div class="frm_inp">
-                   <input type="text" value="{$user_info.user_birtyday}" name="birthday" class="inp"/>
+                   <input type="text" value="{$user_info.user_birthday}" name="birthday" class="inp"/>
                 </div>                                    
             </li>
             <li class="frm">
@@ -80,61 +84,32 @@
                   喜欢的小说类型：
                 </span>
                 <div class="frm_val JQ_Frm" style="display:block">
-                     <div class="tag_del JQ_Del">
-                          <span class="tag JQ_Tag">
-                              <i class="ico_tag01"></i>
-                              <span class="span_l">
-                                   <span  class="tag_nam">武侠</span>
-                                   <a  href="javascript:;" class="ico_tag02"></a>
-                               </span>
-                            </span>
-                        </div> 
-                         <div class="tag_add">
+                        <div class="tag_del JQ_Del tag_container" style="display:none;"></div> 
+                         <div class="tag_add ">
                              <dl>
                               <dt>你可能感兴趣的小说类型:</dt>
-                                <dd>
-                                   <span class="tag JQ_Tag">
+                                <dd class="tag_add_container">
+                                   <span class="tag JQ_Tag tag_add_button" style="cursor:pointer;">
                                        <i class="ico_tag01"></i>
                                        <span class="span_l clearfix">
-                                          <a  href="javascript:;" class="ico_tag03"></a>
-                                          <span class="tag_nam">武侠武侠</span>
+                                          <a href="javascript:;" class="ico_tag03"></a>
+                                          <span class="tag_nam tag_item" data-class="1" data-name="武侠">武侠</span>
                                        </span>
                                    </span>
-                                   <span class="tag JQ_Tag">
+                                   <span class="tag JQ_Tag tag_add_button" style="cursor:pointer;">
                                        <i class="ico_tag01"></i>
                                        <span class="span_l clearfix">
-                                           <a  href="javascript:;" class="ico_tag03"></a>
-                                          <span  class="tag_nam">武侠武侠</span>
-                                       </span>
-                                   </span> 
-                                   <span class="tag JQ_Tag">
-                                       <i class="ico_tag01"></i>
-                                       <span class="span_l clearfix">
-                                           <a  href="javascript:;" class="ico_tag03"></a>
-                                          <span  class="tag_nam">武侠武侠</span>
+                                          <a href="javascript:;" class="ico_tag03"></a>
+                                          <span class="tag_nam tag_item" data-class="2" data-name="玄幻">玄幻</span>
                                        </span>
                                    </span>
-                                   <span class="tag JQ_Tag">
+                                   <span class="tag JQ_Tag tag_add_button" style="cursor:pointer;">
                                        <i class="ico_tag01"></i>
                                        <span class="span_l clearfix">
-                                           <a  href="javascript:;" class="ico_tag03"></a>
-                                          <span  class="tag_nam">武侠武侠</span>
+                                          <a href="javascript:;" class="ico_tag03"></a>
+                                          <span class="tag_nam tag_item" data-class="3" data-name="都市">都市</span>
                                        </span>
                                    </span>
-                                   <span class="tag JQ_Tag">
-                                       <i class="ico_tag01"></i>
-                                       <span class="span_l clearfix">
-                                           <a  href="javascript:;" class="ico_tag03"></a>
-                                          <span  class="tag_nam">武侠武侠</span>
-                                       </span>
-                                   </span>
-                                   <span class="tag JQ_Tag">
-                                       <i class="ico_tag01"></i>
-                                       <span class="span_l clearfix">
-                                           <a  href="javascript:;" class="ico_tag03"></a>
-                                          <span  class="tag_nam">武侠武侠</span>
-                                       </span>
-                                   </span>                                    
                               </dd>
                             </dl>                      
                          </div>
@@ -158,7 +133,7 @@
             <li class="frm">
               <span class="frm_tit">邮政编码：</span>
                 <div class="frm_inp">
-                  <input type="text" value="{$user_info.user_zipcode}" name="postnum" class="inp"/>
+                  <input type="text" value="{$user_info.user_zipcode}" name="zipcode" class="inp"/>
                 </div>
             </li>
             <li class="frm">

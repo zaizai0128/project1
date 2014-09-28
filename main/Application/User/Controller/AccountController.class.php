@@ -19,6 +19,7 @@ class AccountController extends UserController {
 	public function init()
 	{
 		$this->userInfo = $this->userInstance->getUserInfo($this->userId);
+
 		$this->assign(array(
 			'user_info' => $this->userInfo,
 		));
@@ -29,53 +30,20 @@ class AccountController extends UserController {
 	 */
 	public function index()
 	{
-		
 		$this->display();
 	}
 
 	/**
 	 * 补充用户信息
 	 */
-	public function doAddExt()
+	public function doEditInfo()
 	{
 		if (IS_POST) {
-			$data = array_merge($this->userInfo, I());
-
-			de($data);
-			$state = $this->userInstance->doEditExt($data);
+			$data = array_merge(I(), array('user_id'=>$this->userId));
+			$state = $this->userInstance->doEditInfo($data);
 
 			if ($state['code'] > 0)
 				z_redirect($state['msg'], ZU('user/center/index')); 
-			else
-				z_redirect($state['msg']);
-		}
-	}
-
-	/**
-	 * 更新真实信息
-	 */
-	public function trueInfo()
-	{
-		$author_info = D('UserAuthor', 'Service')->getAuthorInfoByUserId($this->userId);
-
-		$this->assign(array(
-			'author_info' => $author_info
-		));
-		$this->display();
-	}
-
-	/**
-	 * 补充真实信息
-	 */
-	public function doTrueInfo()
-	{
-		if (IS_POST) {
-			$data = array_merge($this->userInfo, I());
-			
-			$state = D('UserAuthor', 'Service')->doEdit($data);
-
-			if ($state['code'] > 0)
-				z_redirect($state['msg'], ZU('user/center/index'));
 			else
 				z_redirect($state['msg']);
 		}
@@ -106,5 +74,14 @@ class AccountController extends UserController {
 	{
 
 		$this->display();
+	}
+
+	public function doPassword()
+	{
+		if (IS_POST) {
+			$data = I();
+
+			de($data);
+		}
 	}
 }

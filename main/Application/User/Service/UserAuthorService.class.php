@@ -19,11 +19,11 @@ class UserAuthorService extends ZlibUserAuthorModel {
 	public function doEdit($data)
 	{
 		// 一些验证 ...
-
+		
 		$final_data['user_id'] = $data['user_id'];
-		$final_data['author_name'] = $data['name'];
-		$final_data['user_idcard'] = $data['idcard'];
-		$final_data['user_true_name'] = $data['true_name'];
+		$final_data['user_true_name'] = $data['name'];
+		$final_data['user_zipcode'] = $data['zipcode'];
+		$final_data['user_address'] = $data['address'];
 		
 		$result = parent::doEdit($final_data);
 

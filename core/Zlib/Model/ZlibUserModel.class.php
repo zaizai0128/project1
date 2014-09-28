@@ -60,6 +60,19 @@ class ZlibUserModel extends BaseModel {
 	}
 
 	/**
+	 * 通过昵称查找用户
+	 *
+	 * @param string nickname
+	 * @param string field '*'
+	 * @param string where
+	 */
+	public function getUserInfoByNickName($nickname, $field='*', $wher='')
+	{
+		$condition = 'user_nickname = "'.$nickname.'"';
+		return $this->field($field)->where($condition)->find();
+	}
+
+	/**
 	 * 通过用户id获取用户信息
 	 *
 	 * @param string user_id
