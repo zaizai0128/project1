@@ -1,8 +1,12 @@
 <div class="tpbar_usr">
 <div class="usr_log">
-	<?php if(session('?user')):?>
+	<?php if(ZS('SESSION.user','?')):?>
 	<dl>
-		<dt>欢迎您：{:session('user.user_name')}</dt>
+		<?php 
+			$s_username = ZS('SESSION.user','user_nickname');
+			$s_username = empty($s_username) ? ZS('SESSION.user','user_name') : $s_username ;
+		?>
+		<dt>欢迎您：{$s_username}</dt>
 		<dd>
 			<a href="{:ZU('user/center')}">个人中心</a><a href="#">信箱</a><a href="#">充值</a><a href="#">彩票</a><a href="{:ZU('login/logout')}">退出</a>
 		</dd>

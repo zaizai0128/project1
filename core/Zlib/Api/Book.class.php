@@ -180,10 +180,9 @@ class Book {
 	public function getInfo($load_state = false) 
 	{
 		if ($load_state)
-			loadState();		
+			$this->loadState();
 		return $this->mBookInfo;
 	}
-
 
 	/**
 	 * 获取作品目录

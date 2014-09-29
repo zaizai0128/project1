@@ -13,13 +13,15 @@ class BookController extends HomeController {
 	protected $bookId = Null;
 	protected $bookInfo = Null;
 	protected $bookInstance = Null;
+	protected $bookApi = Null;
 
 	public function __construct()
 	{
 		parent::__construct();
 		$this->bookId = I('get.book_id');
 		$this->bookInstance = D('Book', 'Service');
-		$this->bookInfo = $this->bookInstance->getBookByBookId($this->bookId);
+		$this->bookApi = new \Zlib\Api\Book($this->bookId);
+		$this->bookInfo = $this->bookApi->getInfo();
 		\Zlib\Api\Acl::book($this->bookInfo);
 	}
 

@@ -16,7 +16,7 @@ class HomeController extends Controller {
 	protected $bookInfo = Null;
 	protected $bookClassApi = Null;
 	protected $bookInstance = Null;
-
+	protected $bookApi = Null;
 
 	public function __construct()
 	{
@@ -24,7 +24,8 @@ class HomeController extends Controller {
 		$this->bookId = I('get.book_id');
 		$this->chapterId = I('get.ch_id');
 		$this->bookInstance = D('Book', 'Service');
-		$this->bookInfo = $this->bookInstance->getBookByBookId($this->bookId);
+		$this->bookApi = new \Zlib\Api\Book($this->bookId);
+		$this->bookInfo = $this->bookApi->getInfo();
 		\Zlib\Api\Acl::book($this->bookInfo);
 		$this->bookClassApi = \Zlib\Api\BookClass::getInstance();
 	}
