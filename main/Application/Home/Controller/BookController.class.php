@@ -7,7 +7,6 @@
  * @version 1.0
  */
 namespace Home\Controller;
-use Zlib\Api as Zapi;
 
 class BookController extends HomeController {
 

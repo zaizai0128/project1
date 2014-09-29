@@ -37,6 +37,11 @@ class UserService extends ZlibUserModel {
 		// 保存session
 		ZS('SESSION.user', Null, $user_info);
 
+		// 更新用户最后登录信息
+		$final_data['user_id'] = $user_info['user_id'];
+		$final_data['last_login'] = z_now();
+		parent::doEdit($final_data);
+
 		return z_info(1, '登录成功');
 	}
 
@@ -62,6 +67,7 @@ class UserService extends ZlibUserModel {
 		$final_data['user_state'] = 0;
 		$final_data['user_type'] = '00';
 		$final_data['user_join'] = z_now();
+		$final_data['last_login'] = z_now();
 
 		$user_id = parent::doAdd($final_data);
 
