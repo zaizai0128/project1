@@ -76,6 +76,9 @@ class AccountController extends UserController {
 		$this->display();
 	}
 
+	/**
+	 * 执行修改密码
+	 */
 	public function doPassword()
 	{
 		if (IS_POST) {

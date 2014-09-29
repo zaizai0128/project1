@@ -84,36 +84,28 @@
                   喜欢的小说类型：
                 </span>
                 <div class="frm_val JQ_Frm" style="display:block">
+                        <?php if(!empty($user_info['like_tag'])):?>
+                        <div class="tag_del JQ_Del tag_container" style="display:block;">
+                          <?php foreach($user_info['like_tag'] as $k=>$v):?>
+                          <span class="tag JQ_Tag tag_del_button" onclick="$.delLikeTag(this)" style="cursor:pointer;">
+                            <i class="ico_tag01"></i>
+                            <span class="span_l"><span  class="tag_nam">{$v}</span>
+                            <a  href="javascript:;" class="ico_tag02"></a></span>
+                            <input type="hidden" class="tag_like" name="like[]" value="{$k}" />
+                            <input type="hidden" class="tag_like_name" name="like_name[]" value="{$v}" />
+                          </span>
+                          <?php endforeach;?>
+                        </div> 
+                        <?php else:?>
                         <div class="tag_del JQ_Del tag_container" style="display:none;"></div> 
+                        <?php endif;?>
                          <div class="tag_add ">
                              <dl>
                               <dt>你可能感兴趣的小说类型:</dt>
-                                <dd class="tag_add_container">
-                                   <span class="tag JQ_Tag tag_add_button" style="cursor:pointer;">
-                                       <i class="ico_tag01"></i>
-                                       <span class="span_l clearfix">
-                                          <a href="javascript:;" class="ico_tag03"></a>
-                                          <span class="tag_nam tag_item" data-class="1" data-name="武侠">武侠</span>
-                                       </span>
-                                   </span>
-                                   <span class="tag JQ_Tag tag_add_button" style="cursor:pointer;">
-                                       <i class="ico_tag01"></i>
-                                       <span class="span_l clearfix">
-                                          <a href="javascript:;" class="ico_tag03"></a>
-                                          <span class="tag_nam tag_item" data-class="2" data-name="玄幻">玄幻</span>
-                                       </span>
-                                   </span>
-                                   <span class="tag JQ_Tag tag_add_button" style="cursor:pointer;">
-                                       <i class="ico_tag01"></i>
-                                       <span class="span_l clearfix">
-                                          <a href="javascript:;" class="ico_tag03"></a>
-                                          <span class="tag_nam tag_item" data-class="3" data-name="都市">都市</span>
-                                       </span>
-                                   </span>
-                              </dd>
+                                <dd class="tag_add_container">loading...</dd>
                             </dl>                      
                          </div>
-                        <span class="btn_chag"><a href="#">换一换</a></span>  
+                        <span class="btn_chag"><a href="javascript:;">换一换</a></span>  
                   </div>                                   
             </li>
         </ul> 
@@ -154,7 +146,16 @@
 <block name="js">
 <script type="text/javascript">
   jQuery(function($){
+    var get_like_tag_url = '{:ZU("ajax/class/getLikeTag")}';
 
+    $.getLikeTag(get_like_tag_url);
+
+    $('.btn_chag').on('click', function(){
+        $.getLikeTag(get_like_tag_url);
+    });
+
+    $.showMenu();
+    
     $.extend({
       submitAccount : function()
       {
