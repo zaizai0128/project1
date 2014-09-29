@@ -10,12 +10,21 @@ namespace User\Controller;
 
 class ShelfController extends UserController {
 
+	protected $bookShelfApi = Null;
+
+	public function __construct()
+	{
+		parent::__construct();
+		$this->bookShelfApi = new \Zlib\Api\BookShelf($this->userId);
+	}
+
 	/**
 	 * 书架首页
 	 */
 	public function index()
 	{
 		
+
 		$this->display();
 	}
 

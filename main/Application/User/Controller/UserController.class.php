@@ -12,7 +12,7 @@ use Think\Controller;
 class UserController extends Controller {
 
 	protected $userId = Null;
-	public $userInfo = Null;
+	protected $userInfo = Null;
 	protected $userInstance = Null;
 
 	public function __construct()
@@ -28,7 +28,7 @@ class UserController extends Controller {
 		$this->init();
 	}
 
-	public function init()
+	protected function init()
 	{
 		$this->assign('user_info', $this->userInfo);
 	}

@@ -11,6 +11,15 @@ namespace Zlib\Api;
 class Acl {
 
 	/**
+	 * 应用操作的权限验证
+	 */
+	static public function app($user_info)
+	{
+		if (empty($user_info))
+			z_redirect('未登录，不允许操作');
+	}
+
+	/**
 	 * 后台管理员验证操作权限
 	 *
 	 * @param array admin_info
