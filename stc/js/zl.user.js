@@ -132,9 +132,7 @@ jQuery(function(){
 				}, 500);
 
 			}).mouseleave(function(){
-				$(this).find('.drp_box').animate({
-					opacity : 'hide'
-				}, 500);
+				$(this).find('.drp_box').hide();
 			});
 		}
 	});

@@ -18,4 +18,22 @@ class ShelfController extends UserController {
 		
 		$this->display();
 	}
+
+	/**
+	 * 最近阅读
+	 */
+	public function history()
+	{
+		
+		$this->display();
+	}
+
+	/**
+	 * 书架管理
+	 */
+	public function manager()
+	{
+
+		$this->display();
+	}
 }

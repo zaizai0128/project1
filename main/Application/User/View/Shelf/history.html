@@ -1,4 +1,4 @@
-﻿<extend name="Public/base" />
+<extend name="Public/base" />
 
 <block name="header">
 <include file="Public/header" nav="shelf"/>
@@ -7,7 +7,7 @@
 <block name="main">
 <div class="u_my_bshelf">
 <div class="hd_usr">
-  <include file="menu" ac="index" />
+  <include file="menu" ac="history" />
 </div>
 <div class="bd">
   <div class="u_shelf_lst">
@@ -27,28 +27,28 @@
                   <th><input type="checkbox" value="" name="" /></th>
                     <th>类别</th>
                     <th>作品/最新章节</th>
-                    <th>书签</th>
                     <th>最近更新</th>        
                     <th>作者</th>
                     <th>状态</th>
+                    <th>操作</th>
                 </tr>
                 <tr>
                   <td><input type="checkbox" value="" name="" /></td>
                     <td>青春</td>
                     <td>校园篮球风云[顶]第一章 小试牛刀 VIP</td>
-                    <td>书签</td>
                     <td>无</td>
                     <td>大秦</td>
                     <td>完结</td>
+                    <td><a href="#" class="ctr_add">加入书架</a></td>
                 </tr>
                 <tr>
                   <td><input type="checkbox" value="" name="" /></td>
                     <td>类别</td>
                     <td>作品/最新章节</td>
-                    <td>书签</td>
-                    <td>最近更新</td>
-                    <td>书签</td>
+                    <td>无</td>
+                    <td>大秦</td>
                     <td>完结</td>
+                    <td><a href="#" class="ctr_add">加入书架</a></td>
                 </tr>
             </table>
         </div> 
@@ -56,27 +56,14 @@
           <div class="ctr_l">
                 <label><input type="checkbox" value="" name="" />全选</label>
                 <p class="ctr_lst">
-                    <a href="#">移动</a><a href="#">置顶</a><a href="#">删除</a>
+                    <a href="#">加入书架</a>
                 </p>
              </div> 
            <div class="ctr_r">
-                <div class="ctr_page">
-                   <span class="pg_lst">
-                    <span class="pg_pre" style="display:none">
-                         <a href="#"> <<上一页 </a>
-                      </span>
-                      <a href="#" class="on">1</a>
-                      <a href="#">2</a>
-                      <a href="#">3</a>
-                      <a href="#">4</a>
-                      <a href="#">5</a>
-                      <a href="#">6</a>
-                      <span class="pg_oth">...</span>
-                      <a href="#"class="pg_end">12</a>
-                     <span class="pg_nxt"><a href="#">下一页>></a></span>
-                  </span>    
-                </div>
-             </div>    
+              <span class="shelf_num">
+                 默认显示最近阅读的<em class="colr_01">10</em>部小说
+              </span>      
+           </div>    
         </div>                                                
     </div>                    
 </div>

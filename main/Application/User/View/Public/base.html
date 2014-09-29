@@ -25,7 +25,7 @@
         	<div class="user_side">
             	<div class="side_top">
                     <p class="pic">
-                       <a href="#"><img src="{:z_img('user/images/tou_img')}"/></a>
+                       <a href="javascript:;"><img src="{:z_img('user/images/tou_img')}"/></a>
                     </p>
                     <h3 class="tit">
                     	<a href="#" class="nam_usr">{$user_info.user_name}</a>
@@ -61,5 +61,11 @@
 <script src="{:z_js('zlang')}"></script>
 <script src="{:z_js('zl.user')}"></script>
 <block name="js"></block>
+<script type="text/javascript">
+jQuery(function(){
+
+   $.showMenu();
+});
+</script>
 </body>
 </html>
