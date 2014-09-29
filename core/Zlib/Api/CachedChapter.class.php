@@ -33,7 +33,7 @@ class CachedChapter {
 	
 		$this->mBookId = $book_id;
 		$mRetry = 3;
-		self::setDirty(true, $book_id);
+		// self::setDirty(true, $book_id);
 		while ($mRetry -- > 0) {
 			$succ = $this->loadFromCache();
 			if (!$succ) {	
@@ -118,8 +118,8 @@ class CachedChapter {
 		}
 
 		if (count($this->mChapter) > 10) { // 大于10章才放
-			S(self::$mKeyName.$this->mBookId."##VOLUME", json_encode($this->mVolume));
-			S(self::$mKeyName.$this->mBookId."##CHAPTER", json_encode($this->mChapter));
+			S(self::$mKeyName.$this->mBookId."##VOLUME", json_encode($this->mVolume), 3600 * 24);
+			S(self::$mKeyName.$this->mBookId."##CHAPTER", json_encode($this->mChapter), 3600 * 24);
 		}
 		if ($this->isDirty($this->mBookId)) $this->setDirty(false, $this->mBookId);
 		S(self::$mLockPrefix.self::$mKeyName.$this->mBookId, null);
@@ -216,6 +216,7 @@ class CachedChapter {
 		return $this->mChapter[$chapter_id]["ch_order"];
 	}
 
+	// 由Book.class.php调用即可
 	public static function setDirty($dirty, $book_id) 
 	{	
 		if ($dirty) {
