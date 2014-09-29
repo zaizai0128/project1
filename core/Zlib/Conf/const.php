@@ -40,6 +40,12 @@ return array(
 		'filter_scale' => 1,		// 严打时置成2
 	),
 
+	// 书架相关
+	'SHELF' => array(
+		'max' => 100,	// 用户书架的最大存书量
+
+	),
+
 	// 用户相关
 	'USER' => array(
 		'type' => array(

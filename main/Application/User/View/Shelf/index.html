@@ -1,0 +1,81 @@
+﻿<extend name="Public/base" />
+
+<block name="main">
+<div class="u_my_bshelf">
+<div class="hd_usr">
+    <ul class="hd_nav"><include file="menu" ac="index" /></ul>
+    <span class="num">书架容量(<em>10/{:C('SHELF.max')}</em>)</span>
+</div>
+<div class="bd">
+  <div class="u_shelf_lst">
+      <div class="shel_filt">
+          <span class="filt_l">全部藏书<em>10</em>部</span>
+            <div class="filt_r">
+              <div class="r_sear">
+    <input type="text" name="" 
+                  value="请输入书名 章节名称" class="sear_inp"/>
+                  <a href="#" class="sear_btn">搜索</a>
+                </div>
+            </div>  
+        </div>   
+        <div class="u_td shelf_td">
+          <table>
+              <tr>
+                  <th><input type="checkbox" value="" name="" /></th>
+                    <th>类别</th>
+                    <th>作品/最新章节</th>
+                    <th>书签</th>
+                    <th>最近更新</th>        
+                    <th>作者</th>
+                    <th>状态</th>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" value="" name="" /></td>
+                    <td>青春</td>
+                    <td>校园篮球风云[顶]第一章 小试牛刀 VIP</td>
+                    <td>书签</td>
+                    <td>无</td>
+                    <td>大秦</td>
+                    <td>完结</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" value="" name="" /></td>
+                    <td>类别</td>
+                    <td>作品/最新章节</td>
+                    <td>书签</td>
+                    <td>最近更新</td>
+                    <td>书签</td>
+                    <td>完结</td>
+                </tr>
+            </table>
+        </div> 
+        <div class="shelf_ctr">
+          <div class="ctr_l">
+                <label><input type="checkbox" value="" name="" />全选</label>
+                <p class="ctr_lst">
+                    <a href="#">移动</a><a href="#">置顶</a><a href="#">删除</a>
+                </p>
+             </div> 
+           <div class="ctr_r">
+                <div class="ctr_page">
+                   <span class="pg_lst">
+                    <span class="pg_pre" style="display:none">
+                         <a href="#"> <<上一页 </a>
+                      </span>
+                      <a href="#" class="on">1</a>
+                      <a href="#">2</a>
+                      <a href="#">3</a>
+                      <a href="#">4</a>
+                      <a href="#">5</a>
+                      <a href="#">6</a>
+                      <span class="pg_oth">...</span>
+                      <a href="#"class="pg_end">12</a>
+                     <span class="pg_nxt"><a href="#">下一页>></a></span>
+                  </span>    
+                </div>
+             </div>    
+        </div>                                                
+    </div>                    
+</div>
+</div>
+</block>

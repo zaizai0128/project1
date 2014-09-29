@@ -9,22 +9,7 @@
 namespace User\Controller;
 
 class AccountController extends UserController {
-
-	public function __construct()
-	{
-		parent::__construct();
-		$this->init();
-	}
-
-	public function init()
-	{
-		$this->userInfo = $this->userInstance->getUserInfo($this->userId);
-
-		$this->assign(array(
-			'user_info' => $this->userInfo,
-		));
-	}
-
+	
 	/**
 	 * 个人信息
 	 */

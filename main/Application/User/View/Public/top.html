@@ -5,11 +5,11 @@
     <div class="tpbar_usr">
     	<ul class="usr_nav">
         	<li class="usr_loged">
-                <a href="{:ZU('user/center/index')}" class="usr_nam">欢迎您{$user_info.user_nickname|default=$user_info['user_name']}</a>
+                <a href="{:ZU('user/center/index')}" class="usr_nam">欢迎您, {$user_info.user_nickname|default=$user_info['user_name']}</a>
                 <a href="{:ZU('login/logout')}" class="usr_exit">退出</a>
                 <i class="ico_usr">|</i>
             </li>
-            <li class="usr_li"><a href="#">我的书架V</a>|</li>
+            <li class="usr_li"><a href="{:ZU('user/shelf/index')}">我的书架</a>|</li>
             <li class="usr_li"><a href="#">站内短信</a>|</li>
             <li class="usr_li"><a href="#">充值</a>|</li>
             <li class="tnav_drop" style="cursor:pointer;">

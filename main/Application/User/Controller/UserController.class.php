@@ -12,7 +12,7 @@ use Think\Controller;
 class UserController extends Controller {
 
 	protected $userId = Null;
-	protected $userInfo = Null;
+	public $userInfo = Null;
 	protected $userInstance = Null;
 
 	public function __construct()
@@ -24,6 +24,12 @@ class UserController extends Controller {
 		$this->userInstance = D('User', 'Service');
 		$this->userId = ZS('SESSION.user', 'user_id');
 		// 获取基础用户信息
-		$htis->userInfo = $this->userInstance->getUserInfoByUserId($this->userId);
+		$this->userInfo = $this->userInstance->getUserInfo($this->userId);
+		$this->init();
+	}
+
+	public function init()
+	{
+		$this->assign('user_info', $this->userInfo);
 	}
 }

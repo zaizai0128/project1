@@ -8,10 +8,14 @@
  */
 namespace User\Controller;
 
-class HomeController extends UserController {
+class ShelfController extends UserController {
 
+	/**
+	 * 书架首页
+	 */
 	public function index()
 	{
-		echo '个人书架controller';
+		
+		$this->display();
 	}
 }

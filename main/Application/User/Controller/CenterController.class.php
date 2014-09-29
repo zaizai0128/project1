@@ -10,20 +10,6 @@ namespace User\Controller;
 
 class CenterController extends UserController {
 
-	public function __construct()
-	{
-		parent::__construct();
-		$this->init();
-	}
-
-	public function init()
-	{
-		$this->userInfo = $this->userInstance->getUserInfo($this->userId);
-		$this->assign(array(
-			'user_info' => $this->userInfo,
-		));
-	}
-
 	/**
 	 * 用户中心center首页
 	 */
