@@ -31,7 +31,7 @@ class ZlibUserModel extends BaseModel {
 		// 用户作者信息
 		$user_author = new ZlibUserAuthorModel;
 		$author_info = $user_author->getAuthorInfoByUserId($user_id);
-		return array_merge($user_info, $author_info);
+		return array_merge($user_info, (array)$author_info);
 	}
 
 	/**

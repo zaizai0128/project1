@@ -44,12 +44,12 @@
                   <span class="set_tit">当前余额：</span>  
                   <div class="set_val">
                      <span class="val">
-                       <em class="colr_01">{$user_info.amount}</em> 逐浪金币
+                       <em class="colr_01">{$user_info.amount|default="0"}</em> 逐浪金币
                      </span>
                   </div>
                   <div class="set_val">
                      <span class="val">
-                       <em class="colr_01">{$user_info.bonus}</em> 逐浪银币[过期时间:{$user_info.bonus_expire}]
+                       <em class="colr_01">{$user_info.bonus|default="0"}</em> 逐浪银币[过期时间:{$user_info.bonus_expire|default="-"}]
                      </span>
                   </div>
                    </li>
@@ -57,7 +57,7 @@
                   <span class="set_tit">上次登录：</span>  
                   <div class="set_val">
                      <span class="val">
-                       2014-04-25 14:13:24
+                       {$user_info.last_login}
                      </span>
                   </div>
                </li>

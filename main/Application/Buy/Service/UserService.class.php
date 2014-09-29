@@ -29,7 +29,7 @@ class UserService extends ZlibUserModel {
 		$user_info = parent::getUserInfoByUserId($user_id);
 		$account_info = $this->accountInstance->getAccountByUserId($user_id);
 		
-		return array_merge($user_info, $account_info);
+		return array_merge($user_info, (array)$account_info);
 	}
 
 }
