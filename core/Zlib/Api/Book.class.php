@@ -179,10 +179,10 @@ class Book {
 	/**
 	 * 获取作品目录
 	 */
-	public static function getCatalog($user_id = Null, $book_id)
+	public static function getCatalog($book_id, $user_id = Null)
 	{
 		$catalog = array();
-		$cached_chapter = new CachedChapter($this->$book_id);
+		$cached_chapter = new CachedChapter($book_id);
 		$vip = new UserVipBuy($user_id, $book_id, $cached_chapter);
 		$volume = $cached_chapter->getVolumes();
 

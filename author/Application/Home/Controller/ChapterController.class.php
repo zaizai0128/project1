@@ -16,7 +16,6 @@ class ChapterController extends BaseController {
 	protected $bookInstance = Null;
 	protected $chapterInstance = Null;
 	protected $volumeInstance = Null;
-	protected $bookApi = Null;
 
 	public function init()
 	{
@@ -27,7 +26,6 @@ class ChapterController extends BaseController {
 		$this->bookInstance = D('Book', 'Service');
 		$this->chapterInstance = D('Chapter', 'Service')->getInstance($this->bookId, $this->chapterId);
 		$this->volumeInstance = D('Volume', 'Service');
-		$this->bookApi = new \Zlib\Api\Book($this->bookId);
 	}
 
 	/**
@@ -36,8 +34,7 @@ class ChapterController extends BaseController {
 	public function index()
 	{
 		$book_info = $this->bookInstance->getBookByBookId($this->bookId, 'bk_id,bk_name');
-		$chapter_list = $this->bookApi->getCatalog();
-
+		$chapter_list = \Zlib\Api\Book::getCatalog($this->bookId);
 		$this->assign(array(
 			'chapter_list' => $chapter_list,
 			'book_info' => $book_info,

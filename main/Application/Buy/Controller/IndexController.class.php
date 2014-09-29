@@ -30,7 +30,7 @@ class IndexController extends BuyController {
 	public function chapter()
 	{	
 		// 获取卷章节
-		$volume_list = $this->bookApi->getCatalog();
+		$volume_list = \Zlib\Api\Book::getCatalog($this->bookId);
 
 		$this->assign(array(
 			'chapter_info' => $this->chapterInfo,

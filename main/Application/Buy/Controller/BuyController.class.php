@@ -17,7 +17,6 @@ class BuyController extends Controller {
 	protected $bookInfo = Null;
 	protected $bookInstance = Null;
 	protected $chapterInstance = Null;
-	protected $bookApi = Null;
 
 	public function __construct()
 	{
@@ -28,7 +27,6 @@ class BuyController extends Controller {
 		$this->chapterInfo = $this->chapterInstance->getChapterCommodity();
 		$this->bookInfo = D('Book', 'Service')->getBookByBookId($this->bookId);
 		\Zlib\Api\Acl::buy($this->chapterInfo);
-		$this->bookApi = new \Zlib\Api\Book($this->bookId);
 	}
 
 }

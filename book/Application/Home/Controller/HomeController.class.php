@@ -15,7 +15,6 @@ class HomeController extends Controller {
 	protected $chapterId = Null;
 	protected $bookInfo = Null;
 	protected $bookClassApi = Null;
-	protected $bookApi = Null;
 	protected $bookInstance = Null;
 
 
@@ -28,6 +27,5 @@ class HomeController extends Controller {
 		$this->bookInfo = $this->bookInstance->getBookByBookId($this->bookId);
 		\Zlib\Api\Acl::book($this->bookInfo);
 		$this->bookClassApi = \Zlib\Api\BookClass::getInstance();
-		$this->bookApi = new \Zlib\Api\Book($this->bookId);
 	}
 }
