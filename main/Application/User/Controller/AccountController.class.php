@@ -79,9 +79,13 @@ class AccountController extends UserController {
 	public function doPassword()
 	{
 		if (IS_POST) {
-			$data = I();
+			$data = array_merge(I(), $this->userInfo);
+			$state = $this->userInstance->doEditPwd($data);
 
-			de($data);
+			if ($state['code'] > 0)
+				z_redirect($state['msg'], ZU('user/center/index')); 
+			else
+				z_redirect($state['msg']);
 		}
 	}
 }

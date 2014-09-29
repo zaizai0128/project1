@@ -34,6 +34,25 @@ class UserService extends ZlibUserModel {
 	}
 
 	/**
+	 * 修改个人密码
+	 */
+	public function doEditPwd($data)
+	{
+		if (empty($data) || empty($data['pwd']) || empty($data['npwd']) || empty($data['repwd']))
+			return z_info(-1, '密码不允许为空');
+		if ($data['npwd'] != $data['repwd'])
+			return z_info(-2, '二次密码不同');
+		if (md5($data['pwd']) != $data['user_pwd'])
+			return z_info(-3, '原密码不正确');
+
+		$final_data['user_id'] = $data['user_id'];
+		$final_data['user_pwd'] = md5($data['npwd']);
+
+		$result = parent::doEdit($final_data);
+		return z_info($result, '修改完成');
+	}
+
+	/**
 	 * 修改个人信息
 	 */
 	public function doEditInfo($data)
