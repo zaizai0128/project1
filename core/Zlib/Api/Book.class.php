@@ -18,17 +18,22 @@ class Book {
 	private static $mLockPrefix = "LOCK##";
 	private static $mDirtyPrefix = "DIRTY##";
 
-	public function __construct($book_id, $load_state = false)
+	public function __construct($book_id, $load_state = false, $row = null)
 	{
 		$this->mBookId = $book_id;
 		$mRetry = 3;
 		// self::setDirty(true, $book_id);
-		while ($mRetry -- > 0) {
-			$succ = $this->loadFromCache();
-			if (!$succ) {	
-				$succ = $this->loadFromDatabase();
+		if ($row != null) {
+			$this->setBookInfo($row);
+			if ($this->isDirty($this->mBookId)) $this->setDirty(false, $this->mBookId);
+		} else {
+			while ($mRetry -- > 0) {
+				$succ = $this->loadFromCache();
+				if (!$succ) {	
+					$succ = $this->loadFromDatabase();
+				}
+				if (!$succ) sleep(1); else break;
 			}
-			if (!$succ) sleep(1); else break;
 		}
 		if ($load_state)
 			$this->loadState();
@@ -42,7 +47,7 @@ class Book {
 		$str = S(self::$mKeyName.$this->mBookId);
 		if ($str == null && $str == false) 
 			return false;
-		echo "loadFromCache(): ";
+		// echo "loadFromCache(): ";
 		$this->mBookInfo = json_decode($str, true);
 		return true;
 	}
@@ -53,23 +58,10 @@ class Book {
 			return false;
 		}
 		S(self::$mLockPrefix.self::$mKeyName.$this->mBookId, "1");
-		if ($this->mBookInfo == null)	
-			$this->mBookInfo = array();
-		echo "loadFromDatabase()";
+		// echo "loadFromDatabase()";
 		$m = M('zl_book')->where(' bk_status = \'00\' and bk_id = '.$this->mBookId)->select();
 		foreach ($m as $row) {
-			
-			foreach ($row as $key => $value) {
-				if ($key == 'bk_author_com_html')
-					continue;
-				if ($key == 'bk_intro') {
-//					if (strlen($value > 200)	
-//						$this->mBookInfo[$key] = z_cut_str($value, 100);
-				}
-				$this->mBookInfo[$key] = $value;
-			}
-			
-			S(self::$mKeyName.$this->mBookId, json_encode($this->mBookInfo), 3600 * 6);
+			$this->setBookInfo($row);
 			break;
 		}
 		
@@ -78,6 +70,23 @@ class Book {
 		if ($this->mBookInfo == null)
 			return false;
 		return true;
+	}
+
+	public function setBookInfo($row) {
+		if ($this->mBookInfo == null)	
+			$this->mBookInfo = array();
+	
+		foreach ($row as $key => $value) {
+			if ($key == 'bk_author_com_html')
+				continue;
+			if ($key == 'bk_intro') {
+				//if (strlen($value > 200)	
+				//$this->mBookInfo[$key] = z_cut_str($value, 100);
+			}
+			$this->mBookInfo[$key] = $value;
+		}
+		
+		S(self::$mKeyName.$this->mBookId, json_encode($this->mBookInfo), 3600 * 6);
 	}
 
 	private function loadState() 

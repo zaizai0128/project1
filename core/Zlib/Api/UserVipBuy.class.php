@@ -15,7 +15,8 @@ class UserVipBuy {
 	{	
 		$this->mUserId = $user_id;
 		$this->mBookId = $book_id;
-		$this->mCachedChapter = $cached_chapter;
+		if ($cached_chapter->getBookId() == $this->mBookId)
+			$this->mCachedChapter = $cached_chapter;
 		
 		// 加载数据: 
 		$m = M('zl_user_vipbuy')->where('user_id='.$user_id.' and bk_id='.$book_id)->select();

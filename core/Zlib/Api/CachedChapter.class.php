@@ -206,6 +206,12 @@ class CachedChapter {
 		return $this->mChapter[$chapter_id]['ch_size'];
 	}
 
+	public function getBookId()
+	{
+		return $this->mBookId;
+	}
+
+
 	public function getName($chapter_id) 
 	{
 		return base64_decode($this->mChapter[$chapter_id]["ch_name"]);
