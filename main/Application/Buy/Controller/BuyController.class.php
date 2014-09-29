@@ -27,7 +27,6 @@ class BuyController extends Controller {
 		$this->chapterInfo = $this->chapterInstance->getChapterCommodity();
 		$bookApi = new \Zlib\Api\Book($this->bookId);
 		$this->bookInfo = $bookApi->getInfo();
-		\Zlib\Api\Acl::buy($this->chapterInfo);
 	}
 
 }

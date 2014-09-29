@@ -20,7 +20,7 @@
 				<ul class="nav nav-list">
 					<li class="nav-header">本书vip卷列表</li>
 					<?php foreach($volume_list as $volume_id => $val):?>
-					<li <?php if($chapter_info['ch_roll'] == $volume_id):?>class="active"<?php endif;?>><a href="{$volume_id}">{$val.volume_name}</a></li>
+					<li <?php if($chapter_info['ch_roll'] == $volume_id):?>class="active"<?php endif;?>><a href="{:ZU('buy/index/volume', 'ZL_DOMAIN', array('book_id'=>$book_info['bk_id'],'v_id'=>$volume_id))}">{$val.volume_name}</a></li>
 					<?php endforeach;?>
 				</ul>
 			</div>
@@ -42,7 +42,7 @@
 					<p class="text-success">更新时间：{$chapter_info.ch_update}</p>
 					<p class="text-success">内容预览：{$chapter_info.ch_intro}</p>
 					<p class="text-center">本次将消耗：{$chapter_info.ch_price}
-						<?php if(!empty($user_info)):?>，账户余额：逐浪金币{$user_info.amount}，逐浪银币{$user_info.bonus}<?php endif;?>
+						<?php if(!empty($user_info)):?>，账户余额：逐浪金币{$user_info.amount|default="0"}，逐浪银币{$user_info.bonus|default="0"}<?php endif;?>
 					</p>
 					<p class="text-center text-info"><a href="{:ZU('buy/cost/doCost', 'ZL_DOMAIN', array('book_id'=>$book_info['bk_id'], 'ch_id'=>$chapter_info['ch_id']))}" class="btn">订阅本章</a><a href="" class="btn">订阅全部章节</a></p>
 				</div>

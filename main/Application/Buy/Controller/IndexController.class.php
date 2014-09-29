@@ -29,6 +29,9 @@ class IndexController extends BuyController {
 	 */
 	public function chapter()
 	{	
+		// 验证章节信息
+		\Zlib\Api\Acl::buy($this->chapterInfo);
+
 		// 获取卷章节
 		$volume_list = \Zlib\Api\Book::getCatalog($this->bookId);
 
@@ -46,9 +49,17 @@ class IndexController extends BuyController {
 	 */
 	public function volume()
 	{
+		$volume_id = I('get.v_id');
+		$volume_list = \Zlib\Api\Book::getCatalog($this->bookId);
+		$volume_info = $volume_list[$volume_id];
+		\Zlib\Api\Acl::buyVolume($volume_info);
 
-		echo 'buy volume chapter';
-
+		$this->assign(array(
+			'book_info' => $this->bookInfo,
+			'volume_info' => $volume_info,
+			'volume_list' => $volume_list,
+			'user_info' => $this->userInfo,
+		));
 		$this->display();
 	}
 

@@ -15,8 +15,60 @@
 	<include file="Common@Public/header" />
 		
 	<div class="container">
-		
-
+		<div class="row">
+			<div class="span3">
+				<ul class="nav nav-list">
+					<li class="nav-header">本书vip卷列表</li>
+					<?php foreach($volume_list as $volume_id => $val):?>
+					<li <?php if($volume_info['volume_id'] == $volume_id):?>class="active"<?php endif;?>><a href="{:ZU('buy/index/volume', 'ZL_DOMAIN', array('book_id'=>$book_info['bk_id'],'v_id'=>$volume_id))}">{$val.volume_name}</a></li>
+					<?php endforeach;?>
+				</ul>
+			</div>
+			<div class="span9">
+				<div class="hero-unit">
+						<p class="text-error text-center">卷订阅信息确认</p>
+						<table class="table">
+							<tr>
+								<th>书名</th>
+								<th>作品类型</th>
+								<th>作者</th>
+							</tr>
+							<tr>
+								<td>{$book_info.bk_name}</td>
+								<td>{$book_info.bk_class_id}</td>
+								<td>{$book_info.bk_author}</td>
+							</tr>
+						</table>
+						<p class="text-success">更新章节名称：{$book_info.bk_public_name}</p>
+						<p class="text-success">更新时间：{$book_info.bk_now_date}</p>
+						<p class="text-center">本次将消耗：<em>xxx金币</em>
+							<?php if(!empty($user_info)):?>，账户余额：逐浪金币{$user_info.amount|default="0"}，逐浪银币{$user_info.bonus|default="0"}<?php endif;?>
+						</p>
+						<p class="text-center text-info"><a href="{:ZU('buy/cost/doCost', 'ZL_DOMAIN', array('book_id'=>$book_info['bk_id'], 'ch_id'=>$chapter_info['ch_id']))}" class="btn">订阅选中章节</a><a href="{:ZU('app/shelf/add', 'ZL_DOMAIN', array('book_id'=>$book_info['bk_id']))}" class="btn">加入书架</a></p>
+					</div>
+					<p class="text-danger">订阅信息确认</p>
+					<table class="table">
+						<tr>
+							<th><input type="checkbox" class="chooseAll" checked>全选</th>
+							<th>书名</th>
+							<th>订阅章节名称</th>
+							<th>字数</th>
+							<th>所需逐浪币</th>
+						</tr>
+						<?php foreach($volume_info['volume_chapter'] as $chapter_id => $chapter_info):?>
+							<tr>
+								<td><input type="checkbox" value="{$chapter_info.ch_id}" checked <?php if($chapter_info['chapter_own']):?>disabled<?php endif;?>></td>
+								<td>{$book_info.bk_name}</td>
+								<td>{$chapter_info.chapter_name}</td>
+								<td>{$chapter_info.chapter_size}</td>
+								<td>{$chapter_info.chapter_price}</td>
+							</tr>	
+						<?php endforeach;?>
+					</table>
+					<p class="text-center text-info"><a href="{:ZU('buy/cost/doCost', 'ZL_DOMAIN', array('book_id'=>$book_info['bk_id'], 'ch_id'=>$chapter_info['ch_id']))}" class="btn">订阅选中章节</a><a href="{:ZU('app/shelf/add', 'ZL_DOMAIN', array('book_id'=>$book_info['bk_id']))}" class="btn">加入书架</a></p>
+				</div>
+			</div>
+		</div>
 	</div>
 
 <script src="__JS__/jquery.min.js"></script>

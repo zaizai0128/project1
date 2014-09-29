@@ -440,3 +440,11 @@ function z_referer()
 {
 	return $_SERVER['HTTP_REFERER'];
 }
+
+/**
+ * 获取ip地址
+ */
+function z_ip()
+{
+	return $_SERVER['REMOTE_ADDR'];
+}

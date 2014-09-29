@@ -39,7 +39,8 @@ class UserService extends ZlibUserModel {
 
 		// 更新用户最后登录信息
 		$final_data['user_id'] = $user_info['user_id'];
-		$final_data['last_login'] = z_now();
+		$final_data['user_login_time'] = z_now();
+		$final_data['user_login_ip'] = z_ip();
 		parent::doEdit($final_data);
 
 		return z_info(1, '登录成功');

@@ -96,6 +96,17 @@ class Acl {
 	}
 
 	/**
+	 * 卷购买验证机制
+	 */
+	static public function buyVolume($volume_info)
+	{	
+		if (empty($volume_info))
+			z_redirect('卷不存在');
+
+		
+	}
+
+	/**
 	 * 权限验证机制
 	 */
 	static public function user()
