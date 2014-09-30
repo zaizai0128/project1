@@ -84,9 +84,9 @@
                   喜欢的小说类型：
                 </span>
                 <div class="frm_val JQ_Frm" style="display:block">
-                        <?php if(!empty($user_info['like_tag'])):?>
+                        <?php if(!empty($user_info['user_like_tag'])):?>
                         <div class="tag_del JQ_Del tag_container" style="display:block;">
-                          <?php foreach($user_info['like_tag'] as $k=>$v):?>
+                          <?php foreach($user_info['user_like_tag'] as $k=>$v):?>
                           <span class="tag JQ_Tag tag_del_button" onclick="$.delLikeTag(this)" style="cursor:pointer;">
                             <i class="ico_tag01"></i>
                             <span class="span_l"><span  class="tag_nam">{$v}</span>

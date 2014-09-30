@@ -29,7 +29,7 @@ class UserService extends ZlibUserModel {
 	public function getUserInfo($user_id)
 	{
 		$user_info = $this->getUserFullInfoByUserId($user_id);
-		$user_info['user_like_tag'] = unserialize($user_info['like_tag']);
+		$user_info['user_like_tag'] = unserialize($user_info['user_like_tag']);
 		$account = $this->accountInstance->getAccountByUserId($user_id);
 		return array_merge($user_info, (array)$account);
 	}

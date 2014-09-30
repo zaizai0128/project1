@@ -14,7 +14,7 @@
           <li><a href="{:ZU('/index/index', 'ZL_ADMIN_DOMAIN')}">后台站</a></li>
         </ul>
 
-	<?php if(!session('user')):?>		
+	<?php if(!ZS('SESSION.user','?')):?>		
         <form class="navbar-form pull-right" action="{:ZU('login/doLogin')}" method="post">
           <!-- <input class="span2" type="text" name="username" placeholder="用户名">
           <input class="span2" type="password" name="password" placeholder="密码">
@@ -24,7 +24,11 @@
         </form>
       <?php else:?>
       <p class="navbar-text pull-right">
-      	欢迎, {:session('user.user_name')} | 
+        <?php 
+          $s_username = ZS('SESSION.user','user_nickname');
+          $s_username = empty($s_username) ? ZS('SESSION.user','user_name') : $s_username ;
+        ?>
+      	欢迎, {$s_username} | 
 		<a href="{:ZU('user/center/index')}" class="navbar-link">个人中心</a> | 
 		<a href="{:ZU('login/logout')}" class="navbar-link">退出</a>
       </p>
