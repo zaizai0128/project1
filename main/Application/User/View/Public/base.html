@@ -28,7 +28,7 @@
                        <a href="javascript:;"><img src="{:z_img('user/images/tou_img')}"/></a>
                     </p>
                     <h3 class="tit">
-                    	<a href="#" class="nam_usr">{$user_info.user_name}</a>
+                    	<a href="{:ZU('user/center/index')}" class="nam_usr">{$user_info.user_nickname|default=$user_info['user_name']}</a>
                       <a href="#" class="ico_edit"></a>
                     </h3>
                 </div>

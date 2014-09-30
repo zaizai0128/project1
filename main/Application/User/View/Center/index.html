@@ -57,7 +57,7 @@
                   <span class="set_tit">上次登录：</span>  
                   <div class="set_val">
                      <span class="val">
-                       {$user_info.last_login}
+                       {:ZS('SESSION.user', 'user_login_time')}
                      </span>
                   </div>
                </li>
