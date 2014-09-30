@@ -208,6 +208,8 @@ class Book {
 				if ($tmp['chapter_vip']) {
 					$tmp['chapter_own'] = $vip->isBuyByOrder($cached_chapter->getChapterOrder($chapter_id));
 				}
+
+				$tmp['chapter_order'] = $cached_chapter->getChapterOrder($chapter_id);
 				$chapter_name = $tmp;
 			}
 			$catalog[$volume_id]['volume_chapter'] = $vol;

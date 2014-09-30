@@ -41,15 +41,15 @@
 						</table>
 						<p class="text-success">更新章节名称：{$book_info.bk_public_name}</p>
 						<p class="text-success">更新时间：{$book_info.bk_now_date}</p>
-						<p class="text-center">本次将消耗：<em>xxx金币</em>
+						<p class="text-center">本次将消耗：<em class="choose-need-money">0</em>金币
 							<?php if(!empty($user_info)):?>，账户余额：逐浪金币{$user_info.amount|default="0"}，逐浪银币{$user_info.bonus|default="0"}<?php endif;?>
 						</p>
-						<p class="text-center text-info"><a href="{:ZU('buy/cost/doCost', 'ZL_DOMAIN', array('book_id'=>$book_info['bk_id'], 'ch_id'=>$chapter_info['ch_id']))}" class="btn">订阅选中章节</a><a href="{:ZU('app/shelf/add', 'ZL_DOMAIN', array('book_id'=>$book_info['bk_id']))}" class="btn">加入书架</a></p>
+						<p class="text-center text-info"><a href="javascript:;" class="btn" onclick="$.buyChapter('{:ZU('buy/cost/doCostVolume', 'ZL_DOMAIN', array('book_id'=>$book_info['bk_id'], 'v_id'=>$volume_info['volume_id']))}', '{:ZU('index/index', 'ZL_BOOK_DOMAIN', array('book_id'=>$book_info['bk_id']))}');">订阅选中章节</a><a href="{:ZU('app/shelf/add', 'ZL_DOMAIN', array('book_id'=>$book_info['bk_id']))}" class="btn">加入书架</a></p>
 					</div>
 					<p class="text-danger">订阅信息确认</p>
 					<table class="table">
 						<tr>
-							<th><input type="checkbox" class="chooseAll" checked>全选</th>
+							<th><input type="checkbox" class="choose-all" checked="checked">全选</th>
 							<th>书名</th>
 							<th>订阅章节名称</th>
 							<th>字数</th>
@@ -57,11 +57,11 @@
 						</tr>
 						<?php foreach($volume_info['volume_chapter'] as $chapter_id => $chapter_info):?>
 							<tr>
-								<td><input type="checkbox" value="{$chapter_info.ch_id}" checked <?php if($chapter_info['chapter_own']):?>disabled<?php endif;?>></td>
+								<td><input class="choose-item" type="checkbox" value="{$chapter_id}" checked="checked" <?php if($chapter_info['chapter_own']):?>disabled="disabled"<?php endif;?>></td>
 								<td>{$book_info.bk_name}</td>
 								<td>{$chapter_info.chapter_name}</td>
 								<td>{$chapter_info.chapter_size}</td>
-								<td>{$chapter_info.chapter_price}</td>
+								<td class="choose-item-price">{$chapter_info.chapter_price}</td>
 							</tr>	
 						<?php endforeach;?>
 					</table>
@@ -74,10 +74,13 @@
 <script src="__JS__/jquery.min.js"></script>
 <script src="__JS__/bootstrap.min.js"></script>
 <script src="__JS__/zlang.js"></script>
+<script src="{:z_js('zl.buy')}"></script>
 <script type="text/javascript">
 	jQuery(function(){
 
-		$.debug("购买卷章节页面");
+		$.getTotalMoney();
+		$.chooseBuy();
+
 	});
 </script>
 </body>

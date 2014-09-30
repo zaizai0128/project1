@@ -87,7 +87,7 @@ class UserVipBuy {
 		return $this->saveToDb();
 	}
 
-	public function setBuyByOrder2($ch_order_from, $ch_order_to ) 
+	public function setBuyByOrderMulti($ch_order_from, $ch_order_to ) 
 	{	
 		if ($ch_order_from >  $ch_order_to) {
 			$ch_order =  $ch_order_to;
@@ -116,6 +116,7 @@ class UserVipBuy {
 		$this->mVipMaxOrder = ($this->mVipMaxOrder > $ch_order_to)? $this->mVipMaxOrder : $ch_order_to;
 		// set memcache:
 		// saveToDb();
+		return $this->saveToDb();
 	}
 	
 	public function saveToDb() 

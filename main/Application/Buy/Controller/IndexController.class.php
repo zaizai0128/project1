@@ -49,9 +49,8 @@ class IndexController extends BuyController {
 	 */
 	public function volume()
 	{
-		$volume_id = I('get.v_id');
-		$volume_list = \Zlib\Api\Book::getCatalog($this->bookId);
-		$volume_info = $volume_list[$volume_id];
+		$volume_list = \Zlib\Api\Book::getCatalog($this->bookId, $this->userInfo['user_id']);
+		$volume_info = $volume_list[$this->volumeId];
 		\Zlib\Api\Acl::buyVolume($volume_info);
 
 		$this->assign(array(

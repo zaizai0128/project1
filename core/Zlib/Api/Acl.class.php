@@ -40,10 +40,18 @@ class Acl {
 	 *
 	 * @return 消费的类型
 	 */
-	static public function cost($user_info, $chapter_info)
+	static public function cost($user_info, $book_info, $chapter_info)
 	{
 		if (empty($user_info))
 			z_redirect('未登录', ZU('login/index', 'ZL_DOMAIN', array('setback'=>z_referer())));
+		if (empty($book_info))
+			z_redirect('作品不存在');
+		if ($book_info['bk_status'] == '01')
+			z_redirect('该作品已被关闭');
+		if ($book_info['bk_status'] == '02' || $book_info['bk_status'] == '03')
+			z_redirect('该作品未经管理员审核');
+		if (empty($chapter_info))
+			z_redirect('章节不存在');
 
 		$now = date('Y-m-d', time());
 
@@ -65,6 +73,60 @@ class Acl {
 		// 消耗金币
 		} else {
 			if ($user_info['amount'] >= $chapter_info['ch_price']) {
+				$cost_type = 1;
+			} else {
+				z_redirect('对不起，您的余额不足，请先充值');
+			}
+		}
+
+		return $cost_type;
+	}
+
+	/**
+	 * 购买卷（批量购买）
+	 * @param Array 用户信息
+	 * @param Array 卷信息
+	 * @param String 购买的章节id字符串
+	 */
+	static public function costVolume($user_info, $book_info, $volume_info, $buy_ids)
+	{
+		if (empty($user_info))
+			z_redirect('未登录', ZU('login/index', 'ZL_DOMAIN', array('setback'=>z_referer())));
+		if (empty($book_info))
+			z_redirect('作品不存在');
+		if ($book_info['bk_status'] == '01')
+			z_redirect('该作品已被关闭');
+		if ($book_info['bk_status'] == '02' || $book_info['bk_status'] == '03')
+			z_redirect('该作品未经管理员审核');
+		if (empty($volume_info))
+			z_redirect('卷信息不存在');
+		if (empty($buy_ids))
+			z_redirect('购买章节不存在');
+
+		$now = date('Y-m-d', time());
+		$ids = explode(',', $buy_ids);
+		$total_price = 0;
+
+		foreach ($ids as $chapter_id) {
+
+			// 如果该章节不存在，则返回错误
+			if (!isset($volume_info['volume_chapter'][$chapter_id]) || empty($volume_info['volume_chapter'][$chapter_id]))
+				z_redirect('章节不存在');
+
+			$total_price += (int)$volume_info['volume_chapter'][$chapter_id]['chapter_price'];
+		}
+
+		$cost_type = Null;
+
+		// 银币在时限之内，并且大于章节的钱，则消耗银币
+		if ($user_info['bonus'] >= $total_price 
+			&& $now <= $user_info['bonus_expire']) {
+
+			$cost_type = 2;	// 设置消耗类型为银币
+			
+		// 消耗金币
+		} else {
+			if ($user_info['amount'] >= $total_price) {
 				$cost_type = 1;
 			} else {
 				z_redirect('对不起，您的余额不足，请先充值');
@@ -103,7 +165,7 @@ class Acl {
 		if (empty($volume_info))
 			z_redirect('卷不存在');
 
-		
+
 	}
 
 	/**

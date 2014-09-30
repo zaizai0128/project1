@@ -13,9 +13,11 @@ class BuyController extends Controller {
 
 	protected $bookId = Null;
 	protected $chapterId = Null;
+	protected $volumeId = Null;
 	protected $chapterInfo = Null;
 	protected $bookInfo = Null;
 	protected $bookInstance = Null;
+	protected $bookApi = Null;
 	protected $chapterInstance = Null;
 
 	public function __construct()
@@ -23,10 +25,11 @@ class BuyController extends Controller {
 		parent::__construct();
 		$this->bookId = I('get.book_id');
 		$this->chapterId = I('get.ch_id');
+		$this->volumeId = I('get.v_id');
 		$this->chapterInstance = D('Chapter', 'Service')->getInstance($this->bookId,$this->chapterId);
 		$this->chapterInfo = $this->chapterInstance->getChapterCommodity();
-		$bookApi = new \Zlib\Api\Book($this->bookId);
-		$this->bookInfo = $bookApi->getInfo();
+		$this->bookApi = new \Zlib\Api\Book($this->bookId);
+		$this->bookInfo = $this->bookApi->getInfo();
 	}
 
 }
