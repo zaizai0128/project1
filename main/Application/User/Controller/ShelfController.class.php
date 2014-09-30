@@ -74,6 +74,25 @@ class ShelfController extends UserController {
 	public function manager()
 	{
 
+		$shelf_list = $this->bookShelfApi->getShelfList();
+		
+		$this->assign(array(
+			'shelf_list' => $shelf_list,
+		));
 		$this->display();
+	}
+
+	/**
+	 * 创建书架
+	 */
+	public function add()
+	{
+		$id = $this->bookShelfInstance->doAdd();
+
+		if ($id > 0) {
+			z_redirect('创建成功', ZU('user/shelf/manager'));
+		} else {
+			z_redirect('创建失败');
+		}
 	}
 }

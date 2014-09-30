@@ -14,11 +14,12 @@ class BookShelf {
 	
 	private $mUserId = null;
 	public $mBookShelf = null;
-	private $mMaxShelf = 3;	// 最大书架分类
+	private $mMaxShelf = null;	// 最大书架分类
 
 	public function __construct($user_id)
 	{	
-		$this->mUserId = $user_id;		
+		$this->mUserId = $user_id;
+		$this->mMaxShelf = C('SHELF.shelf_max');
 		$this->loadFromDatabase();
 	}
 
@@ -52,6 +53,19 @@ class BookShelf {
 	private function getShelfInfo($shelf_id) 
 	{
 		return $this->mBookShelf[$shelf_id];
+	}
+
+	/**
+	 * 获取书架列表
+	 */
+	public function getShelfList()
+	{
+		$result = array();
+
+		foreach($this->mBookShelf as $key => $val) {
+			$result[$val['bookshelf_id']] = $val['bookshelf_name'];
+		}
+		return $result;
 	}
 
 	public function getBooks($shelf_id) 

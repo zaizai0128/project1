@@ -28,6 +28,34 @@ class ZlibBookShelfModel extends BaseModel {
 	}
 
 	/**
+	 * 创建书架
+	 */
+	public function doAdd()
+	{
+		$max_id = $this->getMaxId();
+		++$max_id;
+		// 超过最大限制，则返回false
+		if ($max_id >= C('SHELF.shelf_max'))
+			return false;
+
+		$data['user_id'] = $this->userId;
+		$data['bookshelf_id'] = $max_id;
+		++$max_id;
+		$data['bookshelf_name'] = '书架'.$max_id;
+		$data['books'] = '';
+		return $this->shelfInstance->data($data)->add();
+	}
+
+	/**
+	 * 获取最大书架号
+	 */
+	public function getMaxId()
+	{
+		$condition = 'user_id = '.$this->userId;
+		return $this->shelfInstance->where($condition)->max('bookshelf_id');
+	}
+
+	/**
 	 * 获取书架总数
 	 * @param int 书架id
 	 * @return int 
