@@ -95,4 +95,24 @@ class ShelfController extends UserController {
 			z_redirect('创建失败');
 		}
 	}
+
+	/**
+	 * 修改书架名称
+	 */
+	public function edit()
+	{
+		if (!IS_AJAX) {
+			return false;
+		}
+
+		$data['bookshelf_name'] = I('post.name');
+		$data['bookshelf_id'] = $this->shelfId;
+		$data['user_id'] = $this->userId;
+		$state = $this->bookShelfInstance->doEdit($data);
+
+		if ($state>0)
+			$this->ajaxReturn(z_info(1, '修改成功'));
+		else
+			$this->ajaxReturn(z_info(0, '修改失败'));
+	}
 }

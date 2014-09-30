@@ -27,8 +27,8 @@
                 <?php foreach($shelf_list as $key=>$val):?>
                 <tr>
                     <td>{$key}</td>
-                    <td>{$val}</td>
-                    <td><a href="###">修改书架名称</a></td>
+                    <td><input type="text" class="shelf_name" value="{$val}" /></td>
+                    <td><a onclick="$.setShelfName('{:ZU('user/shelf/edit', 'ZL_DOMAIN', array('shelf_id'=>$key))}',this);" href="javascript:;">修改书架名称</a></td>
                 </tr>
                 <?php endforeach;?>
             </table>

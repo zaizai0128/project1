@@ -47,6 +47,15 @@ class ZlibBookShelfModel extends BaseModel {
 	}
 
 	/**
+	 * 修改书架
+	 */
+	public function doEdit($data)
+	{	
+		$condition = 'user_id = '.$data['user_id'].' and bookshelf_id = '.$data['bookshelf_id'];
+		return $this->shelfInstance->where($condition)->data($data)->save();
+	}
+
+	/**
 	 * 获取最大书架号
 	 */
 	public function getMaxId()

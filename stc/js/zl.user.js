@@ -9,6 +9,29 @@ jQuery(function(){
 	$.extend({
 
 		/*
+			修改书架名称
+		*/
+		setShelfName : function(ajax_url, obj)
+		{
+			var obj = $(obj);
+			var shelf_name = obj.parents('tr').find('.shelf_name').val();
+
+			$.ajax({
+				url : ajax_url,
+				type : 'post',
+				data : 'name='+shelf_name,
+				success : function(response)
+				{
+					if (response.code > 0) {
+						alert('修改成功');
+					} else {
+						alert('修改失败');
+					}
+				}
+			})
+
+		},
+		/*
 			获取可能感兴趣的小说类型
 			@param String ajax地址
 		 */
