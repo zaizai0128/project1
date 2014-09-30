@@ -14,6 +14,7 @@ class BookShelf {
 	
 	private $mUserId = null;
 	public $mBookShelf = null;
+	private $mMaxShelf = 3;	// 最大书架分类
 
 	public function __construct($user_id)
 	{	
@@ -53,12 +54,13 @@ class BookShelf {
 		return $this->mBookShelf[$shelf_id];
 	}
 
-	private function getBooks($shelf_id) 
+	public function getBooks($shelf_id) 
 	{
 		$arr = array();
 		$size = count($this->mBookShelf[$shelf_id]['books']);
 		for ($i = 0; $i < $size; $i++) {
-			$book = new Book($this->mBookShelf[$shelf_id]['bookshelf_id']);
+			$book = new Book($this->mBookShelf[$shelf_id]['books'][$i]);
+			$arr[$i] = $book->getInfo();
 		}
 		return $arr;
 	}

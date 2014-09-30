@@ -190,6 +190,26 @@ class BookClass {
 	}
 
 	/**
+	 * 获取全部非顶级分类
+	 */
+	public function getClass()
+	{
+		$result = array();
+
+		foreach($this->mBookClasses as $key=>$child_id) {
+
+			if ($child_id['class_is_leaf'] == 0)
+				continue;
+			
+			$result[$key]['class_id'] = $child_id['class_id'];
+			$result[$key]['class_name'] = $child_id['class_name'];
+			$result[$key]['short_name'] = $child_id['class_short_name'];
+		}	
+
+		return $result;
+	}
+
+	/**
 	 * 获取全部分类，返回json形式
 	 */
 	public function getAllClassForJson()
