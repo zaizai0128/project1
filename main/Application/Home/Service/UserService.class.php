@@ -68,7 +68,8 @@ class UserService extends ZlibUserModel {
 		$final_data['user_state'] = 0;
 		$final_data['user_type'] = '00';
 		$final_data['user_join'] = z_now();
-		$final_data['last_login'] = z_now();
+		$final_data['user_login_time'] = z_now();
+		$final_data['user_login_ip'] = z_ip();
 
 		$user_id = parent::doAdd($final_data);
 

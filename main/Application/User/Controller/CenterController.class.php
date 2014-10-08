@@ -17,34 +17,32 @@ class CenterController extends UserController {
 	{
 		$this->display();
 	}
-	
+
+	/**
+	 * 判断是显示申请作者，还是跳到作者专区
+	 */
+	public function area()
+	{
+		// 如果是作者，则直接跳到作者专区
+		if (in_array($this->userInfo['user_type'], array('02', '03'))) {
+			z_redirect('登录成功', ZU('index/index', 'ZL_AUTHOR_DOMAIN'));
+			return;
+		}
+
+		// 获取个人申请信息
+		$appy_info = $this->userInstance->getApplyInfoByUserId($this->userId);
+
+		$this->assign(array(
+			'apply_info' => $appy_info,
+		));
+		$this->display();
+	}
+
 	/**
 	 * 申请成为作者
 	 */
 	public function apply()
 	{	
-		// 判断是否需要补充个人真实信息
-		$state = D('UserAuthor', 'Service')->checkUserAuthorInfo($this->userId);
-
-		// 跳到补充个人真实信息页
-		if ($state['code'] <=0)
-			z_redirect($state['msg'], ZU('user/center/trueInfo'));
-
-		// 获取个人申请信息
-		$info = $this->userInstance->getApplyInfoByUserId($this->userId);
-
-		// 判断显示申请界面还是进度界面
-		$assign['is_show'] = True;
-		// 如果没有个人信息，则读取个人全部信息，并显示申请界面
-		if (empty($info))
-			$info = $this->userInstance->getUserFullInfoByUserId($this->userId);
-		else
-			$assign['is_show'] = False;
-
-		$this->assign(array(
-			'assign' => $assign,
-			'full_info' => $info,
-		));
 		$this->display();
 	}
 
@@ -60,7 +58,7 @@ class CenterController extends UserController {
 			if ($state['code'] <=0 ) {
 				z_redirect($state['msg']);
 			}
-			z_redirect($state['msg'], ZU('user/center/index'));
+			z_redirect($state['msg'], ZU('user/center/area'));
 		}
 	}
 }

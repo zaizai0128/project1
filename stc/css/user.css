@@ -29,8 +29,8 @@
 
 .way_tab{ overflow:hidden;*zoom:1; margin-bottom:20px;}
 .way_tab li{ float:left; margin-right:30px; font-size:14px; overflow:hidden;*zoom:1; cursor:pointer}
-.way_tab li i{ background:url(../images/radio.jpg) 0 -19px no-repeat;width:17px; height:17px; float:left; margin:3px 10px 0 0}
-.way_tab li.on i{ background:url(../images/radio.jpg) 0 0 no-repeat; }
+.way_tab li i{ background:url(../images/user/radio.jpg) 0 -19px no-repeat;width:17px; height:17px; float:left; margin:3px 10px 0 0}
+.way_tab li.on i{ background:url(../images/user/radio.jpg) 0 0 no-repeat; }
 .way_tab li .tit{float:left}
 
 .login_frm .frm_lst .frm_resed .frm_inp {overflow:hidden;*zoom:1; border:1px solid #cccccc}
@@ -44,7 +44,7 @@
 .info_suc .tit{ overflow:hidden;*zoom:1;  padding-left:232px;}
 .info_suc .suc_tit{ font-size:16px; font-weight:bold; float:left; padding:8px 0 0 10px}
 .info_suc .suc_tit em{ color:#ff0000}
-.info_suc .ico_tip{ background:url(../images/suc_ico.jpg) no-repeat; width:43px; height:43px; float:left}
+.info_suc .ico_tip{ background:url(../images/user/suc_ico.jpg) no-repeat; width:43px; height:43px; float:left}
 .info_suc .txt{ width:736px; margin:25px 0 40px 0}
 .info_suc .txt p{font:14px/30px '宋体';}
 .info_suc .btn{ padding-left:200px; margin-bottom:40px}
@@ -60,7 +60,7 @@
 .frm_sex .sex_lst li{width:76px; height:36px; background:#0894ec; color:#FFF; text-align:center; line-height:36px; font-size:14px; float:left; margin-right:10px}
 .frm_sex .sex_lst li a{ color:#ffffff; display:block}
 .frm_sex .sex_lst li a:hover{ text-decoration:none}
-.frm_sex .sex_lst li.on{ background:url(../images/sex_bg1.jpg) no-repeat; width:76px; height:36px; color:#333333}
+.frm_sex .sex_lst li.on{ background:url(../images/user/sex_bg1.jpg) no-repeat; width:76px; height:36px; color:#333333}
 .frm_sex .sex_lst li.on a{ color:#333333}
 .frm_xingq .frm_info{width:594px}
 .frm_xingq .tag_del,.frm_xingq .tag_add{ font-size:12px}
@@ -68,9 +68,9 @@
 .tag{ overflow:hidden;*zoom:1;height:22px; float:left;margin:5px 8px}
 .tag .span_l{border-top:1px solid #cccccc;border-bottom:1px solid #cccccc;border-right:1px solid #cccccc; overflow:hidden;*zoom:1; float:left;}
 .tag .tag_nam{ float:left; padding:1px 5px}
-.tag .ico_tag01{ background:url(../images/ico_bg01.jpg) 0 1px no-repeat; float:left; width:6px; height:22px}
-.tag .ico_tag02{ background:url(../images/ico_bg01.jpg) 0 -22px no-repeat; float:left; width:7px; height:7px; margin:6px 10px 0 5px}
-.tag .ico_tag03{ background:url(../images/ico_bg01.jpg) 0 -37px no-repeat; width:8px; height:8px; float:left; margin:6px 0 0 5px}
+.tag .ico_tag01{ background:url(../images/user/ico_bg01.jpg) 0 1px no-repeat; float:left; width:6px; height:22px}
+.tag .ico_tag02{ background:url(../images/user/ico_bg01.jpg) 0 -22px no-repeat; float:left; width:7px; height:7px; margin:6px 10px 0 5px}
+.tag .ico_tag03{ background:url(../images/user/ico_bg01.jpg) 0 -37px no-repeat; width:8px; height:8px; float:left; margin:6px 0 0 5px}
 .tag_add{ overflow:hidden;*zoom:1}
 .tag_add dl dt{ width:594px; margin:20px 0 15px 0}
 .tag_add dl dd{ margin-left:-5px}
@@ -80,24 +80,8 @@
 /*Tab*/
 .JQ_Box,.JQ_Frm{display:none}
 /*User-center*/
-/*User_detail*/
-.user_detail{background:#ffffff;height:auto; border:1px solid #cccccc; overflow:hidden;*zoom:1}
-.user_side{ width:198px;float:left; padding-top:20px;}
-.side_top{border-bottom:1px solid #cccccc; margin:0 20px}
-.side_top .pic img{width:156px; height:156px}
-.side_top .tit{ padding:17px 0 23px 0; text-align:center}
-.side_top .tit a{color:#333333; font-size:14px}
-.side_top .tit .ico_edit{ background: url(../images/usr_ico.jpg) 0 -143px no-repeat;width:14px; height:14px; display:inline-block; margin-left:10px; vertical-align:-1px}
-.side_info{ margin:30px 0 0 20px; position:relative}
-.info_value .ico_val{ background:url(../images/usr_ico.jpg) 0 0 no-repeat; width:42px; height:16px; position:absolute;right:20px;top:0}
-.info_value .bar{display:block; width:157px; height:15px; background:#dddddd; line-height:0; margin:20px 0 6px}
-.info_value .bar i{background:url(../images/bar_bg.jpg) 0 0 repeat-x; display:block;height:14px; border-top:1px solid #0484d5}
-.info_value .val_up{color:#0894ec}
-.info_tim{ display:block; margin-top:20px}
-.info_tim em{ color:#666666; display:block; margin-top:5px}
 
 /*User_cnt*/
-.user_cnt{ float:left;width:738px; padding:30px 20px 0 20px; border-left:1px solid #cccccc; min-height:562px }
 .my_info{ overflow:hidden;*zoom:1;}
 .my_info .form_lst{ margin-top:30px}
 .my_info .form_lst a{ color:#0894ec}
@@ -106,24 +90,23 @@
 .info_person .form_lst .val{ width:236px; float:left; color:#666666}
 .info_set{float:right;width:180px;overflow:hidden;*zoom:1}
 .info_set .tit_h4{ font:14px/30px '宋体'; float:right; height:50px}
-.info_set .ico_acc{ background:url(../images/usr_ico.jpg) 0 -27px no-repeat; width:12px; height:12px; display:inline-block; margin-right:5px}
+.info_set .ico_acc{ background:url(../images/user/usr_ico.jpg) 0 -27px no-repeat; width:12px; height:12px; display:inline-block; margin-right:5px}
 .info_set .set_lst{ overflow:hidden;*zoom:1;width:180px; margin-top:30px}
 .info_set .set_lst li{overflow:hidden;*zoom:1; padding-bottom:20px; float:right}
 .info_set .set_tit{float:left; width:60px;}
 .info_set .set_val{float:left; color:#666666}
 .set_val i{ display:inline-block; vertical-align:-2px}
-.set_val .ico_no_01{ background:url(../images/usr_ico.jpg) 0 -50px no-repeat;width:20px;height:12px;}
-.set_val .ico_yes_01{ background:url(../images/usr_ico.jpg) 0 -71px no-repeat;width:20px;height:12px;}
-.set_val .ico_yes_02{ background:url(../images/usr_ico.jpg) 0 -118px no-repeat;width:9px;height:13px;  margin-left:20px}
-.set_val .ico_no_02{ background:url(../images/usr_ico.jpg) 0 -94px no-repeat;width:9px;height:13px; margin-left:20px}
+.set_val .ico_no_01{ background:url(../images/user/usr_ico.jpg) 0 -50px no-repeat;width:20px;height:12px;}
+.set_val .ico_yes_01{ background:url(../images/user/usr_ico.jpg) 0 -71px no-repeat;width:20px;height:12px;}
+.set_val .ico_yes_02{ background:url(../images/user/usr_ico.jpg) 0 -118px no-repeat;width:9px;height:13px;  margin-left:20px}
+.set_val .ico_no_02{ background:url(../images/user/usr_ico.jpg) 0 -94px no-repeat;width:9px;height:13px; margin-left:20px}
 .u_my_info .info_val{ overflow:hidden;*zoom:1;border-bottom:1px solid #dddddd; padding-bottom:30px}
 .u_my_info .info_val .bar{ background:#dddddd; width:668px;height:15px;float:left;margin:5px 0; }
 .u_my_info .info_val .tit{ float:left; width:70px; font-size:14px; float:left}
-.u_my_info .info_val i{ background:url(../images/bar_bg.jpg) repeat-x; height:14px; display:inline-block}
+.u_my_info .info_val i{ background:url(../images/user/bar_bg.jpg) repeat-x; height:14px; display:inline-block}
 .u_my_info .info_val .val_up{ color:#0894EC; margin-left:65px}
 
 /*U_my_book*/
-.u_my_book{}
 .u_my_book .hd_h3{ overflow:hidden;*zoom:1; margin:30px 0}
 .u_my_book .hd_h3 .tit{ float:left; font-size:14px;}
 .u_my_book .hd_h3 .chag_ctl{ float:right; width:40px}
@@ -140,26 +123,6 @@
 .u_book_search dl dd .serch_btn{ position:absolute; right:0;top:0;width:88px; height:37px; background:#0894ec; font-size:14px; color:#ffffff; line-height:37px; text-align:center}
 
 /*U_my_bshelf*/
-.hd_usr{ border-bottom:1px solid #dddddd; overflow:hidden;*zoom:1; margin-bottom:40px}
-.hd_usr .hd_nav{ overflow:hidden;*zoom:1; float:left}
-.hd_usr .hd_nav li{ float:left; width:178px; text-align:center;}
-.hd_usr .hd_nav li a{ font-size:14px; color:#333333; padding-bottom:13px}
-.hd_usr .hd_nav li.on a{ font-weight:bold; display:block; border-bottom:3px solid #0894ec;}
-.hd_usr .hd_nav li a:hover{ text-decoration:none} 
-.hd_usr .hd .num{ float:right}
-.u_shelf_lst .shel_filt,.u_acc_lst .shel_filt{ overflow:hidden;*zoom:1; margin-bottom:10px}
-.shel_filt .filt_l{ float:left; font-size:14px}
-.shel_filt .filt_r{ float:right}
-.filt_r .filt_new a{width:75px; height:25px; background:#0894ec; display:inline-block; color:#FFF; line-height:25px; text-align:center; text-decoration:none}
-.filt_r .r_sear{ border:1px solid #cccccc; width:190px;position:relative}
-.filt_r .r_sear input{ border:none;padding:4px; color:#999999}
-.filt_r .r_sear .sear_btn{ position:absolute;right:0;top:0; width:47px; height:25px; background:#0894ec; color:#FFF; text-align:center; line-height:25px; font-size:14px;}
-.filt_r .r_sel select{ height:26px}
-
-.u_td table{width:100%}
-.u_td th{ padding:10px 20px; background:#eaeaea; border-bottom:1px solid #cccccc;border-top:1px solid #cccccc; font-size:14px; text-align:left}
-.u_td td{ border-bottom:1px solid #cccccc; padding:15px 20px; color:#666666}
-.u_td td .ctr_add{ color:#0894ec}
 
 .shelf_ctr{ overflow:hidden;*zoom:1; margin-top:10px}
 .shelf_ctr .shelf_num{ font-size:12px; color:#999999}
@@ -168,11 +131,7 @@
 .shelf_ctr .ctr_l .ctr_lst{ float:left}
 .ctr_l label input{ vertical-align:-3px; margin-right:10px}
 .ctr_l .ctr_lst a{ padding:5px 10px; display:inline-block; background:#0894ec; color:#ffffff; margin-left:10px}
-.shelf_ctr .ctr_r{ float:right;}
-.ctr_r .pg_lst a,.ctr_r .pg_lst .pg_pre,.ctr_r .pg_nxt{ display:inline-block; height:19px; line-height:19px; padding:0 5px; color:#666666} 
-.ctr_r .pg_oth{ vertical-align:3px}
-.ctr_r .pg_lst a.on{ background:#0894ec; color:#ffffff}
-.ctr_r .pg_lst .pg_end{ background:#f2f2f2;}
+
 
 /*U_fince_lst*/
 .u_fince_lst{ width:100%; margin:0 auto;}

@@ -6,11 +6,10 @@
  * @date 	2014-09-10
  * @version 1.0
  */
-namespace Common\Controller;
+namespace Home\Controller;
 use Think\Controller;
-use Zlib\Api as Zapi;
 
-class BaseController extends Controller {
+class HomeController extends Controller {
 
 	protected $authorInfo = Null; 		// 作者信息
 	protected $authorInstance = Null;	// 作者对象

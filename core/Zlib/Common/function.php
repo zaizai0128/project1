@@ -401,7 +401,7 @@ function z_strlen($str, $charset=Null)
  */
 function z_css($path)
 {
-	$path = '/'.$path.'.css';
+	$path = '/css/'.$path.'.css';
 	return C('ZL_STYLE_DOMAIN') . $path;
 }
 
@@ -428,7 +428,7 @@ function z_js($path = Null)
 function z_img($path, $fix = 'jpg')
 {
 	$domain = C('ZL_STYLE_DOMAIN');
-	$path = $domain . '/' . $path . '.' . $fix;
+	$path = $domain . '/images/' . $path . '.' . $fix;
 	return $path;
 }
 

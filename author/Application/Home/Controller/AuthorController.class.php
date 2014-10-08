@@ -7,9 +7,8 @@
  * @version 1.0
  */
 namespace Home\Controller;
-use Common\Controller\BaseController;
 
-class AuthorController extends BaseController {
+class AuthorController extends HomeController {
 
 	/**
 	 * 作者个人信息

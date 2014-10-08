@@ -7,10 +7,8 @@
  * @version 1.0
  */
 namespace Home\Controller;
-use Common\Controller\BaseController;
-use Zlib\Api as Zapi;
 
-class IndexController extends BaseController {
+class IndexController extends HomeController {
 
 	/**
 	 * 作者站首页

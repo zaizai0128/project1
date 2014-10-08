@@ -17,7 +17,6 @@ class BaseController extends Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->adminInfo = ZS('SESSION.admin');
-		\Zlib\Api\Acl::admin($this->adminInfo);
+		\Zlib\Api\Acl::admin();
 	}
 }

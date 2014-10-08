@@ -7,9 +7,8 @@
  * @version 1.0
  */
 namespace Home\Controller;
-use Common\Controller\BaseController;
 
-class VolumeController extends BaseController {
+class VolumeController extends HomeController {
 
 	protected $bookId = Null;
 	protected $bookInstance = Null;

@@ -21,11 +21,10 @@ class Acl {
 
 	/**
 	 * 后台管理员验证操作权限
-	 *
-	 * @param array admin_info
 	 */
-	static public function admin($admin_info)
+	static public function admin()
 	{
+		$admin_info = ZS('SESSION.admin');
 		if (empty($admin_info))
 			z_redirect('未登录');
 
@@ -198,10 +197,10 @@ class Acl {
 		// 用户状态必须为 启用中
 		if (ZS('SESSION.user', 'user_state') != 0)
 			z_redirect('账号被禁用', ZU('user/center/index')); 
-
+		
 		// 判断用户级别 02 03 作者
 		if (!in_array(ZS('SESSION.user', 'user_type'), array('02', '03', '04'))) {
-			z_redirect('非作者', ZU('user/center/index'));
+			z_redirect('非作者', ZU('user/center/area'));
 		}
 
 		// 其他验证 待...

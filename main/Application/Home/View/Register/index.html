@@ -3,16 +3,16 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>会员注册 - 个性化注册</title>
-<link href="{:z_css('login/css/user')}" type="text/css" rel="stylesheet">
-<link href="{:z_css('login/css/base')}" type="text/css" rel="stylesheet">
+<link href="{:z_css('login')}" type="text/css" rel="stylesheet">
+<link href="{:z_css('login_base')}" type="text/css" rel="stylesheet">
 <script src="{:z_js()}"></script>
-<script src="{:z_js('zlang')}"></script>
+<script src="{:z_js('zl.reg')}"></script>
 </head>
 <body>
 <div class="container">
   <div class="wrap">
     <div class="header">
-      <h1 class="logo"><a href="{:C('ZL_WWW')}"><img src="{:z_img('images/logo')}" /></a></h1>
+      <h1 class="logo"><a href="{:C('ZL_WWW')}"><img src="{:z_img('logo')}" /></a></h1>
       <h2 class="top_sub">会员注册</h2>
     </div>
     <div class="main">
@@ -26,7 +26,7 @@
             <ul class="frm_lst JQ_Box JQ_Frmlst" style="display:block">
               <li class="frm">
                 <div class="frm_inp">
-                  	<input type="text" name="username" value="" placeholder="请输入用户名" class="inp i-username"/>	
+                  	<input type="text" name="username" autocomplete="off" value="" placeholder="请输入用户名" class="inp i-username"/>	
                 </div>
                 <div class="frm_tip i-username-error">
                 	<span class="txt"></span>
@@ -56,7 +56,7 @@
               </li>
               <li class="frm">
                 <div class="frm_inp">
-                 <input type="text" name="verify" value="" placeholder="验证码" class="inp i-verify" maxlength="5"/>
+                 <input type="text" name="verify" autocomplete="off" value="" placeholder="验证码" class="inp i-verify" maxlength="5"/>
                 </div>
               </li>
               <li class="frm">
@@ -85,9 +85,9 @@
             <dl class="tird_acc">
             	<dt>也可使用下列第三方账号登录</dt>
                 <dd>
-                	<a href="#"><img src="{:z_img('login/images/thid_img01')}" /></a>
-                  <a href="#"><img src="{:z_img('login/images/thid_img02')}" /></a>
-                  <a href="#"><img src="{:z_img('login/images/thid_img03')}" /></a>
+                	<a href="#"><img src="{:z_img('reg/thid_img01')}" /></a>
+                  <a href="#"><img src="{:z_img('reg/thid_img02')}" /></a>
+                  <a href="#"><img src="{:z_img('reg/thid_img03')}" /></a>
                 </dd>
             </dl>
         </div>
@@ -106,80 +106,6 @@
   var userErr = new Array();
 
   jQuery(function($){
-
-    $.extend({
-
-      /**
-       * 验证用户名
-       */
-      checkUsername : function(url, class_name)
-      {
-        var username = $('.'+class_name).val().replace(/\s+/, '');
-
-        if (username == '') return false;
-
-        $.ajax({
-          url : url,
-          data : 'username='+username,
-          type : 'post',
-          async: false,
-          success : function(response)
-          {
-            var err = $('.i-username-error');
-            if (response.code <= 0) {
-
-              // 将错误放到数组中
-              userErr.push(response.msg);
-              err.css('display', 'block')
-              err.find('.txt').html(response.msg);
-            } else {
-              userErr.pop();
-              err.find('.txt').html('');
-              err.css('display', 'none')
-            }
-          }
-        });
-      },
-
-      /**
-      * 验证提交
-      */
-      checkRegsiter : function()
-      {
-        // 错误信息存放
-        var err = $('.error-info');
-        var msg = new Array();
-        var isOk = false; // 判断是否允许提交
-
-        var username = $('.i-username').val().replace(/\s+/, '');
-        var password = $('.i-password').val().replace(/\s+/, '');
-        var repassword = $('.i-repassword').val().replace(/\s+/, '');
-        var verify = $('.i-verify').val().replace(/\s+/, '');
-
-        if (username == '') msg.push('用户名不允许为空');
-        if (password == '') msg.push('密码不允许为空');
-        if (repassword == '') msg.push('确认密码不允许为空');
-        if (password != repassword) msg.push('二次密码不一致');
-        if (verify == '') msg.push('验证码不允许为空');
-
-        var iagree = $('.iagree:checked').val();
-        if (iagree == undefined) msg.push('未选中我同意');
-
-        if (msg.length > 0 || userErr.length > 0) {
-          var err_html = '';
-          $.each(msg, function(i, v){
-            err_html += v+'|';
-          });
-          err.html(err_html);
-          isOk = false;
-        } else {
-          isOk = true;
-        }
-        
-        return isOk;
-      }
-
-    });
 
     $('.i-username').blur(function(){
       $.checkUsername('{:ZU('ajax/user/checkUsername')}', 'i-username');

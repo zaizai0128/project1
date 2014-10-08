@@ -7,9 +7,9 @@
  * @version 1.0
  */
 namespace Home\Widget;
-use Common\Controller\BaseController;
+use Home\Controller\HomeController;
 
-class SidebarWidget extends BaseController {
+class SidebarWidget extends HomeController {
 
 	/**
 	 * 顶部的li列表，显示作者拥有的书籍权限

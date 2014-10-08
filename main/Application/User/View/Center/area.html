@@ -1,0 +1,48 @@
+<extend name="Public/author_base" />
+
+<block name="header">
+<include file="Public/header" nav="author"/>
+</block>
+
+<block name="main">
+<div class="authr_sect">
+<div class="hd_usr">
+  <ul class="hd_nav">
+       <li class="on" style="width:195px">
+          <a href="javascript:;">欢迎您加入逐浪文学专栏作家</a>
+       </li>
+    </ul>
+</div>
+<div class="bd">
+    <div class="a_sect_top">
+       <span class="a_sect_btn">
+         <?php if(empty($apply_info)):?>
+         <a href="{:ZU('user/center/apply')}" class="sbtn sbtn_04">立即申请，成为作者</a>
+         <?php else:?>
+          您已经提交过申请，正在审核中，请耐心等待……
+         <?php endif;?>
+       </span>
+    </div>                        
+    <div class="a_sect_lst">
+      <ul class="autr_nav">
+          <li class="on"><a href="javascript:;">作者申请说明</a></li>
+            <li><a href="javascript:;">新手指南</a></li>
+            <li><a href="javascript:;">投稿说明</a></li>
+            <li><a href="javascript:;">常见问题</a></li>
+        </ul> 
+        <div class="autr_nav_line"></div> 
+        <div class="a_sect_cnt">
+          <p>1.成为逐浪文学作者后您将可以在逐浪文学平台及其旗下平台上传您的作                                    品，作品审核通过后才可以通过搜索栏搜索到您的作者名；
+            </p>
+            <p>
+              2.在申请作者专栏后，如果没有创建作品或者创建了作品但未能通过审
+                核的，逐浪文学有权回收作者笔名避免笔名被长期占用搁置；
+            </p>
+            <p>
+              3.欢迎您来逐浪文学进行写作，在发布作品请注意遵守逐浪文学作者注册投稿协议。
+            </p>
+        </div>           
+    </div>
+</div>
+</div> 
+</block>

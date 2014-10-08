@@ -7,9 +7,8 @@
  * @version 1.0
  */
 namespace Home\Controller;
-use Common\Controller\BaseController;
 
-class BookApplyChapterController extends BaseController {
+class BookApplyChapterController extends HomeController {
 
 	protected $bookId = Null;
 	protected $chapterId = Null;

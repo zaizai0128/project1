@@ -1,0 +1,133 @@
+@charset "utf-8";
+/* CSS Document */
+
+body,h1,h2,h3,h4,h5,h6,hr,p,pre,dl,dt,dd,ul,ol,li,th,td,form,fieldset,legend,button,input,textarea{margin:0;padding:0;}h1,h2,h3,h4,h5,h6,button,input,select,textarea{font-size:100%;font-weight:normal;}li{list-style:none;}img,fieldset{border:0;}table{border-collapse:collapse;border-spacing:0;}em,i{font-style:normal;}u,ins{text-decoration:none;}:focus{outline:none;}
+body {font:12px/1.5 tahoma,arial,\5b8b\4f53;background:#f2f2f2;color:#333333;word-break:break-all;word-wrap:break-word;}
+a {color:#3d84b8;text-decoration:none;}
+a:hover {text-decoration:underline;}
+.wrap {width:980px;margin:0 auto;}
+.wrap, .clearfix {*zoom:1;}
+.wrap:after, .clearfix:after {content:'';display:block;height:0;clear:both;}
+.b {font-weight:bold;}
+.u {text-decoration:underline;}
+.clear{clear:both}
+/*Em*/
+.colr_01{ color:#F00;}
+.colr_02{ color:#0689dc}
+/*Topbar*/
+.topbar{ background:#2c2c2c; height:37px;margin-bottom:10px;color:#ffffff;}
+.tpbar_l{ float:left; margin-top:10px}
+.tpbar_l a{color:#ffffff;padding:0 10px}
+.tpbar_usr{ float:right; width:568px}
+.tpbar_usr .usr_nav li{ float:left; height:27px; margin:0 2px; padding-top:10px}
+.tpbar_usr .usr_nav li a{ color:#ffffff;}
+.tpbar_usr .usr_nav li.usr_li a{ padding:0 24px}
+.usr_nav li.usr_loged a.usr_exit{padding:0 20px}
+/*Tbar_drop*/
+.tnav_drop{ position:relative;z-index:91; padding:0 26px;}
+.on_drp{border-top:1px solid #999999;border-left:1px solid #999999;border-right:1px solid #999999;}
+.drp_tit{}
+.drp_box{ width:260px; height:93px; position:absolute; top:35px; right:-3px; background:#333333; border:1px solid #999999; padding-top:10px;}
+.drp_box a{padding:6px 11px; display:inline-block}
+.drp_box i{width:3px;height:3px; background:#ffffff; display:inline-block; vertical-align:3px; margin:0 5px}
+/*Header*/
+.header{padding:20px 0;}
+.header .logo img{ width:115px; height:47px; float:left}
+.header .top_sub{ float:left; color:#333333; font-size:24px; font-family:"Microsoft Yahei"; margin-left:18px}
+.header .nav_lst{ width:670px; float:right; background:#0894ec;}
+.header .nav_lst li{ float:left;width:134px; height:41px; float:right; line-height:41px; text-align:center}
+.header .nav_lst li a{ color:#ffffff; display:block; font-size:14px}
+.header .nav_lst li a:hover{ text-decoration:none}
+.header .nav_lst li.on a{ background:#097bc2}
+/*Main*/
+/*.main{ background:#ffffff; height:auto; border:1px solid #cccccc; padding:80px 0 80px 60px;}*/
+.user_cnt{ float:left;width:738px; padding:30px 20px 50px 20px; border-left:1px solid #cccccc; min-height:562px }
+.hd_usr{ border-bottom:1px solid #dddddd; overflow:hidden;*zoom:1; margin-bottom:40px}
+.hd_usr .hd_nav{ overflow:hidden;*zoom:1; float:left}
+.hd_usr .hd_nav li{ float:left; width:178px; text-align:center;}
+.hd_usr .hd_nav li a{ font-size:14px; color:#333333; padding-bottom:13px}
+.hd_usr .hd_nav li.on a{ font-weight:bold; display:block; border-bottom:3px solid #0894ec;}
+.hd_usr .hd_nav li a:hover{ text-decoration:none} 
+.hd_usr .hd .num{ float:right}
+.hd_usr .sbtn_back{ float:right; margin-top:10px}
+/*User_detail*/
+.user_detail{background:#ffffff;height:auto; border:1px solid #cccccc; overflow:hidden;*zoom:1 }
+.user_side{ width:198px;float:left; padding-top:20px;}
+.side_top{border-bottom:1px solid #cccccc; margin:0 20px}
+.side_top .pic img{width:156px; height:156px}
+.side_top .tit{ padding:17px 0 23px 0; text-align:center}
+.side_top .tit a{color:#333333; font-size:14px}
+.side_top .tit .ico_edit{ background: url(../images/user/usr_ico.jpg) 0 -143px no-repeat;width:14px; height:14px; display:inline-block; margin-left:10px; vertical-align:-1px}
+.side_info{ margin:30px 0 0 20px; position:relative}
+.info_value .ico_val{ background:url(../images/user/usr_ico.jpg) 0 0 no-repeat; width:42px; height:16px; position:absolute;right:20px;top:0}
+.info_value .bar{display:block; width:157px; height:15px; background:#dddddd; line-height:0; margin:20px 0 6px}
+.info_value .bar i{background:url(../images/user/bar_bg.jpg) 0 0 repeat-x; display:block;height:14px; border-top:1px solid #0484d5}
+.info_value .val_up{color:#0894ec}
+.info_tim{ display:block; margin-top:20px}
+.info_tim em{ color:#666666; display:block; margin-top:5px}
+/*Frm*/
+.login_frm .frm_lst li.frm{padding-bottom:20px;}
+.form_lst li.frm{padding-bottom:20px; overflow:hidden;*zoom:1; font:14px/37px '宋体';}
+.frm_inp,.frm_tit,.frm_val{ float:left; overflow:hidden;*zoom:1}
+.frm_inp .inp{border:1px solid #cccccc; padding:10px 7px; width:346px; vertical-align:middle;}
+.frm_tit{ text-align:right; font-size:14px; height:37px; line-height:37px;}
+.frm_val{font-size:14px; overflow:hidden;*zoom:1}
+.frm_resed .re_inp{ padding:0 7px; width:192px; border:none; background:#ffffff}
+.frm_resed .frm_inp { border:1px solid #cccccc; padding:10px 7px; width:346px; 
+vertical-align:middle; position: relative}
+.frm_resed .resed_btn{ position:absolute; right:0; top:0; background:#eaeaea; width:137px; height:38px; font:14px/38px '宋体'; color:#333333; text-align:center; border-left:1px solid #cccccc; display:block; cursor:pointer}
+.frm_resed .resed_btn:active{color:#999999}
+.frm_rad .frm_inp{_margin-top:7px}
+.frm_rad label{ margin-right:54px;}
+.frm_rad label input{ vertical-align:-2px; margin-right:5px}
+.form_lst .frm_inp select{ padding:6px 10px; vertical-align:middle;_margin-top:6px}
+
+/*Filt*/
+.shelf_ctr{ overflow:hidden;*zoom:1; margin-top:10px}
+.shel_filt,.u_acc_lst .shel_filt{ overflow:hidden;*zoom:1; margin-bottom:10px}
+.shel_filt .filt_l{ float:left; font-size:14px}
+.shel_filt .filt_r{ float:right}
+.filt_r .filt_new a{width:75px; height:25px; background:#0894ec; display:inline-block; color:#FFF; line-height:25px; text-align:center; text-decoration:none}
+.filt_r .r_sear{ border:1px solid #cccccc; width:190px;position:relative}
+.filt_r .r_sear input{ border:none;padding:4px; color:#999999}
+.filt_r .r_sear .sear_btn{ position:absolute;right:0;top:0; width:47px; height:25px; background:#0894ec; color:#FFF; text-align:center; line-height:25px; font-size:14px;}
+.filt_r .r_sel select{ height:26px}
+
+/*Table*/
+.u_td table{width:100%}
+.u_td th{ padding:10px 20px; background:#eaeaea; border-bottom:1px solid #cccccc;border-top:1px solid #cccccc; font-size:14px; text-align:left}
+.u_td td{ border-bottom:1px solid #cccccc; padding:15px 20px; color:#666666}
+.u_td td .ctr_add{ color:#0894ec}
+/*btn_upfile*/
+.btn_upfile{display:inline-block;position:relative;width:112px;height:35px;line-height:35px;
+border:1px solid #CCC;background:#eaeaea;color:#333333;overflow:hidden;text-align:center;
+cursor:pointer;vertical-align:middle; font-size:14px}
+.btn_upfile:hover{ text-decoration:none}
+.btn_upfile span{display:block;cursor: pointer;}
+.btn_upfile .inp_file{position:absolute;top:0px;right:0px;font-size:30px;opacity:0
+;cursor: pointer;}
+
+/*Page*/
+.shelf_ctr .ctr_r{ float:right;}
+.ctr_r .pg_lst a,.ctr_r .pg_lst .pg_pre,.ctr_r .pg_nxt{ display:inline-block; height:19px; line-height:19px; padding:0 5px; color:#666666} 
+.ctr_r .pg_oth{ vertical-align:3px}
+.ctr_r .pg_lst a.on{ background:#0894ec; color:#ffffff}
+.ctr_r .pg_lst .pg_end{ background:#f2f2f2;}
+/*Btn*/
+a.sbtn{ height:39px; color:#FFF; font-size:14px; display:inline-block; text-align:center; line-height:39px; background:#0894ec}
+a.sbtn:hover{ text-decoration:none}
+a.sbtn:active{text-decoration:none; background:#0689dc;}
+a.sbtn_01,a.sbtn_01:visited{ width:362px; height:39px; background:#0894ec; display:block; text-align:center; line-height:39px; color:#ffffff; font-size:16px; text-decoration:none;}
+ {text-decoration:none;background:#0689dc;color:#ffffff;}
+a.sbtn_01:active{text-decoration:none; background:#0689dc; color:#ffffff}
+a.sbtn_02{ width:157px; height:39px; background:#0894ec; display:block; color:#FFF; text-align:center; line-height:39px; margin-top:20px; text-decoration:none; font-size:14px}
+a.sbtn_02:active{text-decoration:none; background:#0689dc;}
+a.sbtn_03{ background:#0894ec; width:114px;}
+a.sbtn_04{ height:49px;line-height:49px;padding:0 30px; font-weight:bold}
+a.sbtn_05{ padding:0 42px}
+a.sbtn_06{ background:#0894ec; padding:8px 20px; font-size:12px; color:#FFF}
+a.sbtn_06:hover{ text-decoration:none}
+a.sbtn_07{background:#eaeaea; color:#999; }
+a.sbtn_07:active{text-decoration:none; background:#d3d3d3;}
+/*Footer*/
+.footer p{ text-align:center; padding:58px 0}
