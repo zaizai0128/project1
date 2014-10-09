@@ -1,0 +1,18 @@
+<ul class="tabs">
+    <li class="active">公众章节列表</li>
+    <li>VIP章节列表</li>
+</ul>
+<div class="cons">
+    <div class="leftnav highlight">
+      <h2>系统默认卷 正文<span></span></h2>
+        <ul>
+            <?php foreach($chapter as $val):?>
+            <?php if($ch_id == $val['ch_id']):?>
+              <li class="on">{$val.ch_name}</li>
+            <?php else:?>
+              <li><a href="{:ZU('bookApplyChapter/edit', 'ZL_AUTHOR_DOMAIN', array('apply_id'=>$book_info['bk_id'], 'ch_id'=>$val['ch_id']))}">{$val.ch_name}</a></li>
+            <?php endif;?>
+            <?php endforeach;?>
+        </ul>
+    </div>
+</div>

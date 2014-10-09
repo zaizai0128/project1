@@ -17,7 +17,7 @@ class ChapterVipService extends ZlibChapterVipModel {
 	public function doEdit($data)
 	{
 		$final_data['ch_name'] = $data['ch_name'];
-		$final_data['ch_content'] = $data['ch_content'];
+		$final_data['ch_content'] = $data['content'];
 		$final_data['bk_id'] = $data['bk_id'];
 		$final_data['ch_id'] = $data['ch_id'];
 		
@@ -34,7 +34,7 @@ class ChapterVipService extends ZlibChapterVipModel {
 		$final_data['bk_id'] = $data['bk_id'];
 		$final_data['ch_id'] = $data['ch_id'];
 		$final_data['ch_name'] = $data['ch_name'];
-		$final_data['ch_content'] = $data['ch_content'];
+		$final_data['ch_content'] = $data['content'];
 		
 		return parent::doAdd($final_data);
 	}

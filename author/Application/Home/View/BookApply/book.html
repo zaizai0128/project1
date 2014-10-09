@@ -1,52 +1,124 @@
 <extend name="Public/base" />
 
-<block name="main">
-<div class="row">
-	<div class="span3">
-		<include file="Public/sidebar" nav="book_apply_manager"/>
-	</div>
-	<div class="span9">
-		<ul class="breadcrumb">
-			<li><a href="{:ZU('bookApply/index', 'ZL_AUTHOR_DOMAIN')}">待审核作品管理</a><span class="divider">/</span></li><li class="active">{$book_info.bk_name}</li>
-		</ul>
+<block name="sidebar">
+<include file="Public/sidebar" tab="manager" />
+</block>
 
-		{// 书的常用管理操作 }
-		<include file="Public/apply_actions" ac="index" />
-		
-		<table class="table table-hover">
-			<thead>
-				<tr>
-					<th colspan="3">作品详情</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>作品序号：【{$book_info.bk_id}】</td>
-					<td>作品名称：《{$book_info.bk_name}》</td>
-					<td>提交审核时间：{$book_info.bk_cre_time}</td>
-				</tr>	
-				<tr>
-					<td>作者ID：{$book_info.bk_author_id}</td>
-					<td>作者笔名：{$book_info.bk_author}</td>
-					<td>主要角色：{$book_info.bk_actor|default='<span class="muted">暂未设置</span>'}</td>
-				</tr>
-				<tr>
-					<td>作品标签：{$book_info.bk_tag}</td>
-					<td>授权等级：{:ZC(C('BOOK.auth_level'), $book_info['bk_accredit'])}</td>
-					<td>签约类型：{:ZC(C('BOOK.commision'), $book_info['bk_commision'])}</td>
-				</tr>	
-				<tr>
-					<td>当前状态：{$book_info.bk_apply_status}</td>
-					<td>审核编辑：{$book_info.bk_apply_name}</td>
-					<td>审核意见：{$book_info.bk_apply_comments|default='<span class="muted">暂无任何意见</span>'}</td>
-				</tr>	
-				<tr>
-					<td>总章节数：{$book_info.ch_total}</td>
-					<td>最后更新章节：{$book_info.bk_public_name}</td>
-					<td>最后更新时间：{$book_info.bk_now_date}</td>
-				</tr>		
-			</tbody>
-		</table>						
-	</div>
+<block name="main">
+<div class="work_cnt">
+<div class="hd_usr">
+    <ul class="hd_nav">
+         <li class="on">
+            <a href="#">校园篮球风云</a>
+         </li>
+      </ul>
+      <a href="#" class="colr_02 sbtn_back">返回 >></a>
+  </div>
+  <div class="bd">                     
+      <div class="w_new_cnt w_info_mange">
+        <div class="a_sect_lst">
+        <ul class="autr_nav">
+            <li class="on"><a href="#">作品信息管理</a></li>
+              <li><a href="#">分卷管理</a></li>
+              <li><a href="#">章节管理</a></li>
+              <li><a href="#">草稿箱</a></li>
+              <li><a href="#">副版主管理</a></li>
+          </ul> 
+          <div class="autr_nav_line"></div>         
+       </div> 
+       <div class="w_info_nav">
+        <ul>
+            <li class="on"><a href="#">作品信息修改</a>|</li>
+              <li><a href="#">作品调查</a>|</li>
+              <li><a href="#">作者广告</a></li>
+          </ul>
+       </div>
+         <ul class="form_lst">
+           <li class="frm">
+            <span class="frm_tit">作品名称：</span>
+              <div class="frm_val">
+                 <span class="val">女总裁的神级保镖 （书号：566466）</span>
+              </div>
+           </li>
+           <li class="frm frm_sex">
+            <span class="frm_tit">作品类型：</span>
+              <div class="frm_val">
+                 <span class="val">都市-异能奇术</span>
+              </div>
+           </li>
+           <li class="frm">
+            <span class="frm_tit">授权状态：</span>
+              <div class="frm_val">
+                 <span class="val">独家首发</span>
+              </div>
+           </li>
+           <li class="frm">
+            <span class="frm_tit">作品封面：</span>
+              <div class="frm_inp frm_uplod">
+                <div class="inp_uplod">
+                   <input type="text" value=""  name="" 
+                   class="inp" style="width:250px"/>
+                   <span class="btn">
+                      <a href="#" class="btn_upfile"><span>浏览...</span>
+                        <input class="inp_file" type="file">
+                       </a>
+                      </span>
+                 </div>
+                 <p class="tip">
+                   1、图片格式要求：宽高为204X255像素、大小不超过30KB的JPG文件。<br />   
+                   2、图片元素应包含：书名、笔名、逐浪Logo。<br />
+                   3、建议使用原创图片、不得使用真人照片及他人有版权的图片，
+                     以免引起纠纷。<br />
+                   4、严禁上传色情、暴力、广告宣传或不适合公众观赏的图现即做禁                                        书处理。片，一经发<br />
+                   5、封面上传后，管理员将在2个工作日内审核。
+                 </p>
+                 <p class="pic">
+                    <img src="../Front/images/authr/authr_img01.jpg"/>  
+                 </p>
+              </div>
+           </li>
+          <li class="frm frm_val_inp">
+            <span class="frm_tit">作品标签：</span>
+              <div class="frm_val">
+                 <div class="val_inp">
+                    <span class="val"></span>
+                 </div>   
+                 <span class="txt">每个标签之间用半角，隔开</span>
+              </div>
+           </li>
+           <li class="frm frm_texar">
+            <span class="frm_tit">作品简介：</span>
+              <div class="frm_inp">
+                 <textarea class="textar"></textarea>
+                 <span class="tip">
+                 简练、精辟的简介将使您的作品更有吸引力，请认真斟酌撰写，并将字数控制在
+                 200字以内，与作品无关的内容请在作者公告区域填写。
+                 </span>
+              </div>
+           </li>
+           <li class="frm frm_val_inp">
+            <span class="frm_tit">推荐作品：</span>
+              <div class="frm_val">
+                 <div class="val_inp">
+                    <span class="val"></span>
+                 </div>   
+                 <span class="txt">添加书号，以分号隔开，最多推荐5本</span>
+              </div>
+           </li>
+           <li class="frm frm_rad">
+            <span class="frm_tit">作品状态：</span>
+              <div class="frm_inp">
+                 <label><input type="radio" name="" value="" />连载</label>
+                 <label><input type="radio" name="" value="" />完结</label>
+              </div>
+           </li>
+           <li class="frm">
+              <div class="frm_inp frm_btn">
+                <a href="#" class="sbtn sbtn_03">确定修改</a> 
+              </div>
+           </li>
+         </ul>         
+      </div>
+  </div>
 </div>
 </block>

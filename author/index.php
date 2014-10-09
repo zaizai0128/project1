@@ -24,7 +24,4 @@ define('RUNTIME_PATH',   __DIR__ . '/Runtime/');	// 定义应用的缓存目录
 define('HTML_PATH', __DIR__ . '/Html/');			// 定义应用生成的静态目录
 define('PUBLIC_MODULE_PATH', APP_PATH . 'Public');	// 定义公共模块的目录
 
-// ------------------------------------------------------- 模块级
-define('BIND_MODULE', 'Home');	// 如果只有一个模块，可以这样做
-
 require THINK_PATH . 'ThinkPHP.php';				

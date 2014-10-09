@@ -1,16 +1,89 @@
-<div class="control-group">
-	<label for="input_chapter_name" class="control-label">章节标题</label>
-	<div class="controls">
-		<input type="text" name="ch_name" placeholder="章节标题" id="input_chapter_name" value="{$chapter.ch_name}"/>
-	</div>
-</div>
-<div class="control-group">
-	<label for="input_chapter_content" class="control-label">章节内容</label>
-	<div class="controls">
-		<textarea name="ch_content" id="input_chapter_content" rows="10" placeholder="新增作品首次上传章节总字数需在2000至30000间">{$chapter.ch_content}</textarea>
-	</div>
-</div>
+<extend name="Public/base" />
 
-{// 添加modal的属性}
-<input type="hidden" class="modal-action" value="{:ZU('bookApplyChapter/doEdit', 'ZL_AUTHOR_DOMAIN', array('apply_id'=>I('apply_id'), 'ch_id'=>I('ch_id')))}" />
-<input type="hidden" class="modal-title" value="修改章节 - {$chapter.ch_name}" />
+<block name="sidebar">
+<include file="Public/sidebar" tab="manager" />
+</block>
+
+<block name="main">
+<div class="work_cnt">
+    <div class="hd_usr">
+      <ul class="hd_nav">
+           <li class="on">
+              <a href="javascript:;">{$book_info.bk_name}</a>
+           </li>
+        </ul>
+        <a href="{:ZU('BookApplyChapter/index', 'ZL_AUTHOR_DOMAIN', array('apply_id'=>$book_info['bk_id']))}" class="colr_02 sbtn_back">返回 >></a>
+    </div>
+    <div class="bd">                     
+        <div class="w_new_cnt w_info_mange">
+          <div class="a_sect_lst">
+            <include file="BookApply/action" ac="chapter"/>
+            <div class="autr_nav_line"></div>         
+          </div> 
+            <div class="shel_filt">
+              <span class="filt_l">
+                作品：<span class="nam">{$book_info.bk_name}</span>
+                系统默认<em class="colr_01">正文</em>卷 
+                共<span class="num_sect">{$assign.total}章</span>
+              </span>
+              <span class="filt_r">
+                <a href="{:ZU('BookApplyChapter/add', 'ZL_AUTHOR_DOMAIN', array('apply_id'=>$book_info['bk_id']))}" class="sbtn_06">新建章节</a>
+              </span>
+            </div>
+          <div class="cutbox">
+            <div class="cutbut"></div>
+              {// 左侧章节列表}
+             <div class="cutleft">
+                  <include file="left_list" />
+                  <div class="cons" style="display:none"></div>
+              </div>
+              {// 右侧动作栏}
+              <div class="cutright">
+                <form action="{:ZU('bookApplyChapter/doEdit', 'ZL_AUTHOR_DOMAIN', array('apply_id'=>$book_info['bk_id'], 'ch_id'=>$chapter_info['ch_id']))}" method="post">
+                  <div class="cutable">
+                      <div class="tr">
+                        <span class="td">章节名称：</span>
+                          <div class="tdt">
+                            <input name="ch_name" type="text" class="input_text" placeholder="输入章节号和章节名，示例：第一章 婚礼" autocomplete="off" value="{$chapter_info['ch_name']}"/>
+                              <p class="fred">为配合第三方渠道发布，请注意章节号顺序发布，格式以示例为佳（如：第一章 婚礼），不要使用英文做为章节序号。</p>
+                          </div>
+                      </div>
+                      <div class="tr tzreo">
+                        <span class="td">章节类型：</span>
+                          <div class="tdd">
+                            <input name="vip" type="radio" value="0" checked="checked"/><label>公共章节</label>
+                          </div>
+                      </div>
+                      <div class="tr twu">
+                        <p>正文内容：</p>
+                          <textarea name="content" cols="" rows="" class="textarea_t">{$chapter_info.ch_content}</textarea>
+                          <p><span>新增作品首次上传章节总字数需在2000至30000间</span><a class="a_bot" href="javascript:;">字数计算</a></p>
+                      </div>
+                      <div class="tr">
+                        <p>作者的话：</p>
+                          <textarea name="intro" cols="" rows="" class="textarea_m">{$chapter_info.ch_intro}</textarea>
+                      </div>
+                      <div class="tr">
+                        <!-- <a class="sbtn_02" href="#">确认修改</a> -->
+                        <button>确认修改</butotn>
+                      </div>
+                  </div>
+                </form>
+              </div>
+          </div>
+        </div>
+    </div>
+</div>
+</block>
+
+
+<block name="js">
+<script type="text/javascript">
+  jQuery(function($){
+    $.leftHide();
+    $.chapterTab();
+    $.lineTab();
+
+  });
+</script>
+</block>

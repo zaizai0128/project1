@@ -25,6 +25,20 @@ class ChapterController extends HomeController {
 		$this->bookInstance = D('Book', 'Service');
 		$this->chapterInstance = D('Chapter', 'Service')->getInstance($this->bookId, $this->chapterId);
 		$this->volumeInstance = D('Volume', 'Service');
+
+		$book_info = $this->bookInstance->getBookByBookId($this->bookId, 'bk_id,bk_name');
+		$chapter_list = \Zlib\Api\Book::getCatalog($this->bookId);
+		$assign['volume_total'] = count($chapter_list); 
+		$assign['volume_chapter'] = 0;
+		foreach ($chapter_list as $val) {
+			$assign['volume_chapter'] += count($val['volume_chapter']);
+		}
+
+		$this->assign(array(
+			'assign' => $assign,
+			'book_info' => $book_info,
+			'chapter_list' => $chapter_list,
+		));
 	}
 
 	/**
@@ -32,12 +46,6 @@ class ChapterController extends HomeController {
 	 */
 	public function index()
 	{
-		$book_info = $this->bookInstance->getBookByBookId($this->bookId, 'bk_id,bk_name');
-		$chapter_list = \Zlib\Api\Book::getCatalog($this->bookId);
-		$this->assign(array(
-			'chapter_list' => $chapter_list,
-			'book_info' => $book_info,
-		));
 		$this->display();
 	}
 
@@ -46,11 +54,10 @@ class ChapterController extends HomeController {
 	 */
 	public function add()
 	{	
-		$book_info = $this->bookInstance->getBookByBookId($this->bookId, 'bk_id,bk_name');
 		$volume_list = $this->volumeInstance->getVolumeList($this->bookId, False);
+
 		$this->assign(array(
 			'volume_list' => $volume_list,
-			'book_info' => $book_info,
 		));
 		$this->display();
 	}
@@ -82,12 +89,13 @@ class ChapterController extends HomeController {
 	 */
 	public function edit()
 	{
+		$volume_list = $this->volumeInstance->getVolumeList($this->bookId, False);
 		$chapter_info = $this->chapterInstance->getChapterInfo();
-
 		if (empty($chapter_info)) z_redirect('章节不存在'); 
 
 		$this->assign(array(
 			'chapter_info' => $chapter_info,
+			'volume_list' => $volume_list,
 		));
 		$this->display();
 	}
@@ -113,34 +121,4 @@ class ChapterController extends HomeController {
 		}
 	}
 
-	/**
-	 * 调卷
-	 */
-	public function editVolume()
-	{
-		$chapter_info = $this->chapterInstance->getChapterInfo();
-		$volume_list = $this->volumeInstance->getVolumeList($this->bookId, False);
-
-		$this->assign(array(
-			'volume_list' => $volume_list,
-			'chapter_info' => $chapter_info,
-		));
-		$this->display();
-	}
-
-	public function doEditVolume()
-	{
-		if (IS_POST) {
-			$data = array_merge($this->authorInfo, I(), array('bk_id'=>$this->bookId,'ch_id'=>$this->chapterId));
-
-			$state = $this->chapterInstance->doEditBookVolume($data);
-			
-			if ($state['code'] > 0) {
-
-				z_redirect('修改成功', ZU('chapter/index', 'ZL_AUTHOR_DOMAIN', array('book_id'=>$this->bookId)));
-			} else {
-				z_redirect('修改失败');
-			}
-		}
-	}
 }

@@ -23,6 +23,19 @@ class BookApplyChapterController extends HomeController {
 		\Zlib\Api\Acl::apply($this->authorInfo, $this->bookId);
 		$this->bookApplyInstance = D('BookApply', 'Service');
 		$this->chapterInstance = D('BookApplyChapter', 'Service');
+
+		// 作品信息
+		$book_info = $this->bookApplyInstance
+					->getOneApplyBook($this->authorInfo['user_id'], $this->bookId, 'bk_name,bk_id');
+		$chapter = $this->chapterInstance->getChapterList($this->bookId);
+		$assign['total'] = count($chapter);
+
+		$this->assign(array(
+			'assign' => $assign,
+			'book_info' => $book_info,
+			'chapter' => $chapter,
+			'ch_id' => $this->chapterId,
+		));
 	}
 
 	/**
@@ -30,14 +43,6 @@ class BookApplyChapterController extends HomeController {
 	 */
 	public function index()
 	{
-		$book_info = $this->bookApplyInstance
-					->getOneApplyBook($this->authorInfo['user_id'], $this->bookId, 'bk_name,bk_id');
-		$chapter = $this->chapterInstance->getChapterList($this->bookId);
-
-		$this->assign(array(
-			'book' => $book_info,
-			'chapter' => $chapter,
-		));
 		$this->display();
 	}
 
@@ -46,12 +51,6 @@ class BookApplyChapterController extends HomeController {
 	 */
 	public function add()
 	{
-		$book_info = $this->bookApplyInstance
-					->getOneApplyBook($this->authorInfo['user_id'], $this->bookId, 'bk_name,bk_id');
-
-		$this->assign(array(
-			'book' => $book_info,
-		));
 		$this->display();
 	}
 
@@ -70,7 +69,7 @@ class BookApplyChapterController extends HomeController {
 				$tag['ac'] = 'after_add';	// 行为名称
 				tag('apply_chapter', $tag);	// 章节上传成功后，更新对应的数据表信息
 				
-				z_redirect('添加成功，审核通过后才会看到', ZU('bookApply/book', 'ZL_AUTHOR_DOMAIN'
+				z_redirect('添加成功，审核通过后才会看到', ZU('bookApplyChapter/index', 'ZL_AUTHOR_DOMAIN'
 								, array('apply_id'=>$this->bookId)));
 			} else {
 				z_redirect('添加失败，重新尝试');
@@ -83,10 +82,10 @@ class BookApplyChapterController extends HomeController {
 	 */
 	public function edit()
 	{
-		$chapter = $this->chapterInstance->getChapterInfo($this->bookId, $this->chapterId);
+		$chapter_info = $this->chapterInstance->getChapterInfo($this->bookId, $this->chapterId);
 
 		$this->assign(array(
-			'chapter' => $chapter,
+			'chapter_info' => $chapter_info,
 		));
 		$this->display();
 	}
@@ -105,7 +104,7 @@ class BookApplyChapterController extends HomeController {
 				$tag['ac'] = 'after_edit';	// 行为名称
 				tag('apply_chapter', $tag);	// 章节上传成功后，更新对应的数据表信息
 
-				z_redirect('修改成功，审核通过后才会看到', ZU('bookApply/book', 'ZL_AUTHOR_DOMAIN'
+				z_redirect('修改成功，审核通过后才会看到', ZU('bookApplyChapter/index', 'ZL_AUTHOR_DOMAIN'
 							, array('apply_id'=>$this->bookId)));
 			} else {
 				z_redirect('修改失败，重新尝试');

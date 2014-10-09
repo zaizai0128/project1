@@ -12,6 +12,7 @@ class BookApplyController extends HomeController {
 
 	protected $bookId = Null;
 	protected $bookApplyInstance = Null;
+	protected $bookClassInstance = Null;
 
 	protected function init()
 	{
@@ -19,6 +20,38 @@ class BookApplyController extends HomeController {
 		$this->bookId = I('get.apply_id');
 		\Zlib\Api\Acl::apply($this->authorInfo, $this->bookId);
 		$this->bookApplyInstance = D('BookApply', 'Service');
+		$this->bookClassInstance = \Zlib\Api\BookClass::getInstance();
+	}
+
+	/**
+	 * 编辑作品信息
+	 */
+	public function edit()
+	{
+		$book_info = $this->bookApplyInstance->getOneApplyBook($this->authorInfo['user_id'], $this->bookId);
+		$book_info['class_name'] = $this->bookClassInstance->getPathArray($book_info['bk_class_id']);
+		
+		$this->assign(array(
+			'book_info' => $book_info,
+		));
+		$this->display();
+	}
+
+	/**
+	 * 编辑作品信息
+	 */
+	public function doEdit()
+	{
+		if (IS_POST) {
+			$data = array_merge($this->authorInfo, I(), array('bk_id'=>$this->bookId));
+			$state = $this->bookApplyInstance->doEditBook($data);
+
+			if ($state['code'] > 0) {
+				z_redirect('修改成功', ZU('bookApply/index', 'ZL_AUTHOR_DOMAIN'));
+			} else {
+				z_redirect('修改失败');
+			}
+		}
 	}
 
 	/**
@@ -47,7 +80,7 @@ class BookApplyController extends HomeController {
 
 			if ($state['code'] > 0) {
 				$book_id = $state['code'];
-				z_redirect('添加成功', ZU('bookApply/book', 'ZL_AUTHOR_DOMAIN', array('apply_id'=>$book_id)));
+				z_redirect('添加成功', ZU('bookApply/index', 'ZL_AUTHOR_DOMAIN'));
 			} else {
 				z_redirect('添加失败');
 			}
@@ -76,7 +109,7 @@ class BookApplyController extends HomeController {
 	public function book()
 	{
 		$book_info = $this->bookApplyInstance->getOneApplyBook($this->authorInfo['user_id'], $this->bookId);
-
+			
 		$this->assign(array(
 			'book_info' => $book_info,
 		));

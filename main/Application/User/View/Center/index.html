@@ -22,7 +22,9 @@
                      <span class="frm_tit">用户昵称：</span>
                       <div class="frm_val">
                           <span class="val">{$user_info.user_nickname|default=$user_info['user_name']}</span>
+                          <?php if(empty($user_info['user_nickname'])):?>
                            <span class="frm_ctr"><a href="{:ZU('user/account/index')}">修改昵称</a></span>
+                         <?php endif;?>
                       </div>
                   </li>
                   <li class="frm">

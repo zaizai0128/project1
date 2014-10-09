@@ -64,23 +64,31 @@ class ChapterService extends ZlibChapterModel {
 		if (empty($vip)) return z_info(0, '章节不存在');
 
 		$chapter_info['ch_update'] = z_now();
-		$chapter_info['ch_size'] = z_strlen($data['ch_content']);
+		$chapter_info['ch_size'] = z_strlen($data['content']);
 		$chapter_info['ch_name'] = $data['ch_name'];
+		$chapter_info['ch_roll'] = $data['volume'];
 		$chapter_info['ch_id'] = $data['ch_id'];
 		$chapter_info['bk_id'] = $data['bk_id'];
+		$chapter_info['ch_vip'] = (int)$data['vip'];
 		$result = parent::doEdit($chapter_info);
 
 		if ($result) {
 
 			// 更新内容
-			if ($vip['ch_vip'] == 1) {
+			if ($chapter_info['ch_vip'] == 1) {
 
 				$vip_chapter = D('ChapterVip', 'Service')->getInstance($chapter_info['bk_id'], $chapter_info['ch_id']);
-				$vip_chapter->doEdit($data);
+				$vip_info = $vip_chapter->getChapterInfo('bk_id');
+				
+				if (empty($vip_info)) {
+					$vip_chapter->doAdd($data);
+				} else {
+					$vip_chapter->doEdit($data);
+				}
 			} else {
 
 				// 更新内容
-				parent::setChapterContent($chapter_info['ch_id'], $data['ch_content']);
+				parent::setChapterContent($chapter_info['ch_id'], $data['content']);
 			}
 
 			return z_info($result, '修改成功');
@@ -101,15 +109,15 @@ class ChapterService extends ZlibChapterModel {
 		if ($state['code'] <= 0) return $state;
 
 		$chapter_info['bk_id'] = $data['bk_id'];
-		$chapter_info['ch_roll'] = empty($data['ch_roll']) ? C('BOOK.start_volume') : (int)$data['ch_roll'];
+		$chapter_info['ch_roll'] = empty($data['volume']) ? C('BOOK.start_volume') : (int)$data['volume'];
 		$chapter_info['ch_cre_time'] = z_now();
 		$chapter_info['ch_update'] = z_now();
 		$chapter_info['ch_order'] = parent::getLastChapterOrder();
-		$chapter_info['ch_size'] = z_strlen($data['ch_content']);
+		$chapter_info['ch_size'] = z_strlen($data['content']);
 		$chapter_info['ch_name'] = $data['ch_name'];
 		$chapter_info['ch_status'] = 0;
-		$chapter_info['ch_vip'] = (int)$data['ch_vip'];
-		$chapter_content = $data['ch_content'];
+		$chapter_info['ch_vip'] = (int)$data['vip'];
+		$chapter_content = $data['content'];
 
 		$chapter_id = parent::doAdd($chapter_info);
 		
@@ -117,7 +125,7 @@ class ChapterService extends ZlibChapterModel {
 
 		// 如果是vip，则将内容存放到数据库中，如果是普通章节，则生成静态页
 		if ($chapter_info['ch_vip'] == 1) {
-			$chapter_info['ch_content'] = $chapter_content;
+			$chapter_info['content'] = $chapter_content;
 			$chapter_info['ch_id'] = $chapter_id;
 			$vip_chapter = D('ChapterVip', 'Service')->getInstance($data['bk_id'], $chapter_id);
 			$vip_chapter->doAdd($chapter_info);
@@ -145,8 +153,11 @@ class ChapterService extends ZlibChapterModel {
 		if (empty($data['ch_name'])) 
 			return z_info(-2, '章节名称不允许为空');
 
-		if (empty($data['ch_content']))
+		if (empty($data['content']))
 			return z_info(-3, '章节内容不允许为空');
+
+		if (empty($data['volume']))
+			return z_info(-4, '卷不允许为空');
 
 		// 其他验证 ...
 

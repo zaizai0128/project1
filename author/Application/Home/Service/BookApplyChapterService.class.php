@@ -20,7 +20,7 @@ class BookApplyChapterService extends ZlibBookApplyChapterModel {
 	{
 		if (empty($data['bk_id'])) return z_info(-1, '作品不存在'); 
 		if (empty($data['ch_name'])) return z_info(-2, '章节名不允许为空'); 
-		if (empty($data['ch_content'])) return z_info(-3, '章节内容不允许为空'); 
+		if (empty($data['content'])) return z_info(-3, '章节内容不允许为空'); 
 
 		// 判断是否超过了最大限制章节数
 		$max = parent::getTotalChapterNum($data['bk_id']);
@@ -31,17 +31,16 @@ class BookApplyChapterService extends ZlibBookApplyChapterModel {
 			return z_info(-5, '章节名已经存在');
 
 		// 其他验证 ...
-
-
 		$final_data['bk_id'] = $data['bk_id'];
 		$final_data['ch_cre_time'] = z_now();
 		$final_data['ch_update'] = z_now();
 		$final_data['ch_name'] = $data['ch_name'];
 		$final_data['ch_order'] = parent::getMaxChapterOrder($data['bk_id']);
-		$final_data['ch_size'] = mb_strlen($data['ch_content'], C('SYSTEM.encoded'));
+		$final_data['ch_size'] = z_strlen($data['content']);
 		$final_data['ch_status'] = 0;
-		$final_data['ch_content'] = $data['ch_content'];
-
+		$final_data['ch_content'] = $data['content'];
+		$final_data['ch_intro'] = $data['intro'];
+		
 		$ch_id = parent::doAddChapter($final_data);
 
 		if ($ch_id > 0)
@@ -58,7 +57,7 @@ class BookApplyChapterService extends ZlibBookApplyChapterModel {
 		if (empty($data['bk_id'])) return z_info(-1, '作品不存在'); 
 		if (empty($data['ch_id'])) return z_info(-1, '章节不存在'); 
 		if (empty($data['ch_name'])) return z_info(-2, '章节名不允许为空'); 
-		if (empty($data['ch_content'])) return z_info(-3, '章节内容不允许为空'); 
+		if (empty($data['content'])) return z_info(-3, '章节内容不允许为空'); 
 
 		// 判断是否章节重名
 		if (!$this->_checkChapterName($data['bk_id'], $data['ch_name'], $data['ch_id']))
@@ -68,10 +67,11 @@ class BookApplyChapterService extends ZlibBookApplyChapterModel {
 
 		$final_data['bk_id'] = $data['bk_id'];
 		$final_data['ch_id'] = $data['ch_id'];
-		$final_data['ch_size'] = mb_strlen($data['ch_content'], C('SYSTEM.encoded'));
-		$final_data['ch_content'] = $data['ch_content'];
+		$final_data['ch_size'] = z_strlen($data['content']);
+		$final_data['ch_content'] = $data['content'];
 		$final_data['ch_name'] = $data['ch_name'];
 		$final_data['ch_update'] = z_now();
+		$final_data['ch_intro'] = $data['intro'];
 
 		$result = parent::doEditChapter($final_data);
 
@@ -92,7 +92,6 @@ class BookApplyChapterService extends ZlibBookApplyChapterModel {
 		// 添加的时候判断
 		if (!isset($chapter_id)) {
 			$result = parent::getChapterInfoByName($book_id, $chapter_name, 'ch_id');
-
 		// 修改的时候判断
 		} else {
 			$result = parent::getChapterInfoByName($book_id, $chapter_name, 'ch_id', ' and ch_id != '.$chapter_id);

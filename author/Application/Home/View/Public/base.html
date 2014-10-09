@@ -1,64 +1,46 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<meta charset="utf-8">
-	<block name="title"><title>作者站管理后台</title></block>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
-	<link href="__CSS__/bootstrap.min.css" rel="stylesheet" media="screen">
-	<link href="__CSS__/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
-	{// 公共加载的js}
-	<script src="__JS__/jquery.min.js"></script>
-	<script src="__JS__/bootstrap.min.js"></script>
-	<script src="__JS__/zlang.js"></script>
-	<style>body{padding-top:80px;}</style>
-	{// 扩展的css}
-	<block name="css"></block>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<block name="title"><title>{:ZS('SESSION.author', 'author_name')}的专区 - 作者专区 - 逐浪网</title></block>
+<link href="{:z_css('author')}" type="text/css" rel="stylesheet">
+<link href="{:z_css('base')}" type="text/css" rel="stylesheet">
+<script src="{:z_js()}"></script>
+<script src="{:z_js('zlang')}"></script>
+<script src="{:z_js('author/zlang.author')}"></script>
 </head>
+
 <body>
-	{// 公共头部}
-	<block name="header"><include file="Public/header" /></block>
-	
-    <div class="container">
-    	{// 内容部分}
-    	<block name="main">内容部分</block>
-
-		{// 公共底部}
-		<block name="footer"><include file="Public/footer" /></block>
+<div class="container">
+	<div class="topbar">
+      {// 顶部}
+      <block name="top"><include file="Public/top"/></block>
+  </div>
+ 	<div class="header">
+      <block name="header"><include file="Public/header" nav="author"/></block>
+  </div>
+	<div class="main">
+		<div class="wrap">
+    	  <div class="user_detail">
+        	  <div class="user_side authr_side">
+              {// 左侧菜单 }
+              <block name="sidebar">
+                <include file="Public/sidebar" tab="index" />
+              </block>
+            </div>
+            <div class="user_cnt authr_cnt">
+ 					    <block name="main"></block>
+            </div>
+        </div>
+     </div>
+     <div class="footer">
+        <block name="footer">
+          <include file="Public/footer" />
+        </block>
+    </div> 
     </div>
-    
-    {// 加载常用的modal内容}
-    <include file="Public/modal" />
-
-    {// 扩展的modal内容}
-    <block name="modal"></block>
-    
-    {// 公共js}
-	<script type="text/javascript">
-	jQuery(function(){
-		
-		// modal移除数据
-		$('.modal').on('hide', function(){
-			$(this).removeData("modal");
-		})
-
-		// 只有form的modal才会执行的动作
-		$('.modal-form').on('shown', function(){
-			var title = $(this).find('.modal-title').val();
-			var form_action = $(this).find('.modal-action').val();
-
-			$(this).find('form:first').attr('action', form_action);
-			$(this).find('#editTitle').html(title);
-
-		}).on('hide', function(){
-			$(this).find('form:first').attr('action', '###');
-			$(this).find('#editTitle').html('&nbsp;');
-		});
-
-		$.debug('extend布局 - base');
-	});
-	</script>
-	{// 扩展的js}
-	<block name="js"></block>
+</div>     
+  {// 扩展的js}
+  <block name="js"></block>   
 </body>
 </html>

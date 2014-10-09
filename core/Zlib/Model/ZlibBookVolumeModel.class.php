@@ -55,6 +55,15 @@ class ZlibBookVolumeModel extends BaseModel {
 	}
 
 	/**
+	 * 获取卷信息
+	 */
+	public function getVolumeInfo($book_id, $volume_id, $field='*')
+	{
+		$condition = 'bk_id = '.$book_id.' and volume_id = '.$volume_id;
+		return $this->field($field)->where($condition)->find();
+	}
+
+	/**
 	 * 创建卷信息
 	 */
 	public function doAdd($data)

@@ -41,6 +41,16 @@ class ZlibChapterModel extends BaseModel {
 	}
 
 	/**
+	 * 获取全部章节
+	 */
+	public function getChapters()
+	{
+		$condition = 'bk_id = '.$this->bookId;
+		$chaptes = $this->instance->where($condition)->select();
+		return $chaptes;
+	}
+	
+	/**
 	 * 保存
 	 */
 	public function doAdd($data)

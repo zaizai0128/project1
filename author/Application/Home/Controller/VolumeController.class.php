@@ -21,6 +21,9 @@ class VolumeController extends HomeController {
 		\Zlib\Api\Acl::check($this->authorInfo, $this->bookId);
 		$this->bookInstance = D('Book', 'Service');
 		$this->volumeInstance = D('Volume', 'Service');
+
+		$book_info = $this->bookInstance->getBookByBookId($this->bookId);
+		$this->assign('book_info', $book_info);
 	}
 
 	/**
@@ -28,14 +31,22 @@ class VolumeController extends HomeController {
 	 */
 	public function index()
 	{
-		$book_info = $this->bookInstance->getBookByBookId($this->bookId);
 		// 获取现有的卷
 		$volume_list = $this->volumeInstance->getVolumeList($this->bookId);
+		$assign['total_volume'] = count($volume_list);
 
 		$this->assign(array(
-			'book_info' => $book_info,
+			'assign' => $assign,
 			'volume_list' => $volume_list
 		));
+		$this->display();
+	}
+
+	/**
+	 * 添加分卷
+	 */
+	public function add()
+	{
 		$this->display();
 	}
 
@@ -54,6 +65,18 @@ class VolumeController extends HomeController {
 			else
 				z_redirect($state['msg']);
 		}	
+	}
+
+	/**
+	 * 修改
+	 */
+	public function edit()
+	{
+		$volume_id = I('get.volume_id');
+		$volume_info = $this->volumeInstance->getVolumeInfo($this->bookId,$volume_id);
+
+		$this->assign('volume_info', $volume_info);
+		$this->display();
 	}
 
 	/**

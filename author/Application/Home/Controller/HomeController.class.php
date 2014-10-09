@@ -27,5 +27,6 @@ class HomeController extends Controller {
 		$user_id = ZS('SESSION.user', 'user_id');
 		$this->authorInfo = $this->authorInstance->getAuthorInfoByUserId($user_id);
 		ZS('SESSION.author', Null, $this->authorInfo);
+		$this->assign('author_info', $this->authorInfo);
 	}
 }

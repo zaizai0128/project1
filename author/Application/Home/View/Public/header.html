@@ -1,24 +1,36 @@
-<div class="navbar navbar-inverse navbar-fixed-top">
-  <div class="navbar-inner">
-    <div class="container">
-      <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="brand" href="{:ZU('/index/hall')}">逐浪大厅</a>
-      <div class="nav-collapse collapse">
-        <ul class="nav">
-          <li><a href="{:ZU('index/index')}">首页</a></li>
-          <li class="active"><a href="{:ZU('index/index', 'ZL_AUTHOR_DOMAIN')}">作者站</a></li>
-          <li><a href="{:ZU('index/index', 'ZL_ADMIN_DOMAIN')}">后台站</a></li>
-        </ul>
-        <p class="navbar-text pull-right">
-        	欢迎, {:ZS('SESSION.author', 'user_nickname')} | 
-      		<a href="{:ZU('user/center/index')}" class="navbar-link">个人中心</a> | 
-      		<a href="{:ZU('login/logout')}" class="navbar-link">退出</a>
-        </p>
-      </div>
+<div class="wrap">
+ <div class="hd_top">   
+    <h1 class="logo"><a href="{:C('ZL_WWW')}"><img src="{:z_img('logo')}"  /></a></h1>
+    <h2 class="top_sub">个人中心</h2>
+    <div class="hd_nav">
+      <ul class="nav_lst">
+         <li <if condition="[nav] eq 'shelf'">class="on"</if>><a href="{:ZU('user/shelf/index')}">我的书架</a></li>
+         <li <if condition="[nav] eq 'comment'">class="on"</if>><a href="javascript:;">我的书评</a></li>
+         <li <if condition="[nav] eq 'author'">class="on"</if>><a href="{:ZU('user/center/area')}">作家专区</a></li>
+         <li <if condition="[nav] eq 'money'">class="on"</if>><a href="#">财务中心</a></li>
+         <li <if condition="[nav] eq 'account'">class="on"</if>><a href="{:ZU('user/account/index')}">账号管理</a></li>
+      </ul>
     </div>
-  </div>
+ </div>
+ <div class="hd_user_sect">
+    <dl>
+       <dt>
+         <a href="{:ZU('user/center/index')}"><img src="{:z_img('authr/authr_toux')}"/></a>
+       </dt>
+       <dd>
+         <?php $user_nickname = $author_info['user_nickname'];?>
+         <?php if(empty($user_nickname)):?>
+         <div class="nam">用户昵称：{$author_info.user_name}<a href="{:ZU('user/account/index')}" class="colr_02">[修改昵称]</a></div>
+         <?php else:?>
+         <div class="nam">用户昵称：{$user_nickname}
+         <?php endif;?>
+         <div class="info_val">
+            <em class="tit">VIP 等级：</em>
+            <span class="bar"><i style="width:43%"></i></span>
+            <span class="val_up">成长值9/10</span>
+         </div>
+       </dd>  
+    </dl>
+    <div class="hd_usr_back"><a href="{:ZU('user/center/index')}" class="sbtn sbtn_05">返回个人中心</a></div>
+  </div>   
 </div>

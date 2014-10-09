@@ -77,10 +77,13 @@ class BookApplyBehavior {
 		// 更新章节到正式表
 		foreach ($book_chapters as $key => $val) {
 			// ch_poster_id & ch_poster 是啥？
-			// $val['ch_poster_id'] = $book_apply['bk_author_id'];
-			// $val['ch_poster'] = $book_apply['bk_author'];
+			$val['ch_poster_id'] = $book_apply['bk_author_id'];
+			$val['ch_poster'] = $book_apply['bk_author'];
 			$val['bk_id'] = $book_id;
 			$val['ch_roll'] = C('BOOK.start_volume');
+			// 由于chapter表 没有intro字段，所以暂时先不对该内容进行插入
+			unset($val['ch_intro']);
+			
 			$chapter_instance->createChapter($val);
 		}
 

@@ -47,6 +47,15 @@ class ZlibChapterVipModel extends BaseModel {
 	}
 
 	/**
+	 * 获取vip信息
+	 */
+	public function getChapterInfo($field = '*')
+	{
+		$condition = 'bk_id = '.$this->bookId.' and ch_id = '.$this->chapterId;
+		return $this->instance->field($field)->where($condition)->find();
+	}
+
+	/**
 	 * 获取vip商品章节信息
 	 */
 	public function getVipCommodityInfo()

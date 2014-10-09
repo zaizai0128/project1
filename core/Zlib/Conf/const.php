@@ -211,6 +211,11 @@ return array(
 
 		// 分卷开始id
 		'start_volume' => 1000,		// 对应的是上面的 正文
+
+		// 允许推荐的最大作品书
+		'recommend_max' => 5,
+		// 简介最大字数限制
+		'intro_max' => 200,
 		
 		// 授权等级 -- 新建作品时候的授权等级
 		'auth_level' => array(

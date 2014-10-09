@@ -12,6 +12,7 @@ class BookController extends HomeController {
 
 	protected $bookId = Null;
 	protected $bookInstance = Null;
+	protected $bookClassInstance = Null;
 
 	protected function init()
 	{
@@ -19,6 +20,7 @@ class BookController extends HomeController {
 		$this->bookId = I('get.book_id');
 		\Zlib\Api\Acl::check($this->authorInfo, $this->bookId);
 		$this->bookInstance = D('Book', 'Service');
+		$this->bookClassInstance = \Zlib\Api\BookClass::getInstance();
 	}
 
 	/**
@@ -55,6 +57,7 @@ class BookController extends HomeController {
 	public function edit()
 	{
 		$book_info = $this->bookInstance->getBookByBookId($this->bookId);
+		$book_info['class_name'] = $this->bookClassInstance->getPathArray($book_info['bk_class_id']);
 
 		$this->assign(array(
 			'book_info' => $book_info
@@ -72,8 +75,7 @@ class BookController extends HomeController {
 			$state = $this->bookInstance->doEditBookInfo($data);
 
 			if ($state['code'] > 0)
-				z_redirect('修改成功', ZU('book/book', 'ZL_AUTHOR_DOMAIN'
-								, array('book_id'=>$this->bookId)));
+				z_redirect('修改成功', ZU('book/index', 'ZL_AUTHOR_DOMAIN'));
 			else
 				z_redirect('修改失败');
 		}

@@ -1,0 +1,118 @@
+<extend name="Public/base" />
+
+<block name="sidebar">
+<include file="Public/sidebar" tab="manager" />
+</block>
+
+<block name="main">
+<div class="work_cnt">
+  <div class="hd_usr">
+      <ul class="hd_nav">
+           <li class="on">
+              <a href="javascript:;">{$book_info.bk_name}</a>
+           </li>
+        </ul>
+        <a href="{:ZU('bookApply/index', 'ZL_AUTHOR_DOMAIN')}" class="colr_02 sbtn_back">返回 >></a>
+    </div>
+    <div class="bd">                     
+        <div class="w_new_cnt w_info_mange">
+          <div class="a_sect_lst">
+            <include file="action" ac="info"/>
+            <div class="autr_nav_line"></div>         
+         </div> 
+         <form action="{:ZU('bookApply/doEdit', 'ZL_AUTHOR_DOMAIN', array('apply_id'=>$book_info['bk_id']))}" method="post">
+           <ul class="form_lst">
+             <li class="frm">
+              <span class="frm_tit">作品名称：</span>
+                <div class="frm_val">
+                   <span class="val">{$book_info.bk_name} （待审核书号：{$book_info.bk_id}）</span>
+                </div>
+             </li>
+             <li class="frm frm_sex">
+              <span class="frm_tit">作品类型：</span>
+                <div class="frm_val">
+                   <span class="val">
+                    <?php 
+                      $class_string = '';
+                      foreach($book_info['class_name'] as $key=>$val) {
+                          $class_string .= $val['name'].' - ';
+                      }
+                      $class_string = rtrim($class_string, ' - ');
+                    ?>
+                    {$class_string}
+                   </span>
+                </div>
+             </li>
+             <li class="frm">
+              <span class="frm_tit">授权状态：</span>
+                <div class="frm_val">
+                   <span class="val">{:ZC(C('BOOK.auth_level'), $book_info['bk_accredit'])}</span>
+                </div>
+             </li>
+             <li class="frm">
+              <span class="frm_tit">作品封面：</span>
+                <div class="frm_inp frm_uplod">
+                  <div class="inp_uplod">
+                     <input type="text" value=""  name="" 
+                     class="inp" style="width:250px"/>
+                     <span class="btn">
+                          <a href="javascript:;" class="btn_upfile"><span>浏览...</span>
+                          <input class="inp_file" type="file">
+                         </a>
+                        </span>
+                   </div>
+                   <p class="tip">
+                     1、图片格式要求：宽高为204X255像素、大小不超过30KB的JPG文件。<br />   
+                     2、图片元素应包含：书名、笔名、逐浪Logo。<br />
+                     3、建议使用原创图片、不得使用真人照片及他人有版权的图片，
+                       以免引起纠纷。<br />
+                     4、严禁上传色情、暴力、广告宣传或不适合公众观赏的图现即做禁                                        书处理。片，一经发<br />
+                     5、封面上传后，管理员将在2个工作日内审核。
+                   </p>
+                   <p class="pic">
+                      <img src="{:z_img('authr/authr_img01')}"/>  
+                   </p>
+                </div>
+             </li>
+            <li class="frm frm_val_inp">
+              <span class="frm_tit">作品标签：</span>
+                <div class="frm_val">
+                   <div class="val_inp">
+                      <!-- <span class="val"></span> -->
+                    <input type="text" name="tag" value="{$book_info.bk_tag}" autocomplete="off" />
+                   </div>   
+                   <span class="txt">每个标签之间用空格隔开</span>
+                </div>
+             </li>
+             <li class="frm frm_texar">
+              <span class="frm_tit">作品简介：</span>
+                <div class="frm_inp">
+                   <textarea class="textar" name="intro">{$book_info.bk_intro}</textarea>
+                   <span class="tip">
+                   简练、精辟的简介将使您的作品更有吸引力，请认真斟酌撰写，并将字数控制在
+                   {:C('BOOK.intro_max')}字以内，与作品无关的内容请在作者公告区域填写。
+                   </span>
+                </div>
+             </li>
+             <li class="frm">
+                <div class="frm_inp frm_btn">
+                  <!-- <a href="#" class="sbtn sbtn_03">确定修改</a>  -->
+                  <button>确定修改</button>
+                </div>
+             </li>
+           </ul> 
+           </form>        
+        </div>
+    </div>
+</div>
+</block>
+
+
+<block name="js">
+<script type="text/javascript">
+  jQuery(function($){
+    
+
+  });
+</script>
+</block>

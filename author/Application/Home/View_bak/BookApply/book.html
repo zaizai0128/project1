@@ -1,0 +1,52 @@
+<extend name="Public/base" />
+
+<block name="main">
+<div class="row">
+	<div class="span3">
+		<include file="Public/sidebar" nav="book_apply_manager"/>
+	</div>
+	<div class="span9">
+		<ul class="breadcrumb">
+			<li><a href="{:ZU('bookApply/index', 'ZL_AUTHOR_DOMAIN')}">待审核作品管理</a><span class="divider">/</span></li><li class="active">{$book_info.bk_name}</li>
+		</ul>
+
+		{// 书的常用管理操作 }
+		<include file="Public/apply_actions" ac="index" />
+		
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th colspan="3">作品详情</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>作品序号：【{$book_info.bk_id}】</td>
+					<td>作品名称：《{$book_info.bk_name}》</td>
+					<td>提交审核时间：{$book_info.bk_cre_time}</td>
+				</tr>	
+				<tr>
+					<td>作者ID：{$book_info.bk_author_id}</td>
+					<td>作者笔名：{$book_info.bk_author}</td>
+					<td>主要角色：{$book_info.bk_actor|default='<span class="muted">暂未设置</span>'}</td>
+				</tr>
+				<tr>
+					<td>作品标签：{$book_info.bk_tag}</td>
+					<td>授权等级：{:ZC(C('BOOK.auth_level'), $book_info['bk_accredit'])}</td>
+					<td>签约类型：{:ZC(C('BOOK.commision'), $book_info['bk_commision'])}</td>
+				</tr>	
+				<tr>
+					<td>当前状态：{$book_info.bk_apply_status}</td>
+					<td>审核编辑：{$book_info.bk_apply_name}</td>
+					<td>审核意见：{$book_info.bk_apply_comments|default='<span class="muted">暂无任何意见</span>'}</td>
+				</tr>	
+				<tr>
+					<td>总章节数：{$book_info.ch_total}</td>
+					<td>最后更新章节：{$book_info.bk_public_name}</td>
+					<td>最后更新时间：{$book_info.bk_now_date}</td>
+				</tr>		
+			</tbody>
+		</table>						
+	</div>
+</div>
+</block>

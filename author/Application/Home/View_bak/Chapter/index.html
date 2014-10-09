@@ -1,0 +1,34 @@
+<extend name="Public/base" />
+
+<block name="main">
+<div class="row">
+	<div class="span3">
+		<include file="Public/sidebar" nav="book_manager"/>
+	</div>
+	<div class="span9">
+		<ul class="breadcrumb">
+			<li><a href="{:ZU('book/index', 'ZL_AUTHOR_DOMAIN')}">作品管理</a><span class="divider">/</span></li><li><a href="{:ZU('book/book', 'ZL_AUTHOR_DOMAIN', array('book_id'=>I('book_id')))}">{$book_info.bk_name}</a><span class="divider">/</span></li><li class="active">章节列表</li>
+		</ul>
+		{// 书的常用管理操作 }
+		<include file="Public/actions" ac="manager_chapter" />
+		<div class="alert alert-info">注：删除章节请使用调卷功能，将章节移动到回收站即可</div>
+		<?php foreach($chapter_list as $key=>$val):?>
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th colspan="2">{$val.volume_name}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php foreach($val['volume_chapter'] as $chapter_id=>$chapter_val):?>
+				<tr>
+					<th>《{$chapter_val.chapter_name}》</th>
+					<th><a data-target="#modal-edit" data-toggle="modal" data-backdrop="static" href="{:ZU('chapter/edit','ZL_AUTHOR_DOMAIN', array('book_id'=>I('book_id'), 'ch_id'=>$chapter_id))}">编辑</a>|<a data-target="#modal-edit" data-toggle="modal" data-backdrop="static" href="{:ZU('chapter/editVolume', 'ZL_AUTHOR_DOMAIN', array('book_id'=>I('book_id'), 'ch_id'=>$chapter_id))}">调卷</a></th>
+				</tr>
+				<?php endforeach;?>
+			</tbody>
+		</table>
+		<?php endforeach;?>
+	</div>
+</div>
+</block>

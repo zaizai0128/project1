@@ -1,0 +1,24 @@
+<div class="navbar navbar-inverse navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="brand" href="{:ZU('/index/hall')}">逐浪大厅</a>
+      <div class="nav-collapse collapse">
+        <ul class="nav">
+          <li><a href="{:ZU('index/index')}">首页</a></li>
+          <li class="active"><a href="{:ZU('index/index', 'ZL_AUTHOR_DOMAIN')}">作者站</a></li>
+          <li><a href="{:ZU('index/index', 'ZL_ADMIN_DOMAIN')}">后台站</a></li>
+        </ul>
+        <p class="navbar-text pull-right">
+        	欢迎, {:ZS('SESSION.author', 'user_nickname')} | 
+      		<a href="{:ZU('user/center/index')}" class="navbar-link">个人中心</a> | 
+      		<a href="{:ZU('login/logout')}" class="navbar-link">退出</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

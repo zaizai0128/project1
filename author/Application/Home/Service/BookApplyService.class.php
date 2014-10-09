@@ -12,14 +12,43 @@ use Zlib\Model\ZlibBookApplyModel;
 class BookApplyService extends ZlibBookApplyModel {
 
 	/**
+	 * 修改作品
+	 */
+	public function doEditBook($data)
+	{
+		if (empty($data['bk_id'])) return z_info(-1, 'id不允许为空');
+		
+		$book_info = parent::getOneApplyBook($data['user_id'], $data['bk_id'], 'bk_apply_status');
+		if (empty($book_info)) return z_info(-2, '作品不存在');
+		if ($book_info['bk_apply_status'] != '00') return z_info(-3, '该作品审核通过，无法修改资料');
+
+		$intro_strlen = z_strlen($data['intro']);
+		if ($intro_strlen > C('BOOK.intro_max')) return z_info(-5, '简介超过最大字数');
+
+		$final_data['bk_id'] = $data['bk_id'];
+		$final_data['bk_tag'] = $data['tag'];
+		$final_data['bk_intro'] = $data['intro'];
+		$result = parent::doEdit($final_data);
+
+		if ($result > 0)
+			return z_info($result, '添加成功');
+		else
+			return z_info(0, '添加失败');
+	}
+
+	/**
 	 * 新建作品
 	 */
 	public function doAdd($data)
 	{
 		if (empty($data['bk_name'])) return z_info(-1, '作品名不能为空');
-		if (empty($data['bk_class_id'])) return z_info(-2, '作品id不能为空');
+		if (empty($data['bk_class_id'])) return z_info(-2, '作品分类id不能为空');
 		if (empty($data['author_name'])) return z_info(-3, '作者笔名不能为空');
 		// 检测是否含有关键字 ...
+
+		// 检测简介长度
+		$intro_strlen = z_strlen($data['intro']);
+		if ($intro_strlen > C('BOOK.intro_max')) return z_info(-5, '简介超过最大字数');
 
 		// 查找作品是否重名
 		if(!$this->_checkBookName($data['bk_name'])) 
@@ -33,7 +62,7 @@ class BookApplyService extends ZlibBookApplyModel {
 		$final_data['bk_class_id'] = $data['bk_class_id'];
 		$final_data['bk_tag'] = $data['bk_tag'];
 		$final_data['bk_size'] = 0;
-		$final_data['bk_intro'] = $data['bk_intro'];
+		$final_data['bk_intro'] = $data['intro'];
 		$final_data['bk_now_date'] = z_now();
 		$final_data['bk_apply_status'] = '00';
 		$final_data['ch_total'] = 0;
@@ -50,14 +79,26 @@ class BookApplyService extends ZlibBookApplyModel {
 	 * 判断作品名是否重名
 	 *
 	 */
-	private function _checkBookName($book_name)
+	private function _checkBookName($book_name, $is_edit = False)
 	{	
-		$book = parent::getApplyBookByName($book_name, 'bk_id');
-		if (!empty($book)) return False;
+		if ($is_edit) {
 
-		$book = D('Book', 'Service')->getBookByName($book_name, 'bk_id');
-		if (!empty($book)) return False;
+			$book = parent::getApplyBookByName($book_name, 'bk_name');
+			if ($book['bk_name'] != $book_name && !empty($book))
+				return False;
 
+			$book = D('Book', 'Service')->getBookByName($book_name, 'bk_name');
+			if ($book['bk_name'] != $book_name && !empty($book))
+				return False;
+
+		} else {
+			$book = parent::getApplyBookByName($book_name, 'bk_id');
+			if (!empty($book)) return False;
+
+			$book = D('Book', 'Service')->getBookByName($book_name, 'bk_id');
+			if (!empty($book)) return False;
+		}
+		
 		return True;
 	}
 

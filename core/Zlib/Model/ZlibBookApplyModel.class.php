@@ -46,7 +46,7 @@ class ZlibBookApplyModel extends BaseModel {
 	 */
 	public function getApplyBookByUserId($user_id, $field = '*', $where = '')
 	{
-		$condition = 'bk_author_id = '.$user_id.$where;
+		$condition = 'bk_author_id = '.$user_id.' and bk_apply_status = "00"'.$where;
 		return $this->field($field)->where($condition)
 				->order('bk_cre_time DESC')->select();
 	}
