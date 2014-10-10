@@ -51,6 +51,31 @@ class VolumeService extends ZlibBookVolumeModel {
 		else
 			return z_info($result, '添加失败');
 	}
+
+	/**
+	 * 编辑章节的时候选择的卷
+	 * @param book_id
+	 */
+	public function getVolCategory($book_id)
+	{
+		$volume_list = array();
+		$result = (array)parent::getVolumeById($book_id);
+		
+		if (!empty($result)) {
+			foreach($result as $key=>$val) {
+				$volume_list[$val['volume_order']] = $val['volume_name'];
+			}
+
+		// 如果卷不存在，则显示正文卷 和 作品相关卷
+		} else {
+			$volume_list = C('BOOK.default_volume');
+
+			// 取消掉垃圾箱
+			unset($volume_list['-10']);
+		}
+
+		return $volume_list;
+	}
 	
 	/**
 	 * 获取书的现有卷
@@ -60,7 +85,8 @@ class VolumeService extends ZlibBookVolumeModel {
 	 */
 	public function getVolumeList($book_id, $is_intro = True)
 	{
-		$volume_list = C('BOOK.default_volume');
+		// $volume_list = C('BOOK.default_volume');
+		$volume_list = array();
 		// 获取不同卷下有多少章节
 		$chapter_instance = new \Zlib\Api\CachedChapter($book_id);
 		$result = (array)parent::getVolumeById($book_id);
@@ -88,15 +114,16 @@ class VolumeService extends ZlibBookVolumeModel {
 			}
 
 		// 未创建卷的时候，显示系统默认的卷
-		} else {
-			if ($is_intro) {
-				$total = count($chapter_instance->getVolumeChapters(C('BOOK.start_volume')));
-				$volume_list[C('BOOK.start_volume')]['volume_id'] = -1;
-				$volume_list[C('BOOK.start_volume')]['volume_name'] = '正文';
-				$volume_list[C('BOOK.start_volume')]['volume_intro'] = '系统默认卷正文';
-				$volume_list[C('BOOK.start_volume')]['chapter_total'] = $total;
-			}
-		}
+		} 
+		// else {
+		// 	if ($is_intro) {
+		// 		$total = count($chapter_instance->getVolumeChapters(C('BOOK.start_volume')));
+		// 		$volume_list[C('BOOK.start_volume')]['volume_id'] = -1;
+		// 		$volume_list[C('BOOK.start_volume')]['volume_name'] = '正文';
+		// 		$volume_list[C('BOOK.start_volume')]['volume_intro'] = '系统默认卷正文';
+		// 		$volume_list[C('BOOK.start_volume')]['chapter_total'] = $total;
+		// 	}
+		// }
 		return $volume_list;
 	}
 	

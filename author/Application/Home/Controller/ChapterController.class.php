@@ -39,6 +39,7 @@ class ChapterController extends HomeController {
 			'assign' => $assign,
 			'book_info' => $this->bookInfo,
 			'chapter_list' => $chapter_list,
+			'ch_id' => $this->chapterId,
 		));
 	}
 
@@ -56,8 +57,7 @@ class ChapterController extends HomeController {
 	public function add()
 	{	
 		\Zlib\Api\Acl::checkChapter($this->bookInfo);
-		
-		$volume_list = $this->volumeInstance->getVolumeList($this->bookId, False);
+		$volume_list = $this->volumeInstance->getVolCategory($this->bookId);
 
 		$this->assign(array(
 			'volume_list' => $volume_list,
@@ -95,9 +95,9 @@ class ChapterController extends HomeController {
 	public function edit()
 	{
 		\Zlib\Api\Acl::checkChapter($this->bookInfo);
-
-		$volume_list = $this->volumeInstance->getVolumeList($this->bookId, False);
+		$volume_list = $this->volumeInstance->getVolCategory($this->bookId);
 		$chapter_info = $this->chapterInstance->getChapterInfo();
+		
 		if (empty($chapter_info)) z_redirect('章节不存在'); 
 
 		$this->assign(array(

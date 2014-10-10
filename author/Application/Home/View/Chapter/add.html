@@ -41,12 +41,12 @@
               <div class="cutright">
                 <form action="{:ZU('chapter/doAdd', 'ZL_AUTHOR_DOMAIN', array('book_id'=>$book_info['bk_id']))}" method="post">
                   <div class="cutable">
-                        <?php if(count($volume_list) > 2):?>
+                        <?php if(!empty($volume_list)):?>
                         <div class="th">
                             <span>发表至：</span>
                             <select name="volume">
                               <?php foreach($volume_list as $key=>$val):?>
-                              <option value="{$key}">{$val}</option>
+                              <option value="{$key}" <?php if(count($volume_list) <=2 && $key == 1000):?>selected="selected"<?php endif;?>>{$val}</option>
                               <?php endforeach;?>
                             </select>
                         </div>

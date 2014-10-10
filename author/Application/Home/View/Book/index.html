@@ -18,7 +18,7 @@
            <dl>
               <dt>
                 <p class="pic">
-                   <a href="{:ZU('book/index', 'ZL_DOMAIN', array('book_id'=>$val['bk_id']))}" target="_blank"><img src="{:z_img('authr/authr_img02')}"/></a>
+                   <a href="{:ZU('book/index', 'ZL_DOMAIN', array('book_id'=>$val['bk_id']))}" target="_blank"><img src="{:z_cover($val['bk_id'], $val['bk_cover'])}"/></a>
                 </p>
                 <span class="edit"><a href="{:ZU('book/edit', 'ZL_AUTHOR_DOMAIN', array('book_id'=>$val['bk_id']))}">修改作品信息</a></span>  
               </dt> 
