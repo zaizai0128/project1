@@ -7,6 +7,10 @@
  * @version 1.0
  */
 
+// 基础常量定义
+define('ZL_IMAGE_PATH', '/data/wwwroot/zhulang.ne/images'); // 原图片样式物理地址
+define('ZL_NGINX_MODULE', 'http://172.16.6.200');			// nginx module 地址 [用来对文件进行操作]	
+
 return array(
 	
 	'ZL_WWW' => 'http://www.zhulang.ne',				// www域名
@@ -15,8 +19,11 @@ return array(
 	'ZL_AUTHOR_DOMAIN' => 'http://author.zhulang.ne',	// 作者站域名
 	'ZL_ADMIN_DOMAIN' => 'http://admin.zhulang.ne',		// 管理站域名
 	'ZL_STYLE_DOMAIN' => 'http://stc.zhulang.ne',		// 静态样式文件域名
+	'ZL_IMAGE_DOMAIN' => 'http://image.zhulang.ne',		// 原图片样式文件域名
 	'ZL_DOMAIN_DOT' => '.zhulang.ne',
-	'ZL_NGINX_MODULE' => 'http://172.16.6.200',	// nginx module 地址 [用来对文件进行操作]
+	
+	'ZL_BOOK_COVER_PATH' => ZL_IMAGE_PATH.'/book_cover',// 作品封面目录物理地址
+
 
 	// 系统相关
 	'SYSTEM' => array(
@@ -192,9 +199,9 @@ return array(
 	// 章节相关
 	'CHAPTER' => array(
 		// 普通章节的操作地址
-		'read' => 'http://172.16.6.200/books/read',	// [get]读/book_id/chapter_id
-		'set' => 'http://172.16.6.200/books/set',	// [post]生成/book_id/chapter_id
-		'rm' => 'http://172.16.6.200/books/rm',		// [get]删除/book_id/chapter_id
+		'read' => ZL_NGINX_MODULE.'/books/read',	// [get]读/book_id/chapter_id
+		'set' => ZL_NGINX_MODULE.'/books/set',		// [post]生成/book_id/chapter_id
+		'rm' => ZL_NGINX_MODULE.'/books/rm',		// [get]删除/book_id/chapter_id
 
 		// 章节描述的字符数
 		'intro_num' => 200,

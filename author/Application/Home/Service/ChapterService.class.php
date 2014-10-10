@@ -65,7 +65,10 @@ class ChapterService extends ZlibChapterModel {
 		$chapter_info['ch_update'] = z_now();
 		$chapter_info['ch_size'] = z_strlen($data['content']);
 		$chapter_info['ch_name'] = $data['ch_name'];
-		$chapter_info['ch_roll'] = $data['volume'];
+		
+		if (isset($data['volume']) && !empty($data['volume'])) {
+			$chapter_info['ch_roll'] = $data['volume'];
+		}
 		$chapter_info['ch_id'] = $data['ch_id'];
 		$chapter_info['bk_id'] = $data['bk_id'];
 		$chapter_info['ch_vip'] = (int)$data['vip'];
@@ -153,9 +156,6 @@ class ChapterService extends ZlibChapterModel {
 
 		if (empty($data['content']))
 			return z_info(-3, '章节内容不允许为空');
-
-		if (empty($data['volume']))
-			return z_info(-4, '卷不允许为空');
 
 		// 如果添加vip章节，则判断该作品的签约状态
 		if ($data['vip'] == 1) {
