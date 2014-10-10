@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<block name="title"><title>{:ZS('SESSION.author', 'author_name')}的专区 - 作者专区 - 逐浪网</title></block>
+<block name="title"><title>{$author_info.user_nickname|default=$author_info['user_name']} - 作者中心主页 - 逐浪网</title></block>
 <link href="{:z_css('author')}" type="text/css" rel="stylesheet">
 <link href="{:z_css('base')}" type="text/css" rel="stylesheet">
 <script src="{:z_js()}"></script>

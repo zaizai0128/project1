@@ -232,6 +232,19 @@ class Acl {
 	}
 
 	/**
+	 * 作者站 章节管理的验证机制
+	 */
+	static public function checkChapter($book_info)
+	{
+		if ($book_info['bk_status'] != '00')
+			z_redirect('作品状态非正常，无法继续操作');
+		if ($book_info['bk_fullflag'] != 0)
+			z_redirect('非连载的作品无法进行编辑');
+		
+		return True;
+	}
+
+	/**
 	 * 作者站的审核作品验证机制
 	 */
 	static public function apply($author_info, $book_id)

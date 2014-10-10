@@ -5,7 +5,7 @@
     <div class="tpbar_usr">
     	<ul class="usr_nav">
         	<li class="usr_loged">
-                <a href="{:ZU('user/center/index')}" class="usr_nam">欢迎您, {:ZS('SESSION.author', 'author_name')}</a>
+                <a href="{:ZU('user/center/index')}" class="usr_nam">欢迎您, {$author_info.user_nickname|default=$author_info['user_name']}</a>
                 <a href="{:ZU('login/logout')}" class="usr_exit">退出</a>
                 <i class="ico_usr">|</i>
             </li>

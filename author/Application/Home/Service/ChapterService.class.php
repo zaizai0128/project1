@@ -56,7 +56,6 @@ class ChapterService extends ZlibChapterModel {
 	 */
 	public function doEdit($data)
 	{
-		$data = array_filter($data);
 		$state = $this->_checkChapter($data, True);
 		if ($state['code'] <= 0) return $state;
 
@@ -104,7 +103,6 @@ class ChapterService extends ZlibChapterModel {
 	 */
 	public function doAdd($data)
 	{	
-		$data = array_filter($data);
 		$state = $this->_checkChapter($data);
 		if ($state['code'] <= 0) return $state;
 
@@ -159,6 +157,19 @@ class ChapterService extends ZlibChapterModel {
 		if (empty($data['volume']))
 			return z_info(-4, '卷不允许为空');
 
+		// 如果添加vip章节，则判断该作品的签约状态
+		if ($data['vip'] == 1) {
+			// pass
+		}
+
+		// 判断书籍状态
+		if ($data['bk_fullflag'] != 0) {
+			return z_info(-10, '非连载的作品无法编辑');
+		}
+
+		if ($data['bk_status'] != '00') {
+			return z_info(-11, '作品状态有问题，无法编辑');
+		}
 		// 其他验证 ...
 
 		if ($is_edit) {

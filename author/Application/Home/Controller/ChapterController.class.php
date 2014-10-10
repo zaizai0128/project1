@@ -15,6 +15,7 @@ class ChapterController extends HomeController {
 	protected $bookInstance = Null;
 	protected $chapterInstance = Null;
 	protected $volumeInstance = Null;
+	protected $bookInfo = Null;
 
 	public function init()
 	{
@@ -26,7 +27,7 @@ class ChapterController extends HomeController {
 		$this->chapterInstance = D('Chapter', 'Service')->getInstance($this->bookId, $this->chapterId);
 		$this->volumeInstance = D('Volume', 'Service');
 
-		$book_info = $this->bookInstance->getBookByBookId($this->bookId, 'bk_id,bk_name');
+		$this->bookInfo = $this->bookInstance->getBookByBookId($this->bookId, 'bk_id,bk_name,bk_fullflag,bk_status,bk_accredit,bk_commision');
 		$chapter_list = \Zlib\Api\Book::getCatalog($this->bookId);
 		$assign['volume_total'] = count($chapter_list); 
 		$assign['volume_chapter'] = 0;
@@ -36,7 +37,7 @@ class ChapterController extends HomeController {
 
 		$this->assign(array(
 			'assign' => $assign,
-			'book_info' => $book_info,
+			'book_info' => $this->bookInfo,
 			'chapter_list' => $chapter_list,
 		));
 	}
@@ -54,6 +55,8 @@ class ChapterController extends HomeController {
 	 */
 	public function add()
 	{	
+		\Zlib\Api\Acl::checkChapter($this->bookInfo);
+		
 		$volume_list = $this->volumeInstance->getVolumeList($this->bookId, False);
 
 		$this->assign(array(
@@ -67,8 +70,10 @@ class ChapterController extends HomeController {
 	 */
 	public function doAdd()
 	{
+		\Zlib\Api\Acl::checkChapter($this->bookInfo);
+
 		if (IS_POST) {
-			$data = array_merge($this->authorInfo, I(), array('bk_id'=>$this->bookId));
+			$data = array_merge($this->authorInfo, $this->bookInfo, I());
 			$state = $this->chapterInstance->doAdd($data);
 
 			if ($state['code'] > 0) {
@@ -89,6 +94,8 @@ class ChapterController extends HomeController {
 	 */
 	public function edit()
 	{
+		\Zlib\Api\Acl::checkChapter($this->bookInfo);
+
 		$volume_list = $this->volumeInstance->getVolumeList($this->bookId, False);
 		$chapter_info = $this->chapterInstance->getChapterInfo();
 		if (empty($chapter_info)) z_redirect('章节不存在'); 
@@ -105,8 +112,10 @@ class ChapterController extends HomeController {
 	 */
 	public function doEdit()
 	{
+		\Zlib\Api\Acl::checkChapter($this->bookInfo);
+
 		if (IS_POST) {
-			$data = array_merge($this->authorInfo, I(), array('bk_id'=>$this->bookId, 'ch_id'=>$this->chapterId));
+			$data = array_merge($this->authorInfo, $this->bookInfo, I(), array('ch_id'=>$this->chapterId));
 			$state = $this->chapterInstance->doEdit($data);
 
 			if ($state['code'] > 0) {
