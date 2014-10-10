@@ -48,6 +48,11 @@ class ChapterController extends HomeController {
 	 */
 	public function index()
 	{
+		$volume_list = $this->volumeInstance->getVolCategory($this->bookId);
+
+		$this->assign(array(
+			'volume_list' => $volume_list,
+		));
 		$this->display();
 	}
 

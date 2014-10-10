@@ -37,23 +37,58 @@
                   <div class="cons" style="display:none"></div>
               </div>
               <div class="cutright">
-                <div class="cutable">
-                    
-                     
-                      <div class="tr tzreo">
-    <div class="hero-unit">
-      <p>网站内容自查公告（2014-4-14）</p>
-      <p>亲爱的作者朋友们：为响应国家扫黄政策，逐浪网从即日起对站内所有作品进行清查，凡存在涉黄内容、敏感内容的作品均在处理之列。请广大作者立即做好自查工作，以免造成不必要的损失。如有问题，请及时与编辑联系。</p>
-    </div>
-    <p class="text-info">2013年逐浪网新版全勤奖励公告！（2012-12-31）</p>
-    <p> 2003-2012，携手十年，我们收获喜悦，一起迈步腾飞。 值此龙蛇更替之际，逐浪网作者福利再传喜讯。 回首2012年，逐浪网在电子、无线、出版等各个领域依旧保持着飞速的发展，网站单月发放稿酬作者突破八百人次，年收入超过六位数的作者四十余人，一大批有实力的作者通过自身的努力在逐浪平台上取得了巨大的成功和丰厚的回报！<a href="###">查看详情</a></p>
-    <p class="text-warning">坦克世界文字争霸赛火热开启，苹果4S、IPAD3抱回家！（2012-09-14）</p>
-    <p> 疯玩坦克，激扬文字，领取活动万元奖！《坦克世界》是空中网的热门游戏之一，在游戏的世界里，坦克做主，拓展领土无限；而在逐浪，红文无数，文字最大，小小文浪遏飞舟，也能争霸一方！此次活动奖金丰厚，赶快来文字争霸吧！<a href="###">查看详情</a></p>  
-    <p class="text-error">喜迎龙年，逐浪网全勤奖加倍！（2012-01-12）</p>
-    <p>2003-2012，风风雨雨，十年征程，我们相伴相依。2011年，逐浪网在各条战线上全面开花，其中仅无线稿酬月发近百万。喜迎龙年，预祝广大逐浪网作家们，阖家欢乐，写作顺利。庆祝新春佳节，2012年1月全勤奖翻倍！<a href="###">查看详情</a></p> 
-                      </div>
-                      <!-- <div class="tr"><a class="sbtn_02" href="#">确认修改</a><a class="sbtn_02" href="#">删除本章</a></div> -->
-                  </div>
+   
+                  <div class="cutable">
+                        <?php if(!empty($volume_list)):?>
+                        <div class="th">
+                            <span>发表至：</span>
+                            <select name="volume">
+                              <?php 
+                                $i=1;
+                                $total_v = count($volume_list);
+                              ?>
+                              <?php foreach($volume_list as $key=>$val):?>
+                              <option value="{$key}" 
+                                <?php if(count($volume_list) <=2 && $key == 1000):?>
+                                  selected="selected"
+                                <?php elseif($i == $total_v):?>
+                                  selected="selected"
+                                <?php endif;?>>{$val}</option>
+                              <?php ++$i;?>
+                              <?php endforeach;?>
+                            </select>
+                        </div>
+                        <?php endif;?>
+                        <div class="tr">
+                          <span class="td">章节名称：</span>
+                            <div class="tdt">
+                              <input name="ch_name" type="text" class="input_text" placeholder="输入章节号和章节名，示例：第一章 婚礼" autocomplete="off"/>
+                                <p class="fred">为配合第三方渠道发布，请注意章节号顺序发布，格式以示例为佳（如：第一章 婚礼），不要使用英文做为章节序号。</p>
+                            </div>
+                            <div class="tds">
+                              <input name="app[flower]" type="checkbox" value="1" /><label>求鲜花</label>
+                              <input name="app[gift]" type="checkbox" value="1" /><label>求打赏</label>
+                            </div>
+                        </div>
+                        <div class="tr tzreo">
+                          <span class="td">章节类型：</span>
+                            <div class="tdd">
+                              <label><input name="vip" type="radio" value="0" checked="checked"/>公共章节</label>
+                              <label><input name="vip" type="radio" value="1" />VIP章节</label>
+                            </div>
+                        </div>
+                        <div class="tr twu">
+                          <p>正文内容：</p>
+                            <textarea name="content" cols="" rows="" class="textarea_t"></textarea>
+                            <p><span>章节总字数需在2000至30000间</span><a class="a_bot" href="">字数计算</a></p>
+                        </div>
+                        <div class="tr">
+                          <p>作者的话：</p>
+                            <textarea name="intro" cols="" rows="" class="textarea_m"></textarea>
+                        </div>
+    
+                    </div>
+
               </div>
           </div>
         </div>
