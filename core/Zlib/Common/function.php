@@ -351,7 +351,7 @@ function z_chen_substr($str, $start, $len)  //字符位置从0开始
  * @param string $msg 跳转提示信息
  * @param string $url 跳转的URL 通过ZU生成的url
  * @param integer $delay 延时跳转的时间 单位为秒
- * @param int 	 type 跳转的类型 默认成功1 失败0
+ * @param int 	 type 跳转的类型 默认成功1 失败-1
  */
 function z_redirect($msg, $url = '', $delay = Null, $type = 1)
 {
@@ -363,7 +363,7 @@ function z_redirect($msg, $url = '', $delay = Null, $type = 1)
 		redirect($url,$delay,$msg);
 
 	// 失败的跳转
-	} else if(empty($url) || $type == 2) {
+	} else if(empty($url) || $type == -1) {
 		// $delay = !isset($delay) ? 1 : (int)$delay ;
 
 		// 失败及时跳转到上一页

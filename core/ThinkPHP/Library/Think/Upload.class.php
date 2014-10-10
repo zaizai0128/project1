@@ -267,7 +267,7 @@ class Upload {
     private function check($file) {
         /* 文件上传失败，捕获错误代码 */
         if ($file['error']) {
-            z_redirect($file['error']);
+            $this->error($file['error']);
             return false;
         }
 
