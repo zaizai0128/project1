@@ -1,0 +1,136 @@
+<extend name="Public/base" />
+
+<block name="sidebar">
+<include file="Public/sidebar" tab="info" />
+</block>
+
+<block name="main">
+<div class="a_data_cnt">
+  <div class="hd_usr">
+      <ul class="hd_nav">
+           <li class="on">
+              <a href="#">作者账户信息</a>
+           </li>
+        </ul>
+    </div>
+    <div class="bd">
+      <div class="a_edit_lst">
+          <form action="{:ZU('author/doEdit', 'ZL_AUTHOR_DOMAIN')}" method="post">
+          <ul class="form_lst form_edit_top">
+              <li class="frm">
+                  <span class="frm_tit">
+                      您的账号：
+                    </span>
+                    <div class="frm_val">
+                      <span class="val colr_02"> 
+                        {$author_info.user_name}
+                      </span>
+                    </div>
+                </li>
+                <li class="frm">
+                  <span class="frm_tit">笔名：</span>
+                    <div class="frm_val colr_02">
+                      <span class="val">{$author_info.author_name}</span>
+                    </div>
+                </li>
+                <li class="frm">
+                  <span class="frm_tit">真实姓名：</span>
+                    <div class="frm_val">
+                      <span class="val colr_02">{$author_info.user_true_name}</span>
+                    </div>
+                </li>
+                <li class="frm">
+                    <span class="frm_tit">性别：</span>
+
+                    <div class="frm_val"><span class="val colr_02">{:ZC(C('USER.sex'), $author_info['user_sex'])}</span></div>
+                </li>
+                <li class="frm">
+                  <span class="frm_tit">年龄：</span>
+
+                    <div class="frm_val"><span class="val colr_02">xx</span></div>
+                </li>
+                <li class="frm">
+                  <span class="frm_tit">安全邮箱：</span>
+                    <div class="frm_val">
+                      <span class="val">
+                        <input type="text" value="{$author_info.user_email}" name="a_email" class="inp" autocomplete="off"/>
+                        <em class="colr_01">未认证</em>
+                        <a href="#" class="colr_02 ctr_iden">点击认证</a>
+                      </span>  
+                    </div>
+                </li>
+                <li class="frm">
+                  <span class="frm_tit">安全手机：</span>
+                    <div class="frm_val">
+                      <span class="val">
+                        <input type="text" value="{$author_info.user_mobile}" name="a_phone" class="inp" autocomplete="off" maxlength="11"/>
+                        <em class="colr_01">未认证</em>
+                        <a href="#" class="colr_02 ctr_iden">点击认证</a>
+                      </span>  
+                    </div>
+                </li>
+                <li class="frm">
+                  <span class="frm_tit">联系地址：</span>
+                    <div class="frm_inp">
+                      <input type="text" value="{$author_info.user_address}" name="a_address" class="inp" autocomplete="off"/>
+                    </div>
+                </li>
+                <li class="frm">
+                  <span class="frm_tit">邮政编码：</span>
+                    <div class="frm_inp">
+                      <input type="text" value="{$author_info.user_zipcode}" name="a_zipcode" class="inp" autocomplete="off" maxlength="7"/>
+                    </div>
+                </li>
+            </ul> 
+            <h3 class="tit_bank">银行账户信息</h3>
+            <ul class="form_lst form_data_inp">
+              <li class="frm">
+                  <span class="frm_tit">开户人姓名：</span>
+                    <div class="frm_inp">
+                      <input type="text" value="{$bank_info.bank_name}" name="b_user_name" class="inp" autocomplete="off" />
+                    </div>
+                </li>
+                <li class="frm">
+                  <span class="frm_tit">开户人身份证号：</span>
+                    <div class="frm_inp">
+                       <input type="text" 
+                       value="{$author_info.user_idcard}" name="a_idcard" class="inp" autocomplete="off"/>
+                    </div>
+                </li>
+                <li class="frm">
+                  <span class="frm_tit">银行账户：</span>
+                    <div class="frm_inp">
+                    <input type="text" value="{$bank_info.bank_num}" name="b_num" class="inp" autocomplete="off"/>
+                    </div>
+                </li>
+                <li class="frm">
+                  <span class="frm_tit">开户行全称：</span>
+                    <div class="frm_inp">
+                    <input type="text" value="{$bank_info.bank}" name="b_name" class="inp" autocomplete="off"/>
+                    </div>
+                </li>
+                <li class="frm">
+                   <span class="frm_tit">银行所在省市：</span>
+                   <div class="frm_inp">
+                      <input type="text" value="{$bank_info.bank_prov_city}" name="b_city" class="inp" autocomplete="off"/>
+                    </div>
+                </li>
+                <!-- <li class="frm">
+                  <span class="frm_tit">联系电话：</span>
+                    <div class="frm_inp">
+                    <input type="text" value="15865464567" name="" class="inp"/>
+                    </div>
+                </li> -->
+                <li class="frm">
+                    <span class="frm_tit"></span>
+                    <div class="frm_inp frm_btn">
+                      <button>保存修改</button>
+                      <a href="{:ZU('author/index', 'ZL_AUTHOR_DOMAIN')}" class="sbtn sbtn_03">取消返回</a>
+                    </div>
+                </li>
+            </ul>
+            </form>                 
+        </div>                    
+    </div>
+</div>
+</block>

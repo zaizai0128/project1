@@ -15,16 +15,19 @@ class AuthorController extends HomeController {
 	 */
 	public function index()
 	{
+		// 获取该用户的银行信息
+		$bank_info = D('UserAuthorBank', 'Service')->getBankInfoByUserId($this->authorInfo['user_id']);
+
 		$this->assign(array(
-			'author_info' => $this->authorInfo,
+			'bank_info' => $bank_info,
 		));
 		$this->display();
 	}
 
 	/**
-	 * 填写银行信息
+	 * 修改个人信息
 	 */
-	public function bank()
+	public function edit()
 	{
 		// 获取该用户的银行信息
 		$bank_info = D('UserAuthorBank', 'Service')->getBankInfoByUserId($this->authorInfo['user_id']);
@@ -33,6 +36,22 @@ class AuthorController extends HomeController {
 			'bank_info' => $bank_info,
 		));
 		$this->display();
+	}
+
+	/**
+	 * 执行修改
+	 */
+	public function doEdit()
+	{
+		if (IS_POST) {
+			$data = array_merge(I(), $this->authorInfo);
+			$state = $this->authorInstance->doEditInfo($data);
+			
+			if ($state['code'] > 0)
+				z_redirect($state['msg'], ZU('author/index', 'ZL_AUTHOR_DOMAIN'));
+			else
+				z_redirect($state['msg']);
+		}
 	}
 
 	/**

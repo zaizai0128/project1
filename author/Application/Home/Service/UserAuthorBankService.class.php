@@ -24,10 +24,11 @@ class UserAuthorBankService extends ZlibUserAuthorBankModel {
 		// 查找银行信息
 		$bank = parent::getBankInfoByUserId($data['user_id'], 'id,user_id');
 
-		$final_data['bank'] = $data['bank'];
-		$final_data['bank_name'] = $data['bank_name'];
-		$final_data['bank_num'] = $data['bank_num'];
+		$final_data['bank'] = $data['b_name'];
+		$final_data['bank_name'] = $data['b_user_name'];
+		$final_data['bank_num'] = $data['b_num'];
 		$final_data['user_id'] = $data['user_id'];
+		$final_data['bank_prov_city'] = $data['b_city'];
 		
 		// 添加
 		if (empty($bank)) {

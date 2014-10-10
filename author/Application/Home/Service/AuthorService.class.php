@@ -8,6 +8,7 @@
  */
 namespace Home\Service;
 use Zlib\Model\ZlibUserModel;
+use Zlib\Model\ZlibUserAuthorModel;
 
 class AuthorService extends ZlibUserModel {
 	
@@ -30,6 +31,34 @@ class AuthorService extends ZlibUserModel {
 		$user_info['formal'] = $formal;
 
 		return $user_info;
+	}
+
+	/**
+	 * 修改作者资料
+	 */
+	public function doEditInfo($data)
+	{
+		// 判断 如果用户手机号已经验证，则无法进行修改手机操作
+		if ($data['user_mobi_yz'] == 1 && isset($data['a_phone']))
+			return z_info(-11, '手机号已验证，无法进行修改手机操作');
+
+		// 如果邮箱已经验证，则无法进行修改邮箱操作
+		// pass 暂时未有邮箱被验证字段
+
+		// 用户表信息
+		$final_user['user_id'] = $data['user_id'];
+		$final_user['user_email'] = $data['a_email'];
+		$final_user['user_mobile'] = $data['a_phone'];
+
+		$result['user'] = parent::doEdit($final_user);
+
+		// 作者表信息
+		$result['author'] = D('UserAuthor', 'Service')->doAddInfo($data); 
+
+		// 银行信息
+		$result['bank'] = D('UserAuthorBank', 'Service')->doAddBank($data);
+
+		return z_info(1, '修改成功');
 	}
 
 }

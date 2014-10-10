@@ -6,8 +6,6 @@
 <link href="{:z_css('author')}" type="text/css" rel="stylesheet">
 <link href="{:z_css('base')}" type="text/css" rel="stylesheet">
 <script src="{:z_js()}"></script>
-<script src="{:z_js('zlang')}"></script>
-<script src="{:z_js('author/zlang.author')}"></script>
 </head>
 
 <body>
@@ -39,8 +37,17 @@
         </block>
     </div> 
     </div>
-</div>     
+</div>
+  <script src="{:z_js('zlang')}"></script>
+  <script src="{:z_js('zl.user')}"></script>
+  <script src="{:z_js('author/zlang.author')}"></script>
   {// 扩展的js}
-  <block name="js"></block>   
+  <block name="js"></block>
+<script type="text/javascript">
+jQuery(function(){
+
+   $.showMenu();
+});
+</script>
 </body>
 </html>

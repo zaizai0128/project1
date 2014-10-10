@@ -17,7 +17,12 @@ class ZlibUserAuthorModel extends BaseModel {
 	 */
 	public function doEdit($data)
 	{
-		return $this->data($data)->add($data, array(), True);
+		return $this->where('user_id = '.$data['user_id'])->data($data)->save();
+	}
+
+	public function doAdd($data)
+	{
+		return $this->data($data)->add();
 	}
 
 	/**
