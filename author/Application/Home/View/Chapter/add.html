@@ -45,8 +45,18 @@
                         <div class="th">
                             <span>发表至：</span>
                             <select name="volume">
+                              <?php 
+                                $i=1;
+                                $total_v = count($volume_list);
+                              ?>
                               <?php foreach($volume_list as $key=>$val):?>
-                              <option value="{$key}" <?php if(count($volume_list) <=2 && $key == 1000):?>selected="selected"<?php endif;?>>{$val}</option>
+                              <option value="{$key}" 
+                                <?php if(count($volume_list) <=2 && $key == 1000):?>
+                                  selected="selected"
+                                <?php elseif($i == $total_v):?>
+                                  selected="selected"
+                                <?php endif;?>>{$val}</option>
+                              <?php ++$i;?>
                               <?php endforeach;?>
                             </select>
                         </div>

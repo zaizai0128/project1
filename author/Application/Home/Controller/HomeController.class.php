@@ -17,9 +17,9 @@ class HomeController extends Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		\Zlib\Api\Acl::author();
 		$this->authorInstance = D('Author', 'Service');
 		$this->init();
+		\Zlib\Api\Acl::author($this->authorInfo);
 	}
 
 	protected function init()

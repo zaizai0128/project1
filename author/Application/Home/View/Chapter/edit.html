@@ -28,6 +28,7 @@
               </span>
               <span class="filt_r">
                 <a href="javascript:;" class="sbtn_06">修改【{$chapter_info.ch_name}】章节</a>
+                <a href="{:ZU('chapter/add', 'ZL_AUTHOR_DOMAIN', array('book_id'=>$book_info['bk_id']))}" class="sbtn_06">新建章节</a>
               </span>
             </div>
           <div class="cutbox">
@@ -41,7 +42,7 @@
               <div class="cutright">
                 <form action="{:ZU('chapter/doEdit', 'ZL_AUTHOR_DOMAIN', array('book_id'=>$book_info['bk_id'], 'ch_id'=>$chapter_info['ch_id']))}" method="post">
                   <div class="cutable">
-                        <?php if(count($volume_list) > 2):?>
+                         <?php if(!empty($volume_list)):?>
                         <div class="th">
                             <span>发表至：</span>
                             <select name="volume">

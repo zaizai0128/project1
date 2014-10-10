@@ -192,18 +192,18 @@ class Acl {
 	/**
 	 * 作者站验证机制
 	 */
-	static public function author()
+	static public function author($author_info)
 	{
 		// 用户必须登录
-		if (!ZS('SESSION.user', '?'))
+		if (empty($author_info))
 			z_redirect('请先登录', ZU('login/index', 'ZL_DOMAIN', array('setback'=>ZU('index/index', 'ZL_AUTHOR_DOMAIN'))));
 
 		// 用户状态必须为 启用中
-		if (ZS('SESSION.user', 'user_state') != 0)
+		if ($author_info['user_state'] != 0)
 			z_redirect('账号被禁用', ZU('user/center/index')); 
 		
 		// 判断用户级别 02 03 作者
-		if (!in_array(ZS('SESSION.user', 'user_type'), array('02', '03', '04'))) {
+		if (!in_array($author_info['user_type'], array('02', '03', '04'))) {
 			z_redirect('非作者', ZU('user/center/area'));
 		}
 

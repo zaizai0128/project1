@@ -3,9 +3,12 @@
     <!-- <li>VIP章节列表</li> -->
 </ul>
 <div class="cons">
-    <?php $i = 0;?>
+    <?php 
+      $i = 1;
+      $chapter_t = count($chapter_list);
+    ?>
     <?php foreach($chapter_list as $volume_key=>$volume_val):?>
-      <div class="leftnav <?php if($volume_key == $chapter_info['ch_roll'] || ($i == 0 && empty($chapter_info))):?>highlight<?php endif;?>">
+      <div class="leftnav <?php if($volume_key == $chapter_info['ch_roll'] || ($i == $chapter_t && empty($chapter_info))):?>highlight<?php endif;?>">
       <h2>{$volume_val.volume_name}<span></span></h2>
         <ul>
             <?php foreach($volume_val['volume_chapter'] as $chapter_key=>$chapter_val):?>

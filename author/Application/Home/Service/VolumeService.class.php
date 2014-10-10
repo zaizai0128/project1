@@ -62,6 +62,12 @@ class VolumeService extends ZlibBookVolumeModel {
 		$result = (array)parent::getVolumeById($book_id);
 		
 		if (!empty($result)) {
+			$volume_list = C('BOOK.default_volume');
+			// 取消掉垃圾箱
+			unset($volume_list['-10']);
+			// 取消掉正文
+			unset($volume_list[C('BOOK.start_volume')]);
+
 			foreach($result as $key=>$val) {
 				$volume_list[$val['volume_order']] = $val['volume_name'];
 			}
