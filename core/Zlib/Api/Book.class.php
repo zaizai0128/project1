@@ -217,6 +217,31 @@ class Book {
 		return $catalog;
 	}
 
+	/**
+	 * 获取作品封面
+	 *
+	 * @param int book_id
+	 * @param int cover 是否有封面
+	 * @param int site  站点
+	 */
+	public static function getCover($book_id = Null, $cover = 1, $site = 0)
+	{
+		// 如果作品不存在，则返回默认图片
+		if (empty($book_id) || $cover != 1)
+			return C('ZL_IMAGE_DOMAIN') . '/www/image/no_book.gif' . '?' . time();
+
+		$domain = $site == 0 ? C('ZL_IMAGE_DOMAIN') : C('ZL_NV_IMAGE_DOMAIN') ;
+
+		// 为方便本地测试，修改一下规则
+		if ($book_id > 303730) {
+			// 本地测试的作品，改为测试域名
+			$domain = 'http://images.zhulang.ne';
+		}
+
+		$img = floor( $book_id / 10000 )."/".floor( $book_id % 10000 / 100 )."/".$book_id.".jpg";
+		return $domain . '/book_cover/image/' . $img;
+	}
+
 	public static function isCached($book_id) {
 		return !(S(self::$mKeyName.$book_id) == false);
 	}

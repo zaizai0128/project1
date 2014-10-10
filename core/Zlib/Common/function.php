@@ -448,3 +448,11 @@ function z_ip()
 {
 	return $_SERVER['REMOTE_ADDR'];
 }
+
+/**
+ * 获取作品封面地址
+ */
+function z_cover($book_id = Null, $cover = 1, $site = 0)
+{
+	return \Zlib\Api\Book::getCover($book_id, $cover, $site);
+}

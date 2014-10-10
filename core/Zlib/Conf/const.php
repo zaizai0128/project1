@@ -19,7 +19,8 @@ return array(
 	'ZL_AUTHOR_DOMAIN' => 'http://author.zhulang.ne',	// 作者站域名
 	'ZL_ADMIN_DOMAIN' => 'http://admin.zhulang.ne',		// 管理站域名
 	'ZL_STYLE_DOMAIN' => 'http://stc.zhulang.ne',		// 静态样式文件域名
-	'ZL_IMAGE_DOMAIN' => 'http://image.zhulang.ne',		// 原图片样式文件域名
+	'ZL_IMAGE_DOMAIN' => 'http://images.zhulang.com',	// 原图片样式文件域名
+	'ZL_NV_IMAGE_DOMAIN' => 'http://images.xxs8.com',		// 原女频图片样式文件域名
 	'ZL_DOMAIN_DOT' => '.zhulang.ne',
 	
 	'ZL_BOOK_COVER_PATH' => ZL_IMAGE_PATH.'/book_cover',// 作品封面目录物理地址
