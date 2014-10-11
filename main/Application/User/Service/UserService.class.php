@@ -72,10 +72,17 @@ class UserService extends ZlibUserModel {
 		// 修改主表信息
 		$final_data['user_id'] = $data['user_id'];
 		$final_data['user_sex'] = $data['sex'];
-		$final_data['user_email'] = $data['email'];
+
+		if (isset($data['emali']) && !empty($data['email'])) {
+			$final_data['user_email'] = $data['email'];
+		}
+
 		$final_data['user_qq'] = $data['qq'];
 		$final_data['user_birthday'] = $data['birthday'];
-		$final_data['user_mobile'] = $data['phone'];
+
+		if (isset($data['phone']) && !empty($data['phone'])) {
+			$final_data['user_mobile'] = $data['phone'];
+		}
 
 		if (isset($data['nickname']) && !empty($data['nickname']))
 			$final_data['user_nickname'] = $data['nickname'];

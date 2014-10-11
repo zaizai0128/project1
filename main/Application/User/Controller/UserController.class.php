@@ -19,12 +19,14 @@ class UserController extends Controller {
 	{
 		parent::__construct();
 
-		// 权限验证机制
-		\Zlib\Api\Acl::user();
 		$this->userInstance = D('User', 'Service');
 		$this->userId = ZS('SESSION.user', 'user_id');
+		
 		// 获取基础用户信息
 		$this->userInfo = $this->userInstance->getUserInfo($this->userId);
+
+		// 权限验证机制
+		\Zlib\Api\Acl::user($this->userInfo);
 		$this->init();
 	}
 

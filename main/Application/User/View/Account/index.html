@@ -31,13 +31,18 @@
                 </select>
             </li>
             <li class="frm">
-              <span class="frm_tit">
+                <span class="frm_tit">
                   安全邮箱：
                 </span>
                 <div class="frm_val">
+                  <?php if($user_info['user_email'] == $user_info['user_true_email'] && !empty($user_info['user_true_email'])):?>
+                    <input type="text" disabled value="{$user_info.user_email}" />
+                    <em class="colr_01">已认证</em>
+                  <?php else:?>
                     <input type="text" name="email" value="{$user_info.user_email}" />
                     <em class="colr_01">未认证</em>
                     <a href="javascript:;" class="colr_02 ctr_iden">点击认证</a>
+                  <?php endif;?>
                 </div>
             </li>
             <li class="frm">

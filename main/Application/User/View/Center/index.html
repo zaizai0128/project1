@@ -67,14 +67,16 @@
                   <span class="set_tit">安全认证：</span>  
                   <div class="set_val">
                      <span class="val">
-                      <!--邮箱状态否-->
-                        <!--<span class="val_eml_no">
-                          <i class="ico_no_01"></i><em> (否) </em>
-                        </span>-->
-                        <!--邮箱状态是-->
+                        <!--邮箱状态-->
+                        <?php if($user_info['user_email'] == $user_info['user_true_email'] && !empty($user_info['user_true_email'])):?>
                         <span class="val_eml_yes">
                           <i class="ico_yes_01"></i><em class="colr_01"> (是) </em>
                         </span>
+                        <?php else:?>
+                        <span class="val_eml_no">
+                          <i class="ico_no_01"></i><em> (否) </em>
+                        </span>
+                        <?php endif;?>
                         <?php if($user_info['user_mobi_yz'] == 1):?>
                         <span class="val_tel_yes">
                             <i class="ico_yes_02"></i><em> (是) </em>

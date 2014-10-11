@@ -174,15 +174,17 @@ class Acl {
 	/**
 	 * 权限验证机制
 	 */
-	static public function user()
+	static public function user($user_info)
 	{
+		$user_info = array_filter($user_info);
+		
 		// 用户必须登录
-		if (!ZS('SESSION.user', '?'))
+		if (empty($user_info))
 			z_redirect('请先登录', ZU('login/index', 'ZL_DOMAIN', array('setback'=>z_referer())));
 
 		// 用户状态必须为 启用中
-		if (ZS('SESSION.user', 'user_state') != 0)
-			z_redirect('账号被禁用', C('ZL_WWW')); 
+		if ($user_info['user_state'] != 0)
+			z_redirect('账号禁止使用', C('ZL_WWW')); 
 
 		// 其他验证 待...
 
