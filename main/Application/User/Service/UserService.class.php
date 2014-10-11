@@ -90,6 +90,23 @@ class UserService extends ZlibUserModel {
 	}
 
 	/**
+	 * 注册成功后的补充资料
+	 */
+	public function doFullInfo($data)
+	{
+		$final_data['user_id'] = $data['user_id'];
+		$final_data['user_sex'] = $data['sex'];
+
+		if (!empty($data['like']) && !empty($data['like_name'])) {
+			$final_data['user_like_tag'] = serialize(array_combine($data['like'], $data['like_name']));
+		}
+
+		// 修改主表信息
+		$result = parent::doEdit($final_data);
+		return z_info(1, '修改成功');
+	}
+
+	/**
 	 * 验证修改个人信息
 	 */
 	private function _checkEditInfo($data)

@@ -6,7 +6,7 @@
 <link href="{:z_css('login')}" type="text/css" rel="stylesheet">
 <link href="{:z_css('login_base')}" type="text/css" rel="stylesheet">
 <script src="{:z_js()}"></script>
-<script src="{:z_js('zl.reg')}"></script>
+<script src="{:z_js('zlang')}"></script>
 </head>
 <body>
 <div class="container">
@@ -78,29 +78,17 @@
           </form>
         </div>
         <div class="reg_tips">
-        	<div class="reg_acc">
-               <a href="{:ZU('login/index')}" class="acc_no">已经有逐浪网账号?</a>
-               <a href="{:ZU('login/index')}" class="sbtn_01">立即登录</a>
-            </div>
-            <dl class="tird_acc">
-            	<dt>也可使用下列第三方账号登录</dt>
-                <dd>
-                	<a href="#"><img src="{:z_img('reg/thid_img01')}" /></a>
-                  <a href="#"><img src="{:z_img('reg/thid_img02')}" /></a>
-                  <a href="#"><img src="{:z_img('reg/thid_img03')}" /></a>
-                </dd>
-            </dl>
+        	<include file="right_action" />
         </div>
       </div>
     </div>
     <div class="footer">
-    	<p>Copyright © 2014 ZHULANG.COM All rights Reserved 逐浪网版权所有<br />
-           客服电话：025-66670800
-        </p>
+    	<include file="footer" />
     </div>
   </div>
 </div>
 
+<script src="{:z_js('zl.reg')}"></script>
 <script type="text/javascript">
   
   var userErr = new Array();

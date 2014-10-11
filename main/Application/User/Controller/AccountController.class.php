@@ -35,6 +35,22 @@ class AccountController extends UserController {
 	}
 
 	/**
+	 * 注册成功后的补充资料
+	 */
+	public function doFullInfo()
+	{
+		if (IS_POST) {
+			$data = array_merge(I(), array('user_id'=>$this->userId));
+			$state = $this->userInstance->doFullInfo($data);
+
+			if ($state['code'] > 0)
+				z_redirect($state['msg'], ZU('user/center/index'));
+			else
+				z_redirect($state['msg'], '', 1, -1);
+		}
+	}
+
+	/**
 	 * 自定义头像
 	 */
 	public function avatar()

@@ -26,7 +26,11 @@ class UserService extends ZlibUserModel {
 			return z_info(-3, '用户不存在');
 		if ($user_info['user_state'] == 1) 
 			return z_info(-4, '该用户已被禁用');
-		if ($user_info['user_pwd'] != md5($data['password']))
+		if ($user_info['user_state'] == 'N')
+			return z_info(-5, '用户未被激活');
+
+		$data['password'] = strlen($data['password']) == '32' ? $data['password'] : md5($data['password']) ;
+		if ($user_info['user_pwd'] != $data['password'])
 			return z_info(-5, '密码不正确');
 
 		// 销毁密码
@@ -74,7 +78,39 @@ class UserService extends ZlibUserModel {
 		$user_id = parent::doAdd($final_data);
 
 		if ($user_id) {
-			return z_info(1, '添加成功');
+			return z_info($user_id, '添加成功');
+		} else {
+			return z_info(0, '添加失败');
+		}
+	}
+
+	/**
+	 * 邮箱注册
+	 */
+	public function doAddByEmail($data)
+	{
+		if (empty($data['email']))
+			return z_info(-2, '用户名不允许为空');
+
+		if (empty($data['password']))
+			return z_info(-21, '密码不允许为空');
+
+		$final_data['user_name'] = $data['email'];
+		$final_data['user_email'] = $data['email'];
+		$final_data['user_pwd'] = md5($data['password']);
+		$final_data['reg_type'] = 2;			// 邮箱注册用户 2
+		$final_data['user_state'] = 'N';		// 未激活用户
+		$final_data['user_type'] = '00';		
+		$final_data['user_join'] = z_now();
+		$final_data['user_login_time'] = z_now();
+		$final_data['user_login_ip'] = z_ip();
+
+		$user_id = parent::doAdd($final_data);
+
+		if ($user_id) {
+			return z_info($user_id, '添加成功');
+		} else {
+			return z_info(0, '添加失败');
 		}
 	}
 

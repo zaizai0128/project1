@@ -10,6 +10,17 @@
  	$.extend({
 
  		/**
+ 		 * 性别选择
+ 		 */
+ 		chooseSex : function()
+ 		{
+ 			$('.sex_lst').find('li').on('click', function(){
+ 				$(this).addClass('on').siblings('li').removeClass('on');
+ 				$('.i-sex').val($(this).attr('data-val'));
+ 			});
+ 		},
+
+ 		/**
  		 * 切换验证码
  		 */
  		changeVerify : function(class_name)
@@ -21,6 +32,36 @@
  			}
  			src = src + '?' + parseInt(Math.random() * 8000);
  			$('.verify_img').attr('src', src);
+ 		},
+
+ 		/**
+ 		 * 验证邮箱
+ 		 *
+ 		 */
+ 		checkEmail : function(url, class_name)
+ 		{
+ 			var email = $('.'+class_name).val().replace(/\s+/, '');
+ 			if (email == '') return false;
+
+ 			$.ajax({
+ 				url : url,
+ 				type : 'post',
+ 				data : 'email='+email,
+ 				async : false,
+ 				success : function(response)
+ 				{
+ 					var err = $('.i-email-error');
+ 					if (response.code <= 0) {
+ 						userErr.push(response.msg);
+ 						err.css('display', 'block');
+ 						err.find('.txt').html(response.msg);
+ 					} else {
+ 						userErr.pop();
+						err.find('.txt').html('');
+						err.css('display', 'none')
+ 					}
+ 				}
+ 			});
  		},
 
 		/**
@@ -53,6 +94,41 @@
 			    }
 			  }
 			});
+		},
+
+		/**
+		 * 验证邮箱注册
+		 *
+		 */
+		checkRegsiterEmail : function()
+		{
+			var err = $('.error-info');
+			var msg = new Array();
+			var isOk = false;
+
+			var email = $('.i-email').val().replace(/\s+/, '');
+			var pwd = $('.i-password').val().replace(/\s+/, '');
+			var repwd = $('.i-repassword').val().replace(/\s+/, '');
+			var iagree = $('.iagree:checked').val();
+
+			if (email == '') msg.push('邮箱不允许为空');
+			if (pwd == '') msg.push('密码不允许为空');
+			if (repwd == '') msg.push('确认密码不允许为空');
+			if (pwd != repwd) msg.push('二次密码不一致');
+			if (iagree == undefined) msg.push('未选中我同意');
+
+			// 有错误
+			if (msg.length > 0 || userErr.length > 0) {
+				var err_html = '';
+				$.each(msg, function(i, v){
+					err_html += v+'|';
+				});
+				err.html(err_html);
+				isOk = false;
+			} else {
+				isOk = true;
+			}
+			return isOk;
 		},
 
 		/**

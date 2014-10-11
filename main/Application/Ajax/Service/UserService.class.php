@@ -22,9 +22,27 @@ class UserService extends ZlibUserModel {
 		// 判断用户名是否已存在
 		$user = $this->getUserInfoByUserName($username, 'user_id');
 
-		if (!empty($user)) return array('code'=>-1, 'msg'=>'用户名已存在'); 
+		if (!empty($user)) return z_info(-1, '用户名已存在'); 
 
-		return array('code'=>1, 'msg'=>'验证通过');
+		return z_info(1, '验证通过');
+	}
+
+	/**
+	 * 判断邮箱是否可用
+	 */
+	public function checkEmail($email)
+	{
+		$email_role = '/\w+@\w{2,}\.(com|cn|net|me|com\.cn)$/';
+		// 正则匹配是否是邮箱
+		$result = preg_match($email_role, $email);
+
+		if ($result <= 0) return z_info(-1, '邮箱格式不正确');
+
+		$user = $this->getUserInfoByUserName($email, 'user_id');
+
+		if (!empty($user)) return z_info(-2, '用户名已存在');
+		
+		return z_info(1, '验证通过');
 	}
 
 }

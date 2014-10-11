@@ -22,10 +22,19 @@
              	 {// 注册按钮}
                 <include file="p_reg_sidebar" nav="email"/>                 
              </div>
+             <form action="{:ZU('register/doEmail')}" method="post" onsubmit="return $.checkRegsiterEmail();">
             <ul class="frm_lst JQ_Box JQ_Frmlst" style="display:block">
               <li class="frm">
                 <div class="frm_inp">
-                    <input type="text" name="" value="请输入电子邮箱" class="inp"/>  
+                    <input type="text" name="email" placeholder="请输入电子邮箱" class="inp i-email"/>  
+                </div>
+                <div class="frm_tip i-email-error">
+                  <span class="txt"></span>
+                </div>
+              </li>
+              <li class="frm">
+                <div class="frm_inp">
+                    <input type="password" name="password" value="" class="inp i-password"/>  
                 </div>
                 <div class="frm_tip">
                   <span class="txt"></span>
@@ -33,15 +42,7 @@
               </li>
               <li class="frm">
                 <div class="frm_inp">
-                    <input type="text" name="" value="请输入设置密码" class="inp"/>  
-                </div>
-                <div class="frm_tip">
-                  <span class="txt"></span>
-                </div>
-              </li>
-              <li class="frm">
-                <div class="frm_inp">
-                    <input type="text" name="" value="请再次输入设置密码" class="inp"/>  
+                    <input type="password" name="repassword" value="" class="inp i-repassword"/>  
                 </div>
                 <div class="frm_tip">
                   <span class="txt"></span>
@@ -49,39 +50,45 @@
               </li>
               <li class="frm">
                 <div class="frm_inp frm_chk">
-                   <label><input type="checkbox" />我已阅读并同意</label>
-                   <a href="#">逐浪网注册协议?</a>
+                   <label><input type="checkbox" class="iagree" name="iagree" value="1"/>我已阅读并同意</label>
+                   <a href="http://passport.kongzhong.com/rules.jsp" target="_blank">逐浪网注册协议?</a>
                 </div>
               </li>
               <li class="frm">
+                <div class="frm_tip" style="display:block;"><span class="txt error-info"></span></div>
+              </li>
+              <li class="frm">
                 <div class="frm_inp">
-                  <a href="#" class="sbtn_01">提交注册</a>
+                  <!-- <a href="#" class="sbtn_01">提交注册</a> -->
+                  <button>提交注册</button>
                 </div>
               </li>
             </ul>
+             </form>
         </div>
         <div class="reg_tips">
-        	<div class="reg_acc">
-               <a href="{:ZU('login/index')}" class="acc_no">已经有逐浪网账号?</a>
-               <a href="#" class="sbtn_01">立即登录</a>
-            </div>
-            <dl class="tird_acc">
-            	<dt>也可使用下列第三方账号登录</dt>
-                <dd>
-                	<a href="#"><img src="{:z_img('reg/thid_img01')}" /></a>
-                  <a href="#"><img src="{:z_img('reg/thid_img02')}" /></a>
-                  <a href="#"><img src="{:z_img('reg/thid_img03')}" /></a>
-                </dd>
-            </dl>
+        	<include file="right_action" />
         </div>
       </div>
     </div>
     <div class="footer">
-    	<p>Copyright © 2014 ZHULANG.COM All rights Reserved 逐浪网版权所有<br />
-           客服电话：025-66670800
-        </p>
+    	<include file="footer" />
     </div>
   </div>
 </div>
+
+<script src="{:z_js('zl.reg')}"></script>
+<script type="text/javascript">
+  
+  var userErr = new Array();
+
+  jQuery(function($){
+
+    $('.i-email').blur(function(){
+      $.checkEmail('{:ZU('ajax/user/checkEmail')}', 'i-email');
+    });
+
+  });
+</script>
 </body>
 </html>

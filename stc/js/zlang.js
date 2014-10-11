@@ -1,5 +1,5 @@
 /**
- * 逐浪网js
+ * 逐浪网公共工具 js
  * 
  * @author  songmw<songmingwei@kongzhong.com>
  * @date    2014-08-25

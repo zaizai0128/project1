@@ -39,7 +39,7 @@ class LoginController extends HomeController {
 			if ($state['code'] > 0) {
 				z_redirect('登录成功', ZU('user/center/index', Null, 'back'));
 			} else {
-				z_redirect($state['msg']);
+				z_redirect($state['msg'], '', 1, -1);
 			}
 		}
 	}

@@ -29,4 +29,13 @@ class UserController extends AjaxController {
 		$this->ajaxReturn($state);
 	}
 
+	/**
+	 * 判断邮箱是否可用注册
+	 */
+	public function checkEmail($email)
+	{
+		$state = $this->userInctance->checkEmail($email);
+		$this->ajaxReturn($state);
+	}
+
 }
