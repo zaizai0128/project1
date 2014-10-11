@@ -15,7 +15,7 @@ class Tool {
 	 */
 	public static function phoneVerify()
 	{
-
+		
 
 		echo '发送手机验证码';
 	}
