@@ -77,7 +77,7 @@ class BookController extends HomeController {
 			if ($state['code'] > 0)
 				z_redirect('修改成功', ZU('book/index', 'ZL_AUTHOR_DOMAIN'));
 			else
-				z_redirect('修改失败');
+				z_redirect('修改失败,'.$state['msg'], '', 1, -1);
 		}
 	}
 

@@ -23,7 +23,7 @@ return array(
 	'ZL_NV_IMAGE_DOMAIN' => 'http://images.xxs8.com',		// 原女频图片样式文件域名
 	'ZL_DOMAIN_DOT' => '.zhulang.ne',
 	
-	'ZL_BOOK_COVER_PATH' => ZL_IMAGE_PATH.'/book_cover',// 作品封面目录物理地址
+	'ZL_BOOK_COVER_PATH' => ZL_IMAGE_PATH.'/book_cover/image',// 作品封面目录物理地址
 
 
 	// 系统相关
@@ -219,6 +219,13 @@ return array(
 
 		// 分卷开始id
 		'start_volume' => 1000,		// 对应的是上面的 正文
+
+		// 封面图片的大小 40kb
+		'upload_max' => 40000,
+		// 允许上传的图片格式
+		'upload_exts' => array(
+			'jpg', 'jpeg', 'gif', 'png'
+		),
 
 		// 允许推荐的最大作品书
 		'recommend_max' => 5,

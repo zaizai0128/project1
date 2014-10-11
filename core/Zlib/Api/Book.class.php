@@ -229,7 +229,7 @@ class Book {
 		// 如果作品不存在，则返回默认图片
 		if (empty($book_id) || $cover != 1)
 			return C('ZL_IMAGE_DOMAIN') . '/www/image/no_book.gif' . '?' . time();
-
+		
 		$domain = $site == 0 ? C('ZL_IMAGE_DOMAIN') : C('ZL_NV_IMAGE_DOMAIN') ;
 
 		// 为方便本地测试，修改一下规则
@@ -239,7 +239,53 @@ class Book {
 		}
 
 		$img = floor( $book_id / 10000 )."/".floor( $book_id % 10000 / 100 )."/".$book_id.".jpg";
-		return $domain . '/book_cover/image/' . $img;
+		$img_url = $domain . '/book_cover/image/' . $img;
+
+		if ($fr = @fopen($img_url, 'r')) {
+			fclose($fr);
+			return $img_url;
+		} else {
+			fclose($fr);
+			return C('ZL_IMAGE_DOMAIN') . '/www/image/no_book.gif' . '?' . time();
+		}
+	}
+
+	/**
+	 * 上传作品封面
+	 * @return string 封面的地址
+	 */
+	public static function uploadCover($book_id, $site = 0)
+	{
+		if (empty($_FILES['cover'])) return;
+		$upload = new \Think\Upload();
+		$upload->maxSize = C('BOOK.upload_max');	// 设置允许上传的最大尺寸
+		$upload->subName = False;
+		$upload->saveName = False;
+		$upload->replace = True;
+		$upload->hash = False;
+
+		$domain = $site == 0 ? C('ZL_IMAGE_DOMAIN') : C('ZL_NV_IMAGE_DOMAIN') ;
+		// 为方便本地测试，修改一下规则
+		if ($book_id > 303730) {
+			// 本地测试的作品，改为测试域名
+			$domain = 'http://images.zhulang.ne';
+		}
+
+		$save_path = '/'.floor( $book_id / 10000 )."/".floor( $book_id % 10000 / 100 )."/";
+
+		$upload->rootPath = C('ZL_BOOK_COVER_PATH');
+		$upload->savePath = $save_path;
+		$upload->saveName = $book_id;
+		$upload->saveExt = 'jpg';
+
+		$info = $upload->uploadOne($_FILES['cover']);
+
+		if ($info) {
+			$cover = $domain . '/book_cover/image' . $info['savepath'] . $info['savename'];
+			return z_info(1, $cover);
+		 } else {
+			return z_info(-1, $upload->getError());
+		}
 	}
 
 	public static function isCached($book_id) {

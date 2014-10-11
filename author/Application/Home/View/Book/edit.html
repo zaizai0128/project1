@@ -24,7 +24,7 @@
      	{// 子内容操作}
     	<include file="info_action" aclab="index"/>
      </div>
-     <form action="{:ZU('book/doEdit', 'ZL_AUTHOR_DOMAIN', array('book_id'=>$book_info['bk_id']))}" method="post">
+     <form action="{:ZU('book/doEdit', 'ZL_AUTHOR_DOMAIN', array('book_id'=>$book_info['bk_id']))}" method="post" enctype="multipart/form-data">
        <ul class="form_lst">
          <li class="frm">
          	<span class="frm_tit">作品名称：</span>
@@ -57,12 +57,13 @@
          	<span class="frm_tit">作品封面：</span>
             <div class="frm_inp frm_uplod">
               <div class="inp_uplod">
-                 	<input type="text" value="" name="" class="inp" style="width:250px"/>
+                 	<!-- <input type="text" value="" name="" class="inp" style="width:250px"/>
                  	<span class="btn">
                     <a href="javascript:;" class="btn_upfile"><span>浏览...</span>
-                      <input class="inp_file" type="file">
+                      <input class="inp_file" type="file" name="cover">
                      </a>
-                    </span>
+                    </span> -->
+                    <input class="inp_file" type="file" name="cover">
                </div>
                <p class="tip">
                  1、图片格式要求：宽高为204X255像素、大小不超过30KB的JPG文件。<br />   
@@ -73,7 +74,7 @@
                  5、封面上传后，管理员将在2个工作日内审核。
                </p>
                <p class="pic">
-               	  <img src="{:z_img('authr/authr_img01')}"/>	
+               	  <img src="{:z_cover($book_info['bk_id'], 1)}"/>	
                </p>
             </div>
          </li>

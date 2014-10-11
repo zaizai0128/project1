@@ -31,6 +31,13 @@ class BookService extends ZlibBookModel {
 		$intro_strlen = z_strlen($data['intro']);
 		if ($intro_strlen > C('BOOK.intro_max')) return z_info(-5, '简介超过最大字数');
 
+		// 上传作品封面
+		$state = \Zlib\Api\Book::uploadCover($data['bk_id']);
+
+		if($state['code'] < 0) return $state;
+
+		// 获取作品的封面地址
+		$cover = $state['msg'];
 		// 一些基础验证 ...
 
 		$final_data['bk_id'] = $data['bk_id'];
@@ -41,10 +48,6 @@ class BookService extends ZlibBookModel {
 		$final_data['bk_author_com_book'] = $data['bk_author_com_book'];
 		$result = parent::doEdit($final_data);
 		
-		if ($result > 0) {
-			return z_info($result, '修改成功');
-		} else {
-			return z_info(0, '修改失败');
-		}
+		return z_info(1, '修改成功');
 	}
 }
