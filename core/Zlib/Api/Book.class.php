@@ -80,8 +80,8 @@ class Book {
 			if ($key == 'bk_author_com_html')
 				continue;
 			if ($key == 'bk_intro') {
-				//if (strlen($value > 200)	
-				//$this->mBookInfo[$key] = z_cut_str($value, 100);
+				if (strlen($value > 300))
+					$this->mBookInfo[$key] = z_cut_str($value, 100);
 			}
 			$this->mBookInfo[$key] = $value;
 		}

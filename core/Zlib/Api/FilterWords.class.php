@@ -15,6 +15,7 @@ class FilterWords {
 	public static $mKeyName = "GLOAL##FILERWORDS";
 	public static $mLockPrefix = "LOCK##";
 	public static $mDirtyPrefix = "DIRTY##";
+	private $mReplaceWord = '*';
 
 	// php单例需要把造函数封装起来
 	private function __construct(){}
@@ -24,6 +25,7 @@ class FilterWords {
 	{
 		if (!isset(self::$mInstance)) {
 			self::$mInstance =  new FilterWords();
+			self::$mInstance->setDirty(true);
 			$mRetry = 3;
 			while ($mRetry -- > 0) {
 				$succ = self::$mInstance->loadFromCache();
@@ -39,7 +41,6 @@ class FilterWords {
 	private function loadFromCache() 
 	{
 		if ($this->isDirty()) { 
-			// echo "dirty";
 			 return false; 
 		}
 
@@ -58,64 +59,84 @@ class FilterWords {
 	
 	private function loadFromDatabase() 
 	{	
+		echo "loadFromDatabase::";
 		if (S(self::$mLockPrefix.self::$mKeyName) == "1") {// 加载锁定
 			return false;
 		}
-		$this->mBookClassses = array();
-		$m = M("zl_book_flter_word")->where("status=1")->order("classtype asc")->select();
+		S(self::$mLockPrefix.self::$mKeyName, "1");
+		$this->mFilterWords = array();
+		$m = M("zl_book_filter_words")->where("status=1")->order("classtype asc, word desc")->select();
 		foreach ($m as $row) {
+			if ($row['is_reg'] == '1') $row['word'] = '/'.$row['word'].'/mi';
 			array_push($this->mFilterWords, $row);
 		}
+		// print_r($this->mFilterWords);
 		S($this->mKeyName, json_encode($this->mBookClasses));
 		if ($this->isDirty()) $this->setDirty(false);
 		S(self::$mLockPrefix.self::$mKeyName, null);
 			
 		return true;
 	}
+	
+	// 返回true|false 致命关键词, 禁止录入或者转编辑审核
+	public function hasDeadWord($text)
+	{ 
+		$count = count($this->mFilterWords);
+		for ($i = 0; $i < $count; $i++) {
+			$word =  $this->mFilterWords[$i]['word'];
+			if ($this->mFilterWords[$i]['classtype'] == '1') {
+				if ($this->isFilter($text, $word, $this->mFilterWords[$i]['is_reg']) != false)
+					return true;
+			}
+		}
+		return false;
+	}
 
-	// 返回-1 致命关键词, 禁止录入或者转编辑审核
-	// 返回0 没有关键词, 正常
-	// 返回n 替换普通关键词数量 
-	// 分为0, 1, 2 3级
-	public function filter($text) 
+	public function filter($text, $shuping = false) 
 	{
 		$count = count($this->mFilterWords);
-		$reg_array = array();
-		$str_array = array();
-		for ($i = 0; $i < $count; $i++) {
-			if ($this->mFilterWords[$i]['classtype'] == 0) {
-				if($this->isFilter($text, $this->mFilterWords[$i]['is_reg']))
-					return -1;
-		}
 	
 		$found  = 0;
+		$str_arr = array();
+		$reg_arr = array();
+		$replace_arr = array();
+		
 		for ($i = 0; $i < $count; $i++) {
+			$word =  $this->mFilterWords[$i]['word'];
+			if ($this->mFilterWords[$i]['classtype'] == 3 && !$shuping) 
+				$word = null;	
+
 			if ($this->mFilterWords[$i]['classtype'] == 1) 
-				$found += $this->replaceFilter($text, $this->mFilterWords[$i]['is_reg']);
-					
-			if (C('FILTER.filter_scale') == 2 && $this->mFilterWords[$i]['classtype'] == 2) 
-				$found += $this->replaceFilter($text, $this->mFilterWords[$i]['is_reg']);
+				$word = null;
+
+			if ($word != null) { 
+				if ($this->mFilterWords[$i]['is_reg'] == 0) {	
+					array_push($str_arr, $word);
+				} else {
+					array_push($reg_arr, $word);
+					array_push($replace_arr, $this->mReplaceWord);
+				}
+			} 
 		}
-		return $found;
+
+		if (count($str_arr) > 0) {
+			$text = str_replace($str_arr, "*", $text);
+		}
+		if (count($reg_arr) > 0) {
+			print_r($reg_arr);
+			$text = preg_replace($reg_arr, $replace_arr, $text);
+		}	
+		return $text;
 	}
 
-	public function isFilter($text, $filter, $reg) 
-	{
+	private function isFilter($text, $filter, $reg) {
 		if ($reg == 1) {
-			return preg_match($filter, $text);	
+			echo $filter.":".preg_match($filter, $text)."<br>";
+			return preg_match($filter, $text) == 1;	
 		} else {
+			// echo $text." ".$filter;
 			return strstr($text, $filter);
 		}
-	}
-
-	// 替换,
-	public function replaceFilter($text, $filter, $reg) 
-	{
-		if ($reg == 1) {
-		} else {
-			return str_replace($text, $filter);
-		}
-		
 	}
 
 	public static function setDirty($dirty = true) 
