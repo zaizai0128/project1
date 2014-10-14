@@ -128,7 +128,6 @@ class ChapterService extends ZlibChapterModel {
 		$chapter_info['ch_status'] = 0;
 		$chapter_info['ch_vip'] = (int)$data['vip'];
 		$chapter_content = $data['content'];
-
 		$chapter_id = parent::doAdd($chapter_info);
 		
 		if (empty($chapter_id)) return z_info(0, '添加失败');
@@ -191,17 +190,19 @@ class ChapterService extends ZlibChapterModel {
 			return z_info(-31, '含有政治敏感词汇，将暂停您的作品，等待客服解封');
 		} else {
 
-			// 如果含有普通词汇个数 >= 3 个，将该章节添加到审核表中，禁止作品编辑
+			// 如果含有普通词汇个数 超过了 规定个数，将该章节添加到审核表中，禁止作品编辑
 			$wordNum = $this->filterApi->getFilterWord($data['content']);
-
+			
 			if (count($wordNum) >= C('FILTER.word_num')) {
 				$this->filterInstance->doAddDeadFilter($data);
-			}
+				return z_info(-32, '含有'.$count($wordNum).'个非法词汇，将暂停您的作品，等待客服解封');
 
-			// 无需验证了吧 …… pass
-			de($data);
+			// 如果不超过 规定个数
+			} else {
+				// 将该章节的内容，同时插入到审核表中
+				// pass
+			}
 		}
-		
 		// 其他验证 ...
 
 		if ($is_edit) {

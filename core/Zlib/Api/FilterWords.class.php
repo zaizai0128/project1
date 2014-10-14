@@ -155,8 +155,11 @@ class FilterWords {
 
 			// 普通匹配词
 			} else {
-				if (substr_count($text, $word) > 0)
-					$word_arr = array_merge($word_arr, (array)$word);
+				$num_total = substr_count($text, $word);
+				if ($num_total > 0) {
+					$word = array_fill(0, $num_total, $word);
+					$word_arr = array_merge($word_arr, $word);
+				}
 			}	
 		}
 

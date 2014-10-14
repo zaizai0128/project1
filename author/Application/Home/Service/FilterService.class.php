@@ -28,6 +28,7 @@ class FilterService {
 		$book_data['bk_id'] = $data['bk_id'];
 		$book_data['bk_status'] = '02';
 		// $this->bookInstance->doEdit($book_data);
+		echo 'dead filter';
 		de($data);
 	}
 
