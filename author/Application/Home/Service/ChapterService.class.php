@@ -60,6 +60,14 @@ class ChapterService extends ZlibChapterModel {
 		
 		return $chapter_info;
 	}
+
+	/**
+	 * 修改章节状态
+	 */
+	public function doEditStatus($data)
+	{
+		return parent::doEdit($data);
+	}
 	
 	/**
 	 * 修改章节内容
@@ -68,7 +76,10 @@ class ChapterService extends ZlibChapterModel {
 	{
 		$state = $this->_checkChapter($data, True);
 		if ($state['code'] <= 0) return $state;
+		$ch_data = parent::getChapterInfo('ch_vip, ch_cre_time');
+		if (empty($ch_data)) return z_info(-12, '章节不存在');
 
+		$data['ocontent'] = $data['content'];
 		$data['content'] = $this->filterApi->filter($data['content']);
 		$chapter_info['ch_update'] = z_now();
 		$chapter_info['ch_size'] = z_strlen($data['content']);
@@ -101,7 +112,13 @@ class ChapterService extends ZlibChapterModel {
 				parent::setChapterContent($chapter_info['ch_id'], $data['content']);
 			}
 
-			return z_info($result, '修改成功');
+			// 编辑完章节后，判断该章节的内容是否合法，如果不合法，则修改章节和作品的状态为待审核
+			$data['ch_cre_time'] = $ch_data['ch_cre_time'];
+			$state = $this->_filterChapter($data);
+			if ($state['code'] > 0)
+				return z_info($state['code'], '修改成功');
+			else
+				return $state;
 		} else {
 
 			return z_info($result, '修改失败');
@@ -114,9 +131,13 @@ class ChapterService extends ZlibChapterModel {
 	 */
 	public function doAdd($data)
 	{	
+		// 验证操作
 		$state = $this->_checkChapter($data);
 		if ($state['code'] <= 0) return $state;
 
+		// 保留未被替换的内容
+		$data['ocontent'] = $data['content'];
+		// 将内容过滤为
 		$data['content'] = $this->filterApi->filter($data['content']);
 		$chapter_info['bk_id'] = $data['bk_id'];
 		$chapter_info['ch_roll'] = empty($data['volume']) ? C('BOOK.start_volume') : (int)$data['volume'];
@@ -141,11 +162,55 @@ class ChapterService extends ZlibChapterModel {
 
 		// 普通章节处理
 		} else {
-			
 			parent::setChapterContent($chapter_id, $chapter_content);
 		}
 
-		return z_info($chapter_id, '添加成功');
+		// 添加完章节以后，判断该章节的内容是否合法，如果不合法，则修改章节和作品的状态为待审核
+		$data['ch_id'] = $chapter_id;
+		$data['ch_cre_time'] = $chapter_info['ch_cre_time'];
+		$state = $this->_filterChapter($data);
+
+		if ($state['code'] > 0)
+			return z_info($state['code'], '添加成功');
+		else
+			return $state;
+	}
+
+	/**
+	 * filter
+	 */
+	private function _filterChapter($data)
+	{
+		$content = $data['ocontent'];
+		// 关键字过滤验证
+		$word = $this->filterApi->hasDeadWord($content);
+
+		// 如果含有敏感词汇，则将该章节添加到审核表
+		if ($word) {
+
+			// 添加政治错误级别审核
+			$this->filterInstance->doAddDeadFilter($data);
+			return z_info(-41, '含有政治敏感词汇，将暂停您的作品，等待客服解封');
+		} else {
+
+			// 如果含有普通词汇个数 超过了 规定个数，将该章节添加到审核表中，禁止作品编辑
+			$filter_word = $this->filterApi->getFilterWord($content);
+			$data['filter_word'] = $filter_word;
+
+			if (count($filter_word) >= C('FILTER.word_num')) {
+				// 添加严重级别审核
+				$this->filterInstance->doAddErrorFilter($data);
+				return z_info(-42, '含有'.count($filter_word).'个非法词汇，该章节无法使用，等待客服解封');
+
+			// 如果不超过 规定个数
+			} else {
+				// 添加普通级别审核
+				$this->filterInstance->doAddNoticeFilter($data);
+				return z_info(-31, '内容含有非法词汇');
+			}
+		}
+
+		return z_info($data['ch_id'], '验证通过');
 	}
 
 	/**
@@ -178,38 +243,10 @@ class ChapterService extends ZlibChapterModel {
 		if ($data['bk_status'] != '00') {
 			return z_info(-11, '作品状态有问题，无法编辑');
 		}
-
-		// 关键字过滤验证
-		$word = $this->filterApi->hasDeadWord($data['content']);
-
-		// 如果含有敏感词汇，则将该章节添加到审核表
-		if ($word) {
-
-			// 将该章节内容存放到审核表中
-			$this->filterInstance->doAddDeadFilter($data);
-			return z_info(-31, '含有政治敏感词汇，将暂停您的作品，等待客服解封');
-		} else {
-
-			// 如果含有普通词汇个数 超过了 规定个数，将该章节添加到审核表中，禁止作品编辑
-			$wordNum = $this->filterApi->getFilterWord($data['content']);
-			
-			if (count($wordNum) >= C('FILTER.word_num')) {
-				$this->filterInstance->doAddDeadFilter($data);
-				return z_info(-32, '含有'.$count($wordNum).'个非法词汇，将暂停您的作品，等待客服解封');
-
-			// 如果不超过 规定个数
-			} else {
-				// 将该章节的内容，同时插入到审核表中
-				// pass
-			}
-		}
 		// 其他验证 ...
 
 		if ($is_edit) {
 			if (empty($data['ch_id'])) return z_info(-11, '章节id不允许为空');
-
-			$vip = parent::getChapterInfo('ch_vip');
-			if (empty($vip)) return z_info(-12, '章节不存在');
 
 			// 判断章节名是否重复
 			$chapter_info = parent::getChapterInfoByName($data['ch_name'], 'ch_name', ' and ch_id != '.$data['ch_id']);

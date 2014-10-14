@@ -89,7 +89,7 @@ class ChapterController extends HomeController {
 
 				z_redirect('添加成功', ZU('chapter/index', 'ZL_AUTHOR_DOMAIN', array('book_id'=>$this->bookId)));
 			} else {
-				z_redirect('添加失败');
+				z_redirect($state['msg'], '', 3, -1);
 			}
 		}
 	}
@@ -122,7 +122,7 @@ class ChapterController extends HomeController {
 		if (IS_POST) {
 			$data = array_merge($this->authorInfo, $this->bookInfo, I(), array('ch_id'=>$this->chapterId));
 			$state = $this->chapterInstance->doEdit($data);
-
+			
 			if ($state['code'] > 0) {
 				$tag['data'] = $data;
 				$tag['ac'] = 'after_edit';	// 行为名称
@@ -130,7 +130,7 @@ class ChapterController extends HomeController {
 				
 				z_redirect('修改成功', ZU('chapter/index', 'ZL_AUTHOR_DOMAIN', array('book_id'=>$this->bookId)));
 			} else {
-				z_redirect('修改失败');
+				z_redirect($state['msg'], '', 3, -1);
 			}
 		}
 	}

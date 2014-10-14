@@ -23,7 +23,7 @@
                 <span class="edit"><a href="{:ZU('book/edit', 'ZL_AUTHOR_DOMAIN', array('book_id'=>$val['bk_id']))}">修改作品信息</a></span>  
               </dt> 
              <dd>
-               <h3 class="tit">{$val.bk_name}</h3>  
+               <h3 class="tit">{$val.bk_name}[{:ZC(C('BOOK.status'), $val['bk_status'])}]</h3>  
                  <div class="cnt">
                   <p>最新更新：<a href="{:ZU('read/index', 'ZL_BOOK_DOMAIN', array('book_id'=>$val['bk_id'], 'ch_id'=>$val['bk_public_ch_id']))}" target="_blank">{$val.bk_public_name}</a> {$val.bk_now_date}</p>
                     <p>小说状态：{:ZC(C('BOOK.full_flag'), $val['bk_fullflag'])}</p>

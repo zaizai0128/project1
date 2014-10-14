@@ -59,7 +59,7 @@ class FilterWords {
 	
 	private function loadFromDatabase() 
 	{	
-		echo "loadFromDatabase::";
+		// echo "loadFromDatabase::";
 		if (S(self::$mLockPrefix.self::$mKeyName) == "1") {// 加载锁定
 			return false;
 		}

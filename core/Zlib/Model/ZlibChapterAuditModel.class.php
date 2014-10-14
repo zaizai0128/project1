@@ -19,10 +19,22 @@ class ZlibChapterAuditModel extends BaseModel {
 
 	public function doEdit($data)
 	{
-		$condition = 'bk_id = '.$data['bk_id'].' and ch_id'.$data['ch_id'];
+		$condition = 'bk_id = '.$data['bk_id'].' and ch_id = '.$data['ch_id'];
 		return $this->where($condition)->data($data)->save();
 	}
 
+	/**
+	 * 获取待审核信息
+	 *
+	 * @param int book_id
+	 * @param int chapter_id
+	 * @param string field
+	 */
+	public function getNotCheckInfo($book_id, $chapter_id, $filed='*')
+	{
+		$condition = 'bk_id = '.$book_id.' and ch_id = '.$chapter_id.' and status = 0';
+		return $this->field($field)->where($condition)->find();
+	}
 
 
 }

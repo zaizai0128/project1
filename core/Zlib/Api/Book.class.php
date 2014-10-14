@@ -255,8 +255,8 @@ class Book {
 	 * @return string 封面的地址
 	 */
 	public static function uploadCover($book_id, $site = 0)
-	{
-		if (empty($_FILES['cover'])) return;
+	{		
+		if (empty($_FILES['cover']['name'])) return;
 		$upload = new \Think\Upload();
 		$upload->maxSize = C('BOOK.upload_max');	// 设置允许上传的最大尺寸
 		$upload->subName = False;

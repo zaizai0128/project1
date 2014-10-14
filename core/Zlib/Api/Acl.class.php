@@ -226,8 +226,14 @@ class Acl {
 		}
 
 		if (!in_array($book_id, $author_info['formal']))
-			z_redirect('无权操作', ZU('index/index', 'ZL_AUTHOR_DOMAIN'));
+			z_redirect('无权操作', ZU('index/index', 'ZL_AUTHOR_DOMAIN'), 3, -1);
 
+		// 判断作品状态，是否可以修改
+		$book = new \Zlib\Model\ZlibBookModel;
+		$status = $book->getBookByBookId($book_id, 'bk_status');
+
+		if ($status['bk_status'] != '00')
+			z_redirect('作品状态非正常，无法继续操作', '', 3, -1);
 		// 其他验证 待...
 
 		return True;
