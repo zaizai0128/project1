@@ -46,7 +46,6 @@ return array(
 	// 关键词过滤相关
 	'FILTER' => array(			
 		'filter_scale' => 1,		// 严打时置成2
-
 		'word_num' => 3,	// 普通过滤词 超过多少数 将作品禁封
 
 	),
