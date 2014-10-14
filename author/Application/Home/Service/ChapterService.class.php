@@ -11,6 +11,16 @@ use Zlib\Model\ZlibChapterModel;
 
 class ChapterService extends ZlibChapterModel {
 
+	protected $filterInstance = Null;
+	protected $filterApi = Null;
+
+	public function __construct()
+	{
+		parent::__construct();
+		$this->filterInstance = D('Filter', 'Service');
+		$this->filterApi = \Zlib\Api\FilterWords::getInstance();
+	}
+
 	/**
 	 * 修改章节所属的卷
 	 */
@@ -59,9 +69,7 @@ class ChapterService extends ZlibChapterModel {
 		$state = $this->_checkChapter($data, True);
 		if ($state['code'] <= 0) return $state;
 
-		$vip = parent::getChapterInfo('ch_vip');
-		if (empty($vip)) return z_info(0, '章节不存在');
-
+		$data['content'] = $this->filterApi->filter($data['content']);
 		$chapter_info['ch_update'] = z_now();
 		$chapter_info['ch_size'] = z_strlen($data['content']);
 		$chapter_info['ch_name'] = $data['ch_name'];
@@ -109,6 +117,7 @@ class ChapterService extends ZlibChapterModel {
 		$state = $this->_checkChapter($data);
 		if ($state['code'] <= 0) return $state;
 
+		$data['content'] = $this->filterApi->filter($data['content']);
 		$chapter_info['bk_id'] = $data['bk_id'];
 		$chapter_info['ch_roll'] = empty($data['volume']) ? C('BOOK.start_volume') : (int)$data['volume'];
 		$chapter_info['ch_cre_time'] = z_now();
@@ -170,11 +179,36 @@ class ChapterService extends ZlibChapterModel {
 		if ($data['bk_status'] != '00') {
 			return z_info(-11, '作品状态有问题，无法编辑');
 		}
+
+		// 关键字过滤验证
+		$word = $this->filterApi->hasDeadWord($data['content']);
+
+		// 如果含有敏感词汇，则将该章节添加到审核表
+		if ($word) {
+
+			// 将该章节内容存放到审核表中
+			$this->filterInstance->doAddDeadFilter($data);
+			return z_info(-31, '含有政治敏感词汇，将暂停您的作品，等待客服解封');
+		} else {
+
+			// 如果含有普通词汇个数 >= 3 个，将该章节添加到审核表中，禁止作品编辑
+			$wordNum = $this->filterApi->getFilterWord($data['content']);
+
+			if (count($wordNum) >= C('FILTER.word_num')) {
+				$this->filterInstance->doAddDeadFilter($data);
+			}
+
+			// 无需验证了吧 …… pass
+			de($data);
+		}
+		
 		// 其他验证 ...
 
 		if ($is_edit) {
-			if (empty($data['ch_id']))
-				return z_info(-11, '章节id不允许为空');
+			if (empty($data['ch_id'])) return z_info(-11, '章节id不允许为空');
+
+			$vip = parent::getChapterInfo('ch_vip');
+			if (empty($vip)) return z_info(-12, '章节不存在');
 
 			// 判断章节名是否重复
 			$chapter_info = parent::getChapterInfoByName($data['ch_name'], 'ch_name', ' and ch_id != '.$data['ch_id']);

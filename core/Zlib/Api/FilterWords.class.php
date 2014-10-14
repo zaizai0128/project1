@@ -67,7 +67,7 @@ class FilterWords {
 		$this->mFilterWords = array();
 		$m = M("zl_book_filter_words")->where("status=1")->order("classtype asc, word desc")->select();
 		foreach ($m as $row) {
-			if ($row['is_reg'] == '1') $row['word'] = '/'.$row['word'].'/mi';
+			if ($row['is_reg'] == '1') $row['word'] = '/'.$row['word'].'/miu'; // 不加u 好像无法匹配中文字
 			array_push($this->mFilterWords, $row);
 		}
 		// print_r($this->mFilterWords);
@@ -92,6 +92,9 @@ class FilterWords {
 		return false;
 	}
 
+	/**
+	 * 将错误关键字 替换为 *
+	 */
 	public function filter($text, $shuping = false) 
 	{
 		$count = count($this->mFilterWords);
@@ -119,14 +122,45 @@ class FilterWords {
 			} 
 		}
 
+		// 将非正则匹配的错误字 替换为*
 		if (count($str_arr) > 0) {
-			$text = str_replace($str_arr, "*", $text);
+			$text = str_replace($str_arr, '*', $text);
 		}
+
 		if (count($reg_arr) > 0) {
 			print_r($reg_arr);
 			$text = preg_replace($reg_arr, $replace_arr, $text);
 		}	
+
 		return $text;
+	}
+
+	/**
+	 * 获取内容中问题词数量，并返回数组
+	 */
+	public function getFilterWord($text, $shuping = Flase)
+	{	
+		$word_arr = array();
+
+		// 获取普通过滤词汇
+		foreach ($this->mFilterWords as $val) {
+			if ($val['classtype'] == 3 && !$shuping || $val['classtype'] == 1)
+				continue;
+
+			// 拼接正则匹配
+			$word = $val['word'];
+			if ($val['is_reg'] == 1) {
+				preg_match_all($word, $text, $all);
+				$word_arr = array_merge($word_arr, $all[0]);
+
+			// 普通匹配词
+			} else {
+				if (substr_count($text, $word) > 0)
+					$word_arr = array_merge($word_arr, (array)$word);
+			}	
+		}
+
+		return $word_arr;
 	}
 
 	private function isFilter($text, $filter, $reg) {

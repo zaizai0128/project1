@@ -239,9 +239,9 @@ class Acl {
 	static public function checkChapter($book_info)
 	{
 		if ($book_info['bk_status'] != '00')
-			z_redirect('作品状态非正常，无法继续操作');
+			z_redirect('作品状态非正常，无法继续操作', '', 1, -1);
 		if ($book_info['bk_fullflag'] != 0)
-			z_redirect('非连载的作品无法进行编辑');
+			z_redirect('非连载的作品无法进行编辑', '', 1, -1);
 		
 		return True;
 	}
