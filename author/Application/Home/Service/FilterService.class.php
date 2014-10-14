@@ -7,13 +7,15 @@
  * @version 1.0
  */
 namespace Home\Service;
+use Zlib\Model\ZlibChapterAuditModel;
 
-class FilterService {
+class FilterService extends ZlibChapterAuditModel{
 
 	protected $bookInstance = Null;
 
 	public function __construct()
 	{
+		parent::__construct();
 		$this->bookInstance = D('Book', 'Service');
 	}
 
