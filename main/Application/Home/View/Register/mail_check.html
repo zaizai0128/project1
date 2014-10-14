@@ -7,6 +7,7 @@
 <link href="{:z_css('login_base')}" type="text/css" rel="stylesheet">
 <script src="{:z_js()}"></script>
 <script src="{:z_js('zlang')}"></script>
+<script src="{:z_js('zl.reg')}"></script>
 </head>
 <body>
 <div class="container">
@@ -29,7 +30,7 @@
                 	<dt>温馨提示：</dt>
                     <dd>
                     	  1、如果未找到我们发送的邮件，请稍候或检查您的垃圾邮件。<br />
-                        2、如果5分钟未收到邮件，请点击<a href="javascript:;">重新发送激活邮件。</a><br />
+                        2、如果5分钟未收到邮件，请点击<a href="javascript:;" onclick="$.resendMail('{:ZU("register/reSendMailCode")}', '{$assign.email}', {$assign.user_id});">重新发送激活邮件。</a><br />
                         3、如果重新发送邮件后还长时间未收到邮件，请换个邮箱试试。
                     </dd>
                 </dl>

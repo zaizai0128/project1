@@ -12,7 +12,7 @@ class RegisterController extends HomeController {
 
 	protected $userInstance = Null;
 	protected $key = 'zhul@ngM@ilKey';	// uri加密的key
-	protected $mKey = 'mailRegKey';		// 发送邮件的key
+	protected $mKey = 'REGISTER#SEND_EMAIL#';	// 发送邮件的key
 	protected $mKeyExpire = 300;		// 缓冲5分钟
 
 	public function __construct()
@@ -120,7 +120,7 @@ class RegisterController extends HomeController {
 		$assign['user_id'] = $user_id;
 
 		// 发送邮箱激活验证码 改为异步发送
-		$this->_sendMailCode($email, $user_id);
+		$this->sendMailCode($email, $user_id, md5($email.$user_id.$this->key));
 
 		$this->assign('assign', $assign);
 		$this->display('mail_check');
@@ -168,18 +168,69 @@ class RegisterController extends HomeController {
 	}
 
 	/**
+	 * CURL post发送邮箱激活
+	 */
+	public function sendMailCode($email, $user_id, $key)
+	{
+		if ($key != md5($email.$user_id.$this->key))
+			return z_info(-1, '验证失败');
+
+		$request_data = array();
+		$request_data['email'] = $email;
+		$request_data['id'] = $user_id;
+		$request_data['key'] = $key;
+		$request_url = ZU('Register/postMailCode');
+
+		// curl post请求
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $request_url);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, False);
+		curl_setopt($ch, CURLOPT_POST, 1);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $request_data);
+		$result = curl_exec($ch);
+		curl_close($ch);
+		
+		return z_info(1, '发送成功');
+	}
+
+	/**
+	 * 重新发送激活码
+	 */
+	public function reSendMailCode()
+	{
+		if (!IS_POST) return False;
+
+		$email = I('post.email');
+		$user_id = I('post.id');
+		$key = md5($email.$user_id.$this->key);
+		$state = $this->sendMailCode($email, $user_id, $key);
+		$this->ajaxReturn($state);
+	}
+
+	/**
 	 * 发送邮箱验激活证码
 	 */
-	private function _sendMailCode($email, $user_id)
+	public function postMailCode()
 	{
-		// 添加缓冲设置，5分钟发一次邮件
+		if (!IS_POST) return z_info(0, '错误');
+		$email = I('post.email');
+		$user_id = I('post.id');
+		$key = I('post.key');
 
+		// key 验证失败
+		if ($key != md5($email.$user_id.$this->key)) return z_info(-1, '验证失败');
+
+		// 锁存在，无法发送邮件
+		$mkey = $this->mKey.$email.'#'.$user_id;
+		$lockEmail = S($mkey);
+		if ($lockEmail) return z_info(-2, '请等'.$this->mKeyExpire.'秒后再发送');
+
+		// 添加缓冲设置，5分钟发一次邮件
 		$data['from'] = 'mingwei0529@163.com';
 		$data['from_name'] = '逐浪网 - 系统邮件';
 		$data['subject'] = '账户激活 - 逐浪网'; // 邮件主题
 		$data['email'] = $email;
 		$data['id'] = $user_id;
-
 
 		$param['email'] = $email;
 		$param['uid'] = $user_id;
@@ -200,25 +251,12 @@ class RegisterController extends HomeController {
 </body>   
 </html>
 HTML;
-
 		$state = \Zlib\Api\Tool::sendMail($data);
+
+		// 发送成功，添加锁
+		if ($state['code'] > 0)
+			S($mkey, 1, $this->mKeyExpire);
 		return $state;
-	}
-
-	/**
-	 * 重新发送激活码
-	 */
-	public function reSendMailCode($email, $user_id, $key)
-	{
-		// 如果key错误，则false
-
-		// 如果未达到发送时间，则false
-
-		$data['email'] = $email;
-		$data['id'] = $user_id;
-		$data['msg'] = '感谢您注册逐浪小说网用户...';
-
-		\Zlib\Api\Tool::sendMail($data);
 	}
 
 	/**

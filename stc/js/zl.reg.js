@@ -10,6 +10,22 @@
  	$.extend({
 
  		/**
+ 		 * 重新发送邮件
+ 		 */
+ 		resendMail : function(request_url, email, user_id)
+ 		{
+ 			$.ajax({
+ 				url : request_url,
+ 				type : 'post',
+ 				data : 'email='+email+'&id='+user_id,
+ 				success : function(response)
+ 				{
+ 					$.debug(response);
+ 				}
+ 			});
+ 		},
+
+ 		/**
  		 * 性别选择
  		 */
  		chooseSex : function()
