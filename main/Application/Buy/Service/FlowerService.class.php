@@ -34,13 +34,11 @@ class FlowerService extends ZlibUserFlowerModel{
 			if ($rs) {
 				$log_data['month'] = $final_data['month'];
 				$log_data['user_id'] = $final_data['user_id'];
-				$log_data['bk_id'] = $data['book_info']['bk_id'];
 				$log_data['op_time'] = z_now();
 				$log_data['operator'] = self::OPERATOR;
 				$log_data['num'] = $data['num'];
-				$log_data['show_num'] = $data['num'] * C('APP.log_flower_rate');
 				$log_data['ip'] = z_ip();
-				parent::addSendLog($log_data);
+				parent::addCostAddFlowerLog($log_data);
 			}
 
 		} else if($info['total_num'] != $final_data['total_num']) {
@@ -51,13 +49,11 @@ class FlowerService extends ZlibUserFlowerModel{
 			if ($rs) {
 				$log_data['month'] = $final_data['month'];
 				$log_data['user_id'] = $final_data['user_id'];
-				$log_data['bk_id'] = $data['book_info']['bk_id'];
 				$log_data['op_time'] = z_now();
 				$log_data['operator'] = self::OPERATOR;
 				$log_data['num'] = $data['num'];
-				$log_data['show_num'] = $data['num'] * C('APP.log_flower_rate');
 				$log_data['ip'] = z_ip();
-				parent::addSendLog($log_data);
+				parent::addCostAddFlowerLog($log_data);
 			}
 
 		} else {

@@ -40,11 +40,11 @@ class ZlibUserFlowerModel extends BaseModel {
 	}
 
 	/**
-	 * 添加鲜花日志
+	 * 添加消费赠送鲜花日志
 	 */
-	public function addSendLog($data)
+	public function addCostAddFlowerLog($data)
 	{
-		return $this->sendLogInstance->data($data)->add();
+		return $this->addLogInstance->data($data)->add();
 	}
 
 	/**

@@ -272,8 +272,6 @@ class CostController extends BuyController {
 		$flower['num'] = $add_flower_num;
 		$flower['total_num'] = $flower_have_total;
 		$flower['user_id'] = $this->userInfo['user_id'];
-		$flower['book_info'] = $this->bookInfo;
-		$flower['user_info'] = $this->userInfo; 
 		return $this->flowerInstance->addFlower($flower);
 	}
 }
