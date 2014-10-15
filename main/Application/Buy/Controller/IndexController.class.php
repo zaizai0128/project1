@@ -13,6 +13,8 @@ class IndexController extends BuyController {
 
 	protected $userInstance = Null;
 	protected $userInfo = Null;
+	protected $billInstance = Null;
+	protected $flowerInstance = Null;	
 
 	public function __construct()
 	{
@@ -22,6 +24,9 @@ class IndexController extends BuyController {
 			$this->userInstance = D('User', 'Service');
 			$this->userInfo = $this->userInstance->getAccountInfo(ZS('SESSION.user', 'user_id'));
 		}
+
+		$this->billInstance = D('Bill', 'Service');
+		$this->flowerInstance = D('Flower', 'Service');
 	}
 	
 	/**
@@ -29,6 +34,11 @@ class IndexController extends BuyController {
 	 */
 	public function chapter()
 	{	
+		$month_cost_total = $this->billInstance->getCostSum($this->userInfo['user_id']);
+		// 获取距离下一次赠送鲜花 还需要消费多少
+		$next_num = $this->flowerInstance->getNextFlowerNum($this->userInfo['user_id'], $month_cost_total);
+		$assign['next_num'] = $next_num;
+
 		// 验证章节信息
 		\Zlib\Api\Acl::buy($this->chapterInfo);
 
@@ -36,6 +46,7 @@ class IndexController extends BuyController {
 		$volume_list = \Zlib\Api\Book::getCatalog($this->bookId);
 
 		$this->assign(array(
+			'assign' => $assign,
 			'chapter_info' => $this->chapterInfo,
 			'book_info' => $this->bookInfo,
 			'volume_list' => $volume_list,

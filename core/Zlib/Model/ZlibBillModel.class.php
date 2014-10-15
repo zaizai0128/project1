@@ -54,6 +54,27 @@ class ZlibBillModel extends BaseModel {
 	}
 
 	/**
+	 * 获取某用户的流水帐单
+	 *
+	 * @param int user_id
+	 */
+	public function getBillList($user_id, $field = '*')
+	{
+		$condition = 'user_id = '.$user_id;
+		return $this->billInstance->field($field)->where($condition)->select();
+	}
+
+	/**
+	 * 获取某用户消费总额（当前月）
+	 * @param int user_id
+	 */
+	public function getCostSum($user_id)
+	{
+		$condition = 'user_id = '.$user_id;
+		return $this->billInstance->where($condition)->sum('pay_money');
+	}
+
+	/**
 	 * 验证数据库是否存在
 	 */
 	public function createTable()

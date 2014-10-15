@@ -60,6 +60,10 @@ return array(
 	// 应用app
 	'APP' => array(
 		'max_flower_num' => 8,	// 对每部作品最多投鲜花的数量
+		'cost_num_give_flower' => 500,	// 消费多少逐浪币 给予一个鲜花
+		'log_flower_rate' => 1.7,	// 日志的鲜花比例 show_num
+
+
 	),
 
 	// 用户相关

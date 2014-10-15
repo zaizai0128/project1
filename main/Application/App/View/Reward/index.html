@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>逐浪小说/玄幻小说/网游小说/武侠小说/言情小说阅读网</title>
+<link rel="stylesheet" type="text/css" media="all"
+	href="http://www.zhulang.com/css/small_cp.css" />
+<style type="text/css">
+<!--
+.STYLE1 {
+	color: #FF0000
+}
+
+-->
+.STYLE2 a,.STYLE2 a:hover,.STYLE2 a:visited,.STYLE2 a:link {
+	color: #012E8F;
+	text-decoration: underline;
+}
+
+.STYLE3 {
+	color: #ff0000;
+	font-size: 14px;
+}
+
+.STYLE4 {
+	color: #FF0000;
+}
+-->
+</style>
+<script src="{:z_js()}"></script>
+<script language="javascript" type="text/javascript">
+<!--
+function toNum(n){   
+	var nums=parseInt(n);
+	if(isNaN(nums)){
+		nums=0;
+	}
+	return nums;
+}
+var time="30000";
+var totalTime=time;
+function showLeftTime()
+{
+  var obj=document.getElementById("showleftTime");
+  totalTime--;
+  if(obj){
+	  obj.innerHTML=totalTime;
+  }
+  if(totalTime<=0){
+	  do_close();
+  }
+}
+leftTimeInt=self.setInterval("showLeftTime()",1000);
+var minnum=toNum("100");
+if(minnum<=0)minnum=1;
+function vote_submit(){
+	var num	  = toNum(document.getElementById("num").value);   
+	var maxnum= toNum(document.getElementById("maxnum").value);   
+	if(num < minnum){
+		try{
+			document.getElementById("num").focus();
+		}
+		catch(e){
+			document.getElementById("fornum").focus();
+		}
+		clearShowTime();
+		alert("请输入要投的数目，数目要大于等于"+minnum+"!");
+		return false;
+	} 
+	if(num > maxnum){
+		try{
+			document.getElementById("num").focus();
+		}
+		catch(e){
+			document.getElementById("fornum").focus();
+		}
+		clearShowTime();
+		alert("您最多只能投 "+maxnum+" 票!");
+		return false;
+	}
+	try{
+		document.getElementById("btnsubmit").disabled=true;
+	}
+	catch(e){
+		//
+	}
+	return true;
+}
+
+function clearShowTime(){
+	try{
+		if(!(leftTimeInt===undefined)){
+			window.clearInterval(leftTimeInt);
+		}
+		document.getElementById("closetimediv").innerHTML='<input type="button" value="关闭窗口" class="btnsubmit" onclick="do_close()" />';
+		
+	}
+	catch(e){
+		//
+	}
+}
+function do_close(){
+	try{
+		window.opener=null;
+		window.open("","_self");
+		window.close();
+	}
+	catch(e){
+		window.close();
+	}
+}
+function refreshparent(){
+	if(window.opener){window.opener.location.reload();}
+}
+//-->
+</script>
+</head>
+
+<body>
+<form name="voteform" method="post"  onsubmit="return vote_submit();" action="">
+<div class="layout">
+<div class="main">
+<div class="title"><span class="STYLE4">欢迎您对作品打赏,谢谢您对作者的支持!</span></div>
+<div class="list">
+<ul>
+	<li>打赏作品：《谪仙风云》，作者：昔日西域刀客</li><li>您的当前余额（0 逐浪币）不足（最少打赏100逐浪币）!</li>	<div class="br"></div>
+</ul>
+</div>
+<div id="closetimediv" class="quit"><input type="button" value="关闭窗口"
+	class="btnsubmit" onclick="do_close()" />&nbsp; 或　<span id="showleftTime" style="color:#FF0000"></span>秒后自动关闭！</div>
+<div class="quit"></div>
+</div>
+</div>
+</form>
+</body>
+</html>

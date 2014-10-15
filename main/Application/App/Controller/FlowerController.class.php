@@ -24,7 +24,7 @@ class FlowerController extends AppController {
 		$this->bookInstance = D('Book', 'Service');
 		$this->flowerInstance = D('Flower', 'Service');
 		$this->bookInfo = $this->bookInstance->getBookByBookId($this->bookId);
-		$this->userInfo['flower'] = $this->flowerInstance->getFlower($this->userId, $this->bookId);
+		$this->userInfo['flower'] = $this->flowerInstance->getUserBookFlower($this->userId, $this->bookId);
 
 		$this->mKey = 'APP#FLOWER#LOCK'.$this->userId;
 		$this->_check();

@@ -7,22 +7,24 @@
  * @version 1.0
  */
 namespace App\Service;
-use Zlib\Model\ZlibBookModel;
+use Zlib\Model\ZlibUserFlowerModel;
 
-class FlowerService extends ZlibBookModel {
+class FlowerService extends ZlibUserFlowerModel{
 
 	/**
-	 * 获取用户对每本书的鲜花
+	 * 获取用户对每本书的鲜花使用数
 	 *
 	 * @param user_id
 	 * @param book_id
 	 */
-	public function getFlower($user_id, $book_id)
+	public function getUserBookFlower($user_id, $book_id)
 	{
 		$result = array();
-		$result['have_num'] = 3;
-		$result['allow_num'] = 2;
-
+		$num = parent::getFlower($user_id, 'num');	// 用户拥有的鲜花数
+		$result['have_num'] = (int)$num['num'];
+		$result['allow_num'] = 2;	// 对该作品还能赠送的鲜花数
+		
+		// de($result);
 		return $result;
 	}
 
@@ -42,6 +44,9 @@ class FlowerService extends ZlibBookModel {
 		} else if ($num > $allow_num) {
 			return z_info(-2, '超过当前作品所能接受的鲜花数');
 		} 
+
+		// 
+
 
 		return z_info(1, '赠送成功');
 	}

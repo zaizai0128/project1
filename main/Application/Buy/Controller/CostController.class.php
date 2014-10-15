@@ -13,6 +13,7 @@ class CostController extends BuyController {
 	protected $userInstance = Null;
 	protected $billInstance = Null;
 	protected $discountInstance = Null;
+	protected $flowerInstance = Null;
 	protected $userInfo = Null;
 	protected $costType = Null;	// 消耗的金币类型 1金币 2银币
 	protected $vipBuy = null;		
@@ -24,6 +25,7 @@ class CostController extends BuyController {
 		$this->userInfo = $this->userInstance->getAccountInfo(ZS('SESSION.user', 'user_id'));
 		$this->discountInstance = D('Discount', 'Service');
 		$this->billInstance = D('Bill', 'Service');
+		$this->flowerInstance = D('Flower', 'Service');
 		$this->vipBuy = new \Zlib\Api\UserVipBuy($this->userInfo['user_id'], $this->bookId);
 	}
 
@@ -165,6 +167,9 @@ class CostController extends BuyController {
 				$result[$res_key] = $this->vipBuy->setBuyByOrderMulti($order_from, $order_to);
 		}
 
+		// 添加鲜花操作
+		$result['flower'] = $this->_addFlower();
+
 		// 如果购买成功
 		if (array_product($result) >= 1)
 		{
@@ -236,6 +241,9 @@ class CostController extends BuyController {
 			
 		// 为用户添加购买后的权限
 		$result['buy'] = $this->vipBuy->setBuyByOrder($this->chapterInfo['ch_order']);
+
+		// 添加鲜花操作
+		$result['flower'] = $this->_addFlower();
 		
 		// 如果购买成功
 		if (array_product($result) >= 1)
@@ -248,5 +256,24 @@ class CostController extends BuyController {
 			// 记录到error_log中
 			z_redirect('购买失败，请重新尝试');
 		}
+	}
+
+	/**
+	 * 添加鲜花
+	 */
+	private function _addFlower()
+	{
+		// 获取当月消费总额
+		$month_cost_total = $this->billInstance->getCostSum($this->userInfo['user_id']);
+		// 获取当月用户的鲜花总数
+		$flower_have_total = $this->flowerInstance->getFlowerSum($this->userInfo['user_id']);
+		// 获取应该赠送的鲜花数
+		$add_flower_num = $this->flowerInstance->getAddFlowerNum($month_cost_total, $flower_have_total);
+		$flower['num'] = $add_flower_num;
+		$flower['total_num'] = $flower_have_total;
+		$flower['user_id'] = $this->userInfo['user_id'];
+		$flower['book_info'] = $this->bookInfo;
+		$flower['user_info'] = $this->userInfo; 
+		return $this->flowerInstance->addFlower($flower);
 	}
 }
