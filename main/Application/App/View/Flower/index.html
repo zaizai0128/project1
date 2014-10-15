@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>逐浪小说/玄幻小说/网游小说/武侠小说/言情小说阅读网</title>
+	<link rel="stylesheet" type="text/css" media="all" href="http://www.zhulang.com/css/small.css" />
+    <style type="text/css">
+	<!--
+	.STYLE1 {color: #FF0000}
+	-->
+	.STYLE2 a,
+	.STYLE2 a:hover,
+	.STYLE2 a:visited,
+	.STYLE2 a:link {
+		color: #012E8F;
+		text-decoration: underline;
+		}
+	.STYLE3 {
+		color: #ff0000;
+		font-size:14px;
+		}
+	.STYLE4 {
+		color: #FF7800;
+		}	
+	-->
+    </style>
+    <script src="{:z_js()}"></script>
+</head>
+
+<body onLoad="window.setTimeout('count()',1)">
+
+<form name="form1" method="post" action="{:ZU('App/flower/doAdd', 'ZL_DOMAIN', array('book_id'=>$book_info['bk_id'], 'setback'=>z_referer()))}" onsubmit="return $.doAdd();">
+<div class="layout">
+	<div class="main">
+		<div class="title"><span class="STYLE4">温馨提醒：</span></div>
+		<div class="list">
+		<ul>
+			<li>鲜花送喜欢作品,谢谢您对作者的支持！</li>
+			<li> 您还有
+				<span class="STYLE1"> {$user_info.flower.have_num}</span> 朵鲜花 　该作品最多还可以使用
+				<font color='red'>{$user_info.flower.allow_num}</font>朵鲜花　
+			</li>
+			<li> 我要送出 
+				<input name="num" type="text" id="num" value="1" size="3"> 朵 　　
+				<input type="submit" name="submit" value="点此送出" class="btnsubmit1">
+			</li>
+			<div class="br"></div>
+		  </ul>
+	  </div>
+		<div class="quit">
+			<input type="button" value="关闭窗口" class="btnsubmit" onclick="self.close();"/>　或　
+			<span id="rest" style="color:#FF0000"></span>秒后自动关闭！
+		</div>
+		<div class="quit">想获得更多鲜花，请查看　　　
+			<span class="STYLE2"><a href="http://www.zhulang.com/05_03.htm" target="_blank">送鲜花说明</a></span>　　<a href="http://www.zhulang.com/bookarray.php?flag=5" target="_blank">鲜　花　榜</a>
+		</div>
+	</div>
+</div>
+</form>
+
+<script type="text/javascript">
+// 多少秒 自动关闭
+var time=36000;	
+function count(){
+	setTimeout("count()",1000);
+	rest.innerHTML=time; 
+	time--;
+	if(time==0){
+		self.close();
+	}		
+}
+
+jQuery(function($){
+	$.extend({
+		doAdd : function()
+		{
+			var isOk = false;
+			var num = parseInt($('#num').val().replace(/\s+/,''));
+			var allow_num = {$user_info.flower.allow_num};
+			var have_num = {$user_info.flower.have_num};
+			var pattern=/^\d+$/;   
+
+			if(!pattern.test(num)) {
+				alert("请输入数字！");
+			} else {
+
+				if (num > allow_num) {
+				alert("这部作品最多可以再接受"+allow_num+"朵鲜花，您还可以送出"+have_num+"朵鲜花！");
+
+				} else if(num > have_num) {
+					alert("您当前的鲜花数不够！");
+				} else {
+					isOk = true;
+				}
+			}
+
+			return isOk;
+		}
+	});
+});
+</script>
+</body>
+</html>

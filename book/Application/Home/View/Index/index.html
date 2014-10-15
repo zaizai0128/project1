@@ -58,7 +58,7 @@
     {// 不同卷下的不同章节 }
     <?php foreach($catalog as $key=>$val):?>
     <div class="cont_main">
-      <h3> <cite>{$val.volume_name}<a href="#">（分卷阅读）</a></cite> <span> <a href="#" target="_blank">给本书送鲜花</a>| <a href="#" target="_blank">添加全本基金</a>| <a href="#" target="_blank">我要打赏</a>| <a href="#" target="_blank">我要投票</a>| <a href="#" target="_blank">我要推荐</a>| <a href="#" target="_blank">我要评论</a> </span> </h3>
+      <h3> <cite>{$val.volume_name}<a href="javascript:;">（分卷阅读）</a></cite> <span> <a href="{:ZU('app/flower/index', 'ZL_DOMAIN', array('book_id'=>$book_info['bk_id']))}" target="_blank">给本书送鲜花</a>| <a href="{:ZU('app/reward/index', 'ZL_DOMAIN', array('book_id'=>$book_info['bk_id']))}" target="_blank">我要打赏</a>| <a href="javascript:;" target="_blank">我要投票</a>| <a href="javascript:;" target="_blank">我要推荐</a>| <a href="javascript:;" target="_blank">我要评论</a> </span> </h3>
       <p>{$book_info.bk_intro}</p>
       <div class="ct_list"> 
         <?php $i=0;?>

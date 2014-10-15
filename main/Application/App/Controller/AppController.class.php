@@ -13,12 +13,15 @@ class AppController extends Controller {
 
 	protected $userId = Null;
 	protected $userInfo = Null;
+	protected $userInstance = Null;
 
 	public function __construct()
 	{
 		parent::__construct();
 		$this->userId = ZS('SESSION.user', 'user_id');
-		$this->userInfo = ZS('SESSION.user');
+		$this->userInstance = D('User', 'Service');
+		$this->userInfo = $this->userInstance->getUserInfo($this->userId);
+		
 		\Zlib\Api\Acl::app($this->userInfo);
 	}
 

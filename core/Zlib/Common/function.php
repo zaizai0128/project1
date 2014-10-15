@@ -434,10 +434,12 @@ function z_img($path, $fix = 'jpg')
 
 /**
  * 获取上一页地址
- *
+ * @param now 当前页地址 默认返回上一页
  */
-function z_referer()
+function z_referer($now = False)
 {
+	if ($now)
+		return 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 	return $_SERVER['HTTP_REFERER'];
 }
 

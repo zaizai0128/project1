@@ -57,6 +57,11 @@ return array(
 		'shelf_max' => 3,		// 用户创建的书架最大量	
 	),
 
+	// 应用app
+	'APP' => array(
+		'max_flower_num' => 8,	// 对每部作品最多投鲜花的数量
+	),
+
 	// 用户相关
 	'USER' => array(
 		'type' => array(

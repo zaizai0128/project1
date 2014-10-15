@@ -15,8 +15,9 @@ class Acl {
 	 */
 	static public function app($user_info)
 	{
+		$user_info = array_filter($user_info);
 		if (empty($user_info))
-			z_redirect('未登录，不允许操作');
+			z_redirect('请先登录', ZU('login/index', 'ZL_DOMAIN', array('setback'=>z_referer(1))), 2, -1);
 	}
 
 	/**
