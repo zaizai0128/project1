@@ -187,7 +187,7 @@ class Book {
 	/**
 	 * 获取作品目录
 	 */
-	public static function getCatalog($book_id, $user_id = Null)
+	public static function getCatalog($book_id, $user_id = Null, $all = False)
 	{
 		$catalog = array();
 		$cached_chapter = new CachedChapter($book_id);
@@ -197,12 +197,13 @@ class Book {
 		foreach ($volume as $volume_id => $volume_name) {
 			$catalog[$volume_id]['volume_id'] = $volume_id;
 			$catalog[$volume_id]['volume_name'] = $volume_name;
-			$vol = $cached_chapter->getVolumeChapters($volume_id);
+			$vol = $cached_chapter->getVolumeChapters($volume_id, $all);
 
 			foreach ($vol as $chapter_id => &$chapter_name) {
 				$tmp['chapter_name'] = $chapter_name;
 				$tmp['chapter_vip'] = $cached_chapter->isVip($chapter_id);
 				$tmp['chapter_size'] = $cached_chapter->getSize($chapter_id);
+				$tmp['chapter_status'] = $cached_chapter->getStatus($chapter_id);
 				$tmp['chapter_price'] = z_word_to_money($cached_chapter->getSize($chapter_id));
 				
 				if ($tmp['chapter_vip']) {

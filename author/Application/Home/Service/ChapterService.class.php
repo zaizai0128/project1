@@ -197,19 +197,29 @@ class ChapterService extends ZlibChapterModel {
 			$filter_word = $this->filterApi->getFilterWord($content);
 			$data['filter_word'] = $filter_word;
 
-			if (C('FILTER.filter_scale') == 2 || count($filter_word) >= C('FILTER.word_num')) {
+			if (count($filter_word) >= C('FILTER.word_num')) {
 				// 添加严重级别审核
 				$this->filterInstance->doAddErrorFilter($data);
 				return z_info(-42, '含有'.count($filter_word).'个非法词汇，该章节无法使用，等待客服解封');
 
 			// 如果不超过 规定个数
-			} else {
-				// 添加普通级别审核
-				$this->filterInstance->doAddNoticeFilter($data);
-				return z_info(-31, '内容含有非法词汇');
+			} else if(count($filter_word) > 0) {
+
+				// 严打期间，只要有一个问题词汇，就封锁
+				if(C('FILTER.filter_scale') == 2) {
+
+					// 添加严重级别审核
+					$this->filterInstance->doAddErrorFilter($data);
+					return z_info(-43, '严打期间，禁止使用非法词汇，该章节无法使用，等待客服解封');
+					
+				} else {
+					// 添加普通级别审核
+					$this->filterInstance->doAddNoticeFilter($data);
+					return z_info(-31, '内容含有非法词汇');
+				}
 			}
 		}
-
+		
 		return z_info($data['ch_id'], '验证通过');
 	}
 
@@ -247,6 +257,10 @@ class ChapterService extends ZlibChapterModel {
 
 		if ($is_edit) {
 			if (empty($data['ch_id'])) return z_info(-11, '章节id不允许为空');
+
+			// 获取章节状态
+			// $status = parent::getChapterInfo('ch_status');
+			// if ($status['ch_status'] != '00') return z_info(-12, '当前章节不允许被修改');
 
 			// 判断章节名是否重复
 			$chapter_info = parent::getChapterInfoByName($data['ch_name'], 'ch_name', ' and ch_id != '.$data['ch_id']);

@@ -21,6 +21,8 @@ class FilterService extends ZlibChapterAuditModel{
 
 	/**
 	 * 添加到审核信息 政治级别
+	 * 作品被关闭，章节被关闭，级别为政治错误
+	 * 
 	 */
 	public function doAddDeadFilter($data)
 	{
@@ -64,6 +66,8 @@ class FilterService extends ZlibChapterAuditModel{
 
 	/**
 	 * 添加审核信息 严重级别
+	 * 章节被关闭，级别为严重错误
+	 * 严打期间，作品同时被关闭
 	 */
 	public function doAddErrorFilter($data)
 	{
@@ -74,7 +78,9 @@ class FilterService extends ZlibChapterAuditModel{
 		$final_data['is_vip'] = (int)$data['vip'];
 		$final_data['author_id'] = $data['user_id'];
 		$final_data['author_name'] = $data['author_name'];
-		$final_data['author_lock'] = 0;		// 关闭作品
+		
+		// 严打期间，关闭作品
+		$final_data['author_lock'] = C('FILTER.filter_scale') == 2 ? 1 : 0;
 		$final_data['audit_emergency'] = 1;	// 严重级别
 		$final_data['audit_name'] = $data['ch_name'];
 		$final_data['audit_content'] = $data['ocontent'];
@@ -98,10 +104,19 @@ class FilterService extends ZlibChapterAuditModel{
 		$chapter_data['bk_id'] = $final_data['bk_id'];
 		$chapter_data['ch_id'] = $final_data['ch_id'];
 		$chapter_instance->doEditStatus($chapter_data);
+
+		// 修改作品状态为 待审核
+		if (C('FILTER.filter_scale') == 2) {
+			$book_data['bk_id'] = $data['bk_id'];
+			$book_data['bk_status'] = '01';
+			$this->bookInstance->doEdit($book_data);
+		}
 	}
 
 	/**
 	 * 添加审核信息 普通级别
+	 * 章节被关闭，级别为普通错误
+	 * 严打期间，作品同时被关闭
 	 */
 	public function doAddNoticeFilter($data)
 	{
@@ -113,7 +128,9 @@ class FilterService extends ZlibChapterAuditModel{
 		$final_data['is_vip'] = (int)$data['vip'];
 		$final_data['author_id'] = $data['user_id'];
 		$final_data['author_name'] = $data['author_name'];
-		$final_data['author_lock'] = 0;
+		
+		// 严打期间，关闭作品
+		$final_data['author_lock'] = C('FILTER.filter_scale') == 2 ? 1 : 0;
 		$final_data['audit_emergency'] = 0;
 		$final_data['audit_name'] = $data['ch_name'];
 		$final_data['audit_content'] = $data['ocontent'];
@@ -128,6 +145,13 @@ class FilterService extends ZlibChapterAuditModel{
 		} else {
 			$final_data['update_time'] = z_now();
 			$result = parent::doEdit($final_data);
+		}
+
+		// 修改作品状态为 待审核
+		if (C('FILTER.filter_scale') == 2) {
+			$book_data['bk_id'] = $data['bk_id'];
+			$book_data['bk_status'] = '01';
+			$this->bookInstance->doEdit($book_data);
 		}
 	}
 }

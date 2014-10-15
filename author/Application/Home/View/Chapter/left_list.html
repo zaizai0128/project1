@@ -13,9 +13,9 @@
         <ul>
             <?php foreach($volume_val['volume_chapter'] as $chapter_key=>$chapter_val):?>
             <?php if($ch_id == $chapter_key):?>
-              <li class="on">{$chapter_val.chapter_name}<?php if($chapter_val['chapter_vip']):?>[vip]<?php endif;?></li>
+              <li class="on">{$chapter_val.chapter_name}<?php if($chapter_val['chapter_vip']):?>[vip]<?php endif;?>[{:ZC(C('CHAPTER.status'), $chapter_val['chapter_status'])}]</li>
             <?php else:?>
-              <li><a href="{:ZU('chapter/edit', 'ZL_AUTHOR_DOMAIN', array('book_id'=>$book_info['bk_id'], 'ch_id'=>$chapter_key))}">{$chapter_val.chapter_name}<?php if($chapter_val['chapter_vip']):?>[vip]<?php endif;?></a></li>
+              <li><a href="{:ZU('chapter/edit', 'ZL_AUTHOR_DOMAIN', array('book_id'=>$book_info['bk_id'], 'ch_id'=>$chapter_key))}">{$chapter_val.chapter_name}<?php if($chapter_val['chapter_vip']):?>[vip]<?php endif;?>[{:ZC(C('CHAPTER.status'), $chapter_val['chapter_status'])}]</a></li>
             <?php endif;?>
             <?php endforeach;?>
         </ul>

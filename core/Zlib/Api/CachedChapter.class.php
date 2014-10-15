@@ -213,6 +213,11 @@ class CachedChapter {
 		return $this->mChapter[$chapter_id]['ch_size'];
 	}
 
+	public function getStatus($chapter_id)
+	{
+		return $this->mChapter[$chapter_id]['ch_status'];
+	}
+
 	public function getBookId()
 	{
 		return $this->mBookId;

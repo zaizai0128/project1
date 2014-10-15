@@ -28,7 +28,7 @@ class ChapterController extends HomeController {
 		$this->volumeInstance = D('Volume', 'Service');
 
 		$this->bookInfo = $this->bookInstance->getBookByBookId($this->bookId, 'bk_id,bk_name,bk_fullflag,bk_status,bk_accredit,bk_commision');
-		$chapter_list = \Zlib\Api\Book::getCatalog($this->bookId);
+		$chapter_list = \Zlib\Api\Book::getCatalog($this->bookId, '', True);
 		$assign['volume_total'] = count($chapter_list); 
 		$assign['volume_chapter'] = 0;
 		foreach ($chapter_list as $val) {
