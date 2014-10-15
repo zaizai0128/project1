@@ -109,8 +109,8 @@ class FilterWords {
 			if ($this->mFilterWords[$i]['classtype'] == 3 && !$shuping) 
 				$word = null;	
 
-			if ($this->mFilterWords[$i]['classtype'] == 1) 
-				$word = null;
+			// if ($this->mFilterWords[$i]['classtype'] == 1) 
+			//	$word = null;
 
 			if ($word != null) { 
 				if ($this->mFilterWords[$i]['is_reg'] == 0) {	
@@ -174,6 +174,44 @@ class FilterWords {
 			// echo $text." ".$filter;
 			return strstr($text, $filter);
 		}
+	}
+
+	public function auditFilter($text)
+	{
+		$count = count($this->mFilterWords);
+	
+		$found  = 0;
+		$str_arr = array();
+		$reg_arr = array();
+		$replace_arr = array();
+		
+		for ($i = 0; $i < $count; $i++) {
+			$word =  $this->mFilterWords[$i]['word'];
+
+			if ($word != null) { 
+				if ($this->mFilterWords[$i]['is_reg'] == 0) {	
+					$word = '/'.$word.'/';
+				}
+				array_push($reg_arr, $word);
+				switch ($this->mFilterWords[$i]['classtype']) {
+				case '1':
+					array_push($replace_arr, '<b>$0</b>');
+					break;
+				case '2':
+					array_push($replace_arr, '<b>$0</b>');
+					break;
+				case '3':
+					array_push($replace_arr, '<b>$0</b>');
+					break;
+				}
+			} 
+		}
+
+		if (count($reg_arr) > 0) {
+			print_r($reg_arr);
+			$text = preg_replace($reg_arr, $replace_arr, $text);
+		}	
+		return $text;
 	}
 
 	public static function setDirty($dirty = true) 

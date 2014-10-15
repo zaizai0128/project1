@@ -107,7 +107,7 @@ class CachedChapter {
 		}
 
 		$table = $this->getChapterTable($this->mBookId);
-		$m = M($table)->where(' ch_status=0 and bk_id = '.$this->mBookId)->order('ch_roll asc, ch_order asc')->select();
+		$m = M($table)->where(' (ch_status=0 or ch_status=2) and bk_id = '.$this->mBookId)->order('ch_roll asc, ch_order asc')->select();
 		$ch_order = 0;
 		foreach ($m as $row) {
 			// $row['ch_order'] = $ch_order;
@@ -158,7 +158,7 @@ class CachedChapter {
 		return base64_decode($this->mVolume[$volume_id][$this->mVolumeIntroIndex]);
 	}
 
-	public function getVolumeChapters($volume_id) 
+	public function getVolumeChapters($volume_id, $editor = false) 
 	{	
 		$result = array();
 		$arr = localtime(time(), true);
@@ -168,14 +168,17 @@ class CachedChapter {
 
 		foreach ($this->mVolume[$volume_id][$this->mVolumeChaptersIndex] as  $chapter_id) {
 			// echo "test".$this->mChapter[$chapter_id]['ch_effect_time']."\n";
-			if ($this->mChapter['ch_effect_time'] <= $now) {
+			if ($this->mChapter[$chapter_id]['ch_status'] == 2 && !$editor) {	
+				continue;
+			}
+			if ($this->mChapter[$chapter_id]['ch_effect_time'] <= $now) {
 				$result[$chapter_id] = base64_decode($this->mChapter[$chapter_id]['ch_name']);
 			}
 		}
 		return $result;
 	}
 
-	public function getChapters($vip) 
+	public function getChapters($vip, $editor = false) 
 	{	
 		$result = array();
 		$arr = localtime(time(), true);
@@ -184,9 +187,13 @@ class CachedChapter {
 				$arr['tm_hour'], $arr['tm_min'], $arr['tm_sec']); 
 
 		foreach ($this->mChapter as  $chapter) {
+			if ($chapter['ch_status'] == 2 && !$editor) {	
+				continue;
+			}
 			if ($chapter['ch_vip'] == 1 && $vip) {
-				$result[$chaper_id] = $this->mVolume[$chapter['ch_roll']][$this->mVolumeNameIndex]
-					. ' ' .base64_decode($this->mChapter['ch_name']);
+				// $result[$chaper_id] = $this->mVolume[$chapter['ch_roll']][$this->mVolumeNameIndex]
+				//	. ' ' .base64_decode($this->mChapter['ch_name']);
+				$result[$chaper_id] = base64_decode($this->mChapter['ch_name']);
 			}
 			if ($chapter['ch_vip'] == 0 && !$vip) {
 				//			$result[$chaper_id] = $this->mVolume[$chapter['ch_roll']][$this->mVolumeName] . ' ' .base64_decode($this->mChapter['ch_name']);
