@@ -6,7 +6,7 @@
 		<div class="tab-pane active" id="tab-hot">
 			<ul class="nav">
 				<?php foreach($book_new_list as $key=>$val):?>
-				<li><a href="{:ZU('book/index', 'ZL_DOMAIN', array('book_id'=>$val['bk_id']))}">[{:ZC(z_get_short_category($val['bk_class_id'], $assign['book_top_class']), 'short_name')}]&nbsp;{$val.bk_name}</a></li>
+				<li><a href="{:ZU('book/index', 'ZL_DOMAIN', array('book_id'=>$val['bk_id']))}" target="_blank">[{:ZC(z_get_short_category($val['bk_class_id'], $assign['book_top_class']), 'short_name')}]&nbsp;{$val.bk_name}</a></li>
 				<?php endforeach;?>
 			</ul>
 		</div>
