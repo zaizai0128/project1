@@ -97,7 +97,7 @@ class FlowerController extends AppController {
 			if ($state['code'] > 0) {
 
 				// 设置lock
-				S($this->mKey, 1, $this->expire);
+				// S($this->mKey, 1, $this->expire);
 
 				z_redirect('赠送成功', ZU('', '', 'back'));
 			} else {

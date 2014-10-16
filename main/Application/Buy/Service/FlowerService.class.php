@@ -11,8 +11,6 @@ use Zlib\Model\ZlibUserFlowerModel;
 
 class FlowerService extends ZlibUserFlowerModel{
 
-	const OPERATOR = 0;	// 0 用户
-
 	/**
 	 * 添加鲜花
 	 */
@@ -27,7 +25,7 @@ class FlowerService extends ZlibUserFlowerModel{
 		// 判断是增加还是修改
 		$info = parent::getFlower($final_data['user_id'], 'id,total_num');
 
-		if (empty($info)) {
+		if (empty($info) && $final_data['total_num'] > 0) {
 			$rs = parent::doAdd($final_data);
 
 			// 记录日志
@@ -35,13 +33,13 @@ class FlowerService extends ZlibUserFlowerModel{
 				$log_data['month'] = $final_data['month'];
 				$log_data['user_id'] = $final_data['user_id'];
 				$log_data['op_time'] = z_now();
-				$log_data['operator'] = self::OPERATOR;
+				$log_data['operator'] = parent::OPERATOR;
 				$log_data['num'] = $data['num'];
 				$log_data['ip'] = z_ip();
 				parent::addCostAddFlowerLog($log_data);
 			}
 
-		} else if($info['total_num'] != $final_data['total_num']) {
+		} else if($info['total_num'] != $final_data['total_num'] && $final_data['total_num'] > 0) {
 			$final_data['id'] = $info['id'];
 			$rs = parent::doEdit($final_data);
 
@@ -50,7 +48,7 @@ class FlowerService extends ZlibUserFlowerModel{
 				$log_data['month'] = $final_data['month'];
 				$log_data['user_id'] = $final_data['user_id'];
 				$log_data['op_time'] = z_now();
-				$log_data['operator'] = self::OPERATOR;
+				$log_data['operator'] = parent::OPERATOR;
 				$log_data['num'] = $data['num'];
 				$log_data['ip'] = z_ip();
 				parent::addCostAddFlowerLog($log_data);

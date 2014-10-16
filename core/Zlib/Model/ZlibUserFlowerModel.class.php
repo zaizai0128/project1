@@ -10,6 +10,7 @@ namespace Zlib\Model;
 
 class ZlibUserFlowerModel extends BaseModel {
 
+	const OPERATOR = 0;	// 0 用户
 	const TYPE = 'F001';
 	protected $trueTableName = 'zl_user_flower';
 	protected $addLogInstance = Null;
@@ -45,6 +46,41 @@ class ZlibUserFlowerModel extends BaseModel {
 	public function addCostAddFlowerLog($data)
 	{
 		return $this->addLogInstance->data($data)->add();
+	}
+
+	/**
+	 * 添加消费鲜花日志
+	 */
+	public function addSendFlowerLog($data)
+	{
+		return $this->sendLogInstance->data($data)->add();
+	}
+
+	/**
+	 * 获取用户对应某本书的赠送鲜花数
+	 */
+	public function getSendFlowerNum($user_id, $book_id)
+	{
+		$condition = 'user_id = '.$user_id.' and bk_id = '.$book_id.' and operator = 0 and month = "'.$this->nowTime.'" and type = "'.self::TYPE.'"';
+		return $this->sendLogInstance->where($condition)->sum('num');
+	}
+
+	/**
+	 * 获取用户对某本书还能赠送的鲜花数
+	 */
+	public function getUserAllowSendFlower($user_id, $book_id)
+	{
+		$total = $this->getSendFlowerNum($user_id, $book_id);
+		return (int)(C('APP.max_flower_num') - $total);
+	}
+
+	/**
+	 * 减去用户的鲜花数
+	 */
+	public function reduceFlower($data)
+	{
+		$condition = 'user_id = '.$data['user_id'];
+		return $this->where($condition)->setDec('num', $data['num']);
 	}
 
 	/**

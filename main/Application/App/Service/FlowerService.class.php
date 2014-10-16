@@ -22,9 +22,8 @@ class FlowerService extends ZlibUserFlowerModel{
 		$result = array();
 		$num = parent::getFlower($user_id, 'num');	// 用户拥有的鲜花数
 		$result['have_num'] = (int)$num['num'];
-		$result['allow_num'] = 2;	// 对该作品还能赠送的鲜花数
-		
-		// de($result);
+		$result['allow_num'] = parent::getUserAllowSendFlower($user_id, $book_id);	// 对该作品还能赠送的鲜花数
+	
 		return $result;
 	}
 
@@ -33,9 +32,62 @@ class FlowerService extends ZlibUserFlowerModel{
 	 */
 	public function addFlower($data)
 	{
-		// 一些基础验证
+		$state = $this->_check($data);
+		if ($state['code'] < 0) return $state;
+
 		$have_num = $data['user_info']['flower']['have_num'];
 		$allow_num = $data['user_info']['flower']['allow_num'];
+		$num = $data['num'];
+
+		// 结果数组
+		$result = array();
+
+		// 开启事务流
+		$this->startTrans();
+
+		// 作品增加鲜花数
+		$flower_data['bk_id'] = $data['book_info']['bk_id'];
+		$flower_data['num'] = $data['num'];
+		$result['book'] = D('Book','Service')->addFlower($flower_data);
+
+		// 赠送人减少鲜花数
+		$user_data['user_id'] = $data['user_info']['user_id'];
+		$user_data['num'] = $data['num'];
+		$result['user'] = $this->reduceFlower($user_data);
+
+		// 添加到 赠送鲜花日志表 中
+		$log_data['month'] = parent::getNowTime();
+		$log_data['user_id'] = $data['user_info']['user_id'];
+		$log_data['bk_id'] = $data['book_info']['bk_id'];
+		$log_data['type'] = parent::TYPE;
+		$log_data['op_time'] = z_now();
+		$log_data['operator'] = parent::OPERATOR;
+		$log_data['num'] = $data['num'];
+		$log_data['show_num'] = $data['num'] * C('APP.log_flower_rate');
+		$result['log'] = $this->addSendFlowerLog($log_data);
+
+		// 都通过 commit
+		if (array_product($result) >= 1) {
+			$this->commit();
+			return z_info(1, '赠送成功');
+
+		} else {
+			$this->rollback();
+			return z_info(0, '赠送失败，请重新尝试');
+		}
+	}
+
+	/**
+	 * 验证赠送鲜花环节
+	 */
+	private function _check($data)
+	{
+		// 一些基础验证
+		// 拥有的鲜花数
+		$have_num = $data['user_info']['flower']['have_num'];
+		// 最多允许赠送的鲜花数
+		$allow_num = $data['user_info']['flower']['allow_num'];
+		// 赠送的鲜花数
 		$num = $data['num'];
 
 		if ($num > $have_num) {
@@ -43,12 +95,11 @@ class FlowerService extends ZlibUserFlowerModel{
 
 		} else if ($num > $allow_num) {
 			return z_info(-2, '超过当前作品所能接受的鲜花数');
-		} 
+		} else if ($num <= 0) {
+			return z_info(-3, '请输入大于0的数');
+		}
 
-		// 
-
-
-		return z_info(1, '赠送成功');
+		return z_info(1, '验证通过');
 	}
 	
 }
