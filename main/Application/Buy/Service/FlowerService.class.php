@@ -16,16 +16,18 @@ class FlowerService extends ZlibUserFlowerModel{
 	 */
 	public function addFlower($data)
 	{
-		$final_data['total_num'] = (int)($data['total_num'] + $data['num']);
-		$final_data['num'] = $final_data['total_num'];
 		$final_data['user_id'] = $data['user_id'];
 		$final_data['type'] = parent::TYPE;
 		$final_data['month'] = parent::getNowTime();
 
 		// 判断是增加还是修改
-		$info = parent::getFlower($final_data['user_id'], 'id,total_num');
+		$info = parent::getFlower($final_data['user_id'], 'id,total_num,num');
 
-		if (empty($info) && $final_data['total_num'] > 0) {
+		// 添加
+		if (empty($info) && $data['num'] > 0) {
+
+			$final_data['num'] = $data['num'];
+			$final_data['total_num'] = $data['num'];
 			$rs = parent::doAdd($final_data);
 
 			// 记录日志
@@ -36,10 +38,13 @@ class FlowerService extends ZlibUserFlowerModel{
 				$log_data['operator'] = parent::OPERATOR;
 				$log_data['num'] = $data['num'];
 				$log_data['ip'] = z_ip();
-				parent::addCostAddFlowerLog($log_data);
+				$rs = parent::addCostAddFlowerLog($log_data);
 			}
 
-		} else if($info['total_num'] != $final_data['total_num'] && $final_data['total_num'] > 0) {
+		} else if(!empty($info) && $data['num'] > 0) {
+
+			$final_data['num'] = (int)($data['num'] + $info['num']);
+			$final_data['total_num'] = (int)($data['num'] + $info['total_num']);
 			$final_data['id'] = $info['id'];
 			$rs = parent::doEdit($final_data);
 
@@ -51,7 +56,7 @@ class FlowerService extends ZlibUserFlowerModel{
 				$log_data['operator'] = parent::OPERATOR;
 				$log_data['num'] = $data['num'];
 				$log_data['ip'] = z_ip();
-				parent::addCostAddFlowerLog($log_data);
+				$rs = parent::addCostAddFlowerLog($log_data);
 			}
 
 		} else {
