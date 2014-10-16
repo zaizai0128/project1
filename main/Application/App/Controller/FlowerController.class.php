@@ -70,10 +70,6 @@ class FlowerController extends AppController {
 	 */
 	public function index()
 	{
-
-		// dump($this->bookInfo);
-		// dump($this->userInfo);
-
 		$this->assign(array(
 			'user_info' => $this->userInfo,
 			'book_info' => $this->bookInfo,
@@ -97,8 +93,7 @@ class FlowerController extends AppController {
 			if ($state['code'] > 0) {
 
 				// 设置lock
-				// S($this->mKey, 1, $this->expire);
-
+				S($this->mKey, 1, $this->expire);
 				z_redirect('赠送成功', ZU('', '', 'back'));
 			} else {
 				z_redirect($state['msg'], '', 2, -1);
