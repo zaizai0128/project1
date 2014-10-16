@@ -61,7 +61,7 @@ class ZlibUserFlowerModel extends BaseModel {
 	 */
 	public function getSendFlowerNum($user_id, $book_id)
 	{
-		$condition = 'user_id = '.$user_id.' and bk_id = '.$book_id.' and operator = 0 and month = "'.$this->nowTime.'" and type = "'.self::TYPE.'"';
+		$condition = 'user_id = '.$user_id.' and bk_id = '.$book_id.' and operator = '.self::OPERATOR.' and month = "'.$this->nowTime.'" and type = "'.self::TYPE.'"';
 		return $this->sendLogInstance->where($condition)->sum('num');
 	}
 

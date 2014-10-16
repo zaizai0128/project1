@@ -84,7 +84,6 @@ class FlowerController extends AppController {
 	{
 		if (IS_POST) {
 			// 鲜花数
-			$flower_num = I('post.num');
 			$data['num'] = I('post.num');
 			$data['user_info'] = $this->userInfo;
 			$data['book_info'] = $this->bookInfo;

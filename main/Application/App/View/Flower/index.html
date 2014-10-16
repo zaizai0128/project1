@@ -29,7 +29,7 @@
 
 <body onLoad="window.setTimeout('count()',1)">
 
-<form name="form1" method="post" action="{:ZU('App/flower/doAdd', 'ZL_DOMAIN', array('book_id'=>$book_info['bk_id'], 'setback'=>z_referer()))}" onsubmit="return $.doAdd();">
+<form name="form1" method="post" action="{:ZU('App/flower/doAdd', 'ZL_DOMAIN', array('book_id'=>$book_info['bk_id'], 'setback'=>z_referer()))}" onsubmit="return $.addFlower();">
 <div class="layout">
 	<div class="main">
 		<div class="title"><span class="STYLE4">温馨提醒：</span></div>
@@ -72,7 +72,7 @@ function count(){
 
 jQuery(function($){
 	$.extend({
-		doAdd : function()
+		addFlower : function()
 		{
 			var isOk = false;
 			var num = parseInt($('#num').val().replace(/\s+/,''));

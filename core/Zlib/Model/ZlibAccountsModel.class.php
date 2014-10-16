@@ -23,4 +23,13 @@ class ZlibAccountsModel extends BaseModel {
 		return $this->field($field)->where('oid = '.$user_id)->find();
 	}
 
+	/**
+	 * 减去用户的金币
+	 */
+	public function reduceAccount($data)
+	{
+		$condition = 'oid = '.$data['user_id'];
+		return $this->where($condition)->setDec('amount', $data['num']);
+	}
+
 }

@@ -62,7 +62,10 @@ return array(
 		'max_flower_num' => 8,	// 对每部作品最多投鲜花的数量
 		'cost_num_give_flower' => 500,	// 消费多少逐浪币 给予一个鲜花
 		'log_flower_rate' => 1.7,	// 日志的鲜花比例 show_num
-
+		'min_reward_num' => 100, // 最小打赏金额
+		'reward_quick_num' => array(
+			100, 588, 1888, 5888, 8888, 10000, 50000, 100000
+		),	// 打赏金额快捷选择
 
 	),
 

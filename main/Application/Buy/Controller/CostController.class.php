@@ -113,6 +113,7 @@ class CostController extends BuyController {
 		$bill['user_name'] = $user_info['user_name'];
 		$bill['user_type'] = $user_info['user_type'];
 		$bill['bk_id'] = $book_info['bk_id'];
+		$bill['bk_name'] = $book_info['bk_name'];
 		$bill['chapter'] = serialize($buy_chapter);
 		$bill['author_id'] = $book_info['bk_author_id'];
 		$bill['author_name'] = $book_info['bk_author'];
@@ -224,6 +225,7 @@ class CostController extends BuyController {
 		$bill['user_name'] = $this->userInfo['user_name'];
 		$bill['user_type'] = $this->userInfo['user_type'];
 		$bill['bk_id'] = $this->bookId;
+		$bill['bk_name'] = $this->bookInfo['bk_name'];
 		$bill['chapter'] = serialize(array($this->chapterId=>$this->chapterInfo['ch_name']));
 		$bill['author_id'] = $this->bookInfo['bk_author_id'];
 		$bill['author_name'] = $this->bookInfo['bk_author'];
