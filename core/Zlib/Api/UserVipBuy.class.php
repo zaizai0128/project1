@@ -100,7 +100,7 @@ class UserVipBuy {
 			
 		
 		for ($ch_order = $ch_order_from; $ch_order <= $ch_order_to; $ch_order++) {
-			setBuyByOrder(ch_order, false);
+			$this->setBuyByOrder($ch_order, false);
 		}
 		$this->mVipMaxOrder = ($this->mVipMaxOrder > $ch_order_to)? $this->mVipMaxOrder : $ch_order_to;
 		// set memcache:
