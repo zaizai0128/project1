@@ -63,7 +63,7 @@ class UserVipBuy {
 		return $this->setBuyByOrder($ch_order);
 	}
 
-	public function setBuyByOrder($ch_order) 
+	public function setBuyByOrder($ch_order, $savedb = true) 
 	{	
 		if ($this->mChapterBuyBits == null) {
 			$byte_count = floor($ch_order / 8 + 1);
@@ -84,7 +84,10 @@ class UserVipBuy {
 		$this->mVipMaxOrder = ($this->mVipMaxOrder > $ch_order)? $this->mVipMaxOrder : $ch_order;
 		// echo "setting: ".bin2hex($this->mChapterBuyBits)."<br>";
 		// set memcache:
-		return $this->saveToDb();
+		if ($savedb)
+			return $this->saveToDb();
+		else 
+			return true;
 	}
 
 	public function setBuyByOrderMulti($ch_order_from, $ch_order_to ) 
@@ -95,23 +98,9 @@ class UserVipBuy {
 			$ch_order_from = $ch_order;
 		}
 			
-		if ($this->mChapterBuyBits == null) {
-			$byte_count = floor($ch_order_to / 8 + 1);
-			$this->mChapterBuyBits = str_pad("", $byte_count, chr(0));
-		} else {
-			$byte_count = floor($ch_order_to / 8);
-			$len = strlen($this->mChapterBuyBits);
-			if ($len < $bytes_coun) 
-				$this->mChapterBuyBits .= str_pad("", $byte_count - $len, chr(0));
-		}
 		
 		for ($ch_order = $ch_order_from; $ch_order <= $ch_order_to; $ch_order++) {
-			$byte_count = floor($ch_order / 8);
-			$bit = 1 << ($ch_order % 8);
-			$byte = ord($this->mChapterBuyBits[$byte_count]);
-			$byte |= $bit;
-			$this->mChapterBuyBits[$byte_count] = chr($byte);
-			$this->mVipCount++;
+			setBuyByOrder(ch_order, false);
 		}
 		$this->mVipMaxOrder = ($this->mVipMaxOrder > $ch_order_to)? $this->mVipMaxOrder : $ch_order_to;
 		// set memcache:
