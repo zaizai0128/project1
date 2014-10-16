@@ -85,14 +85,9 @@ class CostController extends BuyController {
 			$price *= $discount_type;// 该类型对应的基数
 		}
 
+		// 开启事务
 		$db = M();
 		$db->startTrans();
-
-		$buy_chapter = array_map(function($val){
-			return $val['chapter_name'];
-		}, $chapter_info);
-
-		$buy_num = count($buy_chapter);	// 购买数量
 
 		// 获取每一步的操作结果
 		$result = array();
@@ -107,30 +102,6 @@ class CostController extends BuyController {
 			->setDec('bonus', $price);
 		}
 
-		// 添加流水账单
-		$bill = array();
-		$bill['user_id'] = $user_info['user_id'];
-		$bill['user_name'] = $user_info['user_name'];
-		$bill['user_type'] = $user_info['user_type'];
-		$bill['bk_id'] = $book_info['bk_id'];
-		$bill['bk_name'] = $book_info['bk_name'];
-		$bill['chapter'] = serialize($buy_chapter);
-		$bill['author_id'] = $book_info['bk_author_id'];
-		$bill['author_name'] = $book_info['bk_author'];
-		$bill['pay_money'] = $price;
-		$bill['pay_type'] = $this->costType;
-		$bill['buy_num'] = $buy_num;
-		$bill['buy_type'] = 2;
-		$bill['discount_type'] = $discount_type; // 折扣类型
-		$bill['time'] = z_now();
-		$bill['status'] = 1;
-		$str_chapter = implode('，', $buy_chapter);
-		$bill['detail'] = $user_info['user_name'].'购买'.$book_info['bk_author'].'写的《'
-							.$book_info['bk_name'].'》作品的卷《'.$volume_info['volume_name'].'》的章节《'.$str_chapter.'》，很是开心。';					
-		// 记录到流水					
-		$result['bill'] = $this->billInstance->doAdd($bill);				
-		
-
 		// 拼出多个数组，每个数组保留自己区域的 from ~ to 章节order
 		// 保证章节号是从小到大
 		ksort($chapter_info);
@@ -140,34 +111,77 @@ class CostController extends BuyController {
 		$start_chapter_arr = current($chapter_info);	// 起始章节的信息
 		$start_order = $start_chapter_arr['chapter_order']; // 起始order
 		foreach($chapter_info as $chapter_id => $val) {
+			$tmp['id'] = $chapter_id;
+			$tmp['name'] = $val['chapter_name'];
+			$tmp['size'] = $val['chapter_size'];
+			$tmp['price'] = $val['chapter_price'];
 
 			// 如果开始没有间断，则保留永远在第一段
 			if ($start_order == $val['chapter_order']) {
-				$interval_array[$start_interval][] = $val['chapter_order'];
-
+				$interval_array[$start_interval]['order'][] = $val['chapter_order'];
+				$interval_array[$start_interval]['chapter'][] = $tmp;
 			// 如果有了间隔，则放在第++段
 			} else {
 				$start_order = $val['chapter_order'];	// 重新归位start_order
 				++$start_interval;
-				$interval_array[$start_interval][] = $val['chapter_order'];
+				$interval_array[$start_interval]['order'][] = $val['chapter_order'];
+				$interval_array[$start_interval]['chapter'][] = $tmp;
 			}
-
 			++$start_order;
 		}
 
-		// 循环数组，为不同区域进行购买
+		// 循环数组，为不同区域进行购买章节，添加流水
 		foreach ($interval_array as $key => $val) {
+			$order = $val['order'];
+			$buy_chapter = $val['chapter'];
 			$res_key = 'buy'.$key;
-			$order_from = min($val);
-			$order_to = max($val);
+			$log_key = 'log'.$key;
+			$order_from = min($order);
+			$order_to = max($order);
 			
 			// 如果章节个数不大于1，则使用单章节购买的方式，否则才使用多章节购买
-			if (count($val) <= 1)
+			if (count($order) <= 1)
 				$result[$res_key] = $this->vipBuy->setBuyByOrder($order_from);
 			else
 				$result[$res_key] = $this->vipBuy->setBuyByOrderMulti($order_from, $order_to);
-		}
 
+			// 添加流水账单
+			$bill = array();
+			$bill['user_id'] = $user_info['user_id'];
+			$bill['user_name'] = $user_info['user_name'];
+			$bill['user_type'] = $user_info['user_type'];
+			$bill['bk_id'] = $book_info['bk_id'];
+			$bill['bk_name'] = $book_info['bk_name'];
+			$bill['chapter'] = serialize($buy_chapter);
+			$bill['author_id'] = $book_info['bk_author_id'];
+			$bill['author_name'] = $book_info['bk_author'];
+
+			// 计算每一区间章节消耗的价格
+			$price_chapter = array_map(function($v){
+				return $v['price'];
+			}, $buy_chapter);
+			$bill['pay_money'] = array_sum($price_chapter);
+			$bill['pay_type'] = $this->costType;
+			$bill['buy_num'] = count($order);
+			$bill['buy_type'] = 2;
+			$bill['discount_type'] = $discount_type; // 折扣类型
+			$bill['time'] = z_now();
+			$bill['status'] = 1;
+
+			// 生成购买章节描述
+			$buy_chapter = array_map(function($v) {
+				return $v['name'];
+			}, $buy_chapter);
+			$str_chapter = implode('，', $buy_chapter);
+			$bill['detail'] = $user_info['user_name'].'购买'.$book_info['bk_author'].'写的《'
+								.$book_info['bk_name'].'》作品的卷《'.$volume_info['volume_name'].'》的章节《'.$str_chapter.'》，很是开心。';					
+
+			$bill['from_ch_order'] = $order_from;
+			$bill['to_ch_order'] = $order_to;
+			// 记录到流水					
+			$result[$log_key] = $this->billInstance->doAdd($bill);	
+		}
+		
 		// 添加鲜花操作
 		$result['flower'] = $this->_addFlower();
 
@@ -238,6 +252,9 @@ class CostController extends BuyController {
 		$bill['status'] = 1;
 		$bill['detail'] = $this->userInfo['user_name'].'购买'.$this->bookInfo['bk_author'].'写的《'
 							.$this->bookInfo['bk_name'].'》作品的《'.$this->chapterInfo['ch_name'].'》，很是开心。';					
+		$bill['from_ch_order'] = $this->chapterInfo['ch_order'];
+		$bill['to_ch_order'] = $this->chapterInfo['ch_order'];
+		
 		// 记录到流水					
 		$result['bill'] = $this->billInstance->doAdd($bill);				
 			
@@ -246,7 +263,7 @@ class CostController extends BuyController {
 
 		// 添加鲜花操作
 		$result['flower'] = $this->_addFlower();
-		
+
 		// 如果购买成功
 		if (array_product($result) >= 1)
 		{

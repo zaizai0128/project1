@@ -139,8 +139,9 @@ class ZlibUserFlowerModel extends BaseModel {
 	 */
 	public function getNextFlowerNum($user_id, $cost_total)
 	{
+		if ($cost_total <= 0) return C('APP.cost_num_give_flower');
+		
 		$total = $this->getFlowerSum($user_id);
-
 		// 获取剩余数
 		$cha = (int)($cost_total - $total * C('APP.cost_num_give_flower'));
 		return (int)(C('APP.cost_num_give_flower') - $cha);

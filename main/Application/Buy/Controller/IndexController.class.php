@@ -34,13 +34,13 @@ class IndexController extends BuyController {
 	 */
 	public function chapter()
 	{	
+		// 验证章节信息
+		\Zlib\Api\Acl::buy($this->chapterInfo);
+
 		$month_cost_total = $this->billInstance->getCostSum($this->userInfo['user_id']);
 		// 获取距离下一次赠送鲜花 还需要消费多少
 		$next_num = $this->flowerInstance->getNextFlowerNum($this->userInfo['user_id'], $month_cost_total);
 		$assign['next_num'] = $next_num;
-
-		// 验证章节信息
-		\Zlib\Api\Acl::buy($this->chapterInfo);
 
 		// 获取卷章节
 		$volume_list = \Zlib\Api\Book::getCatalog($this->bookId);
@@ -64,7 +64,13 @@ class IndexController extends BuyController {
 		$volume_info = $volume_list[$this->volumeId];
 		\Zlib\Api\Acl::buyVolume($volume_info);
 
+		$month_cost_total = $this->billInstance->getCostSum($this->userInfo['user_id']);
+		// 获取距离下一次赠送鲜花 还需要消费多少
+		$next_num = $this->flowerInstance->getNextFlowerNum($this->userInfo['user_id'], $month_cost_total);
+		$assign['next_num'] = $next_num;
+
 		$this->assign(array(
+			'assign' => $assign,
 			'book_info' => $this->bookInfo,
 			'volume_info' => $volume_info,
 			'volume_list' => $volume_list,
