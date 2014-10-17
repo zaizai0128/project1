@@ -12,7 +12,7 @@
 <div class="container">
   <div class="wrap">
     <div class="header">
-      <h1 class="logo"><a href="#"><img src="{:z_img('logo')}" /></a></h1>
+      <h1 class="logo"><a href="{:C('ZL_WWW')}"><img src="{:z_img('logo')}" /></a></h1>
       <h2 class="top_sub">会员登录</h2>
     </div>
     <div class="main">
@@ -46,8 +46,8 @@
               </li>
               <li class="frm">
               	<div class="frm_inp">
-                	<!-- <a href="#" class="sbtn_01">登录</a> -->
-                  <button type="submit" class="sbtn_01">登录</button>
+                	<a href="javascript:;" onclick="$('form:first').submit();" class="sbtn_01">登录</a>
+                  <!-- <button type="submit" class="sbtn_01">登录</button> -->
                 </div>
               </li>
             </ul>

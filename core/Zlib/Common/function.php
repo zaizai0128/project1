@@ -142,12 +142,17 @@ if (!function_exists('z_get_short_category')) {
  * 通过作品的字数获取该作品所需的逐浪币为多少
  *
  * @param int word_num
- * @param int 活动类型 不同活动对应不同的价格促销
+ * @param int price_config 价格配置
  */
 if (!function_exists('z_word_to_money')) {
-	function z_word_to_money($word_num, $active_type = 0)
+	function z_word_to_money($word_num, $price_config = Null)
 	{
-		$price = ceil( $word_num / 1000 * C('MONEY.1000word') );
+		// 如果价格配置为0，则直接返回0
+		if ($price_config <= 0)
+			return 0;
+
+		$price_config = $price_config > 0 ? $price_config : C('MONEY.1000word');
+		$price = ceil( $word_num / 1000 * $price_config );
 		return $price;
 	}
 }

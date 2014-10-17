@@ -89,7 +89,7 @@ class AccountController extends UserController {
 			if ($state['code'] > 0)
 				z_redirect($state['msg'], ZU('user/center/index')); 
 			else
-				z_redirect($state['msg']);
+				z_redirect($state['msg'], '', 2, -1);
 		}
 	}
 }

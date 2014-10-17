@@ -66,8 +66,11 @@ class ZlibChapterVipModel extends BaseModel {
 		// 获取vip基础信息
 		$chapter_info = $chapter_instance->getChapterInfo();
 
+		// 通过book_id 获取该书的价格配置信息
+		$config = M('zl_settle_config')->field('bk_sale')->where('bk_id='.$chapter_info['bk_id'])->find();
+
 		// 计算章节的价格
-		$chapter_info['ch_price'] = z_word_to_money($chapter_info['ch_size']);
+		$chapter_info['ch_price'] = z_word_to_money($chapter_info['ch_size'], $config['bk_sale']);
 		$chapter_info['ch_intro'] = $this->getChapterIntro();
 		return $chapter_info;
 	}

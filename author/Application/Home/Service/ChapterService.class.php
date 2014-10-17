@@ -199,7 +199,7 @@ class ChapterService extends ZlibChapterModel {
 			$filter_word = $this->filterApi->getFilterWord($content);
 			$data['filter_word'] = $filter_word;
 
-			if (count($filter_word) >= C('FILTER.word_num')) {
+			if (count($filter_word) > C('FILTER.word_num')) {
 				// 添加严重级别审核
 				$this->filterInstance->doAddErrorFilter($data);
 				return z_info(-42, '含有'.count($filter_word).'个非法词汇，该章节无法使用，等待客服解封');

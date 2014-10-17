@@ -189,6 +189,9 @@ class Book {
 	 */
 	public static function getCatalog($book_id, $user_id = Null, $all = False)
 	{
+		// 通过book_id 获取该书的价格配置信息
+		$config = M('zl_settle_config')->field('bk_sale')->where('bk_id='.$book_id)->find();
+
 		$catalog = array();
 		$cached_chapter = new CachedChapter($book_id);
 		$vip = new UserVipBuy($user_id, $book_id, $cached_chapter);
@@ -204,7 +207,7 @@ class Book {
 				$tmp['chapter_vip'] = $cached_chapter->isVip($chapter_id);
 				$tmp['chapter_size'] = $cached_chapter->getSize($chapter_id);
 				$tmp['chapter_status'] = $cached_chapter->getStatus($chapter_id);
-				$tmp['chapter_price'] = z_word_to_money($cached_chapter->getSize($chapter_id));
+				$tmp['chapter_price'] = z_word_to_money($cached_chapter->getSize($chapter_id), $config['bk_sale']);
 				
 				if ($tmp['chapter_vip']) {
 					$tmp['chapter_own'] = $vip->isBuyByOrder($cached_chapter->getChapterOrder($chapter_id));

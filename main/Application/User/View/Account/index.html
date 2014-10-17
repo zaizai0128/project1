@@ -135,10 +135,8 @@
             </li>
             <li class="frm">
                 <div class="frm_inp frm_btn">
-                  <button type="submit" class="sbtn sbtn_03">更新</button>
-                  <button type="reset" class="sbtn sbtn_03">取消</button>
-                  <!-- <a href="#" class="sbtn sbtn_03">更新</a> -->
-                  <!-- <a href="javascript:;" class="sbtn sbtn_03">取消</a> -->
+                  <a href="javascript:;" onclick="$('form:first').submit();" class="sbtn sbtn_03">更新</a>
+                  <a href="{:ZU('user/center/index')}" class="sbtn sbtn_03">取消</a>
                 </div>
             </li>
         </ul>  
@@ -164,7 +162,8 @@
       {
         var isOk = false;
 
-        $.debug();
+        // 一些验证...
+
         return true;
       }
     })
