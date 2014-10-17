@@ -13,6 +13,7 @@ class ZlibBillModel extends BaseModel {
 	protected $billInstance = Null;	//数据库对象
 	protected $billPrefix = 'zl_bill_'; // 表前缀
 	protected $tableName = Null;	// 表名
+	protected $dataWhere = Null;	// 日期条件
 
 	/**
 	 * 初始化对象
@@ -22,8 +23,10 @@ class ZlibBillModel extends BaseModel {
 		parent::init();
 		// 设置数据库名称，默认当前年月
 		$this->setTableName();
+		// 设置日期条件
+		$this->setDataWhere();
 		// 如果不存在，则创建数据库
-		$this->createTable();
+		// $this->createTable();
 		// 获取数据库操作对象
 		$this->billInstance = $this->getInstance();
 	}
@@ -41,8 +44,43 @@ class ZlibBillModel extends BaseModel {
 	 */
 	public function setTableName($ym = Null)
 	{
-		$ym = empty($ym) ? date('Ym', time()) : $ym;
-		$this->tableName = $this->billPrefix . $ym;;
+		// $ym = empty($ym) ? date('Ym', time()) : $ym;
+		// $this->tableName = $this->billPrefix . $ym;
+		$this->tableName = 'zl_bill';
+	}
+
+	public function getTableName()
+	{
+		return $this->tableName;
+	}
+
+	/**
+	 * 设置日期条件
+	 * @param int 时间戳格式
+	 */
+	public function setDataWhere($time = Null)
+	{
+		// 获取时间戳
+		$time = empty($time) || !is_int($time) ? time() : $time ;
+
+		// 获取月份
+		$fromMonth = 1;
+		$toMonth = date('t', $time);
+
+		$fromTime = date('Y-m', $time) . '-' . $fromMonth . ' 00:00:00';
+		$toTime = date('Y-m', $time) . '-' . $toMonth . ' 23:59:59';
+
+		$where = ' and time >= "'.$fromTime.'" and time <= "'.$toTime.'"';
+		$where .= ' and status = 1';	// 添加消费账单的状态
+		$this->dataWhere = $where;
+	}
+
+	/**
+	 * 获取日期条件
+	 */
+	public function getDataWhere()
+	{
+		return $this->dataWhere; 
 	}
 
 	/**
@@ -54,14 +92,45 @@ class ZlibBillModel extends BaseModel {
 	}
 
 	/**
+	 * 获取某用户的某一个笔流水帐单详情
+	 *
+	 * @param int user_id
+	 * @param int bill_id
+	 * @param String field
+	 */
+	public function getBillInfo($user_id, $bill_id, $field = '*')
+	{
+		$condition = 'id = '.$bill_id.' and user_id = '.$user_id.' and status = 1';
+		return $this->billInstance->field($field)->where($condition)->find();
+	}
+
+	/**
 	 * 获取某用户的流水帐单
 	 *
 	 * @param int user_id
+	 * @param string field
+	 * @param array page
 	 */
-	public function getBillList($user_id, $field = '*')
+	public function getBillList($user_id, $field = '*', $page = Null)
 	{
 		$condition = 'user_id = '.$user_id;
-		return $this->billInstance->field($field)->where($condition)->select();
+		$condition .= $this->dataWhere;
+
+		if (!empty($page) && is_array($page)) {
+			return $this->billInstance->field($field)->where($condition)
+					->limit($page['firstRow'], $page['listRows'])->order('time desc')->select();
+		}
+		return $this->billInstance->field($field)->where($condition)->order('time desc')->select();
+	}
+
+	/**
+	 * 获取用户的流水账单总数
+	 */
+	public function getBillTotal($user_id)
+	{
+		$condition = 'user_id = '.$user_id;
+		$condition .= $this->dataWhere;
+		return $this->billInstance->where($condition)->count();
 	}
 
 	/**
@@ -71,6 +140,7 @@ class ZlibBillModel extends BaseModel {
 	public function getCostSum($user_id)
 	{
 		$condition = 'user_id = '.$user_id;
+		$condition .= $this->dataWhere;
 		return $this->billInstance->where($condition)->sum('pay_money');
 	}
 

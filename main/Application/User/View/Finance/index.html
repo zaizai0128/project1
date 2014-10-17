@@ -1,0 +1,43 @@
+<extend name="Public/base" />
+
+<block name="header">
+<include file="Public/header" nav="finance"/>
+</block>
+
+<block name="main">
+  <div class="u_my_fince">
+       <div class="hd_usr">
+          <include file="menu" ac="index" />
+        </div>
+        <div class="bd">       
+          <div class="u_fince_lst"> 
+              <div class="u_fince_info">
+                  <ul>
+                      <li>账户名称：{$user_info.user_name}</li>
+                        <li>当前余额：<em class="colr_01">{$user_info.amount}</em> 逐浪币 |
+                            <em class="colr_01">{$user_info.bonus}</em> 奖金逐浪币
+                         </li>
+                    </ul>
+                </div>
+                <div class="u_td fceinfo_td">
+                  <!-- 充值明细？ or 充值+消费明细？ -->
+                  <!-- <table>                                 
+                        <tr>
+                            <td>最近一次充值</td>
+                            <td><em class="colr_01">500000</em> 逐浪币</td>
+                            <td><a class="colr_02" href="#"> 查看明细>> </a></td>
+                        </tr>
+                    </table> -->
+                </div>                                              
+            </div>                    
+        </div>
+    </div>  
+</block>
+
+<block name="js">
+<script type="text/javascript">
+  jQuery(function($){
+
+  });
+</script>
+</block>

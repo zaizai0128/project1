@@ -1,0 +1,63 @@
+<extend name="Public/base" />
+
+<block name="header">
+<include file="Public/header" nav="finance"/>
+</block>
+
+<block name="main">
+<div class="u_my_fince">
+	<div class="hd_usr">
+    	<include file="menu" ac="cost" />
+    </div>
+    <div class="bd">
+    	<div class="u_shelf_lst">
+        	<div class="shel_filt">
+            	<span class="filt_l">
+                	共订阅了《{$bill_info.bk_name}》章节<em class="colr_01">{$bill_info.buy_num}</em>篇
+                </span>
+                <div class="filt_r">
+                	<span class="filt_new"><a href="javascript:history.go(-1);">返回</a></span>
+                </div>	
+            </div>
+            <?php if(!empty($bill_info['chapter'])):?>   
+            <div class="u_td fince_td">
+            	<table>
+                	<tr>
+                        <th>书号</th>
+                        <th>购买章节</th>
+                        <th>价格</th>      
+                    </tr>
+                    <?php foreach($bill_info['chapter'] as $val):?>
+                    <tr>
+                    	<td><em class="colr_02">{$val.id}</em></td>
+                        <td>{$val.name} 
+                           <em class="colr_02">VIP</em>
+                        </td>
+                        <td>{$val.price}</td>
+                    </tr>
+					<?php endforeach;?>
+                </table>
+            </div> 
+	        <?php endif;?>
+            <!-- <div class="shelf_ctr">
+            	<div class="ctr_l">
+                    <label><input type="checkbox" value="" name="" />全选</label>
+                 </div> 
+               <div class="ctr_r">
+                  <span class="shelf_num">
+                     默认显示最近阅读的<em class="colr_01">10</em>部小说
+                  </span>	     
+               </div>    
+            </div> -->                                                
+        </div>                    
+    </div>
+</div>
+</block>
+
+<block name="js">
+<script type="text/javascript">
+  jQuery(function($){
+
+  });
+</script>
+</block>

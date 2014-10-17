@@ -69,6 +69,20 @@ return array(
 
 	),
 
+	// 消费
+	'COST' => array(
+		'buy_type' => array(
+			1 => '单章节',
+			2 => '卷',
+			'A' => '打赏',
+		),
+
+		'pay_type' => array(
+			1 => '逐浪币',
+			2 => '奖金逐浪币',
+		),
+	),
+
 	// 用户相关
 	'USER' => array(
 		'type' => array(

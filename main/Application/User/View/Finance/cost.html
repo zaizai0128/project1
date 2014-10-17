@@ -1,0 +1,81 @@
+<extend name="Public/base" />
+
+<block name="header">
+<include file="Public/header" nav="finance"/>
+</block>
+
+<block name="main">
+   <div class="u_my_fince">
+    <div class="hd_usr">
+        <include file="menu" ac="cost" />
+      </div>
+      <div class="bd">
+        <div class="u_fince_lst"> 
+              <div class="u_td fince_td">
+                <table>
+                    <tr>
+                          <th>消费时间</th>
+                          <th>消费金额</th>
+                          <th>购买类型</th>
+                          <th>用途</th> 
+                          <th>书名【书号】</th>
+                          <th>章节数</th>
+                          <th>操作</th>       
+                      </tr>
+                      <?php foreach($bill_list as $val):?>
+                      <tr>
+                          <td>{$val.time}</td>
+                          <td><em class="colr_01">{$val.pay_money}</em></td>
+                          <td>{:ZC(C('COST.pay_type'), $val['pay_type'])}</td>
+                          <td>{:ZC(C('COST.buy_type'), $val['buy_type'])}购买</td>
+                          <td><a href="{:ZU('book/index', 'ZL_DOMAIN', array('book_id'=>$val['bk_id']))}"><em class="colr_02">{$val.bk_name}【{$val.bk_id}】</em></td>
+                          <td>{$val.buy_num|default="无"}</a></td>
+                          <td>
+                            <?php if($val['buy_type'] == 'A'):?>
+                            打赏
+                            <?php else:?>
+                            <a href="{:ZU('user/finance/costDetail', 'ZL_DOMAIN', array('id'=>$val['id']))}" class="colr_02">查看明细</a>
+                            <?php endif;?>
+                          </td>
+                      </tr>
+                      <?php endforeach;?>
+                  </table>
+              </div> 
+              <div class="shelf_ctr">
+                <div class="ctr_l">
+                      <span class="shelf_num">默认显示最近 
+                         <em class="colr_01"> 3 </em>个月的充值记录
+                      </span>
+                   </div> 
+                 <div class="ctr_r">
+                      <div class="ctr_page">
+                         {$page}
+                         <!-- <span class="pg_lst">
+                          <span class="pg_pre" style="display:none">
+                               <a href="#"> <<上一页 </a>
+                            </span>
+                            <a href="#" class="on">1</a>
+                            <a href="#">2</a>
+                            <a href="#">3</a>
+                            <a href="#">4</a>
+                            <a href="#">5</a>
+                            <a href="#">6</a>
+                            <span class="pg_oth">...</span>
+                            <a href="#"class="pg_end">12</a>
+                           <span class="pg_nxt"><a href="#">下一页>></a></span>
+                        </span>     -->
+                      </div>
+                   </div>    
+              </div>                                                
+          </div>                    
+      </div>
+  </div>  
+</block>
+
+<block name="js">
+<script type="text/javascript">
+  jQuery(function($){
+
+  });
+</script>
+</block>
