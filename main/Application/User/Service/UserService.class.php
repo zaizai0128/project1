@@ -170,7 +170,7 @@ class UserService extends ZlibUserModel {
 		$final_data['user_true_name'] = $data['true_name'];
 		$final_data['user_qq'] = $data['qq'];
 		$final_data['user_mobile'] = $data['phone'];
-		$final_data['aa_text'] = '';
+		$final_data['aa_text'] = $data['msg'];
 		$final_data['aa_read'] = 0;		// 是否已经读
 		$final_data['aa_state'] = 0;	// 申请状态 0 未审核
 		$final_data['tuijianren'] = $data['tjr'];	// 申请时的ip
@@ -184,5 +184,48 @@ class UserService extends ZlibUserModel {
 			return z_info(1, '添加成功');
 		else
 			return z_info(0, '添加失败');
+	}
+
+	/**
+	 * 修改申请信息
+	 */
+	public function doEditApply($data)
+	{
+		// 一些验证 ...
+		if (empty($data['user_id']))
+			return z_info(-10, '用户id不允许为空');
+		if (empty($data['name'])) 
+			return z_info(-11, '笔名不允许为空');
+		if (empty($data['true_name']))
+			return z_info(-12, '真实姓名不允许为空');
+		if (empty($data['phone']))
+			return z_info(-13, '手机号不允许为空');
+		if (empty($data['message']))
+			return z_info(-14, '短信验证码不允许为空');
+		if (empty($data['qq']))
+			return z_info(-15, 'QQ不允许为空');
+
+		// 获取用户的申请信息
+		$info = parent::getApplyInfoByUserId($data['user_id'], 'user_id');
+		if (empty($info))
+			return z_info(-30, '申请信息不存在');
+
+		$final_data['user_id'] = $data['user_id'];
+		$final_data['author_name'] = $data['name'];
+		$final_data['user_true_name'] = $data['true_name'];
+		$final_data['user_qq'] = $data['qq'];
+		$final_data['user_mobile'] = $data['phone'];
+		$final_data['aa_text'] = $data['msg'];
+		$final_data['tuijianren'] = $data['tjr'];	// 申请时的ip
+		$final_data['apply_ip'] = z_ip();	// 申请时的ip
+		// 其他填充数据 ...
+
+		// 提交到申请表
+		$result = parent::doEditApply($final_data);
+
+		if ($result > 0)
+			return z_info(1, '修改成功');
+		else
+			return z_info(0, '修改失败');
 	}
 }

@@ -104,6 +104,15 @@ class ZlibUserModel extends BaseModel {
 	}
 
 	/**
+	 * 修改用户申请作者信息
+	 */
+	public function doEditApply($data)
+	{
+		$condition = 'user_id = '.$data['user_id'].' and aa_state = 0';
+		return $this->userAuthorApplyInstance->where($condition)->data($data)->save();
+	}
+
+	/**
 	 * 编辑
 	 */
 	public function doEdit($data)

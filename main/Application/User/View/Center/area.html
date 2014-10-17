@@ -5,44 +5,176 @@
 </block>
 
 <block name="main">
-<div class="authr_sect">
-<div class="hd_usr">
-  <ul class="hd_nav">
-       <li class="on" style="width:195px">
-          <a href="javascript:;">欢迎您加入逐浪文学专栏作家</a>
-       </li>
-    </ul>
-</div>
-<div class="bd">
-    <div class="a_sect_top">
-       <span class="a_sect_btn">
-         <?php if(empty($apply_info)):?>
-         <a href="{:ZU('user/center/apply')}" class="sbtn sbtn_04">立即申请，成为作者</a>
-         <?php else:?>
-          您已经提交过申请，正在审核中，请耐心等待……
-         <?php endif;?>
-       </span>
-    </div>                        
-    <div class="a_sect_lst">
-      <ul class="autr_nav">
-          <li class="on"><a href="javascript:;">作者申请说明</a></li>
-            <li><a href="javascript:;">新手指南</a></li>
-            <li><a href="javascript:;">投稿说明</a></li>
-            <li><a href="javascript:;">常见问题</a></li>
-        </ul> 
-        <div class="autr_nav_line"></div> 
-        <div class="a_sect_cnt">
-          <p>1.成为逐浪文学作者后您将可以在逐浪文学平台及其旗下平台上传您的作                                    品，作品审核通过后才可以通过搜索栏搜索到您的作者名；
-            </p>
-            <p>
-              2.在申请作者专栏后，如果没有创建作品或者创建了作品但未能通过审
-                核的，逐浪文学有权回收作者笔名避免笔名被长期占用搁置；
-            </p>
-            <p>
-              3.欢迎您来逐浪文学进行写作，在发布作品请注意遵守逐浪文学作者注册投稿协议。
-            </p>
-        </div>           
+<div class="authr_aply">
+  <div class="hd_usr">
+      <ul class="hd_nav">
+           <li class="on">
+              <a href="javascript:;">修改申请信息</a>
+           </li>
+        </ul>
     </div>
-</div>
-</div> 
+    <div class="bd">                       
+        <div class="a_aply_lst">
+          <form action="{:ZU('user/center/doEdit')}" method="post" onsubmit="return $.submitApply();">
+           <ul class="form_lst">
+              <li class="frm">
+   <span class="frm_tit">填写笔名：</span> 
+                 <div class="frm_inp">
+                   <input type="text" value="{$apply_info.author_name}" name="name" placeholder="填写笔名" class="inp author_name" autocomplete="off" maxlength="10" />
+                   <span class="txt">(确定后不可修改)</span>
+                   <span class="txt author_name_error"></span>
+                 </div>
+              </li>
+              <li class="frm">
+   <span class="frm_tit">真实姓名：</span> 
+                 <div class="frm_inp">
+                   <input type="text" value="{$apply_info.user_true_name}" name="true_name" placeholder="填写您的真实姓名" class="inp true_name" autocomplete="off" maxlength="6" />
+                   <span class="txt"></span>
+                   <span class="txt true_name_error"></span>
+                 </div>
+              </li>
+              <li class="frm">
+   <span class="frm_tit">手机号码：</span> 
+                 <div class="frm_inp">
+                   <input type="text" value="{$apply_info.user_mobile}" name="phone" placeholder="填写您的手机号" class="inp phone" autocomplete="off" maxlength="11" />
+                   <span class="txt"></span>
+                   <span class="txt phone_error"></span>
+                 </div>
+              </li>
+              <li class="frm frm_resed">
+   <span class="frm_tit">短信验证码：</span>  
+                 <div class="frm_inp">
+                   <input type="text" value="" name="message" 
+                   class="re_inp message" placeholder="验证码" autocomplete="off" maxlength="6"/>
+                   <a class="resed_btn">免费获取验证码</a>
+                   <span class="txt"></span>
+                   
+                 </div>
+                 <span class="txt message_error"></span>
+              </li>
+              <li class="frm">
+   <span class="frm_tit">推荐人：</span>  
+                 <div class="frm_inp">
+                   <input type="text" value="{$apply_info.tuijianren}" name="tjr" placeholder="如果有，请填写推荐人信息" autocomplete="off" class="inp tjr" />
+                   <span class="txt"></span>
+                   <span class="txt tjr_error"></span>
+                 </div>
+              </li>
+              <li class="frm">
+   <span class="frm_tit">申请人QQ：</span>  
+                 <div class="frm_inp">
+                   <input type="text" value="{$apply_info.user_qq}" name="qq" placeholder="您常用的qq信息" autocomplete="off" class="inp qq" />
+                   <span class="txt"></span>
+                   <span class="txt qq_error"></span>
+                 </div>
+              </li>
+               <li class="frm">
+   <span class="frm_tit">申请说明：</span>  
+                 <div class="frm_inp">
+                   <textarea name="msg" class="msg">{$apply_info.aa_text}</textarea>
+                   <span class="txt"></span>
+                   <span class="txt msg_error"></span>
+                 </div>
+              </li>
+              <li class="frm frm_btn">
+                  <div class="frm_inp">
+                    <button>修改申请</button>
+                      <!-- <a href="#" class="sbtn sbtn_03">提交申请</a> -->
+                  </div>  
+              </li>
+           </ul>        
+          </form>
+        </div>
+    </div>
+</div>  
+</block>
+
+<block name="js">
+<script type="text/javascript">
+jQuery(function($){
+
+  $.extend({
+
+    submitApply : function()
+    {
+      var isOk = false;
+      var err = new Array();
+      var err_msg = new Array();
+      var author_name = $('.author_name').val().replace(/\s+/, '');
+      var true_name = $('.true_name').val().replace(/\s+/, '');
+      var phone = $('.phone').val().replace(/\s+/, '');
+      var message = $('.message').val().replace(/\s+/, '');
+      var qq = $('.qq').val().replace(/\s+/, '');
+
+      if (author_name == '') {
+        err_msg['author_name_error'] = '笔名不允许为空';
+        err.push(1);
+      } else if (author_name.length > 10) {
+        err_msg['author_name_error'] = '笔名过长';
+        err.push(2);
+      } else {
+        err_msg['author_name_error'] = '';
+      }
+
+      if (true_name == '') {
+        err_msg['true_name_error'] = '真实姓名不允许为空';
+        err.push(3);
+      } else if (true_name.length > 6) {
+        err_msg['true_name_error'] = '姓名过长';
+        err.push(4);
+      } else {
+        err_msg['true_name_error'] = '';
+      }
+
+      if (phone == '') {
+        err_msg['phone_error'] = '手机号不允许为空';
+        err.push(5);
+      } else if (phone.length <= 10 || phone.length > 11) {
+        err_msg['phone_error'] = '手机号长度不正确';
+        err.push(6);
+      } else if (phone.match(/1(39|87|85|26|36)\d{8}/) < 1) {
+        err_msg['phone_error'] = '手机格式不正确';
+        err.push(7);
+      } else {
+        err_msg['phone_error'] = '';
+      }
+
+      if (message == '') {
+        err_msg['message_error'] = '验证码不允许为空';
+        err.push(8);
+      } else if (message.length > 6) {
+        err_msg['message_error'] = '验证码格式不正确';
+        err.push(9);
+      } else {
+        err_msg['message_error'] = '';
+      }
+
+      if (qq == '') {
+        err_msg['qq_error'] = 'QQ不允许为空';
+        err.push(10);
+      } else if (qq.length < 5 || qq.length > 15) {
+        err_msg['qq_error'] = 'QQ格式不正确';
+        err.push(11);
+      } else {
+        err_msg['qq_error'] = '';
+      }
+
+      if (err.length > 0) {
+        for(var k in err_msg) {
+          $('.'+k).html(err_msg[k]);
+        }
+      } else {
+         for(var k in err_msg) {
+          $('.'+k).html('');
+        }
+        isOk = true;
+      }
+
+      return isOk;
+    }
+
+  });
+
+});
+</script>
 </block>

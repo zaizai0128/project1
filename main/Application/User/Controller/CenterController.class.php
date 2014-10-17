@@ -30,10 +30,10 @@ class CenterController extends UserController {
 		}
 
 		// 获取个人申请信息
-		$appy_info = $this->userInstance->getApplyInfoByUserId($this->userId);
-
+		$apply_info = $this->userInstance->getApplyInfoByUserId($this->userId);
+		
 		$this->assign(array(
-			'apply_info' => $appy_info,
+			'apply_info' => $apply_info,
 		));
 		$this->display();
 	}
@@ -52,8 +52,24 @@ class CenterController extends UserController {
 	public function doApply()
 	{
 		if (IS_POST) {
-			$data = array_merge($this->userInfo, I());
+			$data = array_merge($this->userInfo, I(), array('user_id'=>$this->userId));
 			$state = $this->userInstance->doAddApply($data);
+
+			if ($state['code'] <=0 ) {
+				z_redirect($state['msg']);
+			}
+			z_redirect($state['msg'], ZU('user/center/area'));
+		}
+	}
+
+	/**
+	 * 修改申请信息
+	 */
+	public function doEdit()
+	{
+		if (IS_POST) {
+			$data = array_merge($this->userInfo, I(), array('user_id'=>$this->userId));
+			$state = $this->userInstance->doEditApply($data);
 
 			if ($state['code'] <=0 ) {
 				z_redirect($state['msg']);
