@@ -161,6 +161,9 @@ class CachedChapter {
 	public function getVolumeChapters($volume_id, $editor = false) 
 	{	
 		$result = array();
+
+		// 下面这个操作 是为了获取 2014-10-01 21:21:21 ?
+		// date('Y-m-d H:i:s', time()) 即可获取上面的格式
 		$arr = localtime(time(), true);
 		$now = sprintf("%04d-%02d-%02d %02d:%02d%02d",
 				$arr['tm_year'] + 1900,  $arr['tm_mon'] + 1, $arr['tm_mday'], 
@@ -171,7 +174,9 @@ class CachedChapter {
 			if ($this->mChapter[$chapter_id]['ch_status'] == 2 && !$editor) {	
 				continue;
 			}
-			if ($this->mChapter[$chapter_id]['ch_effect_time'] <= $now) {
+
+			// 只有非管理后台，才进行该时间判断
+			if ($editor || $this->mChapter[$chapter_id]['ch_effect_time'] <= $now) {
 				$result[$chapter_id] = base64_decode($this->mChapter[$chapter_id]['ch_name']);
 			}
 		}

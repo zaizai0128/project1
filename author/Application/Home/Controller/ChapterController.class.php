@@ -104,7 +104,7 @@ class ChapterController extends HomeController {
 		$chapter_info = $this->chapterInstance->getChapterInfo();
 		
 		if (empty($chapter_info)) z_redirect('章节不存在'); 
-
+		
 		$this->assign(array(
 			'chapter_info' => $chapter_info,
 			'volume_list' => $volume_list,

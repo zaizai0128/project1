@@ -91,6 +91,7 @@ class ChapterService extends ZlibChapterModel {
 		$chapter_info['ch_id'] = $data['ch_id'];
 		$chapter_info['bk_id'] = $data['bk_id'];
 		$chapter_info['ch_vip'] = (int)$data['vip'];
+		$chapter_info['ch_effect_time'] = $data['time_publish'];
 		$result = parent::doEdit($chapter_info);
 
 		if ($result) {
@@ -148,6 +149,7 @@ class ChapterService extends ZlibChapterModel {
 		$chapter_info['ch_name'] = $data['ch_name'];
 		$chapter_info['ch_status'] = 0;
 		$chapter_info['ch_vip'] = (int)$data['vip'];
+		$chapter_info['ch_effect_time'] = $data['time_publish'];
 		$chapter_content = $data['content'];
 		$chapter_id = parent::doAdd($chapter_info);
 		
