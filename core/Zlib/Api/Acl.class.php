@@ -309,13 +309,20 @@ class Acl {
 	static public function chapter($chapter_info)
 	{	
 		if (empty($chapter_info))
-			z_redirect('章节不存在');
+			z_redirect('章节不存在', ZU('index/index', 'ZL_BOOK_DOMAIN', array('book_id'=>$chapter_info['bk_id'])), 2, -1);
 
 		if ($chapter_info['ch_lock'] == 1)
-			z_redirect('该章节处于修改中');
+			z_redirect('该章节处于修改中', ZU('index/index', 'ZL_BOOK_DOMAIN', array('book_id'=>$chapter_info['bk_id'])), 2, -1);
 
 		if ($chapter_info['ch_status'] != 0)
-			z_redirect('该章节非对外开放');
+			z_redirect('该章节非对外开放', ZU('index/index', 'ZL_BOOK_DOMAIN', array('book_id'=>$chapter_info['bk_id'])), 2, -1);
+
+		// 添加 定时发布判断
+		$now = z_now();
+		if ($chapter_info['ch_effect_time'] != '0000-00-00 00:00:00' && $chapter_info['ch_effect_time'] > $now)
+		{
+			z_redirect('该章节不存在', ZU('index/index', 'ZL_BOOK_DOMAIN', array('book_id'=>$chapter_info['bk_id'])), 2, -1);
+		}
 
 		// 如果是vip章节，则继续验证
 		if ($chapter_info['ch_vip'] == 1)
