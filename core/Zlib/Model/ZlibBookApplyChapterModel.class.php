@@ -71,10 +71,10 @@ class ZlibBookApplyChapterModel extends BaseModel {
 	 * @param int book_id
 	 * @param int chapter_id
 	 */
-	public function getChapterInfo($book_id, $chapter_id)
+	public function getChapterInfo($book_id, $chapter_id, $field='*')
 	{
 		$condition = 'bk_id = '.$book_id.' and ch_id = '.$chapter_id;
-		return $this->where($condition)->find();
+		return $this->field($field)->where($condition)->find();
 	}
 
 	/**

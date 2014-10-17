@@ -30,13 +30,21 @@ class BookApplyChapterService extends ZlibBookApplyChapterModel {
 		if (!$this->_checkChapterName($data['bk_id'], $data['ch_name']))
 			return z_info(-5, '章节名已经存在');
 
+		// 判断是不是首章，如果是首章节，则需要判断章节字数够不够
+		$strlen = z_strlen($data['content']);
+		if ($this->_checkChapterFirst($data['bk_id'])) {
+			if ($strlen < 2000 || $strlen > 30000) {
+				return z_info(-6, '首章字数必须为2000-30000之间');
+			}
+		}
+
 		// 其他验证 ...
 		$final_data['bk_id'] = $data['bk_id'];
 		$final_data['ch_cre_time'] = z_now();
 		$final_data['ch_update'] = z_now();
 		$final_data['ch_name'] = $data['ch_name'];
 		$final_data['ch_order'] = parent::getMaxChapterOrder($data['bk_id']);
-		$final_data['ch_size'] = z_strlen($data['content']);
+		$final_data['ch_size'] = $strlen;
 		$final_data['ch_status'] = 0;
 		$final_data['ch_content'] = $data['content'];
 		$final_data['ch_intro'] = $data['intro'];
@@ -63,6 +71,14 @@ class BookApplyChapterService extends ZlibBookApplyChapterModel {
 		if (!$this->_checkChapterName($data['bk_id'], $data['ch_name'], $data['ch_id']))
 			return z_info(-5, '章节名已经存在');
 
+		// 判断是不是首章，如果是首章节，则需要判断章节字数够不够
+		$strlen = z_strlen($data['content']);
+		if ($this->_checkChapterFirst($data['bk_id'], $data['ch_id'], True)) {
+			if ($strlen < 2000 || $strlen > 30000) {
+				return z_info(-6, '首章字数必须为2000-30000之间');
+			}
+		}
+
 		// 其他验证 ...
 
 		$final_data['bk_id'] = $data['bk_id'];
@@ -79,6 +95,23 @@ class BookApplyChapterService extends ZlibBookApplyChapterModel {
 			return z_info($result, '修改成功');
 		else
 			return z_info(0, '修改失败');
+	}
+
+	/**
+	 * 判断章节是否是首章
+	 */
+	private function _checkChapterFirst($book_id, $chapter_id = Null, $is_edit = False)
+	{
+		if ($is_edit) {
+			// 编辑的时候，获取ch_order的值，如果为0，则是首章
+			$info = parent::getChapterInfo($book_id, $chapter_id, 'ch_order');
+			return $info['ch_order'] == 0 ? True : False;
+
+		} else {
+			// 创建的时候，判断章节个数，如果为0个，则说明是首章
+			$total = parent::getTotalChapterNum($book_id);
+			return $total == 0 ? True : False;
+		}
 	}
 
 	/**

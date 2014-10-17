@@ -72,7 +72,7 @@ class BookApplyChapterController extends HomeController {
 				z_redirect('添加成功，审核通过后才会看到', ZU('bookApplyChapter/index', 'ZL_AUTHOR_DOMAIN'
 								, array('apply_id'=>$this->bookId)));
 			} else {
-				z_redirect('添加失败，重新尝试');
+				z_redirect($state['msg'], '', 2, -1);
 			}
 		}
 	}
@@ -107,7 +107,7 @@ class BookApplyChapterController extends HomeController {
 				z_redirect('修改成功，审核通过后才会看到', ZU('bookApplyChapter/index', 'ZL_AUTHOR_DOMAIN'
 							, array('apply_id'=>$this->bookId)));
 			} else {
-				z_redirect('修改失败，重新尝试');
+				z_redirect($state['msg'], '', 2, -1);
 			}
 		}
 	}
