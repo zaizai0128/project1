@@ -31,11 +31,8 @@ class Acl {
 			return True;
 
 		if (empty($admin_info))
-			z_redirect('未登录', ZU('login/index'));
-
-		if ($admin_info['user_type'] != '04')
-			z_redirect('不是管理员', ZU('login/index'));
-
+			z_redirect('未登录', ZU('login/index', 'ZL_ADMIN_DOMAIN'));
+		
 		return True;
 	}
 
