@@ -11,12 +11,22 @@ use Think\Controller;
 
 class BaseController extends Controller {
 
-	protected $user_id;
-	protected $adminInfo;
+	protected $userId = Null;
+	protected $adminInfo = Null;
+	protected $adminInstance = Null;
+	protected $gcid = Null;	// 公共的分类id
 
 	public function __construct()
 	{
 		parent::__construct();
-		\Zlib\Api\Acl::admin();
+		$this->adminInstance = D('Admin', 'Service');
+		$this->userId = ZS('SESSION.admin', 'user_id');
+		$this->adminInfo = $this->adminInstance->getAdminInfo($htis->userId);
+		\Zlib\Api\Acl::admin($this->adminInfo);
+		$this->gcid = I('get.gcid');
+		// 获取后台网站的导航
+		$menu = D('Menu', 'Service')->getMenu($this->gcid);
+		$this->assign('menu_category', $menu);
+		$this->assign('global_cid', $this->gcid);
 	}
 }

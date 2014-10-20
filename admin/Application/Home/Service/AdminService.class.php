@@ -12,6 +12,17 @@ use Zlib\Model\BaseModel;
 class AdminService extends BaseModel {
 
 	/**
+	 * 获取管理员信息
+	 */
+	public function getAdminInfo($user_id)
+	{
+
+		$rs = ZS('SESSION.admin');
+		$rs['user_id'] = 1;
+		return $rs;
+	}
+
+	/**
 	 * 登录
 	 */
 	public function login($user)

@@ -5,15 +5,11 @@
 
     <!-- 主导航 -->
     <ul class="main-nav">
-        <li class=""><a href="/admin.php?s=/Index/index.html">首页</a></li>
-        <li class=""><a href="/admin.php?s=/Article/index.html">作品</a></li>
-        <li class=""><a href="/admin.php?s=/User/index.html">作者</a></li>
-        <li class=""><a href="/admin.php?s=/Config/group.html">会员</a></li>
-        <li class=""><a href="/admin.php?s=/Config/group.html">广告</a></li>
-        <li class=""><a href="/admin.php?s=/Config/group.html">推荐</a></li>
-        <li class=""><a href="/admin.php?s=/Config/group.html">客服</a></li>
-        <li class="current"><a href="/admin.php?s=/Config/group.html">财务</a></li>
-        <li class=""><a href="/admin.php?s=/Config/group.html">设置</a></li>        
+        <?php $i = 0;?>
+        <?php foreach($menu_category['top'] as $val):?>
+        <li <?php if((empty($global_cid) && $i == 0) || $val['current']):?>class="current"<?php endif;?>><a href="{$val.url}">{$val.name}</a></li>
+        <?php ++$i;?>
+        <?php endforeach;?>
     </ul>
     <!-- /主导航 -->
 
@@ -21,7 +17,7 @@
     <div class="user-bar">
         <a href="javascript:;" class="user-entrance"><i class="icon-user"></i></a>
         <ul class="nav-list user-menu hidden">
-            <li class="manager">你好，<em title="admin">admin</em></li>
+            <li class="manager">你好，<em title="admin">{:ZS('SESSION.admin', 'user_name')}</em></li>
             <li><a href="/admin.php?s=/User/updatePassword.html">修改密码</a></li>
             <li><a href="/admin.php?s=/User/updateNickname.html">修改昵称</a></li>
             <li><a href="{:ZU('login/logout', 'ZL_ADMIN_DOMAIN')}">退出</a></li>

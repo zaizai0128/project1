@@ -23,15 +23,16 @@ class Acl {
 	/**
 	 * 后台管理员验证操作权限
 	 */
-	static public function admin()
+	static public function admin($admin_info)
 	{
-		$admin_info = ZS('SESSION.admin');
+		if (empty($admin_info))
+			z_redirect('未登录', ZU('login/index', 'ZL_ADMIN_DOMAIN'));
 
 		if ($admin_info['user_name'] == 'timerlau')
 			return True;
 
-		if (empty($admin_info))
-			z_redirect('未登录', ZU('login/index', 'ZL_ADMIN_DOMAIN'));
+		// 其他验证 ...
+		
 		
 		return True;
 	}

@@ -1,33 +1,18 @@
 <div class="sidebar">
     <!-- 子导航 -->        
     <div id="subnav" class="subnav">
+		<?php $i=0;?>
+		<?php foreach($menu_category['sidebar']['children'] as $val):?>
             <!-- 子导航 -->
-            <h3><i class="icon icon-fold"></i>充值消费</h3> 
-				<ul class="side-sub-menu subnav-off">
-                    <li><a class="item" href="/Public/Admin/chongzhi_index.html">充值查询</a></li>
-					<li><a class="item" href="/Public/Admin/chongzhi_xiaofei.html">消费查询</a></li>
+            <h3><i class="icon <?php if((empty($global_cid) && $i == 0) || $val['current']):?>icon-unfold<?php else:?>icon-fold<?php endif;?>"></i>{$val.name}</h3> 
+				<ul class="side-sub-menu <?php if((empty($global_cid) && $i == 0) || $val['current']):?>subnav-on<?php else:?>subnav-off<?php endif;?>">
+					<?php foreach($val['item'] as $item):?>
+                    <li <?php if($item['current']):?>class="current"<?php endif;?>><a class="item" href="{$item.url}">{$item.name}</a></li>
+	                <?php endforeach;?>
 				</ul>
 			<!-- /子导航 -->
-			<!-- 子导航 -->
-            <h3><i class="icon icon-fold"></i>稿费导入</h3>
-				<ul class="side-sub-menu subnav-off">
-                    <li><a class="item" href="/Public/Admin/gaofei_index.html">稿费概览</a></li>
-					<li><a class="item" href="/Public/Admin/gaofei_zhulang.html">网站数据</a></li>
-					<li><a class="item" href="/Public/Admin/gaofei_dashang.html">用户打赏</a></li>
-					<li><a class="item" href="/Public/Admin/gaofei_fuli.html">福利奖励</a></li>
-					<li><a class="item" href="/Public/Admin/gaofei_wuxian.html">无线收入</a></li>
-					<li><a class="item" href="/Public/Admin/gaofei_qudao.html">第三方渠道</a></li>
-				</ul>
-			<!-- /子导航 -->
-			<!-- 子导航 -->
-            <h3><i class="icon icon-unfold"></i>财务复核</h3>
-				<ul class="side-sub-menu">
-                    <li><a class="item" href="/Public/Admin/gaofei_caiwu.html">稿费概览</a></li>
-					<li><a class="item" href="/Public/Admin/gaofei_jieyu.html">稿费余额</a></li>
-				</ul>
-			<!-- /子导航 -->
-			<!-- 子导航 -->
-			<!-- /子导航 --> 
+		<?php ++$i;?>
+		<?php endforeach;?>
 	</div>        
     <!-- /子导航 -->
 </div>

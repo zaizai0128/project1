@@ -1,0 +1,63 @@
+<extend name="Public/base" />
+
+{// 主体内容}
+<block name="main">
+	<div id="main-content">
+        <div id="top-alert" class="fixed alert alert-error" style="display: none;">
+            <button class="close fixed" style="margin-top: 4px;">&times;</button>
+            <div class="alert-content">这是内容</div>
+        </div>
+	    <div id="main" class="main">
+			<!-- 标题栏 -->
+			<div class="main-title">
+				<h2>新增作品管理 - 待审核作品列表</h2>
+			</div>
+
+		    <div>
+				<div class="btn-group">
+					<button class="btn current" url="gaofei_fuli.html">未审核</button>
+					<button class="btn" url="gaofei_fuli.html">已审核</button>
+				</div>
+		    </div>
+
+			<!-- 数据列表 -->
+			<div class="data-table">
+				<table class="">
+				    <thead>
+				        <tr>
+						<th class="">编号</th>
+						<th class="">分类</th>
+						<th class="">作品名称</th>
+						<th class="">作者</th>
+						<th class="">作品描述</th>
+						<th class="">作品标签</th>
+						<th class="">创建时间</th>
+						<th class="">操作</th>
+						</tr>
+				    </thead>
+				    <tbody>
+				    	<?php foreach($book_apply as $val):?>
+						<tr>
+							<td>{$val.bk_id}</td>
+							<td>{:ZC($assign['book_class'][$val['bk_class_id']], 'class_name')}</td>
+							<td>{$val.bk_name}</td>
+							<td>{$val.bk_author}</td>
+							<td>{$val.bk_intro|default=" - "}</td>
+							<td>{$val.bk_tag|default=" - "}</td>
+							<td>{$val.bk_cre_time}</td>
+							<td>
+								<a href="{:ZU('BookApply/show', 'ZL_ADMIN_DOMAIN', array('apply_id'=>$val['bk_id'], 'gcid'=>$global_cid))}" class="btn">查看</a>
+								<a href="{:ZU('BookApply/check', 'ZL_ADMIN_DOMAIN', array('apply_id'=>$val['bk_id'], 'gcid'=>$global_cid))}" class="btn">审核</a>
+							</td>
+						</tr>
+						<?php endforeach;?>
+					</tbody>
+			    </table>
+			</div>
+			<!-- 分页 -->
+			<?php if(!empty($page)):?>
+			<div class="page">{$page}</div>
+			<?php endif;?>
+	    </div>
+    </div>
+</block>

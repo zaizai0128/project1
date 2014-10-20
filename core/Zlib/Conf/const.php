@@ -197,8 +197,8 @@ return array(
 	// 后台
 	'ADMIN' => array(
 
-		// 后台待审核作品的列表
-		'apply_list_size' => 10,
+		// 后台列表显示条数
+		'list_size' => 10,
 
 	),
 
