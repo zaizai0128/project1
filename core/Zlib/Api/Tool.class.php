@@ -29,11 +29,11 @@ class Tool {
 	{
 		$mail = new \Zlib\Vendor\Mail\PHPMailer;
 		$mail->IsSMTP();	//设置smtp服务器
-		$mail->Host = 'smtp.163.com';	
+		$mail->Host = C('EMAIL.host');
 		$mail->SMTPAuth = true;
-		$mail->Username = "mingwei0529@163.com";
-		$mail->Password = '2pple0529';
-		$mail->From = $data['from'];
+		$mail->Username = C('EMAIL.username');
+		$mail->Password = C('EMAIL.password');
+		$mail->From = C('EMAIL.username');
 		$mail->FromName = $data['from_name'];
 		$mail->CharSet = "UTF-8";	// GB2312 据说utf-8在outlook下乱码，有待测试
 		$mail->Encoding = "base64";

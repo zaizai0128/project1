@@ -326,5 +326,12 @@ return array(
 
 		'commision_vip_chapter' => array('A', 'T', 'X', 'Y', 'Z'),		// 允许发VIP章节 
 
-	) 
+	) ,
+
+	// 邮箱相关
+	'EMAIL' => array(
+		'host' => 'smtp.kongzhong.com',
+		'username' => 'izhulang@kongzhong.com',
+		'password' => 'UbNN6t3!q',
+	),
 );

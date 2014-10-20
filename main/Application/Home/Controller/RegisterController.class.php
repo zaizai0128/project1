@@ -226,7 +226,6 @@ class RegisterController extends HomeController {
 		if ($lockEmail) return z_info(-2, '请等'.$this->mKeyExpire.'秒后再发送');
 
 		// 添加缓冲设置，5分钟发一次邮件
-		$data['from'] = 'mingwei0529@163.com';
 		$data['from_name'] = '逐浪网 - 系统邮件';
 		$data['subject'] = '账户激活 - 逐浪网'; // 邮件主题
 		$data['email'] = $email;
