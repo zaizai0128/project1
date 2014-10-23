@@ -130,13 +130,9 @@ class ZlibBillModel extends BaseModel {
 		$condition = 'user_id = '.$user_id;
 		$condition .= $this->dataWhere;
 
-		/*if (!empty($page) && is_array($page)) {
-			return $this->billInstance->field($field)->where($condition)
-					->limit($page['firstRow'], $page['listRows'])->order('time desc')->select();
-		}*/
+		// 获取全部数据
 		$row  = $this->billInstance->field($field)->where($condition)->order('time desc')->select();
 		$count = count($row); 	
-			echo "aaa".$count;
 		$result = array();
 		for ($i = 0; $i < $count; $i++) {		
 			$temp = array();	
@@ -165,19 +161,44 @@ class ZlibBillModel extends BaseModel {
 				array_push($result, $temp);
 			}
 		}
+
+		// 如果含有分页
+		if (!empty($page) && is_array($page)) {
+			$result = array_slice($result, $page['firstRow'], $page['listRows']);
+		}
 		return $result;
-		
 	}
+
+	/**
+	 * 修改后的获取总数
+	 * @date 2014-10-23
+	 */
+	public function getBillTotal($user_id)
+	{
+		$condition = 'user_id = '.$user_id;
+		$condition .= $this->dataWhere;
+		$row  = $this->billInstance->field('id,chapter')->where($condition)->order('time desc')->select();
+		$result = array();
+
+		foreach ($row as $val) {
+			$tmp = unserialize($val['chapter']);
+			$result = array_merge($result, (array)$tmp);
+		}
+
+		return count($result);
+	}	
 
 	/**
 	 * 获取用户的流水账单总数
 	 */
+	/* 为了配合上面的查询方式，获取全部的数组个数
 	public function getBillTotal($user_id)
 	{
 		$condition = 'user_id = '.$user_id;
 		$condition .= $this->dataWhere;
 		return $this->billInstance->where($condition)->count();
 	}
+	*/
 
 	/**
 	 * 获取某用户消费总额（当前月）

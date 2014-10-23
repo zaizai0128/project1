@@ -29,8 +29,8 @@
                           <td><em class="colr_01">{$val.pay_money}</em></td>
                           <td>{:ZC(C('COST.pay_type'), $val['pay_type'])}</td>
                           <td>{:ZC(C('COST.buy_type'), $val['buy_type'])}购买</td>
-                          <td><a href="{:ZU('book/index', 'ZL_DOMAIN', array('book_id'=>$val['bk_id']))}"><em class="colr_02">{$val.bk_name}【{$val.bk_id}】</em></td>
-                          <td>{$val.buy_item|default="无"}</a></td>
+                          <td><a href="{:ZU('book/index', 'ZL_DOMAIN', array('book_id'=>$val['bk_id']))}"><em class="colr_02">{$val.bk_name}【{$val.bk_id}】</em></a></td>
+                          <td>{$val.buy_item|default="无"}</td>
                           <!--td>{$val.buy_num|default="无"}</a></td>
                           <td>
                             <?php if($val['buy_type'] == 'A'):?>
