@@ -111,6 +111,7 @@ class ZlibBillModel extends BaseModel {
 	 * @param string field
 	 * @param array page
 	 */
+	/* by libin
 	public function getBillList($user_id, $field = '*', $page = Null)
 	{
 		$condition = 'user_id = '.$user_id;
@@ -121,6 +122,51 @@ class ZlibBillModel extends BaseModel {
 					->limit($page['firstRow'], $page['listRows'])->order('time desc')->select();
 		}
 		return $this->billInstance->field($field)->where($condition)->order('time desc')->select();
+	}
+	*/
+
+	public function getBillList($user_id, $field = '*', $page = Null)
+	{
+		$condition = 'user_id = '.$user_id;
+		$condition .= $this->dataWhere;
+
+		/*if (!empty($page) && is_array($page)) {
+			return $this->billInstance->field($field)->where($condition)
+					->limit($page['firstRow'], $page['listRows'])->order('time desc')->select();
+		}*/
+		$row  = $this->billInstance->field($field)->where($condition)->order('time desc')->select();
+		$count = count($row); 	
+			echo "aaa".$count;
+		$result = array();
+		for ($i = 0; $i < $count; $i++) {		
+			$temp = array();	
+			$temp['time'] = $row[$i]['time'];
+			$temp['buy_type'] = $row[$i]['buy_type'];
+			$temp['pay_type'] = $row[$i]['pay_type'];
+			$temp['pay_money'] = $row[$i]['pay_money'];
+			$temp['bk_id'] = $row[$i]['bk_id'];
+			$temp['bk_name'] = $row[$i]['bk_name'];
+			if ($row[$i]['buy_type'] == 2 ) {	
+				$chapter = unserialize($row[$i]['chapter']);
+				$ch_count = count($chapter);
+				for ($j = 0; $j < $ch_count; $j++) {
+					$temp['buy_item'] = $chapter[$i]['name'];
+					$temp['pay_money'] = $chapter[$i]['price'];
+					array_push($result, $temp);
+				} 	
+			} else if ($row[$i]['buy_type'] == 1) {	
+				$chapter = unserialize($row[$i]['chapter']);
+				$ch_count = count($chapter);
+				$temp['buy_item'] = $chapter[0]['name'];
+				$temp['pay_money'] = $chapter[0]['price'];
+				array_push($result, $temp);
+			} else if ($row[$i]['buy_type'] == 'A') {	
+					$temp['buy_item'] = '打赏';
+				array_push($result, $temp);
+			}
+		}
+		return $result;
+		
 	}
 
 	/**

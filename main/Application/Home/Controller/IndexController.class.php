@@ -22,17 +22,9 @@ class IndexController extends HomeController {
 		$this->assign(array(
 			'assign' => $assign,
 		));
-	/*
-		$my =  new Zapi\UserVipBuy(12533415, 270971);
-		echo "buy:92".$this->iv($my->isBuyByOrder(92));
-		echo "buy:94".$this->iv($my->isBuyByOrder(94));
-		echo "buy:97".$this->iv($my->isBuyByOrder(97));
-	*/
+
 		$this->display();
 	}
 	
-	function iv($b) {
-		return $b ? '1' : '0';
-	}
 	
 }

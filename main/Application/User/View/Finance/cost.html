@@ -19,8 +19,9 @@
                           <th>购买类型</th>
                           <th>用途</th> 
                           <th>书名【书号】</th>
-                          <th>章节数</th>
-                          <th>操作</th>       
+                          <!--th>章节数</th>
+                          <th>操作</th-->       
+                          <th>购买项目</th>       
                       </tr>
                       <?php foreach($bill_list as $val):?>
                       <tr>
@@ -29,14 +30,15 @@
                           <td>{:ZC(C('COST.pay_type'), $val['pay_type'])}</td>
                           <td>{:ZC(C('COST.buy_type'), $val['buy_type'])}购买</td>
                           <td><a href="{:ZU('book/index', 'ZL_DOMAIN', array('book_id'=>$val['bk_id']))}"><em class="colr_02">{$val.bk_name}【{$val.bk_id}】</em></td>
-                          <td>{$val.buy_num|default="无"}</a></td>
+                          <td>{$val.buy_item|default="无"}</a></td>
+                          <!--td>{$val.buy_num|default="无"}</a></td>
                           <td>
                             <?php if($val['buy_type'] == 'A'):?>
                             打赏
                             <?php else:?>
                             <a href="{:ZU('user/finance/costDetail', 'ZL_DOMAIN', array('id'=>$val['id']))}" class="colr_02">查看明细</a>
                             <?php endif;?>
-                          </td>
+                          </td-->
                       </tr>
                       <?php endforeach;?>
                   </table>
