@@ -46,8 +46,8 @@
 							<td>{$val.bk_tag|default=" - "}</td>
 							<td>{$val.bk_cre_time}</td>
 							<td>
-								<a href="{:ZU('BookApply/show', 'ZL_ADMIN_DOMAIN', array('apply_id'=>$val['bk_id'], 'gcid'=>$global_cid))}" class="btn">查看</a>
-								<a href="{:ZU('BookApply/check', 'ZL_ADMIN_DOMAIN', array('apply_id'=>$val['bk_id'], 'gcid'=>$global_cid))}" class="btn">审核</a>
+								<a href="{:ZU('BookApply/show', 'ZL_ADMIN_DOMAIN', array('apply_id'=>$val['bk_id']))}" class="btn">查看</a>
+								<a href="{:ZU('BookApply/check', 'ZL_ADMIN_DOMAIN', array('apply_id'=>$val['bk_id']))}" class="btn">审核</a>
 							</td>
 						</tr>
 						<?php endforeach;?>
@@ -60,4 +60,12 @@
 			<?php endif;?>
 	    </div>
     </div>
+</block>
+
+<block name="js">
+<script type="text/javascript">
+    jQuery(function($){
+        $.menu('book', 'check', 'book-apply');
+    });
+</script>   
 </block>

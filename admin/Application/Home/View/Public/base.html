@@ -14,12 +14,8 @@
 </head>
 <body>
     <!-- 头部 -->
-    <block name="header"><include file="Public/header" /></block>
+    <block name="header"><include file="Public/header"/></block>
     <!-- /头部 -->
-
-    <!-- 边栏 -->
-    <block name="sidebar"><include file="Public/sidebar" /></block>
-    <!-- /边栏 -->
 
     <!-- 内容区 -->
     <block name="main">欢迎访问逐浪网运营管理平台</block>
@@ -40,6 +36,7 @@
     </script>
     <script type="text/javascript" src="__JS__/think.js"></script>
     <script type="text/javascript" src="__JS__/common.js"></script>
+    <script type="text/javascript" src="__JS__/zlang.js"></script>
     <script type="text/javascript">
         +function(){
             var $window = $(window), $subnav = $("#subnav"), url;
@@ -116,6 +113,12 @@
 		})
 	})
 	</script>
-	<block name="js"></block>
+	<block name="js">
+    <script type="text/javascript">
+        jQuery(function($){
+            $.menu();
+        });
+    </script>   
+    </block>
 </body>
 </html>

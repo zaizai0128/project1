@@ -8,7 +8,6 @@
  */
 namespace Home\Controller;
 use Common\Controller\BaseController;
-use Zlib\Api as Zapi;
 
 class BookApplyController extends BaseController {
 
@@ -20,7 +19,7 @@ class BookApplyController extends BaseController {
 		$this->bookApplyInstance = D('BookApply', 'Service');
 
 		// 获取作品分类信息	
-		$assign['book_class'] = Zapi\BookClass::getInstance()->getClass();
+		$assign['book_class'] = \Zlib\Api\BookClass::getInstance()->getClass();
 		$this->assign('assign', $assign);
 	}
 
@@ -88,7 +87,7 @@ class BookApplyController extends BaseController {
 				}
 
 				// 成功后跳转的地址
-				$state['url'] = ZU('bookApply/index', 'ZL_ADMIN_DOMAIN', array('gcid'=>$this->gcid));
+				$state['url'] = ZU('bookApply/index', 'ZL_ADMIN_DOMAIN');
 				$this->ajaxReturn($state);
 			} else {
 				$this->ajaxReturn($state);

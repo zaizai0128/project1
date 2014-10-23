@@ -12,13 +12,13 @@ use Common\Controller\BaseController;
 class BookApplyVipController extends BaseController {
 
 	protected $bookId = Null;
-	protected $instance = Null;
+	protected $vipInstance = Null;
 
 	public function __construct()
 	{
 		parent::__construct();
 		$this->bookId = I('get.book_id');
-		$this->instance = D('BookApplyVip', 'Service');
+		$this->vipInstance = D('BookApplyVip', 'Service');
 	}
 
 	/**
@@ -26,14 +26,14 @@ class BookApplyVipController extends BaseController {
 	 */
 	public function index()
 	{
-		$total = $this->instance->getTotal();
-		$limit = 10;
+		$total = $this->vipInstance->getTotal();
+		$limit = C('ADMIN.list_size');
 		$Page = new \Think\Page($total, $limit);
 		$show = $Page->show();
-		$vip_list = $this->instance->getList($Page->firstRow, $Page->listsRows);
+		$vip_list = $this->vipInstance->getList($Page->firstRow, $Page->listsRows);
 
 		$this->assign(array(
-			'data' => $vip_list,
+			'vip_list' => $vip_list,
 			'page' => $show,
 		));
 		$this->display();	
@@ -44,7 +44,7 @@ class BookApplyVipController extends BaseController {
 	 */
 	public function check()
 	{
-		$vip_info = $this->instance->getInfoByBookId($this->bookId);
+		$vip_info = $this->vipInstance->getInfoByBookId($this->bookId);
 
 		$this->assign(array(
 			'data' => $vip_info,
@@ -60,9 +60,10 @@ class BookApplyVipController extends BaseController {
 		if (IS_POST) {
 			$data = I();
 			$data = array_merge($data, $this->adminInfo);
-			$state = $this->instance->doEdit($data);
-
-			if ($state['code'] <=0) z_redirect($state['msg']);
+			$state = $this->vipInstance->doEdit($data);
+			
+			if ($state['status'] <=0) 
+				$this->ajaxReturn($state);
 
 			// 如果审核通过 执行动作
 			$tag = array();
@@ -70,7 +71,8 @@ class BookApplyVipController extends BaseController {
 			$tag['data'] = $data;
 			tag('book_apply_vip', $tag);
 
-			z_redirect('修改成功', ZU('BookApplyVip/index', 'ZL_ADMIN_DOMAIN'));
+			$state['url'] = ZU('BookApplyVip/index', 'ZL_ADMIN_DOMAIN');
+			$this->ajaxReturn($state);
 		}
 	}
 }

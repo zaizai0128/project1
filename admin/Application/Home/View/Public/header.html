@@ -4,12 +4,19 @@
     <!-- /Logo -->
 
     <!-- 主导航 -->
-    <ul class="main-nav">
-        <?php $i = 0;?>
-        <?php foreach($menu_category['top'] as $val):?>
-        <li <?php if((empty($global_cid) && $i == 0) || $val['current']):?>class="current"<?php endif;?>><a href="{$val.url}">{$val.name}</a></li>
-        <?php ++$i;?>
-        <?php endforeach;?>
+    <ul class="main-nav menu-tab">
+        <li sub-target="subnav-book" class="menu-tab-book">
+            <a href="javascript:;">作品管理</a>
+        </li>
+        <li sub-target="subnav-tool" class="menu-tab-tool">
+            <a href="javascript:;">查询工具</a>
+        </li>
+        <li sub-target="subnav-finance" class="menu-tab-finance">
+            <a href="javascript:;">财务工具</a>
+        </li>
+        <li sub-target="subnav-setting" class="menu-tab-setting">
+            <a href="javascript:;">系统设置</a>
+        </li>
     </ul>
     <!-- /主导航 -->
 
@@ -24,3 +31,71 @@
         </ul>
     </div>
 </div>
+
+<!-- 边栏 -->
+<div class="sidebar">
+    <!-- 子导航 -->        
+    <div id="subnav" class="subnav">
+
+        <!-- 子导航-->
+        <div class="subnav-book subnav-item" style="display:none;">
+            <h3 class="subnav-book-check">
+                <i class="icon icon-fold"></i>内容审核
+            </h3> 
+            <ul class="side-sub-menu subnav-off">
+                <li><a class="item item-author-apply" href="javascript:;">新增作者审核</a></li>
+                <li><a class="item item-book-apply" href="{:ZU('bookApply/index', 'ZL_ADMIN_DOMAIN')}">新增作品审核</a></li>
+                <li><a class="item item-book-apply-vip" href="{:ZU('bookApplyVip/index', 'ZL_ADMIN_DOMAIN')}">作品签约申请</a></li>
+                <li><a class="item" href="javascript:;">封面审核</a></li>
+            </ul>
+            
+            <h3 class="subnav-book-manager">
+                <i class="icon icon-fold"></i>作品管理
+            </h3> 
+            <ul class="side-sub-menu subnav-off">
+                <li><a class="item" href="javascript:;">作品列表</a></li>
+                <li><a class="item" href="javascript:;">作品内容管理</a></li>
+                <li><a class="item" href="javascript:;">禁止上榜</a></li>
+            </ul>
+        </div>
+        <!-- /子导航 -->
+
+        <!-- 子导航-->
+        <div class="subnav-tool subnav-item" style="display:none;">
+            <h3 class="subnav-tool-select">
+                <i class="icon icon-fold"></i>查询
+            </h3> 
+            <ul class="side-sub-menu subnav-off">
+                <li><a class="item" href="javascript:;">手机包月条数监控</a></li>
+                <li><a class="item" href="javascript:;">充值消费</a></li>
+                <li><a class="item" href="javascript:;">会员信息查询修改</a></li>
+                <li><a class="item" href="javascript:;">会员鲜花查询</a></li>
+            </ul>
+        </div>
+        <!-- /子导航 -->
+        
+        <!-- 子导航-->
+        <div class="subnav-setting subnav-item" style="display:none;">
+            <h3 class="subnav-setting-web">
+                <i class="icon icon-fold"></i>网站设置
+            </h3> 
+            <ul class="side-sub-menu subnav-off">
+                <li><a class="item" href="javascript:;">网站信息设置</a></li>
+                <li><a class="item" href="javascript:;">邮箱设置</a></li>
+            </ul>
+
+            <h3 class="subnav-setting-manager">
+                <i class="icon icon-fold"></i>管理员
+            </h3> 
+            <ul class="side-sub-menu subnav-off">
+                <li><a class="item item-add" href="javascript:;">添加管理员</a></li>
+                <li><a class="item item-list" href="javascript:;">管理员列表</a></li>
+                <li><a class="item item-contact" href="javascript:;">联系管理员</a></li>
+            </ul>
+        </div>
+        <!-- /子导航 -->
+
+    </div>        
+    <!-- /子导航 -->
+</div>
+<!-- /边栏 -->
