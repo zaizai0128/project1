@@ -16,6 +16,8 @@ class AdminService extends BaseModel {
 	 */
 	public function getAdminInfo($user_id)
 	{
+		// tmp
+		if (!$user_id) return null;
 
 		$rs = ZS('SESSION.admin');
 		$rs['user_id'] = 1;
