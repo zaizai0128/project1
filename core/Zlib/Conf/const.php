@@ -30,6 +30,18 @@ return array(
 	'SYSTEM' => array(
 		'encoded' => 'utf-8',	// 系统编码
 	),
+
+	// 日志相关
+	'LOG' => array(
+		'type' => array(
+			0 => 'default',			// 默认日志，暂时未知
+			1 => 'buy',				// 购买日志
+			2 => 'cost',			// 消费日志
+			3 => 'app',				// 应用日志，鲜花，打赏等
+			4 => 'user',			// 用户日志，登录，修改密码等
+		),	// 日志类型
+	),
+
 	// session相关
 	'SESSION' => array(
 		'user' => 'user',		//前台用户的session存放key

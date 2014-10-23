@@ -471,3 +471,18 @@ function z_cover($book_id = Null, $cover = 1, $site = 0)
 {
 	return \Zlib\Api\Book::getCover($book_id, $cover, $site);
 }
+
+/**
+ * 记录日志
+ *
+ * @param type 	 日志类型，不同类型对应不同的日志文件名
+ * @param String 日志内容
+ */
+function z_log($msg, $type = 0)
+{
+	$log_file = ZC(C('LOG.type'), $type);
+	openlog($log_file, LOG_PID, LOG_USER);
+	$boolean = syslog(LOG_WARNING, $msg);
+	closelog();
+	return $boolean;
+}	
