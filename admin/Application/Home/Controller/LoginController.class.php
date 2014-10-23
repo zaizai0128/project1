@@ -38,6 +38,7 @@ class LoginController extends Controller {
 		if (IS_POST) {
 			$data['user_name'] = I('post.name');
 			$data['password'] = I('post.pwd');
+			$data['verify'] = I('post.verify');
 			$state = $this->adminInstance->login($data);
 			$this->ajaxReturn($state);
 		}
@@ -50,6 +51,13 @@ class LoginController extends Controller {
 	{
 		$state = $this->adminInstance->logout($data);
 		z_redirect('退出成功', ZU('login/index', 'ZL_ADMIN_DOMAIN'));
+	}
+
+	// 验证码
+	public function verify()
+	{
+		$Verify = new \Think\Verify();
+		$Verify->entry();
 	}
 
 }

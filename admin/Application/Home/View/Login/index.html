@@ -16,7 +16,7 @@
             <div class="login-body">
                 <div class="login-main pr">
                     <form action="{:ZU('login/login', 'ZL_ADMIN_DOMAIN')}" method="post" class="login-form">
-                        <h3 class="welcome"><i class="login-logo"></i>OneThink管理平台</h3>
+                        <h3 class="welcome">逐浪网 - 运营管理平台</h3>
                         <div id="itemBox" class="item-box">
                             <div class="item">
                                 <i class="icon-login-user"></i>
@@ -28,15 +28,15 @@
                                 <input type="password" name="pwd" placeholder="请填写密码" autocomplete="off" />
                             </div>
                             <span class="placeholder_copy placeholder_pwd">请填写密码</span>
-                            <!-- <div class="item verifycode">
+                            <div class="item verifycode">
                                 <i class="icon-login-verifycode"></i>
-                                <input type="text" name="verify" placeholder="请填写验证码" autocomplete="off">
+                                <input type="text" name="verify" pl aceholder="请填写验证码" autocomplete="off" maxlength="5">
                                 <a class="reloadverify" title="换一张" href="javascript:void(0)">换一张？</a>
                             </div>
                             <span class="placeholder_copy placeholder_check">请填写验证码</span>
                             <div>
-                                <img class="verifyimg reloadverify" alt="点击切换" src="/admin.php?s=/Public/verify.html">
-                            </div> -->
+                                <img class="verifyimg reloadverify" alt="点击切换" src="{:ZU('login/verify', 'ZL_ADMIN_DOMAIN')}">
+                            </div>
                         </div>
                         <div class="login_btn_panel">
                             <button class="login-btn" type="submit">
@@ -85,14 +85,14 @@
 			//初始化选中用户名输入框
 			$("#itemBox").find("input[name=username]").focus();
 			//刷新验证码
-			// var verifyimg = $(".verifyimg").attr("src");
-   //          $(".reloadverify").click(function(){
-   //              if( verifyimg.indexOf('?')>0){
-   //                  $(".verifyimg").attr("src", verifyimg+'&random='+Math.random());
-   //              }else{
-   //                  $(".verifyimg").attr("src", verifyimg.replace(/\?.*$/,'')+'?'+Math.random());
-   //              }
-   //          });
+			var verifyimg = $(".verifyimg").attr("src");
+            $(".reloadverify").click(function(){
+                if( verifyimg.indexOf('?')>0){
+                    $(".verifyimg").attr("src", verifyimg+'&random='+Math.random());
+                }else{
+                    $(".verifyimg").attr("src", verifyimg.replace(/\?.*$/,'')+'?'+Math.random());
+                }
+            });
 
             //placeholder兼容性
                 //如果支持 

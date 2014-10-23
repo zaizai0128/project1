@@ -26,7 +26,11 @@ class AdminService extends BaseModel {
 	 * 登录
 	 */
 	public function login($user)
-	{
+	{	
+		// 验证码
+		if (!z_check_verify($user['verify']) )
+			return z_info(-1, '验证码错误');
+
 		// 管理员表未建，先用固定的数据做判断
 		if ($user['user_name'] != 'admin' || $user['password'] != '123123')
 			return z_info(-1, '用户名或密码错误');
