@@ -26,7 +26,6 @@ class LoginController extends Controller {
 	 */
 	public function index()
 	{
-
 		$this->display();
 	}
 
@@ -40,6 +39,10 @@ class LoginController extends Controller {
 			$data['password'] = I('post.pwd');
 			$data['verify'] = I('post.verify');
 			$state = $this->adminInstance->login($data);
+
+			if ($state['status'] > 0)
+				$state['url'] = ZU('index/index', 'ZL_ADMIN_DOMAIN');
+			
 			$this->ajaxReturn($state);
 		}
 	}
