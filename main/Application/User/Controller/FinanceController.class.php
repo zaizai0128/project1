@@ -73,6 +73,7 @@ class FinanceController extends UserController {
 
 		if (empty($bill_info)) z_redirect('信息不存在', '', 2, -1);
 		$assign['total'] = $total;
+		$assign['order_id'] = $order_id;
 		$show = $Page->show();
 
 		$this->assign(array(
