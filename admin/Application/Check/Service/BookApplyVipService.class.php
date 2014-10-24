@@ -7,7 +7,7 @@
  * @version 1.0
  */
 
-namespace Home\Service;
+namespace Check\Service;
 use Zlib\Model\ZlibBookApplyVipModel;
 
 class BookApplyVipService extends ZlibBookApplyVipModel {
@@ -29,8 +29,8 @@ class BookApplyVipService extends ZlibBookApplyVipModel {
 		$result = parent::doEdit($final_data);
 
 		if ($result)
-			return z_ajax_return(1, '修改成功');
+			return z_ajax_info(1, '修改成功');
 		else
-			return z_ajax_return(0, '修改失败');
+			return z_ajax_info(0, '修改失败');
 	}
 }

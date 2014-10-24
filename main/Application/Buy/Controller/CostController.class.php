@@ -17,6 +17,8 @@ class CostController extends BuyController {
 	protected $userInfo = Null;
 	protected $costType = Null;	// 消耗的金币类型 1金币 2银币
 	protected $vipBuy = null;		
+	protected $orderCode = Null;	// 订单号
+	protected $nowTime = Null;		// 交易时间
 
 	public function __construct()
 	{
@@ -27,6 +29,8 @@ class CostController extends BuyController {
 		$this->billInstance = D('Bill', 'Service');
 		$this->flowerInstance = D('Flower', 'Service');
 		$this->vipBuy = new \Zlib\Api\UserVipBuy($this->userInfo['user_id'], $this->bookId);
+		$this->orderCode = date('YmdHis', time()) . mt_rand(100000, 999999);
+		$this->nowTime = z_now();
 	}
 
 	/**
@@ -152,7 +156,7 @@ class CostController extends BuyController {
 			$bill['user_type'] = $user_info['user_type'];
 			$bill['bk_id'] = $book_info['bk_id'];
 			$bill['bk_name'] = $book_info['bk_name'];
-			$bill['chapter'] = serialize($buy_chapter);
+			$bill['chapter'] = json_encode($buy_chapter);
 			$bill['author_id'] = $book_info['bk_author_id'];
 			$bill['author_name'] = $book_info['bk_author'];
 
@@ -165,7 +169,7 @@ class CostController extends BuyController {
 			$bill['buy_num'] = count($order);
 			$bill['buy_type'] = 2;
 			$bill['discount_type'] = $discount_type; // 折扣类型
-			$bill['time'] = z_now();
+			$bill['time'] = $this->nowTime;
 			$bill['status'] = 1;
 
 			// 生成购买章节描述
@@ -178,6 +182,7 @@ class CostController extends BuyController {
 
 			$bill['from_ch_order'] = $order_from;
 			$bill['to_ch_order'] = $order_to;
+			$bill['order_id'] = $this->orderCode;
 			// 记录到流水					
 			$result[$log_key] = $this->billInstance->doAdd($bill);	
 		}
@@ -247,7 +252,7 @@ class CostController extends BuyController {
 		$tmp['size'] = $this->chapterInfo['ch_size'];
 		$tmp['price'] = $price;
 
-		$bill['chapter'] = serialize(array($tmp));
+		$bill['chapter'] = json_encode(array($tmp));
 		$bill['author_id'] = $this->bookInfo['bk_author_id'];
 		$bill['author_name'] = $this->bookInfo['bk_author'];
 		$bill['pay_money'] = $price;
@@ -255,12 +260,13 @@ class CostController extends BuyController {
 		$bill['buy_num'] = 1;
 		$bill['buy_type'] = 1;
 		$bill['discount_type'] = $discount_type; // 折扣类型
-		$bill['time'] = z_now();
+		$bill['time'] = $this->nowTime;
 		$bill['status'] = 1;
 		$bill['detail'] = $this->userInfo['user_name'].'购买'.$this->bookInfo['bk_author'].'写的《'
 							.$this->bookInfo['bk_name'].'》作品的《'.$this->chapterInfo['ch_name'].'》，很是开心。';					
 		$bill['from_ch_order'] = $this->chapterInfo['ch_order'];
 		$bill['to_ch_order'] = $this->chapterInfo['ch_order'];
+		$bill['order_id'] = $this->orderCode;
 		
 		// 记录到流水					
 		$result['bill'] = $this->billInstance->doAdd($bill);				

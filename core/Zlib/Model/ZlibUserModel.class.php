@@ -113,6 +113,43 @@ class ZlibUserModel extends BaseModel {
 	}
 
 	/**
+	 * 获取申请作者信息
+	 */
+	public function getApplyInfoById($id, $field='*')
+	{
+		$condition = 'aa_id = '.$id;
+		return $this->userAuthorApplyInstance->field($field)->where($condition)->find();
+	}
+
+	/**
+	 * 获取申请作者的列表
+	 *
+	 * @param String $field
+	 * @param array  $page
+	 */
+	public function getApplyList($field = '*', $page = Null)
+	{
+		$condition = 'aa_state = 0';
+
+		if (!empty($page) && is_array($page)) {
+
+			return $this->userAuthorApplyInstance->field($field)
+						->where($condition)
+						->limit($page['firstRow'], $page['listRows'])->select();
+		}
+		return $this->userAuthorApplyInstance->field($field)->select();
+	}
+
+	/**
+	 * 获取申请作者的总数
+	 */
+	public function getApplyTotal()
+	{
+		$condition = 'aa_state = 0';
+		return $this->where($condition)->count();
+	}
+
+	/**
 	 * 编辑
 	 */
 	public function doEdit($data)

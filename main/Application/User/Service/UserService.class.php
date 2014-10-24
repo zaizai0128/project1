@@ -29,7 +29,7 @@ class UserService extends ZlibUserModel {
 	public function getUserInfo($user_id)
 	{
 		$user_info = $this->getUserFullInfoByUserId($user_id);
-		$user_info['user_like_tag'] = unserialize($user_info['user_like_tag']);
+		$user_info['user_like_tag'] = json_decode($user_info['user_like_tag'], True);
 		$account = $this->accountInstance->getAccountByUserId($user_id);
 		return array_merge($user_info, (array)$account);
 	}
@@ -66,7 +66,7 @@ class UserService extends ZlibUserModel {
 
 		// 个人喜爱的小说类型
 		if (!empty($data['like']) && !empty($data['like_name'])) {
-			$final_data['user_like_tag'] = serialize(array_combine($data['like'], $data['like_name']));
+			$final_data['user_like_tag'] = json_encode(array_combine($data['like'], $data['like_name']));
 		}
 
 		// 修改主表信息
@@ -105,7 +105,7 @@ class UserService extends ZlibUserModel {
 		$final_data['user_sex'] = $data['sex'];
 
 		if (!empty($data['like']) && !empty($data['like_name'])) {
-			$final_data['user_like_tag'] = serialize(array_combine($data['like'], $data['like_name']));
+			$final_data['user_like_tag'] = json_encode(array_combine($data['like'], $data['like_name']));
 		}
 
 		// 修改主表信息

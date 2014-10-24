@@ -17,6 +17,7 @@ class RewardService extends BaseModel {
 	protected $userAccountInstance = Null;
 	protected $billInstance = Null;
 	protected $flowerInstance = Null;
+	protected $orderCode = Null;	// 订单号
 
 	protected function init()
 	{
@@ -24,6 +25,7 @@ class RewardService extends BaseModel {
 		$this->userAccountInstance = new ZlibAccountsModel;
 		$this->billInstance = new ZlibBillModel;
 		$this->flowerInstance = D('Flower', 'Service');
+		$this->orderCode = date('YmdHis', time()) . mt_rand(100000, 999999);
 	}
 
 	/**
@@ -61,7 +63,8 @@ class RewardService extends BaseModel {
 		$log_data['detail'] = $data['user_info']['user_name'].'大发善心，打赏了'
 							.$data['book_info']['bk_author'].'的作品《'.$data['book_info']['bk_name'].'》'
 							.$data['num'].'个逐浪币';
-
+		$log_data['from_ch_order'] = time();
+		$log_data['order_id'] = $this->orderCode;
 		$result['log'] = $this->billInstance->doAdd($log_data);
 
 		// 消费赠送鲜花

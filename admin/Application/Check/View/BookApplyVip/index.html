@@ -1,4 +1,4 @@
-<extend name="Public/base" />
+<extend name="Common@Public/base" />
 
 {// 主体内容}
 <block name="main">
@@ -10,13 +10,13 @@
 	    <div id="main" class="main">
 			<!-- 标题栏 -->
 			<div class="main-title">
-				<h2>新增作品管理 - 待审核作品列表</h2>
+				<h2>审核管理 - 待签约作品列表</h2>
 			</div>
 
 		    <div>
 				<div class="btn-group">
-					<button class="btn current" url="gaofei_fuli.html">未审核</button>
-					<button class="btn" url="gaofei_fuli.html">已审核</button>
+					<button class="btn current">未签约</button>
+					<button class="btn">已签约</button>
 				</div>
 		    </div>
 
@@ -25,29 +25,24 @@
 				<table class="">
 				    <thead>
 				        <tr>
-						<th class="">编号</th>
-						<th class="">分类</th>
+						<th class="">作品编号</th>
 						<th class="">作品名称</th>
 						<th class="">作者</th>
-						<th class="">作品描述</th>
-						<th class="">作品标签</th>
-						<th class="">创建时间</th>
+						<th class="">作品字数</th>
+						<th class="">申请时间</th>
 						<th class="">操作</th>
 						</tr>
 				    </thead>
 				    <tbody>
-				    	<?php foreach($book_apply as $val):?>
+				    	<?php foreach($vip_list as $val):?>
 						<tr>
 							<td>{$val.bk_id}</td>
-							<td>{:ZC($assign['book_class'][$val['bk_class_id']], 'class_name')}</td>
-							<td>{$val.bk_name}</td>
-							<td>{$val.bk_author}</td>
-							<td>{$val.bk_intro|default=" - "}</td>
-							<td>{$val.bk_tag|default=" - "}</td>
-							<td>{$val.bk_cre_time}</td>
+							<td><a href="{:ZU('book/index', 'ZL_DOMAIN', array('book_id'=>$val['bk_id	']))}" target="_blank">《{$val.bk_name}》</a></td>
+							<td>{$val.author_name}</td>
+							<td>{$val.bk_size}</td>
+							<td>{$val.create_time}</td>
 							<td>
-								<a class="btn">查看</a>
-								<a class="btn">审核</a>
+								<a href="{:ZU('check/BookApplyVip/check', 'ZL_ADMIN_DOMAIN', array('book_id'=>$val['bk_id']))}" class="btn">签约</a>
 							</td>
 						</tr>
 						<?php endforeach;?>
@@ -59,13 +54,18 @@
 			<div class="page">{$page}</div>
 			<?php endif;?>
 	    </div>
+	    <div class="cont-ft">
+            <div class="copyright">
+                <include file="Common@Public/footer" />
+            </div>
+        </div>
     </div>
 </block>
 
 <block name="js">
 <script type="text/javascript">
     jQuery(function($){
-        $.menu('kefu', 'check', 'book-apply');
+        $.menu('kefu', 'check', 'book-apply-vip');
     });
 </script>   
 </block>

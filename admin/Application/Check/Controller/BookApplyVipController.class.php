@@ -6,7 +6,7 @@
  * @date 	2014-09-22
  * @version 1.0
  */
-namespace Home\Controller;
+namespace Check\Controller;
 use Common\Controller\BaseController;
 
 class BookApplyVipController extends BaseController {

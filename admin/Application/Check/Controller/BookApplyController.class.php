@@ -6,7 +6,7 @@
  * @date 	2014-09-15
  * @version 1.0
  */
-namespace Home\Controller;
+namespace Check\Controller;
 use Common\Controller\BaseController;
 
 class BookApplyController extends BaseController {
@@ -67,16 +67,16 @@ class BookApplyController extends BaseController {
 		if (IS_POST) {
 
 			if (I('bk_apply_status') == '00') {
-				$this->ajaxReturn(z_ajax_return(0, '请选择审核状态'));
+				$this->ajaxReturn(z_ajax_info(0, '请选择审核状态'));
 			}
 
 			$data = I();
 			$data['bk_apply_user'] = $this->adminInfo['user_id'];
 			$data['bk_apply_name'] = $this->adminInfo['user_name'];
-			$state = $this->bookApplyInstance->doApplyBook($data);
+			$state = $this->bookApplyInstance->doCheckApplyBook($data);
 
 			if ($state['status'] > 0) {
-
+				
 				// 如果审核通过
 				if ($data['bk_apply_status'] == '01') {
 					
@@ -84,6 +84,11 @@ class BookApplyController extends BaseController {
 					$tag['data'] = $data;
 					$tag['ac'] = 'after_check_allow';	// 行为名称
 					tag('book_apply', $tag);	// 审核通过或失败后，更新对应的数据表信息
+
+				// 审核不通过
+				} else if ($data['bk_apply_status'] == '02') {
+
+					// 发送站内短信
 				}
 
 				// 成功后跳转的地址

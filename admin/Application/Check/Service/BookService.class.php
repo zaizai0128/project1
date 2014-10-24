@@ -6,7 +6,7 @@
  * @date 	2014-09-10
  * @version 1.0
  */
-namespace Home\Service;
+namespace Check\Service;
 use Zlib\Model\ZlibBookModel;
 
 class BookService extends ZlibBookModel {

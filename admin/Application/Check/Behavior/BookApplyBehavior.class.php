@@ -6,8 +6,7 @@
  * @date 	2014-09-15
  * @version 1.0
  */
-namespace Home\Behavior;
-use Zlib\Api as Zapi;
+namespace Check\Behavior;
 
 class BookApplyBehavior {
 

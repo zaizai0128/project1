@@ -196,7 +196,7 @@ function z_info($code, $msg)
 /**
  * 用来后台返回ajax状态的函数
  */
-function z_ajax_return($status, $msg, $url = '')
+function z_ajax_info($status, $msg, $url = '')
 {
 	return array('status'=>$status, 'info'=>$msg, 'url'=>$url);
 }

@@ -49,7 +49,7 @@ class FinanceController extends UserController {
 		
 		$have_page['firstRow'] = $Page->firstRow;
 		$have_page['listRows'] = $Page->listRows;
-		$bill_list = $this->billInstance->getBillList($this->userId, '*', $have_page);
+		$bill_list = $this->billInstance->getBillList($this->userId, $have_page);
 
 		$this->assign(array(
 			'page' => $Page->show(),
@@ -63,14 +63,22 @@ class FinanceController extends UserController {
 	 */
 	public function costDetail()
 	{
-		$bill_id = I('get.id');
-		$bill_info = $this->billInstance->getBillInfo($this->userId, $bill_id);
+		$order_id = I('get.id');
+		$total = $this->billInstance->getBillDetailTotal($this->userId, $order_id);
+		$Page = new \Think\Page($total, self::PAGE_LIST);
+
+		$have_page['firstRow'] = $Page->firstRow;
+		$have_page['listRows'] = $Page->listRows;
+		$bill_info = $this->billInstance->getBillDetail($this->userId, $order_id, $have_page);
 
 		if (empty($bill_info)) z_redirect('信息不存在', '', 2, -1);
-		$bill_info['chapter'] = unserialize($bill_info['chapter']);
-		
+		$assign['total'] = $total;
+		$show = $Page->show();
+
 		$this->assign(array(
+			'assign' => $assign,
 			'bill_info' => $bill_info,
+			'page' => $show,
 		));
 		$this->display();
 	}

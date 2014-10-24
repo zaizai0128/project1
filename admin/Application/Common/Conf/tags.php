@@ -8,7 +8,7 @@
  */
 return array(
 	
-	'book_apply' => array('Home\Behavior\BookApplyBehavior'),
-	'book_apply_vip' => array('Home\Behavior\BookApplyVipBehavior'),
+	'book_apply' => array('Check\Behavior\BookApplyBehavior'),
+	'book_apply_vip' => array('Check\Behavior\BookApplyVipBehavior'),
 
 );

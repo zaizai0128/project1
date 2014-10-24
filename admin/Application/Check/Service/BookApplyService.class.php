@@ -6,22 +6,22 @@
  * @date 	2014-09-10
  * @version 1.0
  */
-namespace Home\Service;
+namespace Check\Service;
 use Zlib\Model\ZlibBookApplyModel;
 
 class BookApplyService extends ZlibBookApplyModel {
 
 	/**
-	 * 审核
+	 * 审核通过
 	 */
-	public function doApplyBook($data)
+	public function doCheckApplyBook($data)
 	{
-		$rs = parent::doEdit($data);	
+		$rs = parent::doEdit($data);
 
 		if ($rs)
-			return z_ajax_return(1, '成功');
+			return z_ajax_info(1, '审核完成');
 		else
-			return z_ajax_return(0, '审核失败');
+			return z_ajax_info(0, '审核失败');
 	}
 	
 }

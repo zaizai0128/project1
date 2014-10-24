@@ -92,16 +92,47 @@ class ZlibBillModel extends BaseModel {
 	}
 
 	/**
-	 * 获取某用户的某一个笔流水帐单详情
+	 * 获取用户的订单详情总数
+	 */
+	public function getBillDetailTotal($user_id, $order_id)
+	{	
+		$condition = 'order_id = '.$order_id.' and user_id = '.$user_id.' and status = 1';
+		$result = $this->billInstance->field('chapter')->where($condition)->select();
+
+		// 获取订单详情的数组
+		$order = array();
+		foreach($result as $val) {
+			$tmp = json_decode($val['chapter'], true);
+			$order = array_merge($order, (array)$tmp);
+		}
+
+		return count($order);
+	}
+
+	/**
+	 * 获取用户的订单详情
 	 *
 	 * @param int user_id
-	 * @param int bill_id
-	 * @param String field
+	 * @param int order_id
+	 * @param array page
 	 */
-	public function getBillInfo($user_id, $bill_id, $field = '*')
+	public function getBillDetail($user_id, $order_id, $page = Null)
 	{
-		$condition = 'id = '.$bill_id.' and user_id = '.$user_id.' and status = 1';
-		return $this->billInstance->field($field)->where($condition)->find();
+		$condition = 'order_id = '.$order_id.' and user_id = '.$user_id.' and status = 1';
+		$result = $this->billInstance->field('chapter')->where($condition)->select();
+
+		// 获取订单详情的数组
+		$order = array();
+		foreach($result as $val) {
+			$tmp = json_decode($val['chapter'], true);
+			$order = array_merge($order, (array)$tmp);
+		}
+
+		if (!empty($page) && is_array($page)) {
+			$order = array_slice($order, $page['firstRow'], $page['listRows']);
+		}
+
+		return $order;
 	}
 
 	/**
@@ -125,67 +156,79 @@ class ZlibBillModel extends BaseModel {
 	}
 	*/
 
-	public function getBillList($user_id, $field = '*', $page = Null)
+	// public function getBillList($user_id, $field = '*', $page = Null)
+	// {
+	// 	$condition = 'user_id = '.$user_id;
+	// 	$condition .= $this->dataWhere;
+
+	// 	// 获取全部数据
+	// 	$row  = $this->billInstance->field($field)->where($condition)->order('time desc')->select();
+	// 	$count = count($row); 	
+	// 	$result = array();
+	// 	for ($i = 0; $i < $count; $i++) {		
+	// 		$temp = array();	
+	// 		$temp['time'] = $row[$i]['time'];
+	// 		$temp['buy_type'] = $row[$i]['buy_type'];
+	// 		$temp['pay_type'] = $row[$i]['pay_type'];
+	// 		$temp['pay_money'] = $row[$i]['pay_money'];
+	// 		$temp['bk_id'] = $row[$i]['bk_id'];
+	// 		$temp['bk_name'] = $row[$i]['bk_name'];
+	// 		if ($row[$i]['buy_type'] == 2 ) {	
+	// 			$chapter = json_decode($row[$i]['chapter'], True);
+	// 			$ch_count = count($chapter);
+	// 			for ($j = 0; $j < $ch_count; $j++) {
+	// 				$temp['buy_item'] = $chapter[$i]['name'];
+	// 				$temp['pay_money'] = $chapter[$i]['price'];
+	// 				array_push($result, $temp);
+	// 			} 	
+	// 		} else if ($row[$i]['buy_type'] == 1) {	
+	// 			$chapter = json_decode($row[$i]['chapter'], True);
+	// 			$ch_count = count($chapter);
+	// 			$temp['buy_item'] = $chapter[0]['name'];
+	// 			$temp['pay_money'] = $chapter[0]['price'];
+	// 			array_push($result, $temp);
+	// 		} else if ($row[$i]['buy_type'] == 'A') {	
+	// 				$temp['buy_item'] = '打赏';
+	// 			array_push($result, $temp);
+	// 		}
+	// 	}
+
+	// 	// 如果含有分页
+	// 	if (!empty($page) && is_array($page)) {
+	// 		$result = array_slice($result, $page['firstRow'], $page['listRows']);
+	// 	}
+	// 	return $result;
+	// }
+
+	/**
+	 * 获取消费订单列表
+	 */
+	public function getBillList($user_id, $page = Null)
 	{
 		$condition = 'user_id = '.$user_id;
 		$condition .= $this->dataWhere;
+		$result  = $this->billInstance->field('bk_id,bk_name,order_id,pay_type,buy_type,SUM(buy_num) AS buy_num, SUM(pay_money) AS pay_money, time')
+					->where($condition)->order('time desc')
+					->group('order_id')->select();
 
-		// 获取全部数据
-		$row  = $this->billInstance->field($field)->where($condition)->order('time desc')->select();
-		$count = count($row); 	
-		$result = array();
-		for ($i = 0; $i < $count; $i++) {		
-			$temp = array();	
-			$temp['time'] = $row[$i]['time'];
-			$temp['buy_type'] = $row[$i]['buy_type'];
-			$temp['pay_type'] = $row[$i]['pay_type'];
-			$temp['pay_money'] = $row[$i]['pay_money'];
-			$temp['bk_id'] = $row[$i]['bk_id'];
-			$temp['bk_name'] = $row[$i]['bk_name'];
-			if ($row[$i]['buy_type'] == 2 ) {	
-				$chapter = unserialize($row[$i]['chapter']);
-				$ch_count = count($chapter);
-				for ($j = 0; $j < $ch_count; $j++) {
-					$temp['buy_item'] = $chapter[$i]['name'];
-					$temp['pay_money'] = $chapter[$i]['price'];
-					array_push($result, $temp);
-				} 	
-			} else if ($row[$i]['buy_type'] == 1) {	
-				$chapter = unserialize($row[$i]['chapter']);
-				$ch_count = count($chapter);
-				$temp['buy_item'] = $chapter[0]['name'];
-				$temp['pay_money'] = $chapter[0]['price'];
-				array_push($result, $temp);
-			} else if ($row[$i]['buy_type'] == 'A') {	
-					$temp['buy_item'] = '打赏';
-				array_push($result, $temp);
-			}
-		}
-
-		// 如果含有分页
 		if (!empty($page) && is_array($page)) {
 			$result = array_slice($result, $page['firstRow'], $page['listRows']);
 		}
+		
 		return $result;
 	}
 
 	/**
-	 * 修改后的获取总数
-	 * @date 2014-10-23
+	 * 获取订单总数
 	 */
 	public function getBillTotal($user_id)
 	{
 		$condition = 'user_id = '.$user_id;
 		$condition .= $this->dataWhere;
-		$row  = $this->billInstance->field('id,chapter')->where($condition)->order('time desc')->select();
-		$result = array();
-
-		foreach ($row as $val) {
-			$tmp = unserialize($val['chapter']);
-			$result = array_merge($result, (array)$tmp);
-		}
-
-		return count($result);
+		$row  = $this->billInstance->field('order_id')
+					->where($condition)->order('time desc')
+					->group('order_id')->select();
+		return count($row);
 	}	
 
 	/**

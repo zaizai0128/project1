@@ -1,4 +1,4 @@
-<extend name="Public/base" />
+<extend name="Common@Public/base" />
 
 {// 主体内容}
 <block name="main">
@@ -9,7 +9,7 @@
     </div>
         <div id="main" class="main">
 			<div class="main-title cf">
-				<h2>新增作品管理 - 审核作品</h2>
+				<h2>审核管理 - 审核作品</h2>
 			</div>
 			<!-- 标签页导航 -->
 			<div class="tab-wrap">
@@ -20,7 +20,7 @@
 				</ul>
 				<div class="tab-content">
 				<!-- 表单 -->
-				<form id="form" action="{:ZU('BookApply/doCheck', 'ZL_ADMIN_DOMAIN', array('apply_id'=>$book['bk_id']))}" method="post" class="form-horizontal">
+				<form id="form" action="{:ZU('check/BookApply/doCheck', 'ZL_ADMIN_DOMAIN', array('apply_id'=>$book['bk_id']))}" method="post" class="form-horizontal">
 					<!-- 基础文档模型 -->
 					<div id="tab1" class="tab-pane in tab1">
 						<div class="form-item">
@@ -29,7 +29,7 @@
 							</label>
 							<div class="controls">
 								<select name="bk_apply_status">
-									<?php foreach(C('BOOK.check_status') as $key=>$val):?>
+									<?php foreach(C('CHECK.book_status') as $key=>$val):?>
 									<option value="{$key}">{$val}</option>
 									<?php endforeach;?>
 								</select>
@@ -61,7 +61,7 @@
         </div>
         <div class="cont-ft">
             <div class="copyright">
-                <include file="Public/footer" />
+                <include file="Common@Public/footer" />
             </div>
         </div>
     </div>
