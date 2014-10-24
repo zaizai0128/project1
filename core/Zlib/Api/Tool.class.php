@@ -15,9 +15,9 @@ class Tool {
 	 */
 	public static function phoneVerify()
 	{
-		
-
-		echo '发送手机验证码';
+		$phone = 'http://202.108.24.207/sendmt.jsp?mobile=18701500429&mt=您的逐浪网验证码为XXXXXX，请勿泄露。如非本人操作请回复N屏蔽。客服电话025-66670800&qxtId=D69DDE250CCFB24377925486579BFC9F';
+		$res = file_get_contents($phone);
+		return $res;
 	}
 
 	/**
