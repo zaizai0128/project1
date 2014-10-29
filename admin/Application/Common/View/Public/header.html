@@ -11,6 +11,13 @@
         <li sub-target="subnav-kefu" class="menu-tab-kefu">
             <a href="javascript:;">客服工具</a>
         </li>
+
+        {// 如果是网站管理员，则显示扩展网站的设置信息}
+        <?php if($admin_info['gid'] == 1):?>
+        <li sub-target="subnav-setting" class="menu-tab-setting">
+            <a href="javascript:;">设置</a>
+        </li>
+        <?php endif;?>
     </ul>
     <!-- /主导航 -->
 
@@ -18,9 +25,9 @@
     <div class="user-bar">
         <a href="javascript:;" class="user-entrance"><i class="icon-user"></i></a>
         <ul class="nav-list user-menu hidden">
-            <li class="manager">你好，<em title="admin">{:ZS('SESSION.admin', 'user_name')}</em></li>
-            <li><a href="/admin.php?s=/User/updatePassword.html">修改密码</a></li>
-            <li><a href="/admin.php?s=/User/updateNickname.html">修改昵称</a></li>
+            <li class="manager">你好，<em title="admin">{$admin_info.user_name}</em></li>
+            <li><a href="{:ZU('user/password', 'ZL_ADMIN_DOMAIN')}">修改密码</a></li>
+            <li><a href="{:ZU('user/nickname', 'ZL_ADMIN_DOMAIN')}">修改昵称</a></li>
             <li><a href="{:ZU('login/logout', 'ZL_ADMIN_DOMAIN')}">退出</a></li>
         </ul>
     </div>
@@ -69,6 +76,27 @@
             </ul>
         </div>
         <!-- /子导航 -->
+
+        {// 如果是网站管理员，则显示扩展网站的设置信息}
+        <?php if($admin_info['gid'] == 1):?>
+        <div class="subnav-setting subnav-item" style="display:none;">
+            <h3 class="subnav-setting-system">
+                <i class="icon icon-fold"></i>系统设置
+            </h3>
+            <ul class="side-sub-menu subnav-off">
+                <li><a class="item item-ban-list" href="###">导航管理</a></li>
+            </ul>
+
+            <h3 class="subnav-setting-rbac">
+                <i class="icon icon-fold"></i>RBAC设置
+            </h3>
+            <ul class="side-sub-menu subnav-off">
+                <li><a class="item item-user-list" href="{:ZU('user/index', 'ZL_ADMIN_DOMAIN')}">管理员列表</a></li>
+                <li><a class="item item-ban-list" href="###">用户组列表</a></li>
+                <li><a class="item item-ban-list" href="###">权限列表</a></li>
+            </ul>
+        </div>
+        <?php endif;?>
 
     </div>        
     <!-- /子导航 -->

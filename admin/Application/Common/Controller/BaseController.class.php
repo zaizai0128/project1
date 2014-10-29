@@ -22,5 +22,7 @@ class BaseController extends Controller {
 		$this->userId = ZS('SESSION.admin', 'user_id');
 		$this->adminInfo = $this->adminInstance->getUserInfoById($this->userId);
 		\Zlib\Api\Acl::admin($this->adminInfo);
+
+		$this->assign('admin_info', $this->adminInfo);
 	}
 }

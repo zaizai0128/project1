@@ -6,45 +6,6 @@ jQuery(function($){
 
 	$.extend({
 
-		/**
-		 * 控制后台menu
-		 *
-		 * @param String menu_name			顶级类名
-		 * @param String second_name		二级类名
-		 * @param String third_name			三级类名
-		 */
-		menu : function(menu_name, second_name, third_name)
-		{
-			// 设置js默认参数
-			var second_name = arguments[1] || '';
-			var third_name = arguments[2] || '';
-			
-			// menu类名
-			var menu_instance = $('.menu-tab').find('.menu-tab-'+menu_name);
-			var subnav_attr = menu_instance.attr('sub-target');
-			var subnav_instance = $('.'+menu_instance.attr('sub-target'));
-
-			if (second_name != '') {
-				var second_instance = subnav_instance.find('.'+subnav_attr+'-'+second_name);
-			} else {
-				var second_instance = subnav_instance.find('h3:first');
-			}
-			// 顶级
-			menu_instance.addClass('current').siblings().removeClass('current');
-			// side
-			subnav_instance.show().siblings().hide();
-
-			// 二级菜单
-			second_instance.find('i').removeClass('icon-fold').addClass('icon-unfold');
-			second_instance.next('ul').removeClass('subnav-off').addClass('subnav-on').show();
-
-			// 三级
-			if (third_name != '') {
-				var third_instance = second_instance.next('ul').find('.item-'+third_name).parent('li');
-				third_instance.addClass('current').siblings().removeClass('current');
-			}
-		},
-
 		// 初始化menu标签状态
 		initStatucMenu : function()
 		{
@@ -84,8 +45,48 @@ jQuery(function($){
 			first_tag.show().siblings().hide();
 			first_node.find('i').removeClass('icon-fold').addClass('icon-unfold');
 			first_node.next().removeClass('subnav-off').addClass('subnav-on').show();
-		}
+		},
 
+		/**
+		 * 控制后台menu
+		 *
+		 * @param String menu_name			顶级类名
+		 * @param String second_name		二级类名
+		 * @param String third_name			三级类名
+		 */
+		menu : function(menu_name, second_name, third_name)
+		{
+			$.initStatucMenu();
+			
+			// 设置js默认参数
+			var second_name = arguments[1] || '';
+			var third_name = arguments[2] || '';
+			
+			// menu类名
+			var menu_instance = $('.menu-tab').find('.menu-tab-'+menu_name);
+			var subnav_attr = menu_instance.attr('sub-target');
+			var subnav_instance = $('.'+menu_instance.attr('sub-target'));
+
+			if (second_name != '') {
+				var second_instance = subnav_instance.find('.'+subnav_attr+'-'+second_name);
+			} else {
+				var second_instance = subnav_instance.find('h3:first');
+			}
+			// 顶级
+			menu_instance.addClass('current').siblings().removeClass('current');
+			// side
+			subnav_instance.show().siblings().hide();
+
+			// 二级菜单
+			second_instance.find('i').removeClass('icon-fold').addClass('icon-unfold');
+			second_instance.next('ul').removeClass('subnav-off').addClass('subnav-on').show();
+
+			// 三级
+			if (third_name != '') {
+				var third_instance = second_instance.next('ul').find('.item-'+third_name).parent('li');
+				third_instance.addClass('current').siblings().removeClass('current');
+			}
+		}
 
 	});
 

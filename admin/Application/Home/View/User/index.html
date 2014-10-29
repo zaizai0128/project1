@@ -1,0 +1,67 @@
+<extend name="Common@Public/base" />
+
+{// 主体内容}
+<block name="main">
+	<div id="main-content">
+        <div id="top-alert" class="fixed alert alert-error" style="display: none;">
+            <button class="close fixed" style="margin-top: 4px;">&times;</button>
+            <div class="alert-content">这是内容</div>
+        </div>
+	    <div id="main" class="main">
+			<!-- 标题栏 -->
+			<div class="main-title">
+				<h2>RBAC - 管理员列表</h2>
+			</div>
+
+		    <div>
+				<div class="btn-group">
+					<a class="btn" href="{:ZU('deny/prevent/add', 'ZL_ADMIN_DOMAIN')}">添加屏蔽作品</a>
+				</div>
+		    </div>
+
+			<!-- 数据列表 -->
+			<div class="data-table">
+				<table class="">
+				    <thead>
+				        <tr>
+						<th class="">编号</th>
+						<th class="">作品编号</th>
+						<th class="">理由</th>
+						<th class="">创建时间</th>
+						<th class="">操作</th>
+						</tr>
+				    </thead>
+				    <tbody>
+				    	<?php foreach($list as $val):?>
+						<tr>
+							<td>{$val.id}</td>
+							<td>{$val.bk_id}</td>
+							<td>{$val.ban_reason|default=" - "}</td>
+							<td>{$val.insert_time}</td>
+							<td>
+								<a href="{:ZU('deny/prevent/check', 'ZL_ADMIN_DOMAIN', array('id'=>$val['id']))}" class="btn">解封</a>
+							</td>
+						</tr>
+						<?php endforeach;?>
+					</tbody>
+			    </table>
+			</div>
+			<div class="controls"></div>
+
+			<!-- 分页 -->
+			<?php if(!empty($page)):?>
+			<div class="controls fr">
+				<div class="page">{$page}</div>
+			</div>
+			<?php endif;?>
+	    </div>
+    </div>
+</block>
+
+<block name="js">
+<script type="text/javascript">
+    jQuery(function($){
+        $.menu('setting', 'rbac', 'user-list');
+    });
+</script>   
+</block>
