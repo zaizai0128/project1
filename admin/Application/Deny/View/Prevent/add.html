@@ -9,7 +9,7 @@
     </div>
         <div id="main" class="main">
 			<div class="main-title cf">
-				<h2>审核管理 - 待签约作品</h2>
+				<h2>禁止榜单 - 添加屏蔽列表</h2>
 			</div>
 			<!-- 标签页导航 -->
 			<div class="tab-wrap">
@@ -20,53 +20,31 @@
 				</ul>
 				<div class="tab-content">
 				<!-- 表单 -->
-				<form id="form" action="{:ZU('check/BookApplyVip/doCheck', 'ZL_ADMIN_DOMAIN')}" method="post" class="form-horizontal">
+				<form id="form" action="{:ZU('deny/prevent/doAdd', 'ZL_ADMIN_DOMAIN')}" method="post" class="form-horizontal">
 					<!-- 基础文档模型 -->
 					<div id="tab1" class="tab-pane in tab1">
 						<div class="form-item">
 							<label class="item-label">
-								审核状态<span class="check-tips"></span>
+								要添加的书名<span class="check-tips">不同的书使用“|”分割</span>
 							</label>
 							<div class="controls">
-								<select name="status">
-									<?php foreach(C('CHECK.book_status') as $key=>$val):?>
-									<option value="{$key}">{$val}</option>
-									<?php endforeach;?>
-								</select>
+								<textarea name="books" id="" cols="50" rows="10"></textarea>
 							</div>
-						</div>
+						</div>  
 
 						<div class="form-item">
 							<label class="item-label">
-								签约类型<span class="check-tips">A\B\C\D\E\X\Y\Z</span>
+								操作理由<span class="check-tips"></span>
 							</label>
 							<div class="controls">
-								<select name="bk_commision">
-									<?php foreach(C('BOOK.commision') as $key=>$val):?>
-									<option value="{$key}">{$val.name}</option>
-									<?php endforeach;?>
-								</select>
+								<textarea name="ban_reason" id="" cols="50" rows="3"></textarea>
 							</div>
-						</div>
-
-			            <div class="form-item cf">
-			                <label class="item-label">
-			                	意见<span class="check-tips">签约意见</span>
-			                </label>
-			                <div class="controls">
-			                    <label class="textarea input-large">
-			                    	<textarea name="action_comments" placeholder="反馈给作者的签约意见"></textarea>
-			                    </label>                    
-			            	</div>
-			            </div>        
+						</div>       
 			        </div>
-					
 					<div class="form-item cf">
 						<button class="btn submit-btn ajax-post hidden" id="submit" type="submit" target-form="form-horizontal">确 定</button>
 						<a class="btn btn-return" href="javascript:history.go(-1);">返 回</a>
 					</div>
-					<input type="hidden" name="id" value="{$data.id}" />
-					<input type="hidden" name="bk_id" value="{$data.bk_id}" />
 				</form>
 				<!-- /表单 -->
 				</div>
@@ -77,12 +55,29 @@
 </block>
 
 <block name="js">
+<link href="__JS__/datetimepicker/css/datetimepicker.css" rel="stylesheet" type="text/css">
+<link href="__JS__/datetimepicker/css/dropdown.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="__JS__/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="__JS__/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+
 <script  type="text/javascript">
 jQuery(function($){
 	
-	showTab();
-	$.menu('kefu', 'check', 'book-apply-vip');
-});
+	$('#time-start').datetimepicker({
+        format: 'yyyy-mm-dd',
+        language:"zh-CN",
+	    minView:2,
+	    autoclose:true
+    });
 
+    $('#time-end').datetimepicker({
+        format: 'yyyy-mm-dd',
+        language:"zh-CN",
+	    minView:2,
+	    autoclose:true
+    });
+
+	$.menu('book', 'deny', 'ban-prevent');
+});
 </script>
 </block>

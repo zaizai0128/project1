@@ -31,11 +31,14 @@ class CenterController extends UserController {
 
 		// 获取个人申请信息
 		$apply_info = $this->userInstance->getApplyInfoByUserId($this->userId);
-		
-		$this->assign(array(
-			'apply_info' => $apply_info,
-		));
-		$this->display();
+		$this->assign('apply_info', $apply_info);
+
+		if (empty($apply_info))
+			$template = 'apply';
+		else
+			$template = 'area';
+
+		$this->display($template);
 	}
 
 	/**
@@ -56,7 +59,7 @@ class CenterController extends UserController {
 			$state = $this->userInstance->doAddApply($data);
 
 			if ($state['code'] <=0 ) {
-				z_redirect($state['msg']);
+				z_redirect($state['msg'], '', 2, -1);
 			}
 			z_redirect($state['msg'], ZU('user/center/area'));
 		}
@@ -72,7 +75,7 @@ class CenterController extends UserController {
 			$state = $this->userInstance->doEditApply($data);
 
 			if ($state['code'] <=0 ) {
-				z_redirect($state['msg']);
+				z_redirect($state['msg'], '', 2, -1);
 			}
 			z_redirect($state['msg'], ZU('user/center/area'));
 		}

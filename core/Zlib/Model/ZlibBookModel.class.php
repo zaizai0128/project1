@@ -115,9 +115,57 @@ class ZlibBookModel extends BaseModel {
 	 * @param int book_id
 	 * @param String field
 	 */
-	public function getRank($book_id, $field='*')
+	public function getRank($book_id, $field = '*')
 	{
 		$condition = 'bk_id = '.$book_id;
 		return M('ZlBookRank')->field($field)->where($condition)->find();
+	}
+
+	/**
+	 * 获取列表总数
+	 */
+	public function getBookTotal($field = '*')
+	{
+		$condition = '';
+		return $this->field($field)->where($condition)->count();
+	}
+
+	/**
+	 * 获取作品列表
+	 */
+	public function getBookList($page)
+	{
+		return $this->limit($page['firstRow'], $page['listRows'])->order('bk_id desc')->select();
+	}
+
+	/**
+	 * 屏蔽作品
+	 * status 01
+	 */
+	public function setBookDeny($book_id)
+	{
+		if (is_array($book_id)) {
+			$books = implode(',', $book_id);
+			$condition = 'bk_id in('.$books.')';
+		} else {
+			$condition = 'bk_id = '.$book_id;
+		}
+		$data['bk_status'] = '01';
+		return $this->where($condition)->data($data)->save();
+	}
+
+	/**
+	 * 解封作品
+	 */
+	public function setBookAllow($book_id)
+	{
+		if (is_array($book_id)) {
+			$books = implode(',', $book_id);
+			$condition = 'bk_id in('.$books.')';
+		} else {
+			$condition = 'bk_id = '.$book_id;
+		}
+		$data['bk_status'] = '00';
+		return $this->where($condition)->data($data)->save();
 	}
 }

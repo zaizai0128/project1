@@ -20,7 +20,7 @@ class BaseController extends Controller {
 		parent::__construct();
 		$this->adminInstance = D('Admin', 'Service');
 		$this->userId = ZS('SESSION.admin', 'user_id');
-		$this->adminInfo = $this->adminInstance->getAdminInfo($this->userId);
+		$this->adminInfo = $this->adminInstance->getUserInfoById($this->userId);
 		\Zlib\Api\Acl::admin($this->adminInfo);
 	}
 }

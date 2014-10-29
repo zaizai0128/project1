@@ -7,49 +7,9 @@
  * @version 1.0
  */
 namespace Common\Service;
-use Zlib\Model\BaseModel;
+use Common\Model\UserModel;
 
-class AdminService extends BaseModel {
+class AdminService extends UserModel {
 
-	/**
-	 * 获取管理员信息
-	 */
-	public function getAdminInfo($user_id)
-	{
-		// tmp
-		if (!$user_id) return null;
-
-
-		$rs = ZS('SESSION.admin');
-		return $rs;
-	}
-
-	/**
-	 * 登录
-	 */
-	public function login($user)
-	{	
-		// 验证码
-		if (!z_check_verify($user['verify']) )
-			return z_ajax_info(-1, '验证码错误');
-
-		// 管理员表未建，先用固定的数据做判断
-		if ($user['user_name'] != 'admin' || $user['password'] != '123123')
-			return z_ajax_info(-2, '用户名或密码错误');
-
-		// tmp
-		$user['user_id'] = 1;
-		// 设置session
-		ZS('SESSION.admin', Null, $user);
-		return z_ajax_info(1, '登录成功');
-	}
-
-	/**
-	 * 退出登录
-	 */
-	public function logout()
-	{
-		ZS('SESSION.admin', Null, Null, -1);
-		return z_ajax_info(1, '退出成功');
-	}
+	
 }

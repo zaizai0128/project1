@@ -10,13 +10,12 @@
 	    <div id="main" class="main">
 			<!-- 标题栏 -->
 			<div class="main-title">
-				<h2>审核管理 - 待审核作品列表</h2>
+				<h2>禁止榜单 - 榜单列表</h2>
 			</div>
 
 		    <div>
 				<div class="btn-group">
-					<button class="btn current">未审核</button>
-					<button class="btn">已审核</button>
+					<a class="btn" href="{:ZU('deny/prevent/add', 'ZL_ADMIN_DOMAIN')}">添加屏蔽作品</a>
 				</div>
 		    </div>
 
@@ -26,35 +25,27 @@
 				    <thead>
 				        <tr>
 						<th class="">编号</th>
-						<th class="">分类</th>
-						<th class="">作品名称</th>
-						<th class="">作者</th>
-						<th class="">作品描述</th>
-						<th class="">作品标签</th>
+						<th class="">作品编号</th>
+						<th class="">理由</th>
 						<th class="">创建时间</th>
 						<th class="">操作</th>
 						</tr>
 				    </thead>
 				    <tbody>
-				    	<?php foreach($book_apply as $val):?>
+				    	<?php foreach($list as $val):?>
 						<tr>
+							<td>{$val.id}</td>
 							<td>{$val.bk_id}</td>
-							<td>{:ZC($assign['book_class'][$val['bk_class_id']], 'class_name')}</td>
-							<td>{$val.bk_name}</td>
-							<td>{$val.bk_author}</td>
-							<td>{$val.bk_intro|default=" - "}</td>
-							<td>{$val.bk_tag|default=" - "}</td>
-							<td>{$val.bk_cre_time}</td>
+							<td>{$val.ban_reason|default=" - "}</td>
+							<td>{$val.insert_time}</td>
 							<td>
-								<a href="{:ZU('check/bookApply/show', 'ZL_ADMIN_DOMAIN', array('apply_id'=>$val['bk_id']))}" class="btn">查看</a>
-								<a href="{:ZU('check/bookApply/check', 'ZL_ADMIN_DOMAIN', array('apply_id'=>$val['bk_id']))}" class="btn">审核</a>
+								<a href="{:ZU('deny/prevent/check', 'ZL_ADMIN_DOMAIN', array('id'=>$val['id']))}" class="btn">解封</a>
 							</td>
 						</tr>
 						<?php endforeach;?>
 					</tbody>
 			    </table>
 			</div>
-
 			<div class="controls"></div>
 
 			<!-- 分页 -->
@@ -70,7 +61,7 @@
 <block name="js">
 <script type="text/javascript">
     jQuery(function($){
-        $.menu('kefu', 'check', 'book-apply');
+        $.menu('book', 'deny', 'ban-prevent');
     });
 </script>   
 </block>

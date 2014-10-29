@@ -167,15 +167,15 @@ class BookBan {
 					break;
 			}
 			if ($row != null && $row != false) {
-				print "start";
+				// print "start";
 				$ban_start = $book_list[$i]['ban_start'];
 				$ban_end = $book_list[$i]['ban_end'];
 				if ($ban_start == null || $ban_start == false)	
 					$ban_start = '0000-00-00 00:00:00';
 				if ($ban_end == null || $ban_end == false)	
 					$ban_end = '2099-12-31 23:59:59';
-				print_r($row);
-				print "|||".$ban_start."|||";
+				// print_r($row);
+				// print "|||".$ban_start."|||";
 
 				if (strcmp($row['ban_start'], $ban_start) ==0 && strcmp($row['ban_end'], $ban_end) ==0)
 					continue;
@@ -183,7 +183,7 @@ class BookBan {
 				$data = array();
 				$data['status'] = '0';
 				$data['disable_time'] = $now;
-				echo 'bk_id=\''.$bk_id.'\' and ban_type=\''. $ban_type.' and disable_time=\'0000-00-00 00:00:00\'';
+				// echo 'bk_id=\''.$bk_id.'\' and ban_type=\''. $ban_type.' and disable_time=\'0000-00-00 00:00:00\'';
 				$m->data($data)->where('bk_id=\''.$bk_id.'\' and ban_type='.
 						$ban_type.' and disable_time=\'0000-00-00 00:00:00\'')->save(); 
 			}
