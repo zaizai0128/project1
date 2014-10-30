@@ -43,8 +43,8 @@ class ShelfController extends UserController {
 	{
 		$assign = array();
 		// 获取默认书架的全部书籍
-		$assign['total'] = $this->bookShelfInstance->getTotalBooks(C('SHELF.default_num'));
 		$book_list = $this->bookShelfApi->getBooks(C('SHELF.default_num'));
+		$assign['total'] = count($book_list);
 		$limit = 2;
 		$Page = new \Think\Page($assign['total'], $limit);
 		$show = $Page->show();

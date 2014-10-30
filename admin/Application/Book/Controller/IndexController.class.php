@@ -22,21 +22,51 @@ class IndexController extends BaseController {
 
 	public function index()
 	{
+		// 搜索条件
+		$param['bk_name'] = I('get.bk_name');
+		$param['bk_author'] = I('get.bk_author');
+		$param['bk_status'] = I('get.bk_status');
+		$param['bk_fullflag'] = I('get.bk_fullflag');
+		$param = array_filter($param);
+
 		$class = \Zlib\Api\BookClass::getInstance()->getClass();
 		$assign['class'] = $class;
 
-		$total = $this->bookInstance->getBookTotal();
+		$total = $this->bookInstance->getBookTotal($param);
 		$Page = new \Think\Page($total, C('ADMIN.list_size'));
 		$have_page['firstRow'] = $Page->firstRow;
 		$have_page['listRows'] = $Page->listRows;
-		$book_list = $this->bookInstance->getBookList($have_page);
+		$book_list = $this->bookInstance->getBookList($param, $have_page);
 
 		$this->assign(array(
+			'param' => $param,
 			'assign' => $assign,
 			'page' =>  $Page->show(),
 			'book_list' => $book_list,
 		));
 		$this->display();
+	}
+
+	/**
+	 * 详情编辑
+	 */
+	public function edit()
+	{
+		$book_id = I('get.book_id');
+		$book_info = $this->bookInstance->getBookByBookId($book_id);
+
+		$this->assign('book_info', $book_info);
+		$this->display();
+	}
+
+	public function doEdit()
+	{
+		if (IS_POST) {
+			$data = I();
+
+			print_r($data);
+			die;
+		}
 	}
 
 }

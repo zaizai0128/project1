@@ -1,0 +1,96 @@
+<extend name="Common@Public/base" />
+
+{// 主体内容}
+<block name="main">
+<div id="main-content">
+    <div id="top-alert" class="fixed alert alert-error" style="display: none;">
+        <button class="close fixed" style="margin-top: 4px;">&times;</button>
+        <div class="alert-content">这是内容</div>
+    </div>
+        <div id="main" class="main">
+			<div class="main-title cf">
+				<h2>作品管理 - <a href="{:ZU('book/index', 'ZL_DOMAIN', array('book_id'=>$book_info['bk_id']))}" target="_blank">【{$book_info.bk_name}】</a> - {$book_info.bk_author}</h2>
+			</div>
+			<!-- 标签页导航 -->
+			<div class="tab-wrap">
+				<ul class="tab-nav nav">
+					<li data-tab="tab1" class="current">
+						<a href="javascript:void(0);">基础</a>
+					</li>
+					<li data-tab="tab2">
+						<a href="javascript:void(0);">扩展</a>
+					</li>
+				</ul>
+				<div class="tab-content">
+				<!-- 表单 -->
+				<form id="form" action="{:ZU('book/index/doEdit', 'ZL_ADMIN_DOMAIN')}" method="post" class="form-horizontal">
+					<!-- 基础文档模型 -->
+					<div id="tab1" class="tab-pane in tab1">
+						<div class="form-item">
+							<label class="item-label">
+								作品名<span class="check-tips">作品名无法编辑</span>
+							</label>
+							<div class="controls">
+								【{$book_info.bk_name}】
+							</div>
+						</div>   
+						<div class="form-item">
+							<label class="item-label">
+								作品主要角色<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								【{$book_info.bk_name}】
+							</div>
+						</div>   
+			        </div>
+
+			        <!-- 扩展文档模型 -->
+					<div id="tab2" class="tab-pane tab2">
+						<div class="form-item">
+							<label class="item-label">
+								创建/更新时间<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								创建时间：{$book_info.bk_cre_time} / 最后更新时间：{$book_info.bk_now_date}
+							</div>
+						</div> 
+						<div class="form-item">
+							<label class="item-label">
+								当前共有章节数<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								共{$book_info.ch_total|default="0"}章 <a href="{:ZU('chapter/index/index', 'ZL_ADMIN_DOMAIN', array('book_id'=>$book_info['bk_id']))}">点击查看</a>
+							</div>
+						</div>
+						<div class="form-item">
+							<label class="item-label">
+								最后更新的 普通/VIP 章节<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								普通章节：{$book_info.bk_public_name|default=" 暂无 "} / VIP章节：{$book_info.bk_vip_name|default=" 暂无 "}
+							</div>
+						</div>   
+			        </div>
+
+					<div class="form-item cf">
+						<button class="btn submit-btn ajax-post hidden" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+						<a class="btn btn-return" href="{:ZU('book/index/index', 'ZL_ADMIN_DOMAIN', array('p'=>I('p')))}">返 回</a>
+					</div>
+				</form>
+				<!-- /表单 -->
+				</div>
+			</div>
+			<!-- /标签页导航 -->
+        </div>
+    </div>
+</block>
+
+<block name="js">
+<script  type="text/javascript">
+jQuery(function($){
+	
+	showTab();
+	$.menu('book', 'manager', 'list');
+});
+</script>
+</block>

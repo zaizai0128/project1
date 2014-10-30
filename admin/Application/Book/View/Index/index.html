@@ -13,18 +13,24 @@
 				<h2>作品管理 - 作品列表</h2>
 			</div>
 
-		    <div>
-				<div class="btn-group">
+		    <div style="height:30px;">
+				<!-- <div class="btn-group">
 					<button class="btn current">待审核</button>
 					<button class="btn">未通过</button>
-				</div>
+				</div> -->
 				
 				<!-- 右边搜索 -->
 				<div class="search-form fr cf">
 					<div class="sleft">
 
 						<div class="drop-down">
-							<span data="" class="sort-txt" id="sch-sort-txt">所有</span>
+							<span data="{$param.bk_fullflag}" class="sort-txt" id="sch-fullflag-status">
+								<?php if(!empty($param['bk_fullflag'])):?>
+								{:ZC(C('BOOK.full_flag'), $param['bk_fullflag'])}
+								<?php else:?>
+								所有
+								<?php endif;?>
+							</span>
 							<i class="arrow arrow-down"></i>
 							<ul class="nav-list hidden drop-down-menu">
 								<li><a value="" href="javascript:;">所有</a></li>
@@ -35,7 +41,13 @@
 						</div>
 
 						<div class="drop-down">
-							<span data="" class="sort-txt" id="sch-sort-txt">所有</span>
+							<span data="{$param.bk_status}" class="sort-txt" id="sch-book-status">
+								<?php if(!empty($param['bk_status'])):?>
+								{:ZC(C('BOOK.status'), $param['bk_status'])}
+								<?php else:?>
+								所有
+								<?php endif;?>
+							</span>
 							<i class="arrow arrow-down"></i>
 							<ul class="nav-list hidden drop-down-menu">
 								<li><a value="" href="javascript:;">所有</a></li>
@@ -44,22 +56,24 @@
 								<?php endforeach;?>
 							</ul>
 						</div>
-						<input type="text" placeholder="请输入作品名称" value="" class="search-input" name="bk_name">
+						<input type="text" placeholder="请输入作品名称" value="{$param.bk_name}" class="search-input" name="bk_name">
 						<a url="{:ZU('book/index/index', 'ZL_ADMIN_DOMAIN')}" id="search" href="javascript:;" class="sch-btn"><i class="btn-search"></i></a>
 					</div>
 		            <div class="btn-group-click adv-sch-pannel fl">
+
 		                <button class="btn">高 级<i class="btn-arrowdown"></i></button>
 		                <div class="dropdown cf" style="display: none;">
-		                	<div class="row">
+		                	<!-- <div class="row">
 		                		<label>更新时间：</label>
 		                		<input type="text" placeholder="起始时间" value="" class="text input-2x" name="time-start" id="time-start"> -
 		                		<input type="text" placeholder="结束时间" value="" class="text input-2x" name="time-end" id="time-end">
-		                	</div>
+		                	</div> -->
 		                	<div class="row">
 		                		<label>作者：</label>
-		                		<input type="text" placeholder="请输入作者名称" value="" class="text input-2x" name="bk_author">
+		                		<input type="text" placeholder="请输入作者名称" value="{$param.bk_author}" class="text input-2x" name="bk_author">
 		                	</div>
 		                </div>
+		                <button class="btn clear-param">清空条件</button>
 		            </div>
 				</div>
 				<!-- /右边搜索 -->
@@ -132,18 +146,30 @@ $(function(){
 	//搜索功能
 	$("#search").click(function(){
 		var url = $(this).attr('url');
-		var status = $("#sch-sort-txt").attr("data");
+		var fullflag_status = $("#sch-fullflag-status").attr("data");
+		var book_status = $("#sch-book-status").attr("data");
         var query  = $('.search-form').find('input').serialize();
         query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g,'');
         query = query.replace(/^&/g,'');
-		if(status != ''){
-			query = 'status=' + status + "&" + query;
+
+		if(fullflag_status != ''){
+			query = 'bk_fullflag=' + fullflag_status + "&" + query;
         }
+
+        if(book_status != ''){
+			query = 'bk_status=' + book_status + "&" + query;
+        }
+
         if( url.indexOf('?')>0 ){
             url += '&' + query;
         }else{
             url += '?' + query;
         }
+		window.location.href = url;
+	});
+
+	$('.clear-param').on('click', function(){
+		var url = $('#search').attr('url');
 		window.location.href = url;
 	});
 

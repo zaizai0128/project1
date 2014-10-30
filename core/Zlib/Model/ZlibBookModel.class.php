@@ -123,19 +123,22 @@ class ZlibBookModel extends BaseModel {
 
 	/**
 	 * 获取列表总数
+	 * @param array 条件数组
 	 */
-	public function getBookTotal($field = '*')
+	public function getBookTotal($param = Null)
 	{
-		$condition = '';
-		return $this->field($field)->where($condition)->count();
+		return $this->where($param)->count();
 	}
 
 	/**
 	 * 获取作品列表
+	 *
+	 * @param array 条件数组
+	 * @param array 分页数组
 	 */
-	public function getBookList($page)
+	public function getBookList($param = Null, $page, $field = '*')
 	{
-		return $this->limit($page['firstRow'], $page['listRows'])->order('bk_id desc')->select();
+		return $this->field($field)->where($param)->limit($page['firstRow'], $page['listRows'])->order('bk_id desc')->select();
 	}
 
 	/**
