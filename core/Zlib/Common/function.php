@@ -486,3 +486,20 @@ function z_log($msg, $type = 0)
 	closelog();
 	return $boolean;
 }	
+
+/**
+ * 数组过滤函数
+ *
+ * @param boolean 是否过滤掉0
+ */
+function z_array_filter($arr, $is_filter = True)
+{
+	if ($is_filter)
+		return array_filter($arr);
+	else
+		return array_filter($arr, function($var){
+			if ($var === '0' || !empty($var))
+				return true;
+			return false;
+		});
+}

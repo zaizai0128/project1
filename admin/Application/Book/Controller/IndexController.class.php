@@ -27,7 +27,7 @@ class IndexController extends BaseController {
 		$param['bk_author'] = I('get.bk_author');
 		$param['bk_status'] = I('get.bk_status');
 		$param['bk_fullflag'] = I('get.bk_fullflag');
-		$param = array_filter($param);
+		$param = z_array_filter($param, False);
 
 		$class = \Zlib\Api\BookClass::getInstance()->getClass();
 		$assign['class'] = $class;

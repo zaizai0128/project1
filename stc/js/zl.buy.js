@@ -36,12 +36,13 @@ jQuery(function(){
 				url : url,
 				type : 'post',
 				data : 'item_id='+item_id,
+				async : false,
 				success : function(response)
 				{
 					if(response.code>0) {
 						window.location.href=success_url;
 					} else {
-						alert('订阅失败！请重新尝试！');
+						alert(response.msg);
 						location.reload();
 					}
 				}

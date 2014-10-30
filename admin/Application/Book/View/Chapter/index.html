@@ -10,23 +10,24 @@
 	    <div id="main" class="main">
 			<!-- 标题栏 -->
 			<div class="main-title">
-				<h2>作品管理 - 作品列表</h2>
+				<h2>作品管理 - <a href="{:ZU('index/index', 'ZL_BOOK_DOMAIN', array('book_id'=>$book_info['bk_id']))}" target="_blank">【{$book_info.bk_name}】章节列表</a></h2>
 			</div>
 
 		    <div style="height:30px;">
-				<!-- <div class="btn-group">
-					<button class="btn current">待审核</button>
-					<button class="btn">未通过</button>
-				</div> -->
+				<div class="btn-group">
+					<a class="btn" href="{:ZU('book/index/edit', 'ZL_ADMIN_DOMAIN', array('book_id'=>$book_info['bk_id']))}">返回上一级</a>
+					<button class="btn">普通章节</button>
+					<button class="btn">VIP章节</button>
+				</div>
 				
 				<!-- 右边搜索 -->
 				<div class="search-form fr cf">
 					<div class="sleft">
 
 						<div class="drop-down">
-							<span data="{$param.bk_fullflag}" class="sort-txt" id="sch-fullflag-status">
-								<?php if($param['bk_fullflag'] === '0' || !empty($param['bk_fullflag'])):?>
-								{:ZC(C('BOOK.full_flag'), $param['bk_fullflag'])}
+							<span data="{$param.ch_lock}" class="sort-txt" id="sch-ch-lock">
+								<?php if($param['ch_lock'] === '0' || !empty($param['ch_lock'])):?>
+								{:ZC(C('CHAPTER.lock'), $param['ch_lock'])}
 								<?php else:?>
 								所有
 								<?php endif;?>
@@ -34,16 +35,16 @@
 							<i class="arrow arrow-down"></i>
 							<ul class="nav-list hidden drop-down-menu">
 								<li><a value="" href="javascript:;">所有</a></li>
-								<?php foreach(C('BOOK.full_flag') as $key => $val):?>
+								<?php foreach(C('CHAPTER.lock') as $key => $val):?>
 								<li><a value="{$key}" href="javascript:;">{$val}</a></li>
 								<?php endforeach;?>
 							</ul>
 						</div>
 
 						<div class="drop-down">
-							<span data="{$param.bk_status}" class="sort-txt" id="sch-book-status">
-								<?php if(!empty($param['bk_status'])):?>
-								{:ZC(C('BOOK.status'), $param['bk_status'])}
+							<span data="{$param.ch_status}" class="sort-txt" id="sch-ch-status">
+								<?php if(!empty($param['ch_status'])):?>
+								{:ZC(C('CHAPTER.status'), $param['ch_status'])}
 								<?php else:?>
 								所有
 								<?php endif;?>
@@ -51,13 +52,13 @@
 							<i class="arrow arrow-down"></i>
 							<ul class="nav-list hidden drop-down-menu">
 								<li><a value="" href="javascript:;">所有</a></li>
-								<?php foreach(C('BOOK.status') as $key => $val):?>
+								<?php foreach(C('CHAPTER.status') as $key => $val):?>
 								<li><a value="{$key}" href="javascript:;">{$val}</a></li>
 								<?php endforeach;?>
 							</ul>
 						</div>
-						<input type="text" placeholder="请输入作品名称" value="{$param.bk_name}" class="search-input" name="bk_name">
-						<a url="{:ZU('book/index/index', 'ZL_ADMIN_DOMAIN')}" id="search" href="javascript:;" class="sch-btn"><i class="btn-search"></i></a>
+						<input type="text" placeholder="请输入章节名称" value="{$param.ch_name}" class="search-input" name="ch_name">
+						<a url="{:ZU('book/chapter/index', 'ZL_ADMIN_DOMAIN', array('book_id'=>I('get.book_id')))}" id="search" href="javascript:;" class="sch-btn"><i class="btn-search"></i></a>
 					</div>
 		            <div class="btn-group-click adv-sch-pannel fl">
 
@@ -85,38 +86,35 @@
 				    <thead>
 				        <tr>
 						<th class="row-selected row-selected"><input type="checkbox"></th>
-						<th class="">编号</th>
-						<th class="">作品封面</th>
-						<th class="">作品类别</th>
-						<th class="">作品名</th>
-						<th class="">作者</th>
-						<th class="">作品状态</th>
-						<th class="">最后更新的普通章节</th>
-						<th class="">最后更新的VIP章节</th>
+						<th class="">编号 / Order</th>
+						<th class="">名称</th>
+						<th class="">所属卷</th>
+						<th class="">字数大小</th>
+						<th class="">发表人</th>
+						<th class="">状态</th>
+						<th class="">VIP状态</th>
+						<th class="">锁状态</th>
 						<th class="">创建日期</th>
-						<th class="">最后更新日期</th>
+						<th class="">更新时间</th>
 						<th class="">操作</th>
 						</tr>
 				    </thead>
 				    <tbody>
-				    	<?php foreach($book_list as $val):?>
+				    	<?php foreach($list as $val):?>
 						<tr>
 							<td><input type="checkbox"></td>
-							<td>{$val.bk_id}</td>
+							<td>{$val.ch_id} / {$val.ch_order}</td>
+							<td><a href="{:ZU('read/index', 'ZL_BOOK_DOMAIN', array('book_id'=>$val['bk_id'], 'ch_id'=>$val['ch_id']))}" target="_blank">{$val.ch_name}</a></td>
+							<td>{$val.ch_roll}</td>
+							<td>{$val.ch_size}</td>
+							<td>{$val.ch_poster}</td>
+							<td>{:ZC(C('CHAPTER.status'), $val['ch_status'])}</td>
+							<td>[{:ZC(C('CHAPTER.vip'), $val['ch_vip'])}章节]</td>
+							<td>[{:ZC(C('CHAPTER.lock'), $val['ch_lock'])}]</td>
+							<td>{$val.ch_cre_time}</td>
+							<td>{$val.ch_update}</td>
 							<td>
-								<img src="{:z_cover($val['bk_id'], $val['bk_cover'])}" style="height:60px;"/>
-							</td>
-							<td>{:ZC($assign['class'][$val['bk_class_id']], 'class_name')}</td>
-							<td><a href="{:ZU('book/index', 'ZL_DOMAIN', array('book_id'=>$val['bk_id']))}" target="_blank">{$val.bk_name}</a></td>
-							<td>{$val.bk_author}</td>
-							<td>{:ZC(C('BOOK.full_flag'), $val['bk_fullflag'])}</td>
-							<td>{$val.bk_public_name|default=" - "}</td>
-							<td>{$val.bk_public_name|default=" - "}</td>
-							<td>{$val.bk_cre_time}</td>
-							<td>{$val.bk_now_date}</td>
-							<td>
-								<a href="{:ZU('book/index/edit', 'ZL_ADMIN_DOMAIN', array('book_id'=>$val['bk_id']))}" class="btn">编辑</a>
-								<a href="{:ZU('book/chapter/index', 'ZL_ADMIN_DOMAIN', array('book_id'=>$val['bk_id']))}" class="btn">章节</a>
+								<a href="{:ZU('book/chapter/edit', 'ZL_ADMIN_DOMAIN', array('book_id'=>$val['bk_id']))}" class="btn">编辑</a>
 							</td>
 						</tr>
 						<?php endforeach;?>
@@ -146,18 +144,18 @@ $(function(){
 	//搜索功能
 	$("#search").click(function(){
 		var url = $(this).attr('url');
-		var fullflag_status = $("#sch-fullflag-status").attr("data");
-		var book_status = $("#sch-book-status").attr("data");
+		var ch_lock = $("#sch-ch-lock").attr("data");
+		var ch_status = $("#sch-ch-status").attr("data");
         var query  = $('.search-form').find('input').serialize();
         query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g,'');
         query = query.replace(/^&/g,'');
 
-		if(fullflag_status != ''){
-			query = 'bk_fullflag=' + fullflag_status + "&" + query;
+		if(ch_lock != ''){
+			query = 'ch_lock=' + ch_lock + "&" + query;
         }
 
-        if(book_status != ''){
-			query = 'bk_status=' + book_status + "&" + query;
+        if(ch_status != ''){
+			query = 'ch_status=' + ch_status + "&" + query;
         }
 
         if( url.indexOf('?')>0 ){

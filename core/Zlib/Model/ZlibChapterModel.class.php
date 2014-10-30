@@ -23,7 +23,7 @@ class ZlibChapterModel extends BaseModel {
 	}
 
 	/**
-	 * 获取申请作品的章节个数
+	 * 获取作品的章节个数
 	 */
 	public function getTotalChapterNum()
 	{
@@ -32,7 +32,7 @@ class ZlibChapterModel extends BaseModel {
 	}
 
 	/**
-	 * 获取申请作品章节的总数
+	 * 获取作品章节的总数
 	 */
 	public function getTotalSizeChapter()
 	{
@@ -41,15 +41,30 @@ class ZlibChapterModel extends BaseModel {
 	}
 
 	/**
+	 * 获取章节个数
+	 */
+	public function getChaptersTotal($where = Null)
+	{
+		$condition['bk_id'] = $this->bookId;
+		$condition = array_merge($condition, (array)$where);
+		return $this->instance->where($condition)->count();
+	}
+
+	/**
 	 * 获取全部章节
 	 */
-	public function getChapters()
+	public function getChapters($where = Null, $field='*', $page = Null)
 	{
-		$condition = 'bk_id = '.$this->bookId;
-		$chaptes = $this->instance->where($condition)->select();
+		$condition['bk_id'] = $this->bookId;
+		$condition = array_merge($condition, (array)$where);
+		$chaptes = $this->instance->field($field)->where($condition)->select();
+
+		if (is_array($page)  && !empty($page))
+			$chaptes = $this->instance->field($field)->where($condition)
+							->limit($page['firstRow'], $page['listRows'])->select();
 		return $chaptes;
 	}
-	
+
 	/**
 	 * 保存
 	 */

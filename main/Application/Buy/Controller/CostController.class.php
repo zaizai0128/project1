@@ -46,10 +46,12 @@ class CostController extends BuyController {
 		// 获取卷章节
 		$volume_list = \Zlib\Api\Book::getCatalog($this->bookId);
 		$volume_info = $volume_list[$this->volumeId];
-		$this->costType = \Zlib\Api\Acl::costVolume($this->userInfo, $this->bookInfo, $volume_info, $chapter_ids);
+		$state =  \Zlib\Api\Acl::costVolume($this->userInfo, $this->bookInfo, $volume_info, $chapter_ids);
+		
+		if (is_array($state))
+			$this->ajaxReturn($state);
 
-		if (!$this->costType)
-			$this->ajaxReturn(z_info(-1, '订阅信息有错误'));
+		$this->costType = $state;			
 
 		// 获取要购买的章节
 		$chapter_ids = explode(',', $chapter_ids);
@@ -68,7 +70,6 @@ class CostController extends BuyController {
 
 		// 执行批量购买
 		$state = $this->_doCostMul($this->userInfo, $this->bookInfo, $volume_info, $buy_chapter, $total_price);
-
 		$this->ajaxReturn($state);
 	}
 

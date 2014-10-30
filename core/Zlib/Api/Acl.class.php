@@ -93,17 +93,17 @@ class Acl {
 	static public function costVolume($user_info, $book_info, $volume_info, $buy_ids)
 	{
 		if (empty($user_info))
-			z_redirect('未登录', ZU('login/index', 'ZL_DOMAIN', array('setback'=>z_referer())));
+			return z_info(-1, '未登录');
 		if (empty($book_info))
-			z_redirect('作品不存在');
+			return z_info(-2, '作品不存在');
 		if ($book_info['bk_status'] == '01')
-			z_redirect('该作品已被关闭');
+			return z_info(-21, '该作品已被关闭');
 		if ($book_info['bk_status'] == '02' || $book_info['bk_status'] == '03')
-			z_redirect('该作品未经管理员审核');
+			return z_info(-22, '该作品未经管理员审核');
 		if (empty($volume_info))
-			z_redirect('卷信息不存在');
+			return z_info(-3, '卷信息不存在');
 		if (empty($buy_ids))
-			z_redirect('购买章节不存在');
+			return z_info(-4, '购买章节不存在');
 
 		$now = date('Y-m-d', time());
 		$ids = explode(',', $buy_ids);
@@ -113,7 +113,7 @@ class Acl {
 
 			// 如果该章节不存在，则返回错误
 			if (!isset($volume_info['volume_chapter'][$chapter_id]) || empty($volume_info['volume_chapter'][$chapter_id]))
-				z_redirect('章节不存在');
+				return z_info(-4, '章节不存在');
 
 			$total_price += (int)$volume_info['volume_chapter'][$chapter_id]['chapter_price'];
 		}
@@ -131,7 +131,7 @@ class Acl {
 			if ($user_info['amount'] >= $total_price) {
 				$cost_type = 1;
 			} else {
-				z_redirect('对不起，您的余额不足，请先充值');
+				return z_info(-5, '对不起，您的余额不足，请先充值');
 			}
 		}
 
