@@ -14,6 +14,7 @@ class BookShelf {
 	
 	private $mUserId = null;
 	public $mBookShelf = null;
+	public $mBooks = null;
 	private $mMaxShelf = null;	// 最大书架分类
 
 	public function __construct($user_id)
@@ -34,12 +35,14 @@ class BookShelf {
 			$row['books'] = $arr;
 			$size = count($arr);
 			for ($i = 0; $i < $size; $i++) { 
-				if (!Book::isCached($arr[$i])) {
-					$bookids.= $arr[$i] . ",";
+				if (!Book::isCached($arr[$i]['bk_id'])) {
+					$bookids.= $arr[$i]['bk_id'] . ",";
 				}
+				$this->mBooks[$arr[$i]['bk_id']] = $row['bookshelf_id'];
 			}
 			$this->mBookShelf[$row['bookshelf_id']] = $row;
 		}
+		// print_r($this->mBooks);
 		$bookids[strlen($bookids) - 1] = ' ';
 
 		$m = M('zl_book')->where(' bk_id in ('.$bookids.')')->select();
@@ -73,8 +76,10 @@ class BookShelf {
 		$arr = array();
 		$size = count($this->mBookShelf[$shelf_id]['books']);
 		for ($i = 0; $i < $size; $i++) {
-			$book = new Book($this->mBookShelf[$shelf_id]['books'][$i]);
-			$arr[$i] = $book->getInfo();
+			$book = new Book($this->mBookShelf[$shelf_id]['books'][$i]['bk_id']);
+			$info =  $book->getInfo();
+			$info['bookmark'] =  $this->mBookShelf[$shelf_id]['books'][$i]['ch_id'];
+			array_push($arr, $info);
 		}
 		return $arr;
 	}
@@ -84,56 +89,103 @@ class BookShelf {
 		$arr = array();
 		$size = count($this->mBookShelf[$shelf_id]['books']);
 		for ($i = $from; $i < $to; $i++) {
-			$book = new Book($this->mBookShelf[$shelf_id]['bookshelf_id']);
+			$book = new Book($this->mBookShelf[$shelf_id]['bookshelf_id']['bk_id']);
+			$info =  $book->getInfo();
+			$info['bookmark'] =  $this->mBookShelf[$shelf_id]['books'][$i]['ch_id'];
+			array_push($arr, $info);
 		}
 		return $arr;
 	}
 
 
-	public function addBook($shelf_id, $book_id) 
+	public function addBook($shelf_id, $book_id, $ch_id = -1) 
 	{
 		if ($shelf_id < 0 || $shelf_id > $this->mMaxShelf)
 			return false;
+
+		if ($this->mBooks[$book_id] != null)
+			return false;		// 已存在
 		$row = $this->mBookShelf[$shelf_id];
 		if ($row == null) {
 			$row = array();
 			$row['user_id'] = $this->mUserId;
-			$row['book_shelf_id'] = $shelf_id;
-			$row['bookshelf_name'] = '书架'.($shelf_id + 1);
+			$row['bookshelf_id'] = $shelf_id;
+			if ($shelf_id == 0)
+				$row['bookshelf_name'] = '默认书架';
+			else 
+				$row['bookshelf_name'] = '书架'.$shelf_id;
+			$row['book_amount'] = 0;
 			$row['books'] = array();
 			$this->mBookShelf[$shelf_id] = $row;
-		}
-		if (!in_array($book_id, $row['books'])) {
-			array_push($this->mBookShelf[$shelf_id]['books'],  $book_id);	
-			$row = array();
-			$row['user_id'] = $this->mUserId;
-			$row['bookshelf_id'] = $shelf_id;
-			$row['bookshelf_name'] = $this->mBookShelf[$shelf_id]['bookshelf_name'];
-			$row['books'] = json_encode($this->mBookShelf[$shelf_id]['books']);
-			M('zl_bookshelf_0'.($this->mUserId % 10))->add($row, array(), true);
-		}
+		}	
+		 
+		$temp = array();
+		$temp['bk_id'] = $book_id;
+		$temp['ch_id'] = $ch_id;
+		array_push($this->mBookShelf[$shelf_id]['books'],  $temp);
+		$this->mBookShelf[$shelf_id]['book_amount']++;
+
+		$row['books'] = json_encode($this->mBookShelf[$shelf_id]['books']);
+		$row['book_amount']++;
+		M('zl_bookshelf_0'.($this->mUserId % 10))->add($row, array(), true);
 		return true;
 	}
 
-	public function removeBook($shelf_id, $book_id) 
+	public function updateBookMark($book_id, $ch_id) 
+	{	
+		$shelf_id = $this->mBooks[$book_id];
+		if ($shelf_id == null) {
+			$shelf_id = 0;
+			$this->addBook($shelf_id, $book_id, $ch_id);
+		} else {
+
+			$row = $this->mBookShelf[$shelf_id];
+			$found = false;
+			if ($row != null) {
+				$count = count($row['books']);
+				for ($i = 0; $i < $count; $i++) {
+					if ($row['books'][$i]['bk_id'] == $book_id) {
+						$this->mBookShelf[$shelf_id]['books'][$i]['ch_id'] = $ch_id;
+						$found = true;
+						break;
+					}
+				}
+			}
+			if ($found) {
+				$row['books'] = json_encode($this->mBookShelf[$shelf_id]['books']);
+				$row['book_amount']++;
+				M('zl_bookshelf_0'.($this->mUserId % 10))->data($row)
+					->where('user_id='.$this->mUserId.' and bookshelf_id='.$shelf_id)
+					->save();
+			}
+		}
+	}
+
+	public function removeBook($book_id) 
 	{
+		$shelf_id = $this->mBooks[$book_id];
+		if ($shelf_id == null || $this->mBookShelf[$shelf_id] == null)
+			return false;
 		$size  = count($this->mBookShelf[$shelf_id]['books']);
 		$found = false;
-		for ($i = 0; $i < $size; $i++) {
-			if ($this->mBookShelf[$shelf_id]['books'][$i] == $book_id) {
+		
+		$count = count($this->mBookShelf[$shelf_id]['books']);
+		for ($i = 0; $i < $count; $i++) {
+			if ($this->mBookShelf[$shelf_id]['books'][$i]['bk_id'] == $book_id) {
 				array_splice($this->mBookShelf[$shelf_id]['books'], $i, 1);
-				print_r($this->mBookShelf);
+				$this->mBookShelf[$shelf_id]['book_amount'] --;
+				$this->mBooks[$book_id] = null;
 				$found = true;
 				break;
 			}
 		}
 		if ($found) {
-			$row = array();
-			$row['user_id'] = $this->mUserId;
-			$row['bookshelf_id'] = $shelf_id;
-			$row['bookshelf_name'] = $this->mBookShelf[$shelf_id]['bookshelf_name'];
+			$row = $this->mBookShelf[$shelf_id];
 			$row['books'] = json_encode($this->mBookShelf[$shelf_id]['books']);
-			M('zl_bookshelf_0'.($this->mUserId % 10))->add($row, array(), true);
+			// M('zl_bookshelf_0'.($this->mUserId % 10))->add($row, array(), true);
+			M('zl_bookshelf_0'.($this->mUserId % 10))->data($row)
+				->where('user_id='.$this->mUserId.' and bookshelf_id='.$shelf_id)
+				->save();
 		}
 	}
 }

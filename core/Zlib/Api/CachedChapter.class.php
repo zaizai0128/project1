@@ -201,7 +201,7 @@ class CachedChapter {
 				$result[$chaper_id] = base64_decode($this->mChapter['ch_name']);
 			}
 			if ($chapter['ch_vip'] == 0 && !$vip) {
-				//			$result[$chaper_id] = $this->mVolume[$chapter['ch_roll']][$this->mVolumeName] . ' ' .base64_decode($this->mChapter['ch_name']);
+				//	$result[$chaper_id] = $this->mVolume[$chapter['ch_roll']][$this->mVolumeName] . ' ' .base64_decode($this->mChapter['ch_name']);
 				$result[$chaper_id] = base64_decode($this->mChapter['ch_name']);
 			}
 		}

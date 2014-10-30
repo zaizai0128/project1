@@ -9,6 +9,7 @@ class UserVipBuy {
 	private $mCachedChapter = null;
 	private $mVipMaxOrder = 0;		// 最大vip_order
 	private $mVipCount = 0;			// 合集Vip章数， 可以做数据校验
+	private $mTableName;
 	
 	// user登陆之后才去生成
 	public function __construct($user_id, $book_id, $cached_chapter = null) 
@@ -16,12 +17,15 @@ class UserVipBuy {
 		$this->mUserId = $user_id;
 		$this->mBookId = $book_id;
 
+		$this->mTableName = sprintf("zl_user_vipbuy_%02d", $this->mUserId % 10);
+
 		if ($cached_chapter) {
 			if ($cached_chapter->getBookId() == $this->mBookId)
 				$this->mCachedChapter = $cached_chapter;
 		}
+		
 		// 加载数据: 
-		$m = M('zl_user_vipbuy')->where('user_id='.$user_id.' and bk_id='.$book_id)->select();
+		$m = M($this->mTableName)->where('user_id='.$user_id.' and bk_id='.$book_id)->select();
 		foreach ($m as $row) {
 			$this->mChapterBuyBits = base64_decode($row['vip_chapters']);
 			$this->mVipCount = $row['vip_count'];
@@ -29,25 +33,35 @@ class UserVipBuy {
 			break;
 		}
 
-		if ($this->mChapterBuyBits != null) {
-			if ($this->mCachedChapter == null)
-				$this->mCachedChapter = new CachedChapter($book_id); 
+	}
+
+	public function getCachedChapter() 
+	{
+		if ($this->mCachedChapter == null) {
+			$this->mCachedChapter = new CachedChapter($this->mBookId); 
 		}
+		return $this->mCachedChapter;
 	}
 	
 	public function isBuy($chapter_id) 
 	{
 		if ($this->mChapterBuyBits == null)
 			return false;
-		$ch_order = $this->mCachedChapter->getChapterOrder($chapter_id);
+		$ch_order = $this->getCachedChapter()->getChapterOrder($chapter_id);
 		return $this->isBuyBuyOrder($ch_order);
 	}
 
 	public function isBuyByOrder($ch_order) 
 	{
+		if ($this->mVipMaxOrder  < $ch_order)
+			return false;
 		if ($this->mChapterBuyBits == null)
 			return false;
+
 		$byte_count = $ch_order / 8;
+		
+		if ($byte_count >= strlen($this->mChapterBuyBits))
+			return false;
 		$bit = 1 << ($ch_order % 8);
 		$byte = ord($this->mChapterBuyBits[$byte_count]);
 		return !(($byte & $bit) == 0);
@@ -56,10 +70,7 @@ class UserVipBuy {
 
 	public function setBuy($chapter_id) 
 	{
-		if ($this->mCachedChapter == null) {
-			$this->mCachedChapter = new CachedChapter($book_id);
-		}
-		$ch_order = $this->mCachedChapter->getChapterOrder($chapter_id);
+		$ch_order = $this->getCachedChapter()->getChapterOrder($chapter_id);
 		return $this->setBuyByOrder($ch_order);
 	}
 
@@ -72,8 +83,8 @@ class UserVipBuy {
 		} else {
 			$byte_count = floor($ch_order / 8);
 			$len = strlen($this->mChapterBuyBits);
-			if ($len < $byte_count) 
-				$this->mChapterBuyBits .= str_pad(chr(0), $byte_count - $len, chr(0));
+			if ($len < $byte_count - 1) 
+				$this->mChapterBuyBits .= str_pad(chr(0), $byte_count - $len + 1, chr(0));
 		}
 		
 		$bit = 1 << ($ch_order % 8);
@@ -117,6 +128,18 @@ class UserVipBuy {
 		$data['vip_max_order'] = $this->mVipMaxOrder;
 		$data['vip_chapters'] = base64_encode($this->mChapterBuyBits);
 		// echo "chapter: ". base64_encode($this->mChapterBuyBits)."<br>";
-		return M('zl_user_vipbuy')->add($data, array(), true);
+		return M($this->mTableName)->add($data, array(), true);
+	}
+
+	public function getBuyList() 
+	{
+		$result = array();
+		$cachedCahpter = $this->getCachedChapter();
+		foreach ($cachedCahpter->mChapter as $ch_id => $value) {
+			if ($this->isBuyByOrder($cachedCahpter->mChapter[$ch_id]['ch_order'])) {
+				$result[$ch_id] = base64_decode($cachedCahpter->mChapter[$ch_id]['ch_name']);
+			}
+		}
+		return $result;
 	}
 }
