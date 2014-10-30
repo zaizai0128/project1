@@ -52,9 +52,13 @@ class IndexController extends BaseController {
 	 */
 	public function edit()
 	{
+		$class = \Zlib\Api\BookClass::getInstance()->getClass();
+		$assign['class'] = $class;
+
 		$book_id = I('get.book_id');
 		$book_info = $this->bookInstance->getBookByBookId($book_id);
 
+		$this->assign('assign', $assign);
 		$this->assign('book_info', $book_info);
 		$this->display();
 	}
@@ -63,9 +67,9 @@ class IndexController extends BaseController {
 	{
 		if (IS_POST) {
 			$data = I();
-
-			print_r($data);
-			die;
+			$state = $this->bookInstance->doEditInfo($data);
+			$state['url'] = ZU('book/index/edit', 'ZL_ADMIN_DOMAIN', array('book_id'=>$data['bk_id']));
+			$this->ajaxReturn($state);
 		}
 	}
 

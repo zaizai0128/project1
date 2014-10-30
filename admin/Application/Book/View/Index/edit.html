@@ -28,10 +28,22 @@
 					<div id="tab1" class="tab-pane in tab1">
 						<div class="form-item">
 							<label class="item-label">
+								所属分类<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								<select name="bk_class_id">
+									<?php foreach($assign['class'] as $val):?>
+									<option value="{$val.class_id}" <?php if($val['class_id'] == $book_info['bk_class_id']):?>selected="selected"<?php endif;?>>{$val.class_name}</option>
+									<?php endforeach;?>
+								</select>
+							</div>
+						</div>  
+						<div class="form-item">
+							<label class="item-label">
 								作品名<span class="check-tips">作品名无法编辑</span>
 							</label>
 							<div class="controls">
-								【{$book_info.bk_name}】
+								【{$book_info.bk_name}】({$book_info.bk_initial})
 							</div>
 						</div>   
 						<div class="form-item">
@@ -39,21 +51,105 @@
 								作品主要角色<span class="check-tips"></span>
 							</label>
 							<div class="controls">
-								【{$book_info.bk_name}】
+								<input class="text input-large" type="text" name="bk_actor" value="{$book_info.bk_actor}" placeholder="暂未设置主要角色" />
+							</div>
+						</div>  
+						<div class="form-item">
+							<label class="item-label">
+								作品标签<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								<input class="text input-large" type="text" name="bk_tag" value="{$book_info.bk_tag}" placeholder="暂未设置任何标签" />
 							</div>
 						</div>   
+						<div class="form-item">
+							<label class="item-label">
+								作品描述<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								<label class="textarea input-large">
+									<textarea name="bk_intro">{$book_info.bk_intro}</textarea>
+								</label>
+							</div>
+						</div>
+						<div class="form-item">
+							<label class="item-label">
+								签约类型<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								<select name="bk_accredit">
+									<?php foreach(C('BOOK.accredit') as $key=>$val):?>
+									<option value="{$key}" <?php if($key == $book_info['bk_accredit']):?>selected="selected"<?php endif;?>>{$val}</option>
+									<?php endforeach;?>
+								</select>
+							</div>
+						</div>
+						<div class="form-item">
+							<label class="item-label">
+								签约类型(待定~)<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								{$book_info.bk_commision}
+							</div>
+						</div>
+						<div class="form-item">
+							<label class="item-label">
+								作品状态<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								<select name="bk_status">
+									<?php foreach(C('BOOK.status') as $key=>$val):?>
+									<option value="{$key}" <?php if($key == $book_info['bk_status']):?>selected="selected"<?php endif;?>>{$val}</option>
+									<?php endforeach;?>
+								</select>
+							</div>
+						</div> 
+						<div class="form-item">
+							<label class="item-label">
+								作者推荐<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								<label class="textarea input-large">
+									<textarea name="bk_author_com_txt">{$book_info.bk_author_com_txt}</textarea>
+								</label>
+							</div>
+						</div>
+						<div class="form-item">
+							<label class="item-label">
+								推荐作品<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								<label class="textarea input-large">
+									<textarea name="bk_author_com_book">{$book_info.bk_author_com_book}</textarea>
+								</label>
+							</div>
+						</div>
+						<div class="form-item">
+							<label class="item-label">
+								友情链接<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								<label class="textarea input-large">
+									<textarea name="bk_author_com_html">{$book_info.bk_author_com_html}</textarea>
+								</label>
+							</div>
+						</div>
 			        </div>
 
 			        <!-- 扩展文档模型 -->
 					<div id="tab2" class="tab-pane tab2">
 						<div class="form-item">
 							<label class="item-label">
-								创建/更新时间<span class="check-tips"></span>
+								作品完结状态<span class="check-tips"></span>
 							</label>
 							<div class="controls">
-								创建时间：{$book_info.bk_cre_time} / 最后更新时间：{$book_info.bk_now_date}
+								<?php foreach(C('BOOK.full_flag') as $key=>$val):?>
+								<label class="radio">
+									<input type="radio" name="bk_fullflag" value="{$key}" <?php if($key == $book_info['bk_fullflag']):?>checked="checked"<?php endif;?> disabled/>{$val}
+								</label>
+								<?php endforeach;?>
 							</div>
-						</div> 
+						</div>
 						<div class="form-item">
 							<label class="item-label">
 								当前共有章节数<span class="check-tips"></span>
@@ -64,6 +160,14 @@
 						</div>
 						<div class="form-item">
 							<label class="item-label">
+								创建/更新时间<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								创建时间：{$book_info.bk_cre_time} / 最后更新时间：{$book_info.bk_now_date}
+							</div>
+						</div> 
+						<div class="form-item">
+							<label class="item-label">
 								最后更新的 普通/VIP 章节<span class="check-tips"></span>
 							</label>
 							<div class="controls">
@@ -71,7 +175,7 @@
 							</div>
 						</div>   
 			        </div>
-
+					<input type="hidden" name="bk_id" value="{$book_info.bk_id}" />
 					<div class="form-item cf">
 						<button class="btn submit-btn ajax-post hidden" id="submit" type="submit" target-form="form-horizontal">确 定</button>
 						<a class="btn btn-return" href="{:ZU('book/index/index', 'ZL_ADMIN_DOMAIN', array('p'=>I('p')))}">返 回</a>
