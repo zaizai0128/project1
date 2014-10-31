@@ -9,7 +9,7 @@
     </div>
         <div id="main" class="main">
 			<div class="main-title cf">
-				<h2>用户信息 - {$user_info.user_name}（{$user_info.user_nickname|default="暂未设置"}）</h2>
+				<h2>用户信息 - {$user_info.user_name}【{:ZC(C('USER.user_state'), $user_info['user_state'])}】（{$user_info.user_nickname|default="暂未设置"}）</h2>
 			</div>
 			<!-- 标签页导航 -->
 			<div class="tab-wrap">
