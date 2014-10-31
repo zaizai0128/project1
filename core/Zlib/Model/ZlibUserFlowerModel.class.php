@@ -57,6 +57,24 @@ class ZlibUserFlowerModel extends BaseModel {
 	}
 
 	/**
+	 * 获取获赠鲜花日志
+	 */
+	public function getAddLog($user_id)
+	{
+		$condition = 'user_id = '.$user_id.' and operator = '.self::OPERATOR.' and month = "'.$this->nowTime.'" and type = "'.self::TYPE.'"';
+		return $this->addLogInstance->where($condition)->select();
+	}
+
+	/**
+	 * 获取消费鲜花日志
+	 */
+	public function getSendLog($user_id)
+	{
+		$condition = 'user_id = '.$user_id.' and operator = '.self::OPERATOR.' and month = "'.$this->nowTime.'" and type = "'.self::TYPE.'"';
+		return $this->sendLogInstance->where($condition)->select();
+	}
+
+	/**
 	 * 获取用户对应某本书的赠送鲜花数
 	 */
 	public function getSendFlowerNum($user_id, $book_id)

@@ -63,6 +63,7 @@ class FlowerService extends ZlibUserFlowerModel{
 		$log_data['op_time'] = z_now();
 		$log_data['operator'] = parent::OPERATOR;
 		$log_data['num'] = $data['num'];
+		$log_data['ip'] = z_ip();
 		$log_data['show_num'] = $data['num'] * C('APP.log_flower_rate');
 		$result['log'] = $this->addSendFlowerLog($log_data);
 
@@ -102,6 +103,7 @@ class FlowerService extends ZlibUserFlowerModel{
 				$log_data['user_id'] = $final_data['user_id'];
 				$log_data['op_time'] = z_now();
 				$log_data['operator'] = parent::OPERATOR;
+				$log_data['type'] = parent::TYPE;
 				$log_data['num'] = $data['num'];
 				$log_data['ip'] = z_ip();
 				$rs = parent::addCostAddFlowerLog($log_data);
@@ -120,6 +122,7 @@ class FlowerService extends ZlibUserFlowerModel{
 				$log_data['user_id'] = $final_data['user_id'];
 				$log_data['op_time'] = z_now();
 				$log_data['operator'] = parent::OPERATOR;
+				$log_data['type'] = parent::TYPE;
 				$log_data['num'] = $data['num'];
 				$log_data['ip'] = z_ip();
 				$rs = parent::addCostAddFlowerLog($log_data);

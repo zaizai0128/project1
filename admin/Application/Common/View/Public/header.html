@@ -25,7 +25,7 @@
     <div class="user-bar">
         <a href="javascript:;" class="user-entrance"><i class="icon-user"></i></a>
         <ul class="nav-list user-menu hidden">
-            <li class="manager">你好，<em title="admin">{$admin_info.user_name}</em></li>
+            <li class="manager">你好，<em title="admin">{$admin_info.user_nickname}</em></li>
             <li><a href="{:ZU('user/password', 'ZL_ADMIN_DOMAIN')}">修改密码</a></li>
             <li><a href="{:ZU('user/nickname', 'ZL_ADMIN_DOMAIN')}">修改昵称</a></li>
             <li><a href="{:ZU('login/logout', 'ZL_ADMIN_DOMAIN')}">退出</a></li>
@@ -73,6 +73,13 @@
                 <li><a class="item item-author-apply" href="{:ZU('check/authorApply/index', 'ZL_ADMIN_DOMAIN')}">作者申请审核</a></li>
                 <li><a class="item" href="javascript:;">作者公告审核</a></li>
                 <li><a class="item" href="javascript:;">用户昵称审核</a></li>
+            </ul>
+
+             <h3 class="subnav-kefu-select">
+                <i class="icon icon-fold"></i>查询工具
+            </h3>
+            <ul class="side-sub-menu subnav-off">
+                <li><a class="item item-user-select" href="{:ZU('sel/user/index', 'ZL_ADMIN_DOMAIN')}">用户查询</a></li>
             </ul>
         </div>
         <!-- /子导航 -->

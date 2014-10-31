@@ -8,10 +8,18 @@
  */
 namespace Common\Model;
 use Think\Model;
+use Zlib\Model\ZlibUserModel;
 
 class UserModel extends Model {
 
 	protected $trueTableName = 'admin_user';
+	protected $userInstance = Null;
+
+	public function __construct()
+	{
+		parent::__construct();
+		$this->userInstance = new ZlibUserModel;
+	}
 
 	/**
 	 * 通过用户名获取用户信息
@@ -74,8 +82,12 @@ class UserModel extends Model {
 	public function setLoginTime($user_id)
 	{
 		$condition = 'user_id = '.$user_id;
-		$data['login_time'] = z_now();
-		return $this->where($condition)->data($data)->save();
+		$data['user_login_time'] = z_now();
+		$this->where($condition)->data($data)->save();
+
+		$u_data['user_login_time'] = $data['user_login_time'];
+		$u_data['user_login_ip'] = z_ip();
+		return $this->userInstance->where($condition)->data($u_data)->save();
 	}
 
 }

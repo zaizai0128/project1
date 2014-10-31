@@ -20,6 +20,29 @@ class ZlibUserModel extends BaseModel {
 	}
 
 	/**
+	 * 获取用户总数
+	 * @param array 条件
+	 */
+	public function getUserTotal($where)
+	{
+		return $this->where($where)->count();
+	}
+
+	/**
+	 * 获取用户列表
+	 *
+	 * @param array 条件数组
+	 * @param page  分页
+	 * @param String field
+	 */
+	public function getUserList($where, $page, $field = '*')
+	{
+		return $this->field($field)->where($where)->limit($page['firstRow'], $page['listRows'])
+					->order('user_id DESC')
+					->select();
+	}
+
+	/**
 	 * 获取用户全部信息
 	 *
 	 * @param int user_id

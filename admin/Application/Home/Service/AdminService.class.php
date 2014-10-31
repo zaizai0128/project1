@@ -8,17 +8,9 @@
  */
 namespace Home\Service;
 use Common\Model\UserModel;
-use Zlib\Model\ZlibUserModel;
+
 
 class AdminService extends UserModel {
-
-	protected $userInstance = Null;
-
-	public function __construct()
-	{
-		parent::__construct();
-		$this->userInstance = new ZlibUserModel;
-	}
 
 	/**
 	 * 注册
@@ -57,10 +49,10 @@ class AdminService extends UserModel {
 
 		$admin_data['user_id'] = $id;
 		$admin_data['user_name'] = $user_data['user_name'];
-		$admin_data['password'] = $user_data['user_pwd'];
+		$admin_data['user_pwd'] = $user_data['user_pwd'];
 		// 临时
 		$admin_data['gid'] = 1;
-		$admin_data['create_time'] = $user_data['user_join'];
+		$admin_data['user_join'] = $user_data['user_join'];
 		$rs = parent::doAdd($admin_data);
 
 		if ($rs)
@@ -84,25 +76,32 @@ class AdminService extends UserModel {
 		if (empty($user_info))
 			return z_ajax_info(-2, '用户不存在');
 
-		if ($user_info['password'] != md5($user['password']))
+		if ($user_info['user_pwd'] != md5($user['password']))
 			return z_ajax_info(-21, '密码不正确');
 
 		if ($user_info['status'] != 1)
 			return z_ajax_info(-22, '该用户已被禁用');
 
-		unset($user_info['password']);
-
 		// 设置登录时间
 		parent::setLoginTime($user_info['user_id']);
 
-		// 设置session
-		ZS('SESSION.admin', Null, $user_info);
-
 		// 获取前台用户表信息，获取后，保存到session中
 		$user_info = $this->userInstance->getUserFullInfoByUserId($user_info['user_id']);
+		unset($user_info['user_pwd']);
+
+		// 设置session
+		ZS('SESSION.admin', Null, $user_info);
 		ZS('SESSION.user', Null, $user_info);
 
 		return z_ajax_info(1, '登录成功');
+	}
+
+	/**
+	 * 获取用户信息
+	 */
+	public function getUserFullInfoByUserId($user_id, $field="*")
+	{
+		return $this->userInstance->getUserFullInfoByUserId($user_id, $field);
 	}
 
 	/**
@@ -111,6 +110,7 @@ class AdminService extends UserModel {
 	public function logout()
 	{
 		ZS('SESSION.admin', Null, Null, -1);
+		ZS('SESSION.user', Null, Null, -1);
 		return z_ajax_info(1, '退出成功');
 	}
 }
