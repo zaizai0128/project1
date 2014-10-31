@@ -224,6 +224,10 @@ class Acl {
 				return True;
 		}
 
+		// 如果是后台管理员，则忽略
+		if ($author_info['user_type'] == '04')
+			return True;
+
 		if (!in_array($book_id, $author_info['formal']))
 			z_redirect('无权操作', ZU('index/index', 'ZL_AUTHOR_DOMAIN'), 3, -1);
 

@@ -56,4 +56,13 @@ class ChapterController extends BaseController {
 		$this->display();
 	}
 
+	public function edit()
+	{
+		$chapter_info = $this->chapterInstance->getInfo();
+		
+		// dump($chapter_info);
+		$this->assign('chapter_info', $chapter_info);
+		$this->display();
+	}
+
 }

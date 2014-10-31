@@ -25,6 +25,12 @@ class HomeController extends Controller {
 	protected function init()
 	{
 		$user_id = ZS('SESSION.user', 'user_id');
+
+		// 判断该用户是不是管理员
+		// 如果是管理员，判断该管理员对本书的权限，是否具备编辑修改的操作。
+
+		// 如果不是管理员，则通过获取作者信息来判断。
+
 		$this->authorInfo = $this->authorInstance->getAuthorInfoByUserId($user_id);
 		ZS('SESSION.author', Null, $this->authorInfo);
 		$this->assign('author_info', $this->authorInfo);

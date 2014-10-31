@@ -116,7 +116,7 @@
 							<td>{$val.bk_now_date}</td>
 							<td>
 								<a href="{:ZU('book/index/edit', 'ZL_ADMIN_DOMAIN', array('book_id'=>$val['bk_id']))}" class="btn">编辑</a>
-								<a href="{:ZU('book/chapter/index', 'ZL_ADMIN_DOMAIN', array('book_id'=>$val['bk_id']))}" class="btn">章节</a>
+								<a target="_blank" href="{:ZU('chapter/index', 'ZL_AUTHOR_DOMAIN', array('book_id'=>$val['bk_id']))}" class="btn">章节</a>
 							</td>
 						</tr>
 						<?php endforeach;?>

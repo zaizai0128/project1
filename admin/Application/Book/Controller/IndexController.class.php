@@ -23,7 +23,7 @@ class IndexController extends BaseController {
 	public function index()
 	{
 		// 搜索条件
-		$param['bk_name'] = I('get.bk_name');
+		$param['bk_name'] = array('like', '%'.I('get.bk_name').'%');
 		$param['bk_author'] = I('get.bk_author');
 		$param['bk_status'] = I('get.bk_status');
 		$param['bk_fullflag'] = I('get.bk_fullflag');
@@ -38,6 +38,7 @@ class IndexController extends BaseController {
 		$have_page['listRows'] = $Page->listRows;
 		$book_list = $this->bookInstance->getBookList($param, $have_page);
 
+		$param['bk_name'] = I('get.bk_name');
 		$this->assign(array(
 			'param' => $param,
 			'assign' => $assign,

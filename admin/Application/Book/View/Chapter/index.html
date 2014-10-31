@@ -23,7 +23,6 @@
 				<!-- 右边搜索 -->
 				<div class="search-form fr cf">
 					<div class="sleft">
-
 						<div class="drop-down">
 							<span data="{$param.ch_lock}" class="sort-txt" id="sch-ch-lock">
 								<?php if($param['ch_lock'] === '0' || !empty($param['ch_lock'])):?>
@@ -43,7 +42,7 @@
 
 						<div class="drop-down">
 							<span data="{$param.ch_status}" class="sort-txt" id="sch-ch-status">
-								<?php if(!empty($param['ch_status'])):?>
+								<?php if($param['ch_status'] === '0' || !empty($param['ch_status'])):?>
 								{:ZC(C('CHAPTER.status'), $param['ch_status'])}
 								<?php else:?>
 								所有
@@ -114,7 +113,7 @@
 							<td>{$val.ch_cre_time}</td>
 							<td>{$val.ch_update}</td>
 							<td>
-								<a href="{:ZU('book/chapter/edit', 'ZL_ADMIN_DOMAIN', array('book_id'=>$val['bk_id']))}" class="btn">编辑</a>
+								<a href="{:ZU('book/chapter/edit', 'ZL_ADMIN_DOMAIN', array('book_id'=>$val['bk_id'], 'ch_id'=>$val['ch_id']))}" class="btn">编辑</a>
 							</td>
 						</tr>
 						<?php endforeach;?>
@@ -168,7 +167,7 @@ $(function(){
 
 	$('.clear-param').on('click', function(){
 		var url = $('#search').attr('url');
-		window.location.href = url;
+		window.location.href = url;1
 	});
 
 	/* 状态搜索子菜单 */
