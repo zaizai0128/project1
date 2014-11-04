@@ -245,6 +245,12 @@ return array(
 			9 => '紧急',
 		),
 
+		'chapter_level' => array(
+			0 => '普通',
+			1 => '严重',
+			2 => '政治',
+		),
+
 		// 状态
 		'status' => array(
 			0 => '未审核',

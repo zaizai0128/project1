@@ -36,5 +36,46 @@ class ZlibChapterAuditModel extends BaseModel {
 		return $this->field($field)->where($condition)->find();
 	}
 
+	/**
+	 * 获取审核信息
+	 * @param int id
+	 * @param string field
+	 */
+	public function getCheckInfo($id, $field='*', $where=null)
+	{
+		$condition['id'] = $id;
+		$condition['status'] = 0;
+		$condition = array_merge($condition, (array)$where);
+		return $this->field($field)->where($condition)->find();
+	}
+
+	/**
+	 * 获取列表总数
+	 * @param array 条件
+	 */
+	public function getTotal($where = null)
+	{
+		$condition['status'] = 0;
+		$condition = array_merge($condition, (array)$where);
+		$condition = z_array_filter($condition);
+
+		return $this->where($condition)->count();
+	}
+
+	/**
+	 * 获取列表
+	 */
+	public function getList($where = null, $page = null, $field = '*')
+	{
+		$condition['status'] = 0;
+		$condition = array_merge($condition, (array)$where);
+		$condition = z_array_filter($condition);
+
+		if ($page)
+			return $this->field($field)->where($condition)
+						->limit($page['firstRow'], $page['listRows'])->order('id desc')->select();
+		else
+			return $this->field($field)->where($condition)->order('id desc')->select();
+	}
 
 }

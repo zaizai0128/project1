@@ -63,12 +63,12 @@ class ZlibBillModel extends BaseModel {
 		// 获取时间戳
 		$time = empty($time) || !is_int($time) ? time() : $time ;
 
-		// 获取月份
-		$fromMonth = 1;
-		$toMonth = date('t', $time);
+		// 获取日份
+		$fromDay = 1;
+		$toDay = date('t', $time);
 
-		$fromTime = date('Y-m', $time) . '-' . $fromMonth . ' 00:00:00';
-		$toTime = date('Y-m', $time) . '-' . $toMonth . ' 23:59:59';
+		$fromTime = date('Y-m', $time) . '-' . $fromDay . ' 00:00:00';
+		$toTime = date('Y-m', $time) . '-' . $toDay . ' 23:59:59';
 
 		$where = ' and time >= "'.$fromTime.'" and time <= "'.$toTime.'"';
 		$where .= ' and status = 1';	// 添加消费账单的状态
@@ -206,7 +206,6 @@ class ZlibBillModel extends BaseModel {
 	public function getBillList($user_id, $page = Null)
 	{
 		$condition = 'user_id = '.$user_id;
-		$condition .= $this->dataWhere;
 		$result  = $this->billInstance->field('bk_id,bk_name,order_id,pay_type,buy_type,SUM(buy_num) AS buy_num, SUM(pay_money) AS pay_money, time')
 					->where($condition)->order('time desc')
 					->group('order_id')->select();
@@ -224,7 +223,6 @@ class ZlibBillModel extends BaseModel {
 	public function getBillTotal($user_id)
 	{
 		$condition = 'user_id = '.$user_id;
-		$condition .= $this->dataWhere;
 		$row  = $this->billInstance->field('order_id')
 					->where($condition)->order('time desc')
 					->group('order_id')->select();
@@ -250,7 +248,6 @@ class ZlibBillModel extends BaseModel {
 	public function getCostSum($user_id)
 	{
 		$condition = 'user_id = '.$user_id;
-		$condition .= $this->dataWhere;
 		return $this->billInstance->where($condition)->sum('pay_money');
 	}
 
