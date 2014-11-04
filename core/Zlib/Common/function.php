@@ -498,8 +498,13 @@ function z_array_filter($arr, $is_filter = True)
 		return array_filter($arr);
 	else
 		return array_filter($arr, function($var){
-			if ($var === '0' || !empty($var))
+			if ($var === '0' || !empty($var) || $var === 0)
 				return true;
 			return false;
 		});
+}
+
+function z_json_decode($json, $bo = true)
+{
+	return json_decode($json, $bo);
 }

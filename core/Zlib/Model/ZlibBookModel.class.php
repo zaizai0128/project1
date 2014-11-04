@@ -171,4 +171,34 @@ class ZlibBookModel extends BaseModel {
 		$data['bk_status'] = '00';
 		return $this->where($condition)->data($data)->save();
 	}
+
+	/**
+	 * 设置封面状态为通过
+	 */
+	public function setBookCoverAllow($book_id)
+	{
+		$data['bk_id'] = $book_id;
+		$data['bk_cover'] = 1;
+		return $this->data($data)->save();
+	}
+
+	/**
+	 * 设置全本
+	 */
+	public function setBookFullFlag($book_id)
+	{
+		$data['bk_id'] = $book_id;
+		$data['bk_fullflag'] = 1;
+		return $this->data($data)->save();
+	}
+
+	/**
+	 * 设置封笔
+	 */
+	public function setBookClose($book_id)
+	{
+		$data['bk_id'] = $book_id;
+		$data['bk_fullflag'] = 2;
+		return $this->data($data)->save();
+	}
 }

@@ -189,4 +189,14 @@ class ZlibUserModel extends BaseModel {
 		// 待操作 ...
 		return True;
 	}
+
+	/**
+	 * 修改用户昵称
+	 */
+	public function setNickname($data)
+	{
+		$condition['user_id'] = $data['user_id'];
+		$condition['user_nickname'] = $data['user_nickname'];
+		return $this->data($condition)->save();
+	}
 }
