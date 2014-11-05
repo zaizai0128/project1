@@ -498,7 +498,7 @@ function z_array_filter($arr, $is_filter = True)
 		return array_filter($arr);
 	else
 		return array_filter($arr, function($var){
-			if ($var === '0' || !empty($var) || $var === 0)
+			if ($var === '0' || $var === 0 || !empty($var) )
 				return true;
 			return false;
 		});

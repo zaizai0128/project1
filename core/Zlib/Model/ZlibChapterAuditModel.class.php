@@ -57,7 +57,7 @@ class ZlibChapterAuditModel extends BaseModel {
 	{
 		$condition['status'] = 0;
 		$condition = array_merge($condition, (array)$where);
-		$condition = z_array_filter($condition);
+		$condition = z_array_filter($condition, false);
 
 		return $this->where($condition)->count();
 	}
@@ -69,8 +69,8 @@ class ZlibChapterAuditModel extends BaseModel {
 	{
 		$condition['status'] = 0;
 		$condition = array_merge($condition, (array)$where);
-		$condition = z_array_filter($condition);
-
+		$condition = z_array_filter($condition, false);
+		
 		if ($page)
 			return $this->field($field)->where($condition)
 						->limit($page['firstRow'], $page['listRows'])->order('id desc')->select();

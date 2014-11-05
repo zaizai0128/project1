@@ -38,6 +38,17 @@ class ZlibChapterVipModel extends BaseModel {
 	}
 
 	/**
+	 * 设置vip内容
+	 */
+	public function setChapterContent($content)
+	{
+		$where['bk_id'] = $this->bookId;
+		$where['ch_id'] = $this->bookId;
+		$data['ch_content'] = $content;
+		return $this->instance->where($where)->data($data)->save();
+	}
+
+	/**
 	 * 获取vip描述
 	 */
 	public function getChapterIntro()

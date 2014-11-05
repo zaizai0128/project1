@@ -60,6 +60,9 @@ class LoginController extends Controller {
 	public function verify()
 	{
 		$Verify = new \Think\Verify();
+		$Verify->useCurve = false;
+		$Verify->userNoise = false;
+		$Verify->codeSet = '2345689';
 		$Verify->entry();
 	}
 

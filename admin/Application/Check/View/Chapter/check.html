@@ -20,7 +20,7 @@
 				</ul>
 				<div class="tab-content">
 				<!-- 表单 -->
-				<form id="form" action="{:ZU('Check/BookFull/doCheck', 'ZL_ADMIN_DOMAIN')}" method="post" class="form-horizontal">
+				<form id="form" action="{:ZU('Check/Chapter/doCheck', 'ZL_ADMIN_DOMAIN')}" method="post" class="form-horizontal">
 					<!-- 基础文档模型 -->
 					<div id="tab1" class="tab-pane in tab1">
 						<div class="form-item">
@@ -50,14 +50,15 @@
 
 			            <div class="form-item cf">
 			                <label class="item-label">
-			                	章节内容&nbsp;&nbsp;<span class="btn" onclick="$.doEdit(this, 'edit-content');">点击编辑</span>
+			                	章节内容&nbsp;&nbsp;<span class="btn" onclick="$.doEdit(this);">点击编辑</span>
 			                </label>
 			                <div class="controls">
-			                    <label class="textarea input-large edit-content" style="width:100%;height:800px;">
-			                    	{$data.audit_content|nl2br}
+			                    <label class="textarea input-large edit-content-0" style="width:100%;height:800px;overflow-y:scroll;">
+			                    	{$data.content|nl2br}
+			                    </label>
+			                    <label class="textarea input-large edit-content-1" style="width:100%;height:800px;display:none;">
+			                    	<textarea name="content" style="width:100%;height:100%;">{$data.audit_content}</textarea>
 			                    </label> 
-			                    <div style="display:none;" class="eidt-content-hidden">{$data.audit_content}</div>
-			                    <div style="display:none;" class="eidt-content-style-hidden">{$data.audit_content|nl2br}</div>                   
 			            	</div>
 			            </div>
 
@@ -68,7 +69,9 @@
 						<a class="btn btn-return" href="javascript:history.go(-1);">返 回</a>
 					</div>
 					<input type="hidden" name="id" value="{$data.id}" />
-					<input type="hidden" name="bk_id" value="{$data.bk_info.bk_id}" />
+					<input type="hidden" name="bk_id" value="{$data.bk_id}" />
+					<input type="hidden" name="ch_id" value="{$data.ch_id}" />
+					<input type="hidden" name="is_vip" value="{$data.is_vip}" />
 				</form>
 				<!-- /表单 -->
 				</div>
@@ -83,20 +86,23 @@
 jQuery(function($){
 
 	$.extend({
-		doEdit : function(t, class_name)
+		doEdit : function(t)
 		{
 			var t = $(t);
-			var obj = $('.'+class_name);
+			var obj0 = $('.edit-content-0');	// 显示内容
+			var obj1 = $('.edit-content-1');	// 可编辑内容
 			var hiddenContentObj = $('.eidt-content-hidden');
 			var hiddenContentStyleObj = $('.eidt-content-style-hidden');
 			var text = t.html();
 
 			if (text == '返回') {
 				t.html('点击编辑');
-				obj.html(hiddenContentStyleObj.html());
+				obj0.show();
+				obj1.hide();
 			} else {
 				t.html('返回');
-				obj.html('<textarea name="content" style="width:100%;height:100%;">'+hiddenContentObj.html()+'</textarea>');
+				obj1.show();
+				obj0.hide();
 			}
 		}
 	});

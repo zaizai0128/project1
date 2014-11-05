@@ -77,6 +77,16 @@ class FilterWords {
 			
 		return true;
 	}
+
+	public function __set($key, $val)
+	{
+		$this->$key = $val;
+	}
+
+	public function __get($key)
+	{
+		return $this->$key;
+	}
 	
 	// 返回true|false 致命关键词, 禁止录入或者转编辑审核
 	public function hasDeadWord($text)
@@ -128,10 +138,38 @@ class FilterWords {
 		}
 
 		if (count($reg_arr) > 0) {
-			print_r($reg_arr);
+			// print_r($reg_arr);
 			$text = preg_replace($reg_arr, $replace_arr, $text);
 		}	
 
+		return $text;
+	}
+
+	/**
+	 * 将问题文字添加样式
+	 * @param string 内容
+	 * @param string 替换的样式
+	 */
+	public function filterStyle($text, $style = null)
+	{
+		$pattern = array();
+		$replace = array();
+		$style = $style ?  $style : '<span style="color:red;font-size:24px;font-weight:bold;">${1}</span>';
+
+		foreach ($this->mFilterWords as $filter) {
+
+			if ($filter['is_reg'] == 1) {
+				$filter['word'] = ltrim($filter['word'], '/');
+				$filter['word'] = rtrim($filter['word'], '/miu');
+			}
+
+			$filter['word'] = str_replace('/', '\/', $filter['word']);
+			$filter['word'] = '/('.$filter['word'].')/miu';
+
+			array_push($pattern, $filter['word']);
+			array_push($replace, $style);
+		}
+		$text = preg_replace($pattern, $replace, $text);
 		return $text;
 	}
 
@@ -168,7 +206,7 @@ class FilterWords {
 
 	private function isFilter($text, $filter, $reg) {
 		if ($reg == 1) {
-			echo $filter.":".preg_match($filter, $text)."<br>";
+			// echo $filter.":".preg_match($filter, $text)."<br>";
 			return preg_match($filter, $text) == 1;	
 		} else {
 			// echo $text." ".$filter;
@@ -208,7 +246,7 @@ class FilterWords {
 		}
 
 		if (count($reg_arr) > 0) {
-			print_r($reg_arr);
+			// print_r($reg_arr);
 			$text = preg_replace($reg_arr, $replace_arr, $text);
 		}	
 		return $text;

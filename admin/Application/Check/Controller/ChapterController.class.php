@@ -44,7 +44,8 @@ class ChapterController extends BaseController {
 	{
 		$id = I('get.id');
 		$data = $this->auditInstance->getCheckInfo($id);
-
+		
+		// dump($data);
 		$this->assign('data', $data);
 		$this->display();
 	}
@@ -55,7 +56,13 @@ class ChapterController extends BaseController {
 	public function doCheck()
 	{
 		if (IS_POST) {
-			
+			$data = I();
+			$state = $this->auditInstance->setChapterStatus($data);
+
+			if ($state['status'] > 0) {
+				$state['url'] = ZU('check/Chapter/index', 'ZL_ADMIN_DOMAIN' );
+			}
+			$this->ajaxReturn($state);	
 		}
 	}
 
