@@ -46,14 +46,19 @@ class Acl {
 	{
 		if (empty($user_info))
 			z_redirect('未登录', ZU('login/index', 'ZL_DOMAIN', array('setback'=>z_referer())));
+
 		if (empty($book_info))
-			z_redirect('作品不存在');
-		if ($book_info['bk_status'] == '01')
-			z_redirect('该作品已被关闭');
-		if ($book_info['bk_status'] == '02' || $book_info['bk_status'] == '03')
-			z_redirect('该作品未经管理员审核');
+			z_redirect('作品不存在', '', 2, -1);
+
+		$book_allow = array('00', '04');
+		if (!in_array($book_info['bk_status'], $book_allow))
+			return z_redirect('该作品已被关闭', '', 2, -1);
+
 		if (empty($chapter_info))
-			z_redirect('章节不存在');
+			z_redirect('章节不存在', '', 2, -1);
+
+		if ($chapter_info['ch_status'] != 0)
+			z_redirect('章节关闭，禁止购买', '', 2, -1);
 
 		$now = date('Y-m-d', time());
 
@@ -96,10 +101,10 @@ class Acl {
 			return z_info(-1, '未登录');
 		if (empty($book_info))
 			return z_info(-2, '作品不存在');
-		if ($book_info['bk_status'] == '01')
+
+		$book_allow = array('00', '04');
+		if (!in_array($book_info['bk_status'], $book_allow))
 			return z_info(-21, '该作品已被关闭');
-		if ($book_info['bk_status'] == '02' || $book_info['bk_status'] == '03')
-			return z_info(-22, '该作品未经管理员审核');
 		if (empty($volume_info))
 			return z_info(-3, '卷信息不存在');
 		if (empty($buy_ids))
@@ -144,13 +149,10 @@ class Acl {
 	static public function buy($chapter_info)
 	{
 		if (empty($chapter_info))
-			z_redirect('章节不存在');
-
-		if ($chapter_info['ch_lock'] != 0)
-			z_redirect('该章节已经被锁，无法购买');
+			z_redirect('章节不存在', '', 2, -1);
 
 		if ($chapter_info['ch_status'] != 0)
-			z_redirect('该章节无法购买');
+			z_redirect('该章节无法购买', '', 2, -1);
 
 		if ($chapter_info['ch_vip'] != 1)
 			z_redirect('该章节不是vip，无需购买', ZU('read/index', 'ZL_BOOK_DOMAIN', 
@@ -167,7 +169,7 @@ class Acl {
 		if (empty($volume_info))
 			z_redirect('卷不存在');
 
-
+		return true;
 	}
 
 	/**
@@ -229,28 +231,31 @@ class Acl {
 			return True;
 
 		if (!in_array($book_id, $author_info['formal']))
-			z_redirect('无权操作', ZU('index/index', 'ZL_AUTHOR_DOMAIN'), 3, -1);
+			z_redirect('无权操作', ZU('index/index', 'ZL_AUTHOR_DOMAIN'), 2, -1);
 
 		// 判断作品状态，是否可以修改
 		$book = new \Zlib\Model\ZlibBookModel;
-		$status = $book->getBookByBookId($book_id, 'bk_status');
+		$status = $book->getBookByBookId($book_id, 'bk_status, bk_fullflag');
 
-		if ($status['bk_status'] != '00')
-			z_redirect('作品状态非正常，无法继续操作', '', 3, -1);
-		// 其他验证 待...
+		$allow = array('00', '03');
+		if (!in_array($status['bk_status'], $allow))
+			z_redirect('该作品状态禁止作者编辑，如有问题，请联系客服人员', '', 2, -1);
+
+		// 非连载作品，无法操作
+		if ($status['bk_fullflag'] != 0)
+			z_redirect('非连载的作品无法进行编辑', '', 2, -1);
+
+		// 其他验证 待add...
 
 		return True;
 	}
 
 	/**
 	 * 作者站 章节管理的验证机制
+	 * 应该验证章节信息，而不是作品信息了。
 	 */
 	static public function checkChapter($book_info)
 	{
-		if ($book_info['bk_status'] != '00')
-			z_redirect('作品状态非正常，无法继续操作', '', 1, -1);
-		if ($book_info['bk_fullflag'] != 0)
-			z_redirect('非连载的作品无法进行编辑', '', 1, -1);
 		
 		return True;
 	}
@@ -293,11 +298,13 @@ class Acl {
 		if (empty($book_info))
 			z_redirect('作品不存在', C('ZL_WWW'));
 
-		if ($book_info['bk_status'] == '01')
-			z_redirect('该作品已被关闭', C('ZL_www'));
+		// 白名单
+		$allow = array('00', '04');
 
-		if ($book_info['bk_status'] == '02' || $book_info['bk_status'] == '03')
-			z_redirect('该作品未经管理员审核', C('ZL_www'));
+		// 如果不在白名单，则提示作品不存在
+		if (!in_array($book_info['bk_status'], $allow)) {
+			z_redirect('作品不存在', C('ZL_WWW'));
+		}
 
 		// 其他验证 待...
 
@@ -310,21 +317,19 @@ class Acl {
 	 */
 	static public function chapter($chapter_info)
 	{	
-		if (empty($chapter_info))
-			z_redirect('章节不存在', ZU('index/index', 'ZL_BOOK_DOMAIN', array('book_id'=>$chapter_info['bk_id'])), 2, -1);
-
-		if ($chapter_info['ch_lock'] == 1)
-			z_redirect('该章节处于修改中', ZU('index/index', 'ZL_BOOK_DOMAIN', array('book_id'=>$chapter_info['bk_id'])), 2, -1);
-
-		if ($chapter_info['ch_status'] != 0)
-			z_redirect('该章节非对外开放', ZU('index/index', 'ZL_BOOK_DOMAIN', array('book_id'=>$chapter_info['bk_id'])), 2, -1);
-
-		// 添加 定时发布判断
+		$is_deny = false;
 		$now = z_now();
-		if ($chapter_info['ch_effect_time'] != '0000-00-00 00:00:00' && $chapter_info['ch_effect_time'] > $now)
-		{
-			z_redirect('该章节不存在', ZU('index/index', 'ZL_BOOK_DOMAIN', array('book_id'=>$chapter_info['bk_id'])), 2, -1);
+
+		if (empty($chapter_info) || $chapter_info['ch_status'] != 0) {
+			$is_deny = true;
+		} elseif ($chapter_info['ch_effect_time'] != '0000-00-00 00:00:00' && $chapter_info['ch_effect_time'] > $now) {
+			$is_deny = true;
+		} else {
+			$is_deny = false;
 		}
+
+		if ($is_deny)
+			z_redirect('该章节不存在', ZU('index/index', 'ZL_BOOK_DOMAIN', array('book_id'=>$chapter_info['bk_id'])), 2, -1);	
 
 		// 如果是vip章节，则继续验证
 		if ($chapter_info['ch_vip'] == 1)
@@ -340,8 +345,10 @@ class Acl {
 	 */
 	static public function chapterVip($chapter_info)
 	{
+		$user_id = ZS('SESSION.user', 'user_id');
+
 		// 验证用户是否已购买该章节
-		$vip = new \Zlib\Api\UserVipBuy(ZS('SESSION.user', 'user_id'), $chapter_info['bk_id']);
+		$vip = new \Zlib\Api\UserVipBuy($user_id, $chapter_info['bk_id']);
 		$buy = $vip->isBuyByOrder($chapter_info['ch_order']);
 
 		if (!$buy) {

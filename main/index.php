@@ -8,6 +8,8 @@
  * @version 1.0
  */
 
+header('Content-type=text/html;charset=utf-8');
+
 // ------------------------------------------------------ 系统调试参数
 define('APP_DEBUG',True);			// 开启调试模式 正式环境改为False
 define('BUILD_DIR_SECURE', False);	// 禁止生成安全目录 正式环境改为True
@@ -23,4 +25,4 @@ define('RUNTIME_PATH',   __DIR__ . '/Runtime/');	// 定义应用的缓存目录
 define('HTML_PATH', __DIR__ . '/Html/');			// 定义应用生成的静态目录
 define('PUBLIC_MODULE_PATH', APP_PATH . 'Public');	// 定义公共模块的目录
 
-require THINK_PATH . 'ThinkPHP.php';				
+require THINK_PATH . 'ThinkPHP.php';

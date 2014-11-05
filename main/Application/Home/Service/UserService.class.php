@@ -18,7 +18,7 @@ class UserService extends ZlibUserModel {
 	{
 		if (empty($data['username'])) return z_info(-1, '用户名不允许为空');
 		if (empty($data['password'])) return z_info(-2, '密码不允许为空');
-
+		
 		// 通过用户名查找用户信息
 		$user_info = parent::getUserInfoByUserName($data['username']);
 

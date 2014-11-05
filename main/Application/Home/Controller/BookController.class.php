@@ -21,7 +21,11 @@ class BookController extends HomeController {
 		$this->bookId = I('get.book_id');
 		$this->bookInstance = D('Book', 'Service');
 		$this->bookApi = new \Zlib\Api\Book($this->bookId);
+
+		// 获取作品信息
 		$this->bookInfo = $this->bookApi->getInfo();
+
+		// 验证该作品是否允许被访问
 		\Zlib\Api\Acl::book($this->bookInfo);
 	}
 

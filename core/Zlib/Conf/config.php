@@ -32,6 +32,9 @@ $main_config = array(
         // 逐浪公共类库
     	'Zlib' => ZLIB_PATH,
     ),
+
+    // 过滤方法 I()方法获取的变量，会使用的函数
+    'DEFAULT_FILTER' =>  'htmlspecialchars,trim',
 );
 
 return array_merge($main_config, $db_conf, $cache_conf, $const_conf, $session_conf, $url_conf, $route_conf);
