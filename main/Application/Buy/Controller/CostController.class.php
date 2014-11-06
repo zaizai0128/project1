@@ -113,6 +113,7 @@ class CostController extends BuyController {
 		// 存放章节段的数组
 		$interval_array = array();
 		$start_interval = 0;	// 第一段
+		$array_total = 0;		// 每一段的起始值
 		$start_chapter_arr = current($chapter_info);	// 起始章节的信息
 		$start_order = $start_chapter_arr['chapter_order']; // 起始order
 		foreach($chapter_info as $chapter_id => $val) {
@@ -123,17 +124,19 @@ class CostController extends BuyController {
 			$tmp['ch_order'] = $val['chapter_order'];
 
 			// 如果开始没有间断，则保留永远在第一段
-			if ($start_order == $val['chapter_order']) {
+			if ($start_order == $val['chapter_order'] && $array_total < C('COST.duration')) {
 				$interval_array[$start_interval]['order'][] = $val['chapter_order'];
 				$interval_array[$start_interval]['chapter'][] = $tmp;
 			// 如果有了间隔，则放在第++段
 			} else {
 				$start_order = $val['chapter_order'];	// 重新归位start_order
+				$array_total = 0;
 				++$start_interval;
 				$interval_array[$start_interval]['order'][] = $val['chapter_order'];
 				$interval_array[$start_interval]['chapter'][] = $tmp;
 			}
 			++$start_order;
+			++$array_total;
 		}
 
 		// 循环数组，为不同区域进行购买章节，添加流水

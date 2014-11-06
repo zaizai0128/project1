@@ -65,7 +65,7 @@
 							</tr>	
 						<?php endforeach;?>
 					</table>
-					<p class="text-center text-info"><a href="{:ZU('buy/cost/doCost', 'ZL_DOMAIN', array('book_id'=>$book_info['bk_id'], 'ch_id'=>$chapter_info['ch_id']))}" class="btn">订阅选中章节</a><a href="{:ZU('app/shelf/add', 'ZL_DOMAIN', array('book_id'=>$book_info['bk_id']))}" class="btn">加入书架</a></p>
+					<p class="text-center text-info"><a href="javascript:;" onclick="$.buyChapter('{:ZU('buy/cost/doCostVolume', 'ZL_DOMAIN', array('book_id'=>$book_info['bk_id'], 'v_id'=>$volume_info['volume_id']))}', '{:ZU('index/index', 'ZL_BOOK_DOMAIN', array('book_id'=>$book_info['bk_id']))}');" class="btn">订阅选中章节</a><a href="{:ZU('app/shelf/add', 'ZL_DOMAIN', array('book_id'=>$book_info['bk_id']))}" class="btn">加入书架</a></p>
 				</div>
 			</div>
 		</div>

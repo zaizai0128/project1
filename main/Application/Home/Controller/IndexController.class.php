@@ -16,6 +16,9 @@ class IndexController extends HomeController {
 	 */
 	public function index()
 	{	
+		// $counts = new Zapi\Account(15126427, 1);
+		// $counts->incre(15000);
+
 		// 获取全部顶级分类
 		$assign['book_top_class'] = Zapi\BookClass::getInstance()->getTopClass();
 

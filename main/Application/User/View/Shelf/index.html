@@ -36,7 +36,7 @@
                 <tr>
                   <td><input type="checkbox" value="" name="" /></td>
                     <td><?php echo $category[$val['bk_class_id']]['class_name'];?></td>
-                    <td>{$val.bk_name}/{$val.bk_public_name}</td>
+                    <td><a href="{:ZU('book/index', 'ZL_DOMAIN', array('book_id'=>$val['bk_id']))}" target="_blank">{$val.bk_name}</a>/<a href="{:ZU('read/index', 'ZL_BOOK_DOMAIN', array('book_id'=>$val['bk_id'], 'ch_id'=>$val['bk_public_ch_id']))}" target="_blank">{$val.bk_public_name}</a></td>
                     <td>书签</td>
                     <td>{$val.bk_now_date}</td>
                     <td>{$val.bk_author}</td>
