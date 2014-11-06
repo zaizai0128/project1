@@ -19,11 +19,6 @@ class BookService extends ZlibBookModel {
 	public function doEditBookInfo($data)
 	{
 		if (empty($data['bk_id'])) return z_info(-1, '作品不存在');
-		
-		$book_info = parent::getBookByBookId($data['bk_id']);
-		
-		if ($book_info['bk_status'] != '00') return z_info(-2, '禁止修改');
-		if ($book_info['bk_fullflag'] != 0) return z_info(-3, '完结作品，禁止修改');
 
 		$com = explode(' ', $data['com_txt']);
 		if (count($com) > C('BOOK.recommend_max')) return z_info(-4, '超过最大推荐作品数量');

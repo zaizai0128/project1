@@ -246,15 +246,6 @@ class ChapterService extends ZlibChapterModel {
 		if ($data['vip'] == 1) {
 			// pass
 		}
-
-		// 判断书籍状态
-		if ($data['bk_fullflag'] != 0) {
-			return z_info(-10, '非连载的作品无法编辑');
-		}
-
-		if ($data['bk_status'] != '00') {
-			return z_info(-11, '作品状态有问题，无法编辑');
-		}
 		// 其他验证 ...
 
 		if ($is_edit) {
