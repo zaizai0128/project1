@@ -1,6 +1,6 @@
 <?php
 /**
- * 充值接口类
+ * 账户充值接口类
  * 
  * @author 	songmw<songmingwei@kongzhong.com>
  * @date 	2014-11-06
@@ -9,7 +9,7 @@
 namespace Zlib\Api;
 use Think\Model;
 
-class Recharge {
+class Account {
 
 	protected $userId = null;	// 用户id
 	protected $type = null;		// 充值方式
