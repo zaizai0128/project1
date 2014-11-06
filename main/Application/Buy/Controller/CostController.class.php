@@ -120,6 +120,7 @@ class CostController extends BuyController {
 			$tmp['name'] = $val['chapter_name'];
 			$tmp['size'] = $val['chapter_size'];
 			$tmp['price'] = $val['chapter_price'];
+			$tmp['ch_order'] = $val['chapter_order'];
 
 			// 如果开始没有间断，则保留永远在第一段
 			if ($start_order == $val['chapter_order']) {
@@ -173,13 +174,14 @@ class CostController extends BuyController {
 			$bill['time'] = $this->nowTime;
 			$bill['status'] = 1;
 
-			// 生成购买章节描述
-			$buy_chapter = array_map(function($v) {
-				return $v['name'];
-			}, $buy_chapter);
-			$str_chapter = implode('，', $buy_chapter);
-			$bill['detail'] = $user_info['user_name'].'购买'.$book_info['bk_author'].'写的《'
-								.$book_info['bk_name'].'》作品的卷《'.$volume_info['volume_name'].'》的章节《'.$str_chapter.'》，很是开心。';					
+			// 生成购买章节描述 取消掉
+			// $buy_chapter = array_map(function($v) {
+			// 	return $v['name'];
+			// }, $buy_chapter);
+
+			// $str_chapter = implode('，', $buy_chapter);
+			// $bill['detail'] = $user_info['user_name'].'购买'.$book_info['bk_author'].'写的《'
+			// 					.$book_info['bk_name'].'》作品的卷《'.$volume_info['volume_name'].'》的章节《'.$str_chapter.'》，很是开心。';					
 
 			$bill['from_ch_order'] = $order_from;
 			$bill['to_ch_order'] = $order_to;
@@ -252,6 +254,7 @@ class CostController extends BuyController {
 		$tmp['name'] = $this->chapterInfo['ch_name'];
 		$tmp['size'] = $this->chapterInfo['ch_size'];
 		$tmp['price'] = $price;
+		$tmp['ch_order'] = $this->chapterInfo['ch_order'];
 
 		$bill['chapter'] = json_encode(array($tmp));
 		$bill['author_id'] = $this->bookInfo['bk_author_id'];
@@ -263,8 +266,8 @@ class CostController extends BuyController {
 		$bill['discount_type'] = $discount_type; // 折扣类型
 		$bill['time'] = $this->nowTime;
 		$bill['status'] = 1;
-		$bill['detail'] = $this->userInfo['user_name'].'购买'.$this->bookInfo['bk_author'].'写的《'
-							.$this->bookInfo['bk_name'].'》作品的《'.$this->chapterInfo['ch_name'].'》，很是开心。';					
+		// $bill['detail'] = $this->userInfo['user_name'].'购买'.$this->bookInfo['bk_author'].'写的《'
+		// 					.$this->bookInfo['bk_name'].'》作品的《'.$this->chapterInfo['ch_name'].'》，很是开心。';					
 		$bill['from_ch_order'] = $this->chapterInfo['ch_order'];
 		$bill['to_ch_order'] = $this->chapterInfo['ch_order'];
 		$bill['order_id'] = $this->orderCode;
