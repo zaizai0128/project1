@@ -16,15 +16,6 @@ class IndexController extends HomeController {
 	 */
 	public function index()
 	{	
-		$recharge = new Zapi\Recharge(15126427, -456, 1, 2);
-		$res = $recharge->incre();
-
-		if ($res)
-			echo 'ok';
-		else
-			echo 'false';
-
-
 		// 获取全部顶级分类
 		$assign['book_top_class'] = Zapi\BookClass::getInstance()->getTopClass();
 

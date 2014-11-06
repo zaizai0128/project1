@@ -7,8 +7,7 @@
  * @date 	2014-09-01
  * @version 1.0
  */
-
-header('Content-type=text/html;charset=utf-8');
+header("Content-type:text/html;charset=utf-8"); 
 
 // ------------------------------------------------------ 系统调试参数
 define('APP_DEBUG',True);			// 开启调试模式 正式环境改为False
