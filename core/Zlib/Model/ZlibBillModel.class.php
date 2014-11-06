@@ -169,7 +169,7 @@ class ZlibBillModel extends BaseModel {
 	// 		$temp = array();	
 	// 		$temp['time'] = $row[$i]['time'];
 	// 		$temp['buy_type'] = $row[$i]['buy_type'];
-	// 		$temp['pay_type'] = $row[$i]['pay_type'];
+	// 		$temp['money_type'] = $row[$i]['money_type'];
 	// 		$temp['pay_money'] = $row[$i]['pay_money'];
 	// 		$temp['bk_id'] = $row[$i]['bk_id'];
 	// 		$temp['bk_name'] = $row[$i]['bk_name'];
@@ -206,7 +206,7 @@ class ZlibBillModel extends BaseModel {
 	public function getBillList($user_id, $page = Null)
 	{
 		$condition = 'user_id = '.$user_id;
-		$result  = $this->billInstance->field('bk_id,bk_name,order_id,pay_type,buy_type,SUM(buy_num) AS buy_num, SUM(pay_money) AS pay_money, time')
+		$result  = $this->billInstance->field('bk_id,bk_name,order_id,money_type,buy_type,SUM(buy_num) AS buy_num, SUM(pay_money) AS pay_money, time')
 					->where($condition)->order('time desc')
 					->group('order_id')->select();
 
@@ -268,7 +268,7 @@ CREATE TABLE IF NOT EXISTS `$this->tableName` (
   `author_id` int(10) unsigned NOT NULL COMMENT '作者id',
   `author_name` varchar(20) NOT NULL COMMENT '作者笔名',
   `pay_money` float NOT NULL COMMENT '支付的金额',
-  `pay_type` char(1) NOT NULL DEFAULT '1' COMMENT '支付方式 1逐浪金币 2逐浪银币',
+  `money_type` char(1) NOT NULL DEFAULT '1' COMMENT '支付方式 1逐浪金币 2逐浪银币',
   `buy_num` mediumint(8) unsigned NOT NULL COMMENT '购买章节数量',
   `buy_type` char(1) NOT NULL DEFAULT '1' COMMENT '购买类型 1单章节 2卷 A打赏',
   `discount_type` char(5) NOT NULL COMMENT '折扣类型 根据配置文件获取',

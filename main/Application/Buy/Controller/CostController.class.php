@@ -167,7 +167,7 @@ class CostController extends BuyController {
 				return $v['price'];
 			}, $buy_chapter);
 			$bill['pay_money'] = array_sum($price_chapter);
-			$bill['pay_type'] = $this->costType;
+			$bill['money_type'] = $this->costType;
 			$bill['buy_num'] = count($order);
 			$bill['buy_type'] = 2;
 			$bill['discount_type'] = $discount_type; // 折扣类型
@@ -260,7 +260,7 @@ class CostController extends BuyController {
 		$bill['author_id'] = $this->bookInfo['bk_author_id'];
 		$bill['author_name'] = $this->bookInfo['bk_author'];
 		$bill['pay_money'] = $price;
-		$bill['pay_type'] = $this->costType;
+		$bill['money_type'] = $this->costType;
 		$bill['buy_num'] = 1;
 		$bill['buy_type'] = 1;
 		$bill['discount_type'] = $discount_type; // 折扣类型

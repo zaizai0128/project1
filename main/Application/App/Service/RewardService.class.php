@@ -55,7 +55,7 @@ class RewardService extends BaseModel {
 		$log_data['author_id'] = $data['book_info']['bk_author_id'];
 		$log_data['author_name'] = $data['book_info']['bk_author'];
 		$log_data['pay_money'] = $data['num'];
-		$log_data['pay_type'] = 1;	// 逐浪金币
+		$log_data['money_type'] = 1;	// 逐浪金币
 		$log_data['buy_num'] = 1;
 		$log_data['buy_type'] = self::LOG_TYPE;
 		$log_data['discount_type'] = '';

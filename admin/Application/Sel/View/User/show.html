@@ -275,7 +275,7 @@
 							    	<tr>
 							    		<td>{$val.time}</td>
 										<td><em class="colr_01">{$val.pay_money}</em></td>
-										<td>{:ZC(C('COST.pay_type'), $val['pay_type'])}</td>
+										<td>{:ZC(C('COST.money_type'), $val['money_type'])}</td>
 										<td>{$val.buy_num}</td>
 										<td>{:ZC(C('COST.buy_type'), $val['buy_type'])}购买</td>
 										<td><a target="_blank" href="{:ZU('book/index', 'ZL_DOMAIN', array('book_id'=>$val['bk_id']))}"><em class="colr_02">{$val.bk_name}【{$val.bk_id}】</em></a></td>
