@@ -47,6 +47,14 @@ class ZlibBookShelfModel extends BaseModel {
 	}
 
 	/**
+	 * 创建默认书架
+	 */
+	public function doAddDefault($data)
+	{
+		return $this->shelfInstance->data($data)->add();
+	}
+
+	/**
 	 * 修改书架
 	 */
 	public function doEdit($data)

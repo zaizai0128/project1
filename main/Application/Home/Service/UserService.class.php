@@ -78,6 +78,10 @@ class UserService extends ZlibUserModel {
 		$user_id = parent::doAdd($final_data);
 
 		if ($user_id) {
+			
+			$final_data['user_id'] = $user_id;
+			z_tag('user', 'after_add', $final_data);
+
 			return z_info($user_id, '添加成功');
 		} else {
 			return z_info(0, '添加失败');
@@ -108,6 +112,10 @@ class UserService extends ZlibUserModel {
 		$user_id = parent::doAdd($final_data);
 
 		if ($user_id) {
+
+			$final_data['user_id'] = $user_id;
+			z_tag('user', 'after_add', $final_data);
+
 			return z_info($user_id, '添加成功');
 		} else {
 			return z_info(0, '添加失败');

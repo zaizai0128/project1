@@ -508,3 +508,17 @@ function z_json_decode($json, $bo = true)
 {
 	return json_decode($json, $bo);
 }
+
+/**
+ * 封装 tag
+ *
+ * @param string 行为名称
+ * @param string 动作名称
+ * @param array  传递的数组
+ */
+function z_tag($behavior, $action, $param)
+{
+	$tag['data'] = $param;
+	$tag['ac'] = $action;
+	tag($behavior, $tag);
+}
