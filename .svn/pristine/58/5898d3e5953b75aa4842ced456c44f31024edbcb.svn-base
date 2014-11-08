@@ -1,0 +1,54 @@
+<?php
+namespace Home\Controller;
+use Think\Controller;
+class IndexController extends BaseController {
+	//首页的显示遍历
+	public function index(){
+		//判断用户是否登录
+		// if(!session("?user.id")){
+		// 	$data['collapsible_menu_value']='dn';
+		// 	$data['oginTop_value']='';
+		// }else{
+		// 	$data['collapsible_menu_value']='';
+		// 	$data['loginTop_value']='dn';
+		// 	$id=session('user.id');			
+		// }
+		//显示首页用户名
+		$user=M('users');
+		$id=session('user.id');
+		$res_user=$user->where("id=$id")->find();
+		if($res_user){
+			$this->data['username']=$res_user['username'];
+		}
+		//显示首页的职位分类
+		$job_category=M('job_category');
+		$res_category=$this->getCates();
+		//var_dump($res_category[0]['sub']);
+		//输出到模板
+		$this->assign('data',$this->data);
+		$this->display();
+	}
+    //最新职位的显示
+    public function newjob_ajax(){
+    	
+    }
+    //遍历数组的子分类
+    public function getCates($pid=0){
+        $cate = M('job_category');
+        $cates = $cate->where("pid=".$pid)->select();
+        //遍历分类
+        $arr = array();
+        if($cates){
+	        foreach ($cates as $key => $value) {
+	            // var_dump($value['id']);
+	            $temp['id'] = $value['id'];
+	            $temp['name'] = $value['name'];
+	            //递归获取子集分类
+	            $temp['sub'] = $this->getCates($temp['id']);
+	            $arr[] = $temp; 
+	        }
+	        return $arr;      	
+        }
+    }
+
+}

@@ -1,0 +1,21 @@
+<?php
+namespace Home\Controller;
+use Think\Controller;
+class UserController extends Controller {
+    public function index(){
+        $this->display('register');
+    }
+	public function ajaxRet(){
+		$user=M('users');
+		$email=$_GET['email'];
+		$res=$user->where("username='$email'")->select();
+		if($res){
+			$this->ajaxReturn($res);
+		}else{
+			$this->ajaxReturn($res);
+		}
+	}
+	public function add_user(){
+		var_dump($_POST);
+	}
+}

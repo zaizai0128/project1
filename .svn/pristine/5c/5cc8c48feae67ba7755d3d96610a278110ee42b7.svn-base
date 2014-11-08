@@ -1,0 +1,247 @@
+<?php
+namespace Home\Controller;
+use Think\Controller;
+class ResumeController extends Controller {
+	//个人模板主页
+	//$username 			用户名
+	//$time 				最后修改时间
+	//$total				个人信息小汇
+	//$email				简历表的邮箱
+	public function index(){
+		$id=11;
+		$rid=11;
+		//判断用户是否写过简历
+		$resume=M('resume');
+		$user=M('users');                                        
+		$res_resume=$resume->where("uid='$id'")->find();   
+		$res_user=$user->where("id='$id'")->find();
+		if($res_resume==''){				
+
+		}else{
+			if($res_resume['sex']==1){
+				$sex='男';
+			}else{
+				$sex='女';
+			}
+			$data['username']=$res_resume['name'];
+			$data['sex']=$sex;
+			$data['education']=$res_resume['education'];
+			$data['work_year']=$res_resume['work_year'];
+			$data['phone']=$res_resume['phone'];
+			$data['email']=$res_resume['e-mail'];
+			$data['time']=date('Y-m-d',$res_resume['modify_time']);
+		}
+		//判断用户是否有期望工作
+		$hopejob=M('hopejob');			
+		$res_hope=$hopejob->where("rid='{$res_resume['id']}'")->find();
+		if($res_hope){
+			$data['hope_in']='dn';
+			$data['hope_out']='';
+			$data['hope_value']=$res_hope['city'].'&nbsp;&nbsp;'.$res_hope['nature'].'&nbsp;&nbsp;'.$res_hope['job'].'&nbsp;&nbsp;'.$res_hope['salary'];
+		}else{
+			$data['hope_in']='';
+			$data['hope_out']='dn';				
+		}
+		//判断用户是否有过工作经历
+		$work_history=M('work_history');  
+		$res_history=$work_history->where("rid='{$rid}'")->select();
+		if($res_history){
+			$data['history_work_first']='';
+			$data['history_work_second']='dn';
+			$data['history_work_third']='dn';
+			$data['history_value']=$res_history;
+		}else{
+			$data['history_work_second']='dn';
+		}
+		//判断用户是否有项目经验
+		$project = M('project');
+		$res_project = $project->where("rid='{$rid}'")->select();
+		if($res_project){
+			$data['project_first']='';
+			$data['project_second']='';
+			$data['project_third']='dn';
+			$data['project_value'] = $res_project;
+		}else{
+			$data['']='';
+		}
+		//模板的输出
+		$this->assign('data',$data);
+		$this->display();
+	}
+	//个人建立基本信息的修改
+	public function update_ajax(){
+		$data = I();
+		$data['uid']=11;
+		if($data['name'] == ''){
+			$check = -1;
+		}elseif ($data['gender'] == ''){
+			$check = -1;
+		}elseif ($data['topDegree'] == '') {
+			$check = -1;
+		}elseif ($data['workyear'] == ''){
+			$check = -1;
+		}elseif ($data['tel'] == ''){
+			$check = -1;
+		}else{
+			$in['uid']=$data['uid'];
+			$in['name']=$data['name'];
+			$in['sex']=$data['gender'];
+			$in['education']=$data['topDegree'];
+			$in['work_year']=$data['workyear'];
+			$in['phone']=$data['tel'];
+			$in['e-mail']=$data['email'];
+			$in['now_state']=$data['currentState'];
+			$resume = M('resume');
+			$result = $resume->where("uid='{$data['uid']}'")->find();
+			if($result){
+				$res=$resume->where("uid='{$in['uid']}'")->save($in);
+				if($res){
+					$check = 1;
+					$this->ajaxReturn($check);
+				}
+			}else{
+				$res=$resume->where("uid='{$in['uid']}'")->add($in);
+				if($res){
+					$check = 1;
+					$this->ajaxReturn($check);
+				}
+			}
+		}
+	}
+	//ajax提交表单处理期望工作
+	public function hope_ajax(){
+			$in['rid']=1;
+			$in['city']=$_POST['expectCity'];
+			$in['nature']=$_POST['type'];
+			$in['job']=$_POST['expectPosition'];
+			$in['salary']=$_POST['expectSalary'];
+			$hope=M('hopejob');
+			$result = $hope->where("rid='{$in['rid']}'")->find();
+			if($result){
+				$res=$hope->where("rid='{$in['rid']}'")->save($in);
+				if($res){
+					$check = 1;
+					$this->ajaxReturn($check);
+				}				
+			}else{
+				$res=$hope->where("rid='{$in['rid']}'")->add($in);
+				if($res){
+					$check = 1;
+					$this->ajaxReturn($check);
+				}				
+			}
+	}
+	//ajax提交表单处理工作经历
+	public function history_ajax(){
+		if($_POST['companyName'] == ''){
+			$check = -1;
+		}elseif ($_POST['positionName'] == ''){
+			$check = -1;
+		}elseif ($_POST['companyYearStart'] == '') {
+			$check = -1;
+		}elseif ($_POST['companyMonthStart'] == ''){
+			$check = -1;
+		}elseif ($_POST['companyYearEnd'] == ''){
+			$check = -1;
+		}elseif($_POST['companyMonthEnd'] == ''){
+			$check = -1;
+		}else{
+			$data['rid']=11;//手写的简历表外键
+			$data['company'] = $_POST['companyName'];
+			$data['job'] = $_POST['positionName'];
+			$data['begin_yeartime'] = $_POST['companyYearStart'];
+			$data['begin_monthtime'] = $_POST['companyMonthStart'];
+			$data['end_yeartime'] = $_POST['companyYearEnd'];
+			$data['end_monthtime'] = $_POST['companyMonthEnd'];
+			$history = M('work_history');
+			$result = $history->where("rid='{$in['rid']}'")->find();
+			if(!empty($_POST['history_id'])){
+				$result = $history->where("id='{$_POST['history_id']}'")->save($data);
+				if($result){
+					$check = 1;
+					$this->ajaxReturn($check);					
+				}else{
+					$check = -1;
+					$this->ajaxReturn($check);					
+				}
+			}else{
+				$res=$history->add($data);
+				if($res){
+					$check = 1;
+					$this->ajaxReturn($check);
+				}else{
+					$check = -1;
+					$this->ajaxReturn($check);
+				}				
+			}
+		}
+	}
+	public function delhistory_ajax(){
+		$history = M('work_history');
+		$res_history=$history->where("id={$_GET['id']}")->delete();
+		if($res_history){
+			$this->redirect('Resume/index');
+		}else{
+			$this->redirect('Resume/index');
+		}
+	}
+	//ajax提交表单处理项目经验
+	public function project_ajax(){
+		if($_POST['projectName'] == ''){
+			$check = -1;
+		}elseif($_POST['thePost'] == ''){
+			$check = -1;
+		}elseif($_POST['projectYearStart'] == ''){
+			$check = -1;
+		}elseif($_POST['projectMonthStart'] == ''){
+			$check = -1;
+		}elseif($_POST['projectYearEnd'] == ''){
+			$check = -1;
+		}elseif($_POST['projectMonthEnd'] == ''){
+			$check = -1;
+		}else{
+			$data['rid'] = 11; //手写的简历表外键
+			$data['name'] = $_POST['projectName'];
+			$data['job'] = $_POST['thePost'];
+			$data['begin_yeartime'] = $_POST['projectYearStart'];
+			$data['begin_monthtime'] = $_POST['projectMonthStart'];
+			$data['end_yeartime'] = $_POST['projectYearEnd'];
+			$data['end_monthtime'] = $_POST['projectMonthEnd'];
+			$data['description'] = $_POST['projectDescription'];
+			$project = M('project');
+			if(!empty($_POST['projectId'])){
+				echo 1111;
+			}else{
+				$res=$project->add($data);
+				if($res){
+					$check = 1;
+					$this->ajaxReturn($check);
+				}else{
+					$check = -1;
+					$this->ajaxReturn($check);
+				}				
+			}
+		}
+	}
+	public function delproject_ajax(){
+		$project = M('project');
+		$res_project=$project->where("id={$_GET['id']}")->delete();
+		if($res_project){
+			$this->redirect('Resume/index');
+		}else{
+			$this->redirect('Resume/index');
+		}		
+	}
+	//ajax提交表单处理教育背景
+	public function edu_ajax(){
+
+	}
+	//ajax提交表单处理自我描述
+	public function discrible_ajax(){
+
+	}
+	//ajax提交表单处理作品展示
+	public function show_ajax(){
+
+	}
+}

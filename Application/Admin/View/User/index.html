@@ -1,0 +1,161 @@
+<extend name="Public/base" />
+
+
+{// 导航}
+<block name="breadcrumb">
+<li class="active">用户列表</li>
+</block>
+
+{// 左侧菜单}
+<block name="sidebar">
+	<include file="Public/sidebar"/>
+</block>
+
+{// 主体}
+<block name="main">
+<div class="row-fluid">
+	<h1 class="header smaller lighter blue">用户列表</h1>
+	<div class="table-header">
+	用户列表搜索结果
+	</div>
+
+	<table id="sample-table-2" class="table table-striped table-bordered table-hover">
+		<thead>
+			<tr>
+				<th class="center">
+					<label>
+						<input type="checkbox" class="ace" />
+						<span class="lbl"></span>
+					</label>
+				</th>
+				<th>id</th>
+				<th>用户名</th>
+				<th class="hidden-480">密码</th>
+
+				<th class="hidden-phone">
+					<i class="icon-time bigger-110 hidden-phone"></i>
+					修改时间
+				</th>
+				<th class="hidden-480">状态</th>
+
+				<th class="hidden-480">操作</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			<foreach name="arr" item="value">	
+				<tr>
+					<td class="center">
+						<label>
+							<input type="checkbox" class="ace" />
+							<span class="lbl"></span>
+						</label>
+					</td>
+					<td>{$value.id}</td>
+					<td>{$value.username}</td>
+					<td class="hidden-480">{$value.password}</td>
+					<td class="hidden-phone">{$value.time}</td>
+					<td class="hidden-480">
+						<php>echo $vip[$value['state']]</php>
+					</td>
+					<td>
+						<div class="hidden-phone visible-desktop action-buttons">
+							<a class="blue" href="#">
+								<i class="icon-zoom-in bigger-130"></i>
+							</a>
+
+							<a class="green" href="{:U('user/edit', array('id'=>$value['id']))}">
+								<i class="icon-pencil bigger-130"></i>
+							</a>
+
+							<a class="red" href="#">
+								<i class="icon-trash bigger-130"></i>
+							</a>
+						</div>
+
+						<div class="hidden-desktop visible-phone">
+							<div class="inline position-relative">
+								<button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown">
+									<i class="icon-caret-down icon-only bigger-120"></i>
+								</button>
+
+								<ul class="dropdown-menu dropdown-icon-only dropdown-yellow pull-right dropdown-caret dropdown-close">
+									<li>
+										<a href="#" class="tooltip-info" data-rel="tooltip" title="View">
+											<span class="blue">
+												<i class="icon-zoom-in bigger-120"></i>
+											</span>
+										</a>
+									</li>
+
+									<li>
+										<a href="#" class="tooltip-success" data-rel="tooltip" title="Edit">
+											<span class="green">
+												<i class="icon-edit bigger-120"></i>
+											</span>
+										</a>
+									</li>
+
+									<li>
+										<a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
+											<span class="red">
+												<i class="icon-trash bigger-120"></i>
+											</span>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</td>
+				</tr>
+			</foreach>
+		</tbody>
+	</table>
+</div>
+</block>
+
+{// js}
+<block name="js">
+	<script src="__STYLE__/js/jquery.dataTables.min.js"></script>
+	<script src="__STYLE__/js/jquery.dataTables.bootstrap.js"></script>
+
+	<script type="text/javascript">
+			jQuery(function($) {
+				// 这是对这个表格进行的一些配置
+				// 具体配置 你可以百度一下 bootstrap dataTables
+				// 也可以自己看源代码, 就是umcomposer目录下的 dataTables.js
+				var oTable1 = $('#sample-table-2').dataTable( {
+				// 这个是配置都有哪些列 是允许进行 排序的.
+				"aoColumns": [
+			      { "bSortable": false },
+			      null, null,null, null, null,
+				  { "bSortable": false }
+				] } );
+				
+				// 这就是全选按钮
+				$('table th input:checkbox').on('click' , function(){
+					var that = this;
+					$(this).closest('table').find('tr > td:first-child input:checkbox')
+					.each(function(){
+						this.checked = that.checked;
+						$(this).closest('tr').toggleClass('selected');
+					});	
+				});
+			
+				// 这个是你的鼠标放上去后,会弹出一些小提示之类的..
+				$('[data-rel="tooltip"]').tooltip({placement: tooltip_placement});
+				function tooltip_placement(context, source) {
+					var $source = $(source);
+					var $parent = $source.closest('table')
+					var off1 = $parent.offset();
+					var w1 = $parent.width();
+			
+					var off2 = $source.offset();
+					var w2 = $source.width();
+			
+					if( parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2) ) return 'right';
+					return 'left';
+				}
+			})
+		</script>
+</block>

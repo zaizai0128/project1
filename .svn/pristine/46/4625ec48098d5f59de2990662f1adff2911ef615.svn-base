@@ -1,0 +1,299 @@
+﻿<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>发布新职位-招聘服务-拉勾网-最专业的互联网招聘平台 </title>
+        <meta name="description" content="拉勾网是3W旗下的互联网领域垂直招聘网站,互联网职业机会尽在拉勾网">
+        <meta name="keywords" content="拉勾,拉勾网,拉勾招聘,拉钩, 拉钩网 ,互联网招聘,拉勾互联网招聘, 移动互联网招聘, 垂直互联网招聘, 微信招聘, 微博招聘, 拉勾官网, 拉勾百科,跳槽, 高薪职位, 互联网圈子, IT招聘, 职场招聘, 猎头招聘,O2O招聘, LBS招聘, 社交招聘, 校园招聘, 校招,社会招聘,社招">
+        <link href="/favicon.ico" rel="Shortcut Icon">
+        <link href="__PUBLIC__/HomeStyle/css/style.css" type="text/css" rel="stylesheet">
+        <link href="__PUBLIC__/HomeStyle/css/external.min.css" type="text/css" rel="stylesheet">
+        <link href="__PUBLIC__/HomeStyle/css/popup.css" type="text/css" rel="stylesheet">
+        <script type="text/javascript" src="__PUBLIC__/HomeStyle/js/jquery.1.10.1.min.js"></script>
+        <script src="__PUBLIC__/HomeStyle/js/jquery.lib.min.js" type="text/javascript"></script>
+        <script type="text/javascript" src="__PUBLIC__/HomeStyle/js/ajaxfileupload.js"></script>
+        <script src="__PUBLIC__/HomeStyle/js/additional-methods.js" type="text/javascript"></script>
+        <!--[if lte IE 8]>
+            <script type="text/javascript" src="__PUBLIC__/HomeStyle/js/excanvas.js">
+            </script>
+        <![endif]-->
+        <link rel="stylesheet" href="__PUBLIC__/HomeStyle/css/ui.css">
+        <link rel="stylesheet" href="__PUBLIC__/HomeStyle/css/window.css">
+    </head>
+    
+    <body>
+        <div id="body">
+            <include file="Public/header" nav="company" />
+            <div id="container">
+                <include file="Public/sidebar" />
+                <div class="content">
+                    <dl class="company_center_content">
+                        <dt>
+                            <h1>
+                                <em></em>
+                                发布新职位
+                            </h1>
+                        </dt>
+                        <dd>
+                            <form action="http://www.lagou.com/corpPosition/preview.html" method="post"
+                            id="jobForm">
+                                <input type="hidden" value="" name="id">
+                                <input type="hidden" value="create" name="preview">
+                                <input type="hidden" value="25927" name="companyId">
+                                <input type="hidden" value="c29d4a7c35314180bf3be5eb3f00048f" name="resubmitToken">
+                                <table class="btm">
+                                    <tbody>
+                                        <tr>
+                                            <td width="25">
+                                                <span class="redstar"> * </span>
+                                            </td>
+                                            <td width="85">职位类别</td>
+                                            <td>
+                                                <input type="hidden" id="positionType" value="" name="positionType">
+                                                <input type="button" value="请选择职位类别" id="select_category" class="selectr selectr_380">
+                                                <div class="dn" id="box_job" style="display:none">
+                                                    <dl>
+                                                        <foreach name="res1" item="v1">
+                                                        <dt>{$v1.name}</dt>
+                                                        <dd>
+                                                            <ul class="reset job_main">
+                                                                <foreach name="val2" item="v2">
+                                                                <li>
+                                                                    <span>{$v2.name}</span>
+                                                                    <ul class="reset job_sub dn">
+                                                                        <foreach name="val3" item="v3">
+                                                                        <li>{$v3.name}</li>
+                                                                        </foreach>
+                                                                    </ul>
+                                                                </li>
+                                                                </foreach>
+                                                            </ul>
+                                                        </dd>
+                                                        </foreach>
+                                                    </dl>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span class="redstar"> * </span>
+                                            </td>
+                                            <td>
+                                                职位名称
+                                            </td>
+                                            <td>
+                                                <input type="text" placeholder="请输入职位名称，如：产品经理" value="" name="positionName"
+                                                id="positionName">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td>
+                                                所属部门
+                                            </td>
+                                            <td>
+                                                <input type="text" placeholder="请输入所属部门" value="" name="department" id="department">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table class="btm">
+                                    <tbody>
+                                        <tr>
+                                            <td width="25">
+                                                <span class="redstar"> * </span>
+                                            </td>
+                                            <td width="85">
+                                                工作性质
+                                            </td>
+                                            <td>
+                                                <ul class="profile_radio clearfix reset">
+                                                    <li>
+                                                        全职
+                                                        <em></em>
+                                                        <input type="radio" name="jobNature" value="全职">
+                                                    </li>
+                                                    <li>
+                                                        兼职
+                                                        <em></em>
+                                                        <input type="radio" name="jobNature" value="兼职">
+                                                    </li>
+                                                    <li>
+                                                        实习
+                                                        <em></em>
+                                                        <input type="radio" name="jobNature" value="实习">
+                                                    </li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span class="redstar"> * </span>
+                                            </td>
+                                            <td>月薪范围</td>
+                                            <td>
+                                                <div class="salary_range">
+                                                    <div>
+                                                        <input type="text" placeholder="最低月薪" value="" id="salaryMin" name="salaryMin">
+                                                        <span> k </span>
+                                                    </div>
+                                                    <div>
+                                                        <input type="text" placeholder="最高月薪" value="" id="salaryMax" name="salaryMax">
+                                                        <span> k </span>
+                                                    </div>
+                                                    <span>只能输入整数，如：9</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span class="redstar"> * </span>
+                                            </td>
+                                            <td>工作城市</td>
+                                            <td>
+                                                <input type="text" placeholder="请输入工作城市，如：北京" value="上海" name="workAddress"
+                                                id="workAddress">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table class="btm">
+                                    <tbody>
+                                        <tr>
+                                            <td width="25">
+                                                <span class="redstar"> * </span>
+                                            </td>
+                                            <td width="85">工作经验</td>
+                                            <td>
+                                                <input type="hidden" id="experience" value="" name="workYear">
+                                                <input type="button" value="请选择工作经验" id="select_experience" class="selectr selectr_380">
+                                                <div class="boxUpDown boxUpDown_380 dn" id="box_experience" style="display:none">
+                                                    <ul>
+                                                        <li>不限</li>
+                                                        <li>应届毕业生</li>
+                                                        <li>1年以下</li>
+                                                        <li>1-3年</li>
+                                                        <li>3-5年</li>
+                                                        <li>5-10年</li>
+                                                        <li>10年以上</li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span class="redstar"> * </span>
+                                            </td>
+                                            <td>学历要求</td>
+                                            <td>
+                                                <input type="hidden" id="education" value="" name="education">
+                                                <input type="button" value="请选择学历要求" id="select_education" class="selectr selectr_380">
+                                                <div class="boxUpDown boxUpDown_380 dn" id="box_education" style="display:none">
+                                                    <ul>
+                                                        <li>不限</li>
+                                                        <li>大专</li>
+                                                        <li>本科</li>
+                                                        <li>硕士</li>
+                                                        <li>博士</li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table class="btm">
+                                    <tbody>
+                                        <tr>
+                                            <td width="25">
+                                                <span class="redstar"> * </span>
+                                            </td>
+                                            <td width="85">
+                                                职位诱惑
+                                            </td>
+                                            <td>
+                                                <input type="text" placeholder="20字描述该职位的吸引力，如：福利待遇、发展前景等" value="" name="positionAdvantage" class="input_520" id="positionAdvantage">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span class="redstar"> * </span>
+                                            </td>
+                                            <td>职位描述</td>
+                                            <td>
+                                                <span class="c9 f14">
+                                                    (建议分条描述工作职责等。请勿输入公司邮箱、联系电话及其他外链，否则将自动删除)
+                                                </span>
+                                                <textarea name="positionDetail" id="positionDetail" class="tinymce" style="display:none" aria-hidden="true"></textarea>
+                                                <span role="application" aria-labelledby="positionDetail_voice" id="positionDetail_parent" class="mceEditor defaultSkin">
+                                                    <span class="mceVoiceLabel" style="display:none" id="positionDetail_voice">
+                                                        富文本域
+                                                    </span>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span class="redstar"> * </span>
+                                            </td>
+                                            <td>工作地址</td>
+                                            <td>
+                                                <input type="text" placeholder="请输入详细的工作地址" value="" name="positionAddress" class="input_520" id="positionAddress">
+                                                <input type="hidden" value="" name="positionLng" id="lng">
+                                                <input type="hidden" value="" name="positionLat" id="lat">
+                                                <div class="work_place f14">
+                                                    我们将在职位详情页以地图方式精准呈现给用户
+                                                    <a id="mapPreview" href="javascript:;">
+                                                        预览地图
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td width="25">
+                                                <span class="redstar"> * </span>
+                                            </td>
+                                            <td colspan="2">
+                                                接收简历邮箱：
+                                                <span id="receiveEmailVal">
+                                                    admin@admin.com
+                                                </span>
+                                                <input type="hidden" value="admin@admin.com" id="receiveEmail" name="email">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="25"></td>
+                                            <td colspan="2">
+                                                同时简历自动发送至邮箱（仅一个）
+                                                <input type="text" value="" id="forwardEmail" name="forwardEmail">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="25"></td>
+                                            <td colspan="2">
+                                                <input type="submit" value="预览" id="jobPreview" class="btn_32">
+                                                <input type="button" value="发布" id="formSubmit" class="btn_32">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </form>
+                        </dd>
+                    </dl>
+                </div>
+                <script src="__PUBLIC__/HomeStyle/js/jobs.min.js" type="text/javascript"></script>
+                <div class="clear"></div>
+                <a rel="nofollow" title="回到顶部" id="backtop" style="display:none"></a>
+            </div>
+        </div>
+        <include file="Public/footer" />
+        <script src="__PUBLIC__/HomeStyle/js/core.min.js" type="text/javascript">
+        </script>
+        <script src="__PUBLIC__/HomeStyle/js/popup.min.js" type="text/javascript">
+        </script>
+    </body>
+
+</html>

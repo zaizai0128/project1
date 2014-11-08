@@ -1,0 +1,16 @@
+<extend name="Public/base" />
+
+{// 导航}
+<block name="breadcrumb">
+<li class="active">用户列表</li>
+</block>
+
+{// 左侧菜单}
+<block name="sidebar">
+	<include file="Public/sidebar" nav="user" ac="user_list"/>
+</block>
+
+{// 主体}
+<block name="main">
+用户列表
+</block>

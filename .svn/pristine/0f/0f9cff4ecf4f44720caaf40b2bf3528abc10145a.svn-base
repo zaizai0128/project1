@@ -1,0 +1,21 @@
+<?php
+/**
+ * 用户管理
+ *
+ * @author 	wangz
+ * @date 	2014-10-29
+ * @version 1.0
+ */
+namespace Admin\Controller;
+
+class UserController extends BaseController {
+
+	/**
+	 * 用户列表页
+	 */
+	public function index()
+	{
+
+		$this->display();
+	}
+}

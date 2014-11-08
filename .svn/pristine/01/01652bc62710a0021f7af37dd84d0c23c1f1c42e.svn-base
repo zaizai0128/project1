@@ -1,0 +1,14 @@
+<?php
+namespace Home\Controller;
+use Think\Controller;
+class IndexController extends Controller {
+
+    public function index()
+    {
+
+    	// 模拟用户登陆
+    	$user = array('id'=> 1, 'username' => '1234567@123.com', 'type' => 1);
+    	session('user', $user);
+    	$this->success('登陆成功', U('Home/Company/index'));
+    }
+}

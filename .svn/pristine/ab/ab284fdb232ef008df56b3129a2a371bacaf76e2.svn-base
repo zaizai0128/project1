@@ -1,0 +1,21 @@
+<?php
+/**
+ * 后台的基类
+ *
+ * @author 	wangz
+ * @date 	2014-10-29
+ * @version 1.0
+ */
+namespace Admin\Controller;
+use Think\Controller;
+
+class BaseController extends Controller {
+
+	public function __construct()
+	{
+		parent::__construct();
+
+		// 进行相应的 权限 和 用户验证
+	}
+
+}
