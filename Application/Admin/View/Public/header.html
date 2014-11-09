@@ -1,8 +1,4 @@
 <div class="navbar" id="navbar">
-	<script type="text/javascript">
-		try{ace.settings.check('navbar' , 'fixed')}catch(e){}
-	</script>
-
 	<div class="navbar-inner">
 		<div class="container-fluid">
 			<a href="#" class="brand">
@@ -16,7 +12,7 @@
 
 				<li class="light-blue">
 					<a data-toggle="dropdown" href="#" class="dropdown-toggle">
-						<img class="nav-user-photo" src="__STYLE__/avatars/user.jpg" alt="Jason's Photo" />
+						<img class="nav-user-photo" src="__STYLE__/avatars/user.jpg" alt="{:session('admin.username')}" />
 						<span class="user-info">
 							<small>欢迎回来</small>
 							{:session('admin.username')}
@@ -34,7 +30,7 @@
 						</li>
 
 						<li>
-							<a href="#">
+							<a href="javascript:;" onclick="$.lagou.formShow('{:U('admin/user/editPwd')}');">
 								<i class="icon-lock"></i>
 								修改密码
 							</a>

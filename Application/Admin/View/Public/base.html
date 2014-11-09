@@ -13,6 +13,7 @@
 		  <link rel="stylesheet" href="__STYLE__/css/font-awesome-ie7.min.css" />
 		<![endif]-->
 		<link rel="stylesheet" href="__STYLE__/css/ace-fonts.css" />
+		<link rel="stylesheet" href="__STYLE__/css/jquery-ui-1.10.3.full.min.css" />
 		<link rel="stylesheet" href="__STYLE__/css/ace.min.css" />
 		<link rel="stylesheet" href="__STYLE__/css/ace-responsive.min.css" />
 		<link rel="stylesheet" href="__STYLE__/css/ace-skins.min.css" />
@@ -20,6 +21,10 @@
 		<!--[if lte IE 8]>
 		  <link rel="stylesheet" href="__STYLE__/css/ace-ie.min.css" />
 		<![endif]-->
+        <link rel="stylesheet" href="__STYLE__/css/bootstrap-timepicker.css" />
+        <link rel="stylesheet" href="__STYLE__/css/datepicker.css" />
+        <link rel="stylesheet" href="__STYLE__/css/lagou.global.css" />
+        
 		<!-- /必须的css -->
 		{// 不同页面单独需要的css}
 		<block name="css"></block>
@@ -45,10 +50,6 @@
 			<div class="main-content">
 				<!-- 面包屑导航 -->
 				<div class="breadcrumbs" id="breadcrumbs">
-					<script type="text/javascript">
-						try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
-					</script>
-
 					<ul class="breadcrumb">
 						<li>
 							<i class="icon-home home-icon"></i>
@@ -118,6 +119,11 @@
 		</a>
 		<!-- /回到顶部 -->
 
+		<!-- 操作后提示框 -->
+		<div id="lg-alert" class="hide" style="margin-bottom:-1.5em;"></div>
+		<!--modal表单弹出框-->
+		<form id="lg-form" class="modal fade hide form-horizontal" method="post" tabindex="-1" enctype="multipart/form-data" onsubmit="return false;"></form>
+
 		<!-- 基础js部分 -->
 		<!--[if !IE]>-->
 		<script type="text/javascript">
@@ -135,7 +141,30 @@
 		<script src="__STYLE__/js/bootstrap.min.js"></script>
 		<script src="__STYLE__/js/ace-elements.min.js"></script>
 		<script src="__STYLE__/js/ace.min.js"></script>
+
+		<script src="__STYLE__/js/jquery.dataTables.min.js"></script>
+		<script src="__STYLE__/js/jquery.dataTables.bootstrap.js"></script>
+		<script src="__STYLE__/js/jquery-ui-1.10.3.full.min.js"></script>
+		<script src="__STYLE__/lagou/lagou.global.js"></script>
+		<script src="__STYLE__/js/jquery.nestable.min.js"></script>
+		<script src="__STYLE__/js/jquery-ui-1.10.3.full.min.js"></script>
+		<script src="__STYLE__/js/jquery.ui.touch-punch.min.js"></script>
+
 		<!-- /基础js部分 -->
+		<script type="text/javascript">
+		jQuery(function($){
+			try{
+				ace.settings.navbar_fixed(true);
+				ace.settings.sidebar_fixed(true);
+				ace.settings.breadcrumbs_fixed(true);
+			}catch(e){}
+			
+			$('[data-rel=tooltip]').tooltip();
+			$('[data-rel=popover]').popover({html:true});
+
+		});	
+		</script>
+		
 
 		{// 扩展js}
 		<block name="js"></block>

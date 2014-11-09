@@ -19,9 +19,13 @@ class LoginController extends Controller {
 
 	public function doLogin()
 	{
+		if (!IS_POST) {
+			E('页面不存在', 404);
+		}
+
 		$arr = I();
-		$username= trim($arr['username']);
-		$password = md5(trim($arr['password']));
+		$username= $arr['username'];
+		$password = md5($arr['password']);
 		$code = $arr['code'];
 
 		$Verify = new \Think\Verify();
@@ -41,7 +45,7 @@ class LoginController extends Controller {
 
 				if ($result['status'] == 1) {
 					$admin['id'] = $result['id'];
-					$admin['login_ip'] = ip2long($_SERVER['REMOTE_ADDR']);
+					$admin['login_ip'] = $_SERVER['REMOTE_ADDR'];
 					$admin['login_time'] = time();
 					$userObj->data($admin)->save();
 					$result = array_merge($result, $admin);
@@ -49,7 +53,7 @@ class LoginController extends Controller {
 
 					$response['code'] = 1;
 					$response['msg'] = '登陆成功';
-					$response['url'] = U('User/index');
+					$response['url'] = U('Admin/Index/index');
 					$this->ajaxReturn($response);
 
 				} else {

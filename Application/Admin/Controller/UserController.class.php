@@ -64,4 +64,32 @@ class UserController extends BaseController {
 		// 	$this->ajaxReturn($state);
 		// }
 	}
+
+	/**
+	 * 修改密码
+	 */
+	public function editPwd()
+	{
+		$this->display('edit_pwd');
+	}
+
+	public function doEditPwd()
+	{
+		if (IS_POST) {
+			$data = I();
+			$data['password'] = md5(I('post.password'));
+			$data['id'] = $this->userId;
+
+			$rs = M('Admin')->data($data)->save();
+
+			if ($rs) {
+				$msg['code'] = 1;
+				$msg['msg'] = '修改成功，下次登录即生效';
+			} else {
+				$msg['code'] = 0;
+				$msg['msg'] = '修改失败';
+			}
+			$this->ajaxReturn($msg);
+		}
+	}
 }

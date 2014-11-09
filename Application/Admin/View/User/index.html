@@ -8,109 +8,133 @@
 
 {// 左侧菜单}
 <block name="sidebar">
-	<include file="Public/sidebar"/>
+	<include file="Public/sidebar" nav="user"/>
 </block>
 
 {// 主体}
 <block name="main">
 <div class="row-fluid">
-	<h1 class="header smaller lighter blue">用户列表</h1>
-	<div class="table-header">
-	用户列表搜索结果
-	</div>
-
-	<table id="sample-table-2" class="table table-striped table-bordered table-hover">
-		<thead>
-			<tr>
-				<th class="center">
-					<label>
-						<input type="checkbox" class="ace" />
-						<span class="lbl"></span>
-					</label>
-				</th>
-				<th>id</th>
-				<th>用户名</th>
-				<th class="hidden-480">密码</th>
-
-				<th class="hidden-phone">
-					<i class="icon-time bigger-110 hidden-phone"></i>
-					修改时间
-				</th>
-				<th class="hidden-480">状态</th>
-
-				<th class="hidden-480">操作</th>
-			</tr>
-		</thead>
-
-		<tbody>
-			<foreach name="arr" item="value">	
+	<h3 class="header blue lighter smaller">
+		<div class="row-fluid  dataTables_wrapper">
+			<div class="span4">
+				<button class="btn btn-primary btn-small" onclick="$.weitac.formShow('{{URL::route('admin.user.add')}}')"><i class="icon-plus"></i>创建用户</button>
+			</div>
+			<div class="span8" id="m_search_div">
+				<button type="button" class="btn btn-primary btn-small pull-right" id="search_submit" onclick="search();"><i class="icon-ok bigger-110"></i>搜索</button>
+				<input name="username" value="" type="text" id="search_username" class="pull-right" placeholder="用户名"/>
+				<label class="control-label pull-right">用户名：</label>
+			</div>	
+		</div>	
+	</h3>
+	<div class="table-header">用户列表</div>
+	<div class="dataTables_wrapper" role="grid">
+		<table id="user_table" class="table table-striped table-bordered table-hover" style="margin-bottom:0px;">
+			<thead>
 				<tr>
-					<td class="center">
+					<th class="center">
 						<label>
 							<input type="checkbox" class="ace" />
 							<span class="lbl"></span>
 						</label>
-					</td>
-					<td>{$value.id}</td>
-					<td>{$value.username}</td>
-					<td class="hidden-480">{$value.password}</td>
-					<td class="hidden-phone">{$value.time}</td>
-					<td class="hidden-480">
-						<php>echo $vip[$value['state']]</php>
-					</td>
-					<td>
-						<div class="hidden-phone visible-desktop action-buttons">
-							<a class="blue" href="#">
-								<i class="icon-zoom-in bigger-130"></i>
-							</a>
+					</th>
+					<th>id</th>
+					<th>用户名</th>
+					<th class="hidden-480">密码</th>
 
-							<a class="green" href="{:U('user/edit', array('id'=>$value['id']))}">
-								<i class="icon-pencil bigger-130"></i>
-							</a>
+					<th class="hidden-phone">
+						<i class="icon-time bigger-110 hidden-phone"></i>
+						修改时间
+					</th>
+					<th class="hidden-480">状态</th>
 
-							<a class="red" href="#">
-								<i class="icon-trash bigger-130"></i>
-							</a>
-						</div>
-
-						<div class="hidden-desktop visible-phone">
-							<div class="inline position-relative">
-								<button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown">
-									<i class="icon-caret-down icon-only bigger-120"></i>
-								</button>
-
-								<ul class="dropdown-menu dropdown-icon-only dropdown-yellow pull-right dropdown-caret dropdown-close">
-									<li>
-										<a href="#" class="tooltip-info" data-rel="tooltip" title="View">
-											<span class="blue">
-												<i class="icon-zoom-in bigger-120"></i>
-											</span>
-										</a>
-									</li>
-
-									<li>
-										<a href="#" class="tooltip-success" data-rel="tooltip" title="Edit">
-											<span class="green">
-												<i class="icon-edit bigger-120"></i>
-											</span>
-										</a>
-									</li>
-
-									<li>
-										<a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
-											<span class="red">
-												<i class="icon-trash bigger-120"></i>
-											</span>
-										</a>
-									</li>
-								</ul>
-							</div>
-						</div>
-					</td>
+					<th class="hidden-480">操作</th>
 				</tr>
-			</foreach>
-		</tbody>
-	</table>
+			</thead>
+
+			<tbody>
+				<foreach name="arr" item="value">	
+					<tr>
+						<td class="center">
+							<label>
+								<input type="checkbox" class="ace" />
+								<span class="lbl"></span>
+							</label>
+						</td>
+						<td>{$value.id}</td>
+						<td>{$value.username}</td>
+						<td class="hidden-480">{$value.password}</td>
+						<td class="hidden-phone">{$value.time}</td>
+						<td class="hidden-480">
+							<php>echo $vip[$value['state']]</php>
+						</td>
+						<td>
+							<div class="hidden-phone visible-desktop action-buttons">
+								<a class="blue" href="#">
+									<i class="icon-zoom-in bigger-130"></i>
+								</a>
+
+								<a class="green" href="{:U('user/edit', array('id'=>$value['id']))}">
+									<i class="icon-pencil bigger-130"></i>
+								</a>
+
+								<a class="red" href="#">
+									<i class="icon-trash bigger-130"></i>
+								</a>
+							</div>
+
+							<div class="hidden-desktop visible-phone">
+								<div class="inline position-relative">
+									<button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown">
+										<i class="icon-caret-down icon-only bigger-120"></i>
+									</button>
+
+									<ul class="dropdown-menu dropdown-icon-only dropdown-yellow pull-right dropdown-caret dropdown-close">
+										<li>
+											<a href="#" class="tooltip-info" data-rel="tooltip" title="View">
+												<span class="blue">
+													<i class="icon-zoom-in bigger-120"></i>
+												</span>
+											</a>
+										</li>
+
+										<li>
+											<a href="#" class="tooltip-success" data-rel="tooltip" title="Edit">
+												<span class="green">
+													<i class="icon-edit bigger-120"></i>
+												</span>
+											</a>
+										</li>
+
+										<li>
+											<a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
+												<span class="red">
+													<i class="icon-trash bigger-120"></i>
+												</span>
+											</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</td>
+					</tr>
+				</foreach>
+			</tbody>
+		</table>
+		<!-- 分页 -->
+		<div class="row-fluid">
+			<div class="span3">
+				<div class="dataTables_info" id="user_table_info">当前显示 1 到 2 条，共 2 条记录</div>
+			</div>
+			<div class="dataTables_paginate paging_bootstrap pagination">
+				<ul>
+					<li class="prev disabled"><a href="#"><i class="icon-double-angle-left"></i></a></li>
+					<li class="active"><a href="#">1</a></li>
+					<li class="next disabled"><a href="#"><i class="icon-double-angle-right"></i></a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
 </div>
 </block>
 
@@ -121,17 +145,7 @@
 
 	<script type="text/javascript">
 			jQuery(function($) {
-				// 这是对这个表格进行的一些配置
-				// 具体配置 你可以百度一下 bootstrap dataTables
-				// 也可以自己看源代码, 就是umcomposer目录下的 dataTables.js
-				var oTable1 = $('#sample-table-2').dataTable( {
-				// 这个是配置都有哪些列 是允许进行 排序的.
-				"aoColumns": [
-			      { "bSortable": false },
-			      null, null,null, null, null,
-				  { "bSortable": false }
-				] } );
-				
+
 				// 这就是全选按钮
 				$('table th input:checkbox').on('click' , function(){
 					var that = this;

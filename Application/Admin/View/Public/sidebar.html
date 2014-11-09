@@ -1,7 +1,4 @@
 <div class="sidebar" id="sidebar">
-	<script type="text/javascript">
-		try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
-	</script>
 	<ul class="nav nav-list">
 		<li <if condition="[nav] eq 'index'">class="active open"</if>>
 			<a href="{:U('admin/index/index')}">
@@ -12,7 +9,7 @@
 
 		<li <if condition="[nav] eq 'user'">class="active open"</if>>
 			<a href="javascript:;" class="dropdown-toggle">
-				<i class="icon-group"></i>
+				<i class="icon-list"></i>
 				<span class="menu-text">用户管理</span>
 				<b class="arrow icon-angle-down"></b>
 			</a>
@@ -20,19 +17,7 @@
 				<li>
 				<a href={:U('user/index')}>
 						<i class="icon-double-angle-right"></i>
-						全部会员列表
-					</a>
-				</li>
-				<li>
-					<a href="javascript:;">
-						<i class="icon-double-angle-right"></i>
-						企业会员列表
-					</a>
-				</li>
-				<li>
-					<a href="javascript:;">
-						<i class="icon-double-angle-right"></i>
-						管理员列表
+						会员列表
 					</a>
 				</li>
 			</ul>
@@ -40,7 +25,29 @@
 
 		<li <if condition="[nav] eq 'document'">class="active open"</if>>
 			<a href="javascript:;" class="dropdown-toggle">
-				<i class="icon-folder-close"></i>
+				<i class="icon-list"></i>
+				<span class="menu-text">公司信息管理</span>
+				<b class="arrow icon-angle-down"></b>
+			</a>
+			<ul class="submenu">
+				<li <if condition="[ac] eq 'xxx'">class="active open"</if>>
+					<a href="javascript:;">
+						<i class="icon-double-angle-right"></i>
+						公司信息列表
+					</a>
+				</li>
+				<li <if condition="[ac] eq 'xxx'">class="active open"</if>>
+					<a href="javascript:;">
+						<i class="icon-double-angle-right"></i>
+						发布职位列表
+					</a>
+				</li>
+			</ul>
+		</li>
+
+		<li <if condition="[nav] eq 'document'">class="active open"</if>>
+			<a href="javascript:;" class="dropdown-toggle">
+				<i class="icon-list"></i>
 				<span class="menu-text">职位分类管理</span>
 				<b class="arrow icon-angle-down"></b>
 			</a>
@@ -60,22 +67,53 @@
 			</ul>
 		</li>
 
-		<li <if condition="[nav] eq 'document'">class="active open"</if>>
+		<li <if condition="[nav] eq 'link'">class="active open"</if>>
 			<a href="javascript:;" class="dropdown-toggle">
-				<i class="icon-folder-close"></i>
-				<span class="menu-text">公司信息管理</span>
+				<i class="icon-list"></i>
+				<span class="menu-text">友情连接管理</span>
 				<b class="arrow icon-angle-down"></b>
 			</a>
 			<ul class="submenu">
-				<li <if condition="[ac] eq 'xxx'">class="active open"</if>>
+				<li <if condition="[ac] eq 'index'">class="active open"</if>>
 					<a href="javascript:;">
 						<i class="icon-double-angle-right"></i>
-						公司信息列表
+						友情链接列表
 					</a>
 				</li>
 			</ul>
 		</li>
 
+		<li <if condition="[nav] eq 'role'">class="active open"</if>>
+			<a href="javascript:;" class="dropdown-toggle">
+				<i class="icon-list"></i>
+				<span class="menu-text">用户组管理</span>
+				<b class="arrow icon-angle-down"></b>
+			</a>
+			<ul class="submenu">
+				<li>
+				<a href={:U('user/index')}>
+						<i class="icon-double-angle-right"></i>
+						用户组列表
+					</a>
+				</li>
+			</ul>
+		</li>
+
+		<li <if condition="[nav] eq 'manager'">class="active open"</if>>
+			<a href="javascript:;" class="dropdown-toggle">
+				<i class="icon-list"></i>
+				<span class="menu-text">管理员管理</span>
+				<b class="arrow icon-angle-down"></b>
+			</a>
+			<ul class="submenu">
+				<li>
+				<a href={:U('Admin/Manager/index')}>
+						<i class="icon-double-angle-right"></i>
+						管理员列表
+					</a>
+				</li>
+			</ul>
+		</li>
 
 	</ul>
 

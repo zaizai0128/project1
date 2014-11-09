@@ -3,7 +3,7 @@ return array(
     // url
     'URL_MODEL'             =>  2,
 	//'配置项'=>'配置值'
-	'DB_TYPE'               =>  'mysql',     // 数据库类型
+	'DB_TYPE'               =>  'mysqli',     // 数据库类型
     'DB_HOST'               =>  'localhost', // 服务器地址
     'DB_NAME'               =>  'lagou',          // 数据库名
     'DB_USER'               =>  'root',      // 用户名
@@ -16,6 +16,10 @@ return array(
 	'SHOW_PAGE_TRACE' 		=>	true,				//开启页面trace
 	'DOMAIN'                =>  'http://lagou.me',
 	'WEB_NAME'				=>	'拉勾',
+    
+    'DEFAULT_FILTER'        =>  'htmlspecialchars,trim', // 默认参数过滤方法 用于I函数...
+    'MODULE_ALLOW_LIST'    =>    array('Home','Admin'),
+    'DEFAULT_MODULE'       =>    'Home',
 
     // email配置
     'email_host' => 'smtp.163.com',

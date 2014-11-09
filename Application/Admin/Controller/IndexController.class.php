@@ -11,11 +11,11 @@ namespace Admin\Controller;
 class IndexController extends BaseController {
 
 	/**
-	 * shouye
+	 * 首页
 	 */
 	public function index()
 	{
-
+		
 		$this->display();
 	}
 }
