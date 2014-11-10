@@ -23,10 +23,16 @@ class ManagerController extends BaseController {
 	 */
 	public function index()
 	{
-		$total = $this->adminObj->count();
-		$Page = new \Think\Page($total, 20);
-		$data = $this->adminObj->limit($Page->first, $Page->listRows)->order('id desc')->select();
+		$map = I();
+		$where = array_filter($map);
+		if (isset($map['username']))
+			$where['username'] = array('LIKE', '%'.$map['username'].'%');
 
+		$total = $this->adminObj->where($where)->count();
+		$Page = new \Think\Page($total, 20);
+		$data = $this->adminObj->where($where)->limit($Page->first, $Page->listRows)->order('id desc')->select();
+
+		$this->assign('map', $map);
 		$this->assign('data', $data);
 		$this->assign('page', $Page->show());
 		$this->display();
@@ -58,6 +64,34 @@ class ManagerController extends BaseController {
 		}
 	}
 
+	public function edit()
+	{
+		$user_id = I('get.user_id');
+		$info = $this->adminObj->where('id='.$user_id)->find();
+
+		$this->assign('info', $info);
+		$this->display();
+	}
+
+	public function doEdit()
+	{
+		if (IS_POST) {
+			$data = I();
+			$data['status'] = isset($data['status']) ? $data['status'] : 0 ;
+			$res = $this->adminObj->data($data)->save();
+
+			if ($res) {
+				$msg['code'] = 1;
+				$msg['msg'] = '修改成功';
+			} else {
+				$msg['code'] = 0;
+				$msg['msg'] = '修改失败';
+			}
+			
+			$this->ajaxReturn($msg);
+		}
+	}
+
 	public function pic()
 	{
 		$user_id = I('post.user_id');
@@ -79,7 +113,11 @@ class ManagerController extends BaseController {
 		} else {
 			$msg['code'] = 1;
 			$msg['msg'] = '上传成功';
-			$msg['url'] = '/Uploads/Admin/Manager/Pic/'.$info['pic']['savename'];
+			$msg['url'] = '/Uploads/Admin/Manager/Pic/'.$info['avatar']['savename'];
+
+			$data['id'] = $user_id;
+			$data['image'] = 1;
+			$this->adminObj->save($data);
 		}
 		
 		$this->ajaxReturn($msg);

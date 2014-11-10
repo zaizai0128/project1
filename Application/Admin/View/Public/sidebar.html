@@ -15,7 +15,7 @@
 			</a>
 			<ul class="submenu">
 				<li>
-				<a href={:U('user/index')}>
+				<a href={:U('Admin/User/index')}>
 						<i class="icon-double-angle-right"></i>
 						会员列表
 					</a>
@@ -23,7 +23,7 @@
 			</ul>
 		</li>
 
-		<li <if condition="[nav] eq 'document'">class="active open"</if>>
+		<li <if condition="[nav] eq 'company'">class="active open"</if>>
 			<a href="javascript:;" class="dropdown-toggle">
 				<i class="icon-list"></i>
 				<span class="menu-text">公司信息管理</span>
@@ -31,13 +31,13 @@
 			</a>
 			<ul class="submenu">
 				<li <if condition="[ac] eq 'xxx'">class="active open"</if>>
-					<a href="javascript:;">
+					<a href="{:U('Admin/Company/index')}">
 						<i class="icon-double-angle-right"></i>
 						公司信息列表
 					</a>
 				</li>
 				<li <if condition="[ac] eq 'xxx'">class="active open"</if>>
-					<a href="javascript:;">
+					<a href="{:U('Admin/Job/index')}">
 						<i class="icon-double-angle-right"></i>
 						发布职位列表
 					</a>
@@ -45,7 +45,7 @@
 			</ul>
 		</li>
 
-		<li <if condition="[nav] eq 'document'">class="active open"</if>>
+		<li <if condition="[nav] eq 'type'">class="active open"</if>>
 			<a href="javascript:;" class="dropdown-toggle">
 				<i class="icon-list"></i>
 				<span class="menu-text">职位分类管理</span>

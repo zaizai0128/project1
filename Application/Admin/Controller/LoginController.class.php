@@ -39,10 +39,10 @@ class LoginController extends Controller {
 
 		$userObj = D('admin');
 		$result = $userObj->where('username = "'.$username.'"')->find();
-
+		
 		if ($result) {
 			if ($password == $result['password']) {
-
+				
 				if ($result['status'] == 1) {
 					$admin['id'] = $result['id'];
 					$admin['login_ip'] = $_SERVER['REMOTE_ADDR'];
@@ -64,7 +64,7 @@ class LoginController extends Controller {
 				
 			} else {
 				$response['code'] = -3;
-				$response['msg'] = '您的用户已经被禁用';
+				$response['msg'] = '密码错误';
 				$this->ajaxReturn($response);
 			}
 

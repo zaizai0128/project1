@@ -12,7 +12,7 @@
 
 				<li class="light-blue">
 					<a data-toggle="dropdown" href="#" class="dropdown-toggle">
-						<img class="nav-user-photo" src="__STYLE__/avatars/user.jpg" alt="{:session('admin.username')}" />
+						<img class="nav-user-photo" src="{:lg_admin_logo(session('admin.id'), session('admin.image'))}" alt="{:session('admin.username')}" />
 						<span class="user-info">
 							<small>欢迎回来</small>
 							{:session('admin.username')}
