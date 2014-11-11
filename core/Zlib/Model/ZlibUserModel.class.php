@@ -199,4 +199,14 @@ class ZlibUserModel extends BaseModel {
 		$condition['user_nickname'] = $data['user_nickname'];
 		return $this->data($condition)->save();
 	}
+
+	/**
+	 * 重置密码
+	 */
+	public function resetPwd($data)
+	{
+		$condition['user_id'] = $data['user_id'];
+		$condition['user_pwd'] = md5($data['password']);
+		return $this->data($condition)->save();
+	}
 }
