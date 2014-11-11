@@ -15,10 +15,18 @@ class Account {
 	protected $type = null;		// 充值方式
 	protected $subType = null;		// 充值方式 子方式
 	protected $order_id = null;	// 订单号
+	protected $memo = null;
+	protected $ip = null;
 	protected $result = null;	// 记录每一步操作的结果
 	protected $err_result = null; // 记录每一步的错误
 	protected $now = null;			// 当前时间
 	protected $record = null;
+	static public $payType = array(
+		'ALIPAY' => 0,
+		'RDO' => 1,
+		'KEFU' => 10,
+		'SYSTEM' => 11,
+		);
 
 	protected $db = null;		
 	protected $accountInstance = null;
@@ -26,17 +34,19 @@ class Account {
 	/**
 	 * 初始化
 	 * @param int 用户id
-	 * @param int 充值方式
-	 * @param int 充值子方式
-	 * @param string order_id
+	 * @param string 充值方式
+	 * @param string memo 内容
+	 * @param string ip
+ 	 * @param int 充值子方式
 	 */
-	public function __construct($user_id, $type, $sub_type = 0, $order_id = null)
+	public function __construct($user_id, $type, $memo = '', $ip = '', $sub_type = 0)
 	{
 		$this->userId = $user_id;
-		$this->type = $type;
+		$this->type = self::$payType[$type];
+		$this->memo = $memo;
+		$this->ip = !empty($ip) ? $ip : z_ip();
 		$this->subType = $sub_type;
-		$this->order_id = isset($order_id) ? $order_id : date('YmdHis', time()) . mt_rand(100000, 999999) ;
-
+		$this->order_id = date('YmdHis', time()) . mt_rand(100000, 999999) ;
 		$this->result = array();
 		$this->err_result = array();
 		$this->record = array();
@@ -50,16 +60,28 @@ class Account {
 	 * 充值逐浪币
 	 * 
 	 * @param int 逐浪币
+	 * @param string order_id
 	 * @return boolean
 	 */
-	public function incre($money)
+	public function incre($money, $order_id)
 	{
 		$this->db->startTrans();	// 开启事务
 
-		$this->result['account'] = $this->accountInstance->where('oid='.$this->userId)
+		$info = $this->accountInstance->field('oid')->where('oid='.$this->userId)->find();
+
+		if (empty($info)) {
+			$data['amount'] = $money;
+			$data['oid'] = $this->userId;
+			$this->result['account'] = $this->accountInstance->data($data)->add();
+
+		} else {
+			$this->result['account'] = $this->accountInstance->where('oid='.$this->userId)
 								->setInc('amount', $money);
+		}
+		
 		$this->err_result['account_err'] = $this->accountInstance->getDbError();
-			
+
+		$this->order_id = $order_id;
 		$record['amount'] = $money;
 
 		// 添加到充值日志表中。
@@ -73,9 +95,10 @@ class Account {
 	 * 充值逐浪奖金币
 	 * 
 	 * @param int 逐浪奖金币
+	 * @param string order_id
 	 * @param int 时效时间
 	 */
-	public function increBonus($money, $expire = null)
+	public function increBonus($money, $order_id, $expire = null)
 	{
 		$this->db->startTrans();	// 开启事务
 		$expire = isset($expire) ? $expire : date('Y-m-t', time());
@@ -84,8 +107,9 @@ class Account {
 		$bonus['bonus_expire'] = $expire;
 		$this->result['account'] = $this->accountInstance->where('oid='.$this->userId)->data($bonus)->save();
 
+		$this->order_id = $order_id;
 		$record['bonus'] = $money;
-		$record['memo'] = $expire;
+		$record['memo'] = !empty($this->memo) ? $this->memo : $expire;
 
 		$this->_recharge($record);
 		return $this->_commit();
@@ -104,7 +128,7 @@ class Account {
 		$this->result['account'] = $this->accountInstance->where('oid='.$this->userId)->data($bonus)->save();
 
 		$record['bonus'] = -$account['bonus'];
-		$record['memo'] = $account['bonus_expire'];
+		$record['memo'] = !empty($this->memo) ? $this->memo : $account['bonus_expire'];
 
 		$this->_recharge($record);
 		return $this->_commit();
@@ -125,7 +149,7 @@ class Account {
 
 		$record['amount'] = -$account['amount'];
 		$record['bonus'] = -$account['bonus'];
-		$record['memo'] = $account['bonus_expire'];
+		$record['memo'] = !empty($this->memo) ? $this->memo : $account['bonus_expire'];
 
 		$this->_recharge($record);
 		return $this->_commit();
@@ -145,7 +169,7 @@ class Account {
 		$record['charge_type'] = $this->type;
 		$record['charge_subtype'] = $this->subType;
 		$record['admin_id'] = 0;
-		$record['ip'] = z_ip();
+		$record['ip'] = $this->ip;
 		$this->record = $record;
 		$this->result['charge_record'] = $record_instance->data($record)->add();
 

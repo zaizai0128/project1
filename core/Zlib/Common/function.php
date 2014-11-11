@@ -475,10 +475,10 @@ function z_cover($book_id = Null, $cover = 1, $site = 0)
 /**
  * 记录日志
  *
- * @param type 	 日志类型，不同类型对应不同的日志文件名
  * @param String 日志内容
+ * @param String 日志类型，不同类型对应不同的日志文件名
  */
-function z_log($msg, $type = 0)
+function z_log($msg, $type = 'LOG_DEFAULT')
 {
 	$log_file = ZC(C('LOG.type'), $type);
 	openlog($log_file, LOG_PID, LOG_USER);
