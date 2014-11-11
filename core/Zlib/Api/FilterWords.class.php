@@ -54,12 +54,13 @@ class FilterWords {
 		if ($this->mFilterWords == null || $this->mFilterWords == false) {
 			return false;
 		}
+		log_debug_cache("FilterWords::loadFromCache");
 		return true;
 	}
 	
 	private function loadFromDatabase() 
 	{	
-		// echo "loadFromDatabase::";
+		log_debug_cache("FilterWords::loadFromDatabsae");
 		if (S(self::$mLockPrefix.self::$mKeyName) == "1") {// 加载锁定
 			return false;
 		}

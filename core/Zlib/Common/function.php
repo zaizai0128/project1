@@ -522,3 +522,12 @@ function z_tag($behavior, $action, $param)
 	$tag['ac'] = $action;
 	tag($behavior, $tag);
 }
+
+function log_debug_cache($str)
+{
+	if (APP_DEBUG) {
+		openlog ("debugcache" ,  LOG_PID  ,  LOG_USER); 
+		syslog ( LOG_DEBUG, $str); 
+		closelog ();
+	}
+}

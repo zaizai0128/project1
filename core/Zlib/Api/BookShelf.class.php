@@ -47,7 +47,7 @@ class BookShelf {
 
 		$m = M('zl_book')->where(' bk_id in ('.$bookids.')')->select();
 		foreach ($m as $row) {
-			new Book($row['bk_id'], false, $row);
+			$book = new Book($row['bk_id'], false, $row);
 		}
 		
 		return true;
@@ -98,7 +98,7 @@ class BookShelf {
 	}
 
 
-	public function addBook($shelf_id, $book_id, $ch_id = -1) 
+	public function addBook($shelf_id, $book_id, $ch_id = 0) 
 	{
 		if ($shelf_id < 0 || $shelf_id > $this->mMaxShelf)
 			return false;

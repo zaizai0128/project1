@@ -61,11 +61,13 @@ class CachedChapter {
 			$this->mChapter = json_decode($str, true);
 		if ($this->mChapter == null || $this->mChapter == false)
 			$this->mChapter = array();
+		log_debug_cache("CachedChapter::".$this->mBookId.":LoadFromCache");
 		return true;
 	}
 	
 	private function loadFromDatabase() 
 	{	
+		log_debug_cache("CachedChapter::".$this->mBookId.":LoadFromDatabase");
 		if (S(self::$mLockPrefix.self::$mKeyName.$this->mBookId) == "1") {// 加载锁定
 			return false;
 		}
@@ -107,7 +109,8 @@ class CachedChapter {
 		}
 
 		$table = $this->getChapterTable($this->mBookId);
-		$m = M($table)->where(' (ch_status=0 or ch_status=2) and bk_id = '.$this->mBookId)->order('ch_roll asc, ch_order asc')->select();
+		$m = M($table)->where(' (ch_status=0 or ch_status=2) and bk_id = '.$this->mBookId)
+			->order('ch_roll asc, ch_order asc')->select();
 		$ch_order = 0;
 		foreach ($m as $row) {
 			// $row['ch_order'] = $ch_order;

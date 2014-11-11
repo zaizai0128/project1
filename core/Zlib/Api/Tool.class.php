@@ -43,10 +43,9 @@ class Tool {
 		$mail->Body = $data['msg'];
 		$mail->AltBody ="text/html";
 
-		if(!$mail->Send())    
-	    { 	       
-	    	return z_info(0, $mail->ErrorInfo);    
-	    }
-	    return z_info(1, '发送成功');     
+		if(!$mail->Send())    { 	       
+			return z_info(0, $mail->ErrorInfo);    
+		}
+		return z_info(1, '发送成功');     
 	}
 }

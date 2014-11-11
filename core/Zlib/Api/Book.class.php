@@ -35,8 +35,11 @@ class Book {
 				if (!$succ) sleep(1); else break;
 			}
 		}
-		if ($load_state)
-			$this->loadState();
+		if (!$succ) {
+		} else {
+			if ($load_state)
+				$this->loadState();
+		}
 	}
 
 	private function loadFromCache() 
@@ -48,14 +51,17 @@ class Book {
 		if ($str == null && $str == false) 
 			return false;
 		// echo "loadFromCache(): ";
+		log_debug_cache("Book::".$this->mBookId.":LoadFromCache");
 		$this->mBookInfo = json_decode($str, true);
 		return true;
 	}
 	
+	// 有锁返回false, 其他返回true, 避免不存在数据重复访问
 	private function loadFromDatabase() 
 	{	
+		log_debug_cache("Book::".$this->mBookId.":LoadFromDatabase");
 		if (S(self::$mLockPrefix.self::$mKeyName.$this->mBookId) == "1") {// 加载锁定
-			return false;
+			return 0;
 		}
 		S(self::$mLockPrefix.self::$mKeyName.$this->mBookId, "1");
 		// echo "loadFromDatabase()";
@@ -67,8 +73,8 @@ class Book {
 		
 		if ($this->isDirty($this->mBookId)) $this->setDirty(false, $this->mBookId);
 		S(self::$mLockPrefix.self::$mKeyName.$this->mBookId, null);
-		if ($this->mBookInfo == null)
-			return false;
+		// if ($this->mBookInfo == null)
+		//		return false;
 		return true;
 	}
 
