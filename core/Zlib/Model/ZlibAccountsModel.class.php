@@ -32,4 +32,14 @@ class ZlibAccountsModel extends BaseModel {
 		return $this->where($condition)->setDec('amount', $data['num']);
 	}
 
+	/**
+	 * 调整用户奖金币的时效
+	 */
+	public function changeBonusExpire($user_id, $expire)
+	{
+		$condition['oid'] = $user_id;
+		$data['bonus_expire'] = $expire;
+		return $this->where($condition)->data($data)->save();
+	}
+
 }

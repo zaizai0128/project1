@@ -531,3 +531,11 @@ function log_debug_cache($str)
 		closelog ();
 	}
 }
+
+/**
+ * 生成唯一order号
+ */
+function z_order_id()
+{
+	return date('YmdHis', time()) . mt_rand(100000, 999999);
+}

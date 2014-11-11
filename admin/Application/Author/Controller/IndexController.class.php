@@ -1,6 +1,11 @@
 <?php
-
-
+/**
+ * 作者管理
+ *
+ * @author 	songmw<songmingwei@kongzhong.com>
+ * @date 	2014-11-11
+ * @version 1.0
+ */
 namespace Author\Controller;
 use Common\Controller\BaseController;
 

@@ -1,0 +1,62 @@
+<extend name="Common@Public/base" />
+
+{// 主体内容}
+<block name="main">
+<div id="main-content">
+    <div id="top-alert" class="fixed alert alert-error" style="display: none;">
+        <button class="close fixed" style="margin-top: 4px;">&times;</button>
+        <div class="alert-content">这是内容</div>
+    </div>
+        <div id="main" class="main">
+			<div class="main-title cf">
+				<h2>清空账户金额 - 逐浪币【{$info.amount}】/ 逐浪奖金币【{$info.bonus}】(有效期：{$info.bonus_expire})</h2>
+			</div>
+			<!-- 标签页导航 -->
+			<div class="tab-wrap">
+				<ul class="tab-nav nav">
+					<li data-tab="tab1" class="current">
+						<a href="javascript:void(0);">基础</a>
+					</li>
+				</ul>
+				<div class="tab-content">
+				<!-- 表单 -->
+				<form id="form" action="{:ZU('user/account/doClear', 'ZL_ADMIN_DOMAIN')}" method="post" class="form-horizontal">
+					<!-- 基础文档模型 -->
+					<div id="tab1" class="tab-pane in tab1">
+						<div class="default-form">
+							<div class="form-item">
+								<label class="item-label">
+									备注<span class="check-tips"></span>
+								</label>
+								<div class="controls">
+									<label class="textarea input-large">
+										<textarea name="memo" placeholder="操作备注"></textarea>
+									</label>
+								</div>
+							</div>
+						</div>
+			        </div>
+
+					<div class="form-item cf">
+						<input type="hidden" name="user_id" value="{$info.oid}">
+						<button class="btn submit-btn ajax-post hidden" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+						<a class="btn btn-return" href="javascript:history.go(-1);">返 回</a>
+					</div>
+				</form>
+				<!-- /表单 -->
+				</div>
+			</div>
+			<!-- /标签页导航 -->
+        </div>
+    </div>
+</block>
+
+<block name="js">
+<script  type="text/javascript">
+jQuery(function($){
+	
+	showTab();
+	$.menu('kefu', 'select', 'user-select');
+});
+</script>
+</block>

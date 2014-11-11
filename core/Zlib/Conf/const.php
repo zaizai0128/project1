@@ -38,6 +38,7 @@ return array(
 			'LOG_COST' => 'cost',			// 消费日志
 			'LOG_APP' => 'app',				// 应用日志，鲜花，打赏等
 			'LOG_USER' => 'user',			// 用户日志，登录，修改密码等
+			'LOG_CHANGE' => 'change',		// 后台调整类型
 		),	// 日志类型
 	),
 
@@ -96,6 +97,7 @@ return array(
 
 	// 充值
 	'RECHARGE' => array(
+
 		// 充值类型 一级分类
 		'type' => array(
 			0 => '支付宝',
@@ -108,7 +110,12 @@ return array(
 
 		// 充值类型 二级分类
 		'sub_type' => array(
-			10 => 'xx原因调整',
+			'补充类', 
+			'系统类', 
+			'退还类', 
+			'赠予类', 
+			'调整将金币有效期',
+			'清空类'
 		),
 	),
 

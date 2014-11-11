@@ -46,7 +46,7 @@ class Account {
 		$this->memo = $memo;
 		$this->ip = !empty($ip) ? $ip : z_ip();
 		$this->subType = $sub_type;
-		$this->order_id = date('YmdHis', time()) . mt_rand(100000, 999999) ;
+		$this->order_id = z_order_id();
 		$this->result = array();
 		$this->err_result = array();
 		$this->record = array();
@@ -83,6 +83,7 @@ class Account {
 
 		$this->order_id = $order_id;
 		$record['amount'] = $money;
+		$record['memo'] = !empty($this->memo) ? $this->memo : '';
 
 		// 添加到充值日志表中。
 		$this->_recharge($record);
@@ -109,6 +110,33 @@ class Account {
 
 		$this->order_id = $order_id;
 		$record['bonus'] = $money;
+		$record['memo'] = !empty($this->memo) ? $this->memo : $expire;
+
+		$this->_recharge($record);
+		return $this->_commit();
+	}
+
+	/**
+	 * 同时添加逐浪币和逐浪奖金币
+	 *
+	 * @param int amount
+	 * @param int bonus
+	 * @param string order_id
+	 * @param int 失效时间
+	 */
+	public function increBoth($amount, $bonus, $order_id, $expire = null)
+	{
+		$this->db->startTrans();
+		$expire = isset($expire) ? $expire : date('Y-m-t', time());
+
+		$data['amount'] =  array('exp', 'amount+'.$amount);
+		$data['bonus'] =  array('exp', 'bonus+'.$bonus);
+		$data['bonus_expire'] = $expire;
+		$this->result['account'] = $this->accountInstance->where('oid='.$this->userId)->data($data)->save();
+
+		$this->order_id = $order_id;
+		$record['amount'] = $amount;
+		$record['bonus'] = $bonus;
 		$record['memo'] = !empty($this->memo) ? $this->memo : $expire;
 
 		$this->_recharge($record);
