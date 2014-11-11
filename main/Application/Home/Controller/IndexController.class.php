@@ -15,10 +15,10 @@ class IndexController extends HomeController {
 	 * 网站首页
 	 */
 	public function index()
-	{	
+	{
 		// 获取全部顶级分类
 		$assign['book_top_class'] = Zapi\BookClass::getInstance()->getTopClass();
-
+		
 		$this->assign(array(
 			'assign' => $assign,
 		));
