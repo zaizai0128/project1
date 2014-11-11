@@ -1,0 +1,322 @@
+<extend name="Common@Public/base" />
+
+{// 主体内容}
+<block name="main">
+<div id="main-content">
+    <div id="top-alert" class="fixed alert alert-error" style="display: none;">
+        <button class="close fixed" style="margin-top: 4px;">&times;</button>
+        <div class="alert-content">这是内容</div>
+    </div>
+        <div id="main" class="main">
+			<div class="main-title cf">
+				<h2>用户信息 - {$user_info.author_name}【{:ZC(C('USER.user_state'), $user_info['user_state'])}】</h2>
+			</div>
+			<!-- 标签页导航 -->
+			<div class="tab-wrap">
+				<ul class="tab-nav nav">
+					<li data-tab="tab1" class="current">
+						<a href="javascript:void(0);">基础信息</a>
+					</li>
+					<li data-tab="tab2">
+						<a href="javascript:void(0);">作者信息</a>
+					</li>
+					<li data-tab="tab3">
+						<a href="javascript:void(0);">银行信息</a>
+					</li>
+				</ul>
+				<div class="tab-content">
+				<!-- 表单 -->
+				<form id="form" action="{:ZU('book/index/doEdit', 'ZL_ADMIN_DOMAIN')}" method="post" class="form-horizontal">
+					<!-- 基础文档模型 -->
+					<div id="tab1" class="tab-pane in tab1"> 
+						<div class="form-item">
+							<label class="item-label">
+								用户名 / 昵称<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								{$user_info.user_name} / {$user_info.user_nickname|default="暂未设置"}
+							</div>
+						</div>
+						<div class="form-item">
+							<label class="item-label">
+								注册方式<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								{:ZC(C('USER.reg_type'), $user_info['reg_type'])}
+							</div>
+						</div>
+						<div class="form-item">
+							<label class="item-label">
+								用户类型<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								{:ZC(C('USER.type'), $user_info['user_type'])}
+							</div>
+						</div>
+						<div class="form-item">
+							<label class="item-label">
+								性别<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								{:ZC(C('USER.sex'), $user_info['user_sex'])}
+							</div>
+						</div>
+						<div class="form-item">
+							<label class="item-label">
+								邮箱 / 是否验证<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								{$user_info.user_email} 
+								<?php if(!empty($user_info['user_true_email']) && $user_info['user_true_email'] == $user_info['user_email']):?>[已验证]
+								<?php else:?>
+								[未验证]
+								<?php endif;?>
+							</div>
+						</div>
+						<div class="form-item">
+							<label class="item-label">
+								用户QQ<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								{$user_info.user_qq|default="暂未设置"}
+							</div>
+						</div>
+						<div class="form-item">
+							<label class="item-label">
+								电话<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								{$user_info.user_telephone|default="暂未设置"}
+							</div>
+						</div>
+						<div class="form-item">
+							<label class="item-label">
+								生日<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								{$user_info.user_birthday|default="暂未设置"}
+							</div>
+						</div>
+						<div class="form-item">
+							<label class="item-label">
+								手机号<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								{$user_info.user_mobile|default="暂未设置"}
+								<?php if($user_info['user_mobi_yz'] == 1):?>
+									[已验证]
+								<?php endif;?>
+							</div>
+						</div>
+						<div class="form-item">
+							<label class="item-label">
+								省 - 市 - 地区<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								{$user_info.user_province|default="暂未设置"}
+								-
+								{$user_info.user_city|default="暂未设置"}
+								-
+								{$user_info.user_area|default="暂未设置"}
+							</div>
+						</div>
+						<div class="form-item">
+							<label class="item-label">
+								喜欢标签<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								<?php $tags = ''?>
+								<?php foreach($user_info['user_like_tag'] as $val):?>
+								<?php $tags .= $val.' , '?>
+								<?php endforeach;?>
+								{$tags|trim=" , "}
+							</div>
+						</div>
+						<div class="form-item">
+							<label class="item-label">
+								注册时间<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								{$user_info.user_join}
+							</div>
+						</div>
+						<div class="form-item">
+							<label class="item-label">
+								上次登录时间 / 上次登录IP<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								{$user_info.user_login_time} / {$user_info.user_login_ip}
+							</div>
+						</div>
+			        </div>
+					<!-- 作者文档 -->
+					<div id="tab2" class="tab-pane tab2">
+						<div class="form-item">
+							<label class="item-label">
+								真实姓名<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								{$user_info.user_true_name}
+							</div>
+						</div>
+						<div class="form-item">
+							<label class="item-label">
+								作者笔名<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								{$user_info.author_name}
+							</div>
+						</div>
+						<div class="form-item">
+							<label class="item-label">
+								邮编号<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								{$user_info.user_zipcode|default="暂未设置"}
+							</div>
+						</div>
+						<div class="form-item">
+							<label class="item-label">
+								地址<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								{$user_info.user_address|default="暂未设置"}
+							</div>
+						</div>				
+						<div class="form-item">
+							<label class="item-label">
+								紧急联系人<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								{$user_info.user_name_ji|default="暂未设置"}
+							</div>
+						</div>
+						<div class="form-item">
+							<label class="item-label">
+								紧急联系人与用户关系<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								{$user_info.user_name_guanxi|default="暂未设置"}
+							</div>
+						</div>
+						<div class="form-item">
+							<label class="item-label">
+								紧急联系人电话<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								{$user_info.user_name_tel|default="暂未设置"}
+							</div>
+						</div>	
+						<div class="form-item">
+							<label class="item-label">
+								紧急联系人所在城市<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								{$user_info.user_ji_pro_city|default="暂未设置"}
+							</div>
+						</div>	
+					</div>
+			        <!-- 银行信息 -->
+					<div id="tab3" class="tab-pane tab3">
+						<div class="form-item">
+							<label class="item-label">
+								开户行<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								{$user_info.bank|default="暂未设置"}
+							</div>
+						</div>	 
+						<div class="form-item">
+							<label class="item-label">
+								开户人名称<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								{$user_info.bank_name|default="暂未设置"}
+							</div>
+						</div>
+						<div class="form-item">
+							<label class="item-label">
+								银行账号<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								{$user_info.bank_num|default="暂未设置"}
+							</div>
+						</div>
+						<div class="form-item">
+							<label class="item-label">
+								身份证号<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								{$user_info.user_idcard|default="暂未设置"}
+							</div>
+						</div>
+						<div class="form-item">
+							<label class="item-label">
+								银行所在城市<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								{$user_info.bank_prov_city|default="暂未设置"}
+							</div>
+						</div>
+						<div class="form-item">
+							<label class="item-label">
+								开户人手机号<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								{$user_info.bank_mobile|default="暂未设置"}
+							</div>
+						</div>
+						<div class="form-item">
+							<label class="item-label">
+								开户人电话<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								{$user_info.bank_tel|default="暂未设置"}
+							</div>
+						</div>
+						<div class="form-item">
+							<label class="item-label">
+								办公室电话<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								{$user_info.office|default="暂未设置"}
+							</div>
+						</div>
+						<div class="form-item">
+							<label class="item-label">
+								邮寄地址 / 邮编<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								{$user_info.post_addr|default="暂未设置"} / {$user_info.post_code|default="暂未设置"}
+							</div>
+						</div>
+						<div class="form-item">
+							<label class="item-label">
+								作品列表?<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								{$user_info.product|default="暂未设置"}
+							</div>
+						</div>
+			        </div> 
+					<div class="form-item cf">
+						<a class="btn btn-return" href="javascript:history.go(-1);">返 回</a>
+					</div>
+				</form>
+				<!-- /表单 -->
+				</div>
+			</div>
+			<!-- /标签页导航 -->
+        </div>
+    </div>
+</block>
+
+<block name="js">
+<script  type="text/javascript">
+jQuery(function($){
+	
+	showTab();
+	$.menu('kefu', 'select', 'user-select');
+});
+</script>
+</block>

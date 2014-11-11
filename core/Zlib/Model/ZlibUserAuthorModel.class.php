@@ -11,6 +11,48 @@ namespace Zlib\Model;
 class ZlibUserAuthorModel extends BaseModel {
 
 	protected $trueTableName = 'zl_user_author';
+	protected $userInstance = null;
+
+	public function __construct()
+	{
+		parent::__construct();
+		$this->userInstance = new ZlibUserModel;
+	}
+
+	/**
+	 * 获取列表总数
+	 * @param array 条件
+	 */
+	public function getTotal($where = null)
+	{
+		$condition['u.user_type'] = '02';
+		$condition = array_merge($condition, (array)$where);
+		$condition = z_array_filter($condition, false);
+
+		return $this->alias('AS a')
+				   ->join('LEFT JOIN zl_user AS u ON a.user_id = u.user_id')
+				   ->where($condition)->count();
+	}
+
+	/**
+	 * 获取列表
+	 */
+	public function getList($where = null, $page = null, $field = '*')
+	{
+		$condition['u.user_type'] = '02';
+		$condition = array_merge($condition, (array)$where);
+		$condition = z_array_filter($condition, false);
+		
+		if ($page)
+			return $this->alias('AS a')
+					->join('LEFT JOIN zl_user AS u ON a.user_id = u.user_id')
+					->where($condition)
+					->limit($page['firstRow'], $page['listRows'])->order('u.user_id desc')->select();
+		else
+			return $this->alias('AS a')
+					->join('LEFT JOIN zl_user AS u ON a.user_id = u.user_id')
+					->where($condition)->order('u.user_id desc')->select();
+	}
 	
 	/**
 	 * 编辑
@@ -36,6 +78,20 @@ class ZlibUserAuthorModel extends BaseModel {
 	{
 		$condition = 'user_id = '.$user_id;
 		return $this->field($field)->where($condition)->find();
+	}
+
+	/**
+	 * 获取作者全部信息
+	 */
+	public function getAuthorAllInfoByUserId($user_id, $field='*')
+	{
+		$condition['a.user_id'] = $user_id;
+		$field .= ',u.user_name as user_name';	// tmp 由于bank没有user_name，导致为null
+		
+		return $this->alias('AS a')->field($field)
+			->join('LEFT JOIN zl_user AS u ON a.user_id = u.user_id')
+			->join('LEFT JOIN zl_user_author_bank AS b ON a.user_id = b.user_id')
+			->where($condition)->find();
 	}
 
 }

@@ -8,6 +8,9 @@
         <li sub-target="subnav-book" class="menu-tab-book">
             <a href="javascript:;">作品管理</a>
         </li>
+        <li sub-target="subnav-author" class="menu-tab-author">
+            <a href="javascript:;">作者管理</a>
+        </li>
         <li sub-target="subnav-kefu" class="menu-tab-kefu">
             <a href="javascript:;">客服工具</a>
         </li>
@@ -54,6 +57,17 @@
                 <li><a class="item item-ban-list" href="{:ZU('deny/list/index', 'ZL_ADMIN_DOMAIN')}">禁止上榜作品列表</a></li>
                 <li><a class="item item-ban-update" href="{:ZU('deny/update/index', 'ZL_ADMIN_DOMAIN')}">禁止最新更新出现列表</a></li>
                 <li><a class="item item-ban-prevent" href="{:ZU('deny/prevent/index', 'ZL_ADMIN_DOMAIN')}">屏蔽列表</a></li>
+            </ul>
+        </div>
+        <!-- /子导航 -->
+
+        <!-- 子导航 - 作者管理 -->
+        <div class="subnav-author subnav-item" style="display:none;">
+            <h3 class="subnav-author-manager">
+                <i class="icon icon-fold"></i>作者管理
+            </h3>
+            <ul class="side-sub-menu subnav-off">
+                <li><a class="item item-list" href="{:ZU('author/index/select', 'ZL_ADMIN_DOMAIN')}">作者查询</a></li>
             </ul>
         </div>
         <!-- /子导航 -->
