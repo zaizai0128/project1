@@ -97,14 +97,14 @@ class BookShelf {
 		return $arr;
 	}
 
-
+	
 	public function addBook($shelf_id, $book_id, $ch_id = 0) 
 	{
 		if ($shelf_id < 0 || $shelf_id > $this->mMaxShelf)
 			return false;
 
 		if ($this->mBooks[$book_id] != null)
-			return false;		// 已存在
+			return true;		// 已存在
 		$row = $this->mBookShelf[$shelf_id];
 		if ($row == null) {
 			$row = array();
@@ -119,6 +119,9 @@ class BookShelf {
 			$this->mBookShelf[$shelf_id] = $row;
 		}	
 		 
+		if ($this->mBookShelf[$shelf_id]['book_amount'] >= C("SHELF.max"))
+			return false;
+
 		$temp = array();
 		$temp['bk_id'] = $book_id;
 		$temp['ch_id'] = $ch_id;
@@ -128,6 +131,8 @@ class BookShelf {
 		$row['books'] = json_encode($this->mBookShelf[$shelf_id]['books']);
 		$row['book_amount']++;
 		M('zl_bookshelf_0'.($this->mUserId % 10))->add($row, array(), true);
+		// 添加收藏日志
+		z_log('userid:['.$this->mUserId.'] '.'bookid:['.$book_id.']' ,  'LOG_COLLECT');
 		return true;
 	}
 

@@ -33,12 +33,14 @@ return array(
 	// 日志相关
 	'LOG' => array(
 		'type' => array(
-			'LOG_DEFAULT' => 'default',			// 默认日志，暂时未知
-			'LOG_BUY' => 'buy',				// 购买日志
+			'LOG_DEFAULT' => 'default',		// 默认日志，暂时未知
+			'LOG_BUY' => 'buy',			// 购买日志
 			'LOG_COST' => 'cost',			// 消费日志
-			'LOG_APP' => 'app',				// 应用日志，鲜花，打赏等
+			'LOG_APP' => 'app',			// 应用日志，鲜花，打赏等
 			'LOG_USER' => 'user',			// 用户日志，登录，修改密码等
-			'LOG_CHANGE' => 'change',		// 后台调整类型
+			'LOG_CHANGE' => 'charge_change',	// 后台调整类型
+			'LOG_VISIT' => 'visit',			// 点击日志
+			'LOG_COLLECT' => 'collect',		// 收藏日志
 		),	// 日志类型
 	),
 

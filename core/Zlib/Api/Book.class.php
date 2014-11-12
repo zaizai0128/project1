@@ -61,7 +61,7 @@ class Book {
 	{	
 		log_debug_cache("Book::".$this->mBookId.":LoadFromDatabase");
 		if (S(self::$mLockPrefix.self::$mKeyName.$this->mBookId) == "1") {// 加载锁定
-			return 0;
+			return false;
 		}
 		S(self::$mLockPrefix.self::$mKeyName.$this->mBookId, "1");
 		// echo "loadFromDatabase()";
@@ -137,6 +137,7 @@ class Book {
 		}
 	}
 
+	// 同步更新 
 	public function addFlower() 
 	{
 		//关键数据实时写库: 
@@ -144,43 +145,39 @@ class Book {
 		$this->mBookInfo['bk_flower_month']++;
 		
 		S(self::$mKeyName.$this->mBookId, json_encode($this->mBookInfo), 3600 * 6);
+		/*
 		$m = M('zl_book_rank');
 		$data = array ('bk_flower_total' => $this->mBookInfo['bk_flower_total'],
 				'bk_flower_month' =>   $this->mBookInfo['bk_flower_month']);
 		$m->whrere('bk_id='.$mBookId).setField($data);
-		
+		*/
 	}
 	
 	public function addVisit() 
 	{
-		//关键数据实时写库: 
 		$this->mBookInfo['bk_visit_day'] = $this->mBookInfo['bk_visit_day'] + 1;
 		$this->mBookInfo['bk_visit_week'] = $this->mBookInfo['bk_visit_week'] + 1;
 		$this->mBookInfo['bk_visit_month'] = $this->mBookInfo['bk_visit_month'] + 1;
 		$this->mBookInfo['bk_visit_all'] = $this->mBookInfo['bk_visit_all'] + 1;
 			
-	//	S(self::$mKeyName.$this->mBookId, json_encode($this->mBookInfo));
+		// S(self::$mKeyName.$this->mBookId, json_encode($this->mBookInfo));
 		S(self::$mKeyName.$this->mBookId, json_encode($this->mBookInfo), 3600 * 6);
 	}
+
 	
-	public function addCom() 
-	{
-		//关键数据实时写库: 
-		$this->mBookInfo['bk_com_week']++;
-		$this->mBookInfo['bk_com_month']++;
-		$this->mBookInfo['bk_com_all']++;
-		
-		S(self::$mKeyName.$this->mBookId, json_encode($this->mBookInfo), 3600 * 6);
-	}
-	
+	// 收藏
 	public function addCollection() 
 	{
-		//关键数据实时写库: 
+		// 非关键数据
+		// 关键数据实时写库: 
 		$this->mBookInfo['bk_collection_week']++;
 		$this->mBookInfo['bk_collection_month']++;
 		$this->mBookInfo['bk_collection_all']++;
 		
 		S(self::$mKeyName.$this->mBookId, json_encode($this->mBookInfo), 3600 * 6);
+		$data = array ('bk_flower_total' => $this->mBookInfo['bk_flower_total'],
+				'bk_flower_month' =>   $this->mBookInfo['bk_flower_month']);
+		$m->whrere('bk_id='.$mBookId).setField($data);
 	}	
 
 	public function getInfo($load_state = false) 
@@ -258,6 +255,17 @@ class Book {
 			fclose($fr);
 			return C('ZL_IMAGE_DOMAIN') . '/www/image/no_book.gif' . '?' . time();
 		}
+	}
+
+	// 推荐: 	
+	public function addCom() 
+	{
+		//非关键数据
+		$this->mBookInfo['bk_com_week']++;
+		$this->mBookInfo['bk_com_month']++;
+		$this->mBookInfo['bk_com_all']++;
+		
+		S(self::$mKeyName.$this->mBookId, json_encode($this->mBookInfo), 3600 * 6);
 	}
 
 	/**
