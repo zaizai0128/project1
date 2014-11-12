@@ -86,7 +86,7 @@ class ZlibUserAuthorModel extends BaseModel {
 	public function getAuthorAllInfoByUserId($user_id, $field='*')
 	{
 		$condition['a.user_id'] = $user_id;
-		$field .= ',u.user_name as user_name';	// tmp 由于bank没有user_name，导致为null
+		$field .= ',u.user_name as user_name, u.user_id as user_id';	// tmp 由于bank没有user_name，导致为null
 		
 		return $this->alias('AS a')->field($field)
 			->join('LEFT JOIN zl_user AS u ON a.user_id = u.user_id')

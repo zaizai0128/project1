@@ -47,9 +47,10 @@ class IndexController extends BaseController {
 					break;
 			}
 
+			// sql 索引有问题，导致查询时间过长，有待优化
 			$total = $this->authorInstance->getTotal($where);
 			$data = $this->authorInstance->getList($where);
-		
+
 			$this->assign('data', $data);
 			$this->assign('map', $map);
 			$this->display();

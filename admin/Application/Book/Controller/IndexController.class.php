@@ -23,12 +23,15 @@ class IndexController extends BaseController {
 	public function index()
 	{
 		// 搜索条件
-		$param['bk_name'] = array('like', '%'.I('get.bk_name').'%');
+		$bk_name = I('get.bk_name');
+		if (!empty($bk_name))
+			$param['bk_name'] = array('like', '%'.$bk_name.'%');
+
 		$param['bk_author'] = I('get.bk_author');
 		$param['bk_status'] = I('get.bk_status');
 		$param['bk_fullflag'] = I('get.bk_fullflag');
+		$param['bk_author_id'] = I('get.user_id');
 		$param = z_array_filter($param, False);
-
 		$class = \Zlib\Api\BookClass::getInstance()->getClass();
 		$assign['class'] = $class;
 
