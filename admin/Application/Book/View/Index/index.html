@@ -115,8 +115,9 @@
 							<td>{$val.bk_cre_time}</td>
 							<td>{$val.bk_now_date}</td>
 							<td>
-								<a href="{:ZU('book/index/edit', 'ZL_ADMIN_DOMAIN', array('book_id'=>$val['bk_id']))}" class="btn">编辑</a>
-								<a target="_blank" href="{:ZU('chapter/index', 'ZL_AUTHOR_DOMAIN', array('book_id'=>$val['bk_id']))}" class="btn">章节</a>
+								<a href="{:ZU('book/index/edit', 'ZL_ADMIN_DOMAIN', array('book_id'=>$val['bk_id']))}" class="btn btn-mini">编辑</a>
+								<a target="_blank" href="{:ZU('chapter/index', 'ZL_AUTHOR_DOMAIN', array('book_id'=>$val['bk_id']))}" class="btn btn-mini">章节</a>
+								<a target="_blank" href="{:ZU('book/index/delete', 'ZL_ADMIN_DOMAIN', array('book_id'=>$val['bk_id']))}" class="btn btn-mini ajax-get">删除</a>
 							</td>
 						</tr>
 						<?php endforeach;?>

@@ -210,4 +210,15 @@ class ZlibBookModel extends BaseModel {
 		$condition['bk_author_id'] = $user_id;
 		return $this->where($condition)->count();
 	}
+
+	/**
+	 * 删除
+	 * @param int book_id
+	 */
+	public function del($book_id)
+	{
+		$data['bk_id'] = $book_id;
+		$data['bk_status'] = '01';
+		return $this->data($data)->save();
+	}
 }

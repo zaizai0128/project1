@@ -28,7 +28,7 @@ class IndexController extends BaseController {
 			$param['bk_name'] = array('like', '%'.$bk_name.'%');
 
 		$param['bk_author'] = I('get.bk_author');
-		$param['bk_status'] = I('get.bk_status');
+		$param['bk_status'] = I('get.bk_status', '00');
 		$param['bk_fullflag'] = I('get.bk_fullflag');
 		$param['bk_author_id'] = I('get.user_id');
 		$param = z_array_filter($param, False);
@@ -73,6 +73,16 @@ class IndexController extends BaseController {
 			$data = I();
 			$state = $this->bookInstance->doEditInfo($data);
 			$state['url'] = ZU('book/index/edit', 'ZL_ADMIN_DOMAIN', array('book_id'=>$data['bk_id']));
+			$this->ajaxReturn($state);
+		}
+	}
+
+	public function delete()
+	{
+		if (IS_AJAX) {
+			$book_id = I('get.book_id');
+
+			$state = $this->bookInstance->delBook($book_id);
 			$this->ajaxReturn($state);
 		}
 	}

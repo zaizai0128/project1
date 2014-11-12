@@ -32,6 +32,16 @@ class ZlibChapterModel extends BaseModel {
 	}
 
 	/**
+	 * 获取作品vip的章节个数
+	 */
+	public function getTotalVipChapterNum()
+	{
+		$condition['bk_id'] = $this->bookId;
+		$condition['ch_vip'] = 1;
+		return (int)$this->instance->where($condition)->count();
+	}
+
+	/**
 	 * 获取作品章节的总数
 	 */
 	public function getTotalSizeChapter()
