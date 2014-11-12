@@ -71,7 +71,7 @@ class BookApplyVipController extends BaseController {
 			$tag['data'] = $data;
 			tag('book_apply_vip', $tag);
 
-			$state['url'] = ZU('BookApplyVip/index', 'ZL_ADMIN_DOMAIN');
+			$state['url'] = ZU('check/BookApplyVip/index', 'ZL_ADMIN_DOMAIN');
 			$this->ajaxReturn($state);
 		}
 	}

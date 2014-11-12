@@ -30,7 +30,6 @@ class UserAuthorBankService extends ZlibUserAuthorBankModel {
 		$final_data['user_id'] = $data['user_id'];
 		$final_data['user_name'] = $data['user_name'];
 		$final_data['bank_prov_city'] = $data['b_city'];
-		$final_data['user_idcard'] = $data['a_idcard'];
 		
 		// 添加
 		if (empty($bank)) {

@@ -92,7 +92,7 @@ class BookApplyController extends BaseController {
 				}
 
 				// 成功后跳转的地址
-				$state['url'] = ZU('bookApply/index', 'ZL_ADMIN_DOMAIN');
+				$state['url'] = ZU('check/bookApply/index', 'ZL_ADMIN_DOMAIN');
 				$this->ajaxReturn($state);
 			} else {
 				$this->ajaxReturn($state);

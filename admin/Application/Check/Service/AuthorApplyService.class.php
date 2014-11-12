@@ -83,6 +83,7 @@ class AuthorApplyService extends ZlibUserModel {
 		$author_data['author_name'] = $apply_data['author_name'];
 		$author_data['user_true_name'] = $apply_data['user_true_name'];
 		$author_data['create_time'] = z_now();
+		$author_data['shenhe_time'] = z_now();
 
 		// 分配一个随机的责任编辑？
 
