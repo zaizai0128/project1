@@ -2,6 +2,20 @@
 namespace Home\Controller;
 use Think\Controller;
 class IndexController extends BaseController {
+
+	public function tmp2()
+	{
+
+		$msg['content']['data']['phone'] = '18612666432';
+		$msg['content']['data']['email'] = '247678652@qq.com';
+		$msg['content']['rows'] = [];
+		$msg['message'] = '操作成功';
+		$msg['state'] = 1;
+
+		$this->ajaxReturn($msg);
+		// echo '{"content":{"data":{"phone":"18612666432","email":"247678652@qq.com"},"rows":[]},"message":"操作成功","state":1}';
+	}
+
 	//首页的显示遍历
 	public function index(){
 		//显示首页用户名
@@ -16,12 +30,11 @@ class IndexController extends BaseController {
 		$res_category=$this->getCates();
 		//显示热门职位的分类
 		$res_hotjob=$this->showHot();
-		var_dump($res_hotjob);
 		//输出到模板
 		$this->assign('data',$this->data);
 		$this->assign('cates',$res_category);
 		$this->assign('hotjob',$res_hotjob);
-		//$this->display();
+		$this->display();
 		//var_dump($res_category);
 	}
     //最新职位的显示
@@ -51,12 +64,16 @@ class IndexController extends BaseController {
     public function showHot(){
     	$user_col = M('user_col');
     	$job = M('job');
+    	$company = M('company');
     	$res_user_col=$user_col->query("select job_id,count(job_id) as times from lg_user_col GROUP BY job_id order by times desc limit 3");
-    	//var_dump($res_user_col);
-    	foreach($res_user_col as $value){
+    	foreach($res_user_col as $key=>$value){
     		$id=$value['job_id'];
-    		$hot_job[]=$job->where("id={$id}")->find();
+    		$arr=$job->where("id={$id}")->find();
+    		$cid=$arr['company_id'];
+    		$arr['company']=$company->where("id={$cid}")->find();
+    		$hot_job[]=$arr;
     	}
+    	//var_dump($hot_job);
     	return $hot_job;
     }
 

@@ -32,7 +32,7 @@
             <li class="current"><a href="index.html">首页</a></li>
             <li ><a href="companylist.html" >公司</a></li>
             <li ><a href="h/toForum.html" target="_blank">论坛</a></li>
-            <li ><a href="jianli.html" rel="nofollow">我的简历</a></li>
+            <li ><a href="<?php echo U('Resume/index');?>" rel="nofollow">我的简历</a></li>
             <li ><a href="create.html" rel="nofollow">发布职位</a></li>
         </ul>
         <ul class="loginTop <?php echo ($data['loginTop_value']); ?>">
@@ -64,14 +64,9 @@
                         <dt>
                             我收到的简历
                         </dt>
-                        <dd>
-                            <a href="">
+                        <dd <?php if([nav] == 'unhandle'): ?>class="current"<?php endif; ?>>
+                            <a href="<?php echo U('Home/ResumeHandle/unhandle');?>">
                                 待处理简历
-                            </a>
-                        </dd>
-                        <dd>
-                            <a href="canInterviewResumes.html">
-                                待定简历
                             </a>
                         </dd>
                         <dd>
@@ -84,23 +79,18 @@
                                 不合适简历
                             </a>
                         </dd>
-                        <dd class="btm">
-                            <a href="autoFilterResumes.html">
-                                自动过滤简历
-                            </a>
-                        </dd>
                     </dl>
                     <dl class="company_center_aside">
                         <dt>
                             我发布的职位
                         </dt>
-                        <dd>
-                            <a href="positions.html">
+                        <dd <?php if([nav] == 'positions'): ?>class="current"<?php endif; ?>>
+                            <a href="<?php echo U('Home/CompanyJob/positions');?>">
                                 有效职位
                             </a>
                         </dd>
-                        <dd>
-                            <a href="positions.html">
+                        <dd <?php if([nav] == 'invalid'): ?>class="current"<?php endif; ?>>
+                            <a href="<?php echo U('Home/CompanyJob/invalid');?>">
                                 已下线职位
                             </a>
                         </dd>

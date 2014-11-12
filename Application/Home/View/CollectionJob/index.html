@@ -21,37 +21,7 @@ var rctx = "http://hr.lagou.com";
 </head>
 <body>
 <div id="body">
-    <div id="header">
-        <div class="wrapper">
-            <a href="http://www.lagou.com/" class="logo"></a>
-            <ul class="reset" id="navheader">
-                <li><a href="http://www.lagou.com/">首页</a></li>
-                <li><a href="http://www.lagou.com/gongsi/">公司</a></li>
-                <li><a href="http://www.lagou.com/toForum.html" target="_blank" rel="nofollow">论坛</a></li>
-                                    <li><a href="http://www.lagou.com/resume/basic.html" rel="nofollow">我的简历</a></li>
-                                            </ul> 
-                        <dl class="collapsible_menu">
-                <dt>
-                    <span id="nowrap">小苍苍&nbsp;</span>
-                                        <span id="noticeDot-0" class="dn"></span>                   
-                                        <i></i>
-                </dt>
-                                    <dd style="display: none;"><a href="http://www.lagou.com/resume/myresume.html" rel="nofollow">我的简历</a></dd>
-                                        <dd style="display: none;"><a href="http://www.lagou.com/mycenter/collections.html">我收藏的职位</a></dd>
-                                                            <dd style="display: none;"><a href="http://www.lagou.com/mycenter/delivery.html">我投递的职位 <span class="red dn" id="noticeNo">(0)</span></a></dd>
-                                        <dd style="display: none;" class="btm"><a href="http://www.lagou.com/s/subscribe.html">我的订阅</a></dd>
-                    <dd style="display: none;"><a href="http://www.lagou.com/mycenter/saveUserType.do?type=1">我要招人</a></dd>
-                                                <dd style="display: none;"><a href="http://www.lagou.com/user/accountBind.html">帐号设置</a></dd>
-                                <dd style="display: none;" class="logout"><a href="http://www.lagou.com/user/logout.html" rel="nofollow">退出</a></dd>
-            </dl>
-                                    <div id="noticeTip" class="dn">
-                <span class="bot"></span>
-                <span class="top"></span>
-                <a href="http://www.lagou.com/mycenter/delivery.html?tag=0&amp;r=0" class="notice_tip" target="_blank"><strong>0</strong>条新投递反馈</a>
-                <a href="javascript:;" class="closeNT"></a>
-            </div>
-                    </div>
-    </div><!-- end #header -->
+    <include file="Public/header" nav='index' />
     <div id="container">
                 
         <div class="clearfix">
@@ -61,61 +31,34 @@ var rctx = "http://hr.lagou.com";
                         <h1><em></em>我收藏的职位</h1>
                     </dt>
                     <dd>
-                                                <form id="collectionsForm">
+                        <form id="collectionsForm">
                             <ul class="reset my_collections">
-                                                                <li data-id="245610">
-                                    <a href="http://www.lagou.com/gongsi/36786.html" target="_blank" title="师盛">
-                                        <img src="%E6%88%91%E6%94%B6%E8%97%8F%E7%9A%84%E8%81%8C%E4%BD%8D-%E6%8B%9B%E8%81%98%E6%9C%8D%E5%8A%A1-%E6%8B%89%E5%8B%BE%E7%BD%91-%E6%9C%80%E4%B8%93%E4%B8%9A%E7%9A%84%E4%BA%92%E8%81%94%E7%BD%91%E6%8B%9B%E8%81%98%E5%B9%B3%E5%8F%B0_files/logo_default.png" alt="师盛">
+                                <foreach name="result" item="vo" >
+                                    <li data-id="245610">
+                                    <a href="" target="_blank" title="师盛">
+                                        <img src="" alt="师盛">
                                     </a>
                                     <div class="co_item">
                                         <h2 title="PHP 程序员">
                                             <a href="http://www.lagou.com/jobs/245610.html" target="_blank">
-                                                <em>PHP 程序员</em> 
-                                                <span>（3k-5k）</span>
+                                                <em>{$vo.name}</em> 
+                                                <span>（{$vo.salary_low}k-{$vo.salary_high}k）</span>
                                             </a>
                                         </h2>
-                                        <span class="co_time">发布时间：2014-09-22 22:51</span>
-                                        <div class="co_cate">师盛 / 广州 / 不限 / 不限</div>
-                                        <span class="co_youhuo c7">专注会展行业软件开发，多种晋升方向。</span>
-                                                                        
-                                                                                 
-                                <a href="http://www.lagou.com/jobs/245610.html" target="_blank" class="collection_link">投个简历</a>
-                                                                              
-                                                                                                <i></i>
-                                        <a href="javascript:;" class="collectionCancel collection_link collected">
+                                        <span class="co_time">发布时间：{$vo.modify_time|date='Y年m月d日',###}</span>
+                                        <div class="co_cate">{$vo.company.name} / {$vo.address} / {$vo.work_year} / {$vo.edu}</div>
+                                        <span class="co_youhuo c7">{$vo.desc}</span>
+                                        <a href="" target="_blank" class="collection_link">投个简历</a>
+                                        <i></i>
+                                        <a href="{:U('CollectionJob/jobDel',array('jid'=>$vo['id']))}" class="collection_link">
                                             取消收藏
-                                            <span>已取消收藏</span>
                                         </a>
-                                    </div>
-                                </li>
-                                                                <li data-id="263818">
-                                    <a href="http://www.lagou.com/gongsi/37435.html" target="_blank" title="木屋时代科技有限公司">
-                                        <img src="%E6%88%91%E6%94%B6%E8%97%8F%E7%9A%84%E8%81%8C%E4%BD%8D-%E6%8B%9B%E8%81%98%E6%9C%8D%E5%8A%A1-%E6%8B%89%E5%8B%BE%E7%BD%91-%E6%9C%80%E4%B8%93%E4%B8%9A%E7%9A%84%E4%BA%92%E8%81%94%E7%BD%91%E6%8B%9B%E8%81%98%E5%B9%B3%E5%8F%B0_files/logo_default.png" alt="木屋时代科技有限公司">
-                                    </a>
-                                    <div class="co_item">
-                                        <h2 title="产品经理">
-                                            <a href="http://www.lagou.com/jobs/263818.html" target="_blank">
-                                                <em>产品经理</em> 
-                                                <span>（3k-5k）</span>
-                                            </a>
-                                        </h2>
-                                        <span class="co_time">发布时间：2014-10-23 14:30</span>
-                                        <div class="co_cate">木屋时代科技有限公司 / 北京 / 不限 / 大专</div>
-                                        <span class="co_youhuo c7">每周双休，周四团体活动。工作氛围轻松</span>
-                                                                        
-                                                                                 
-                                <a href="http://www.lagou.com/jobs/263818.html" target="_blank" class="collection_link">投个简历</a>
-                                                                              
-                                                                                                <i></i>
-                                        <a href="javascript:;" class="collectionCancel collection_link collected">
-                                            取消收藏
-                                            <span>已取消收藏</span>
-                                        </a>
-                                    </div>
-                                </li>
-                                                            </ul>
-                                                    </form>
-                                            </dd>
+                                        </div>
+                                    </li>                                    
+                                </foreach>
+                            </ul>
+                        </form>
+                    </dd>
                 </dl>
             </div>  
             <div class="content_r">

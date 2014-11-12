@@ -1,7 +1,7 @@
 <?php
 namespace Home\Controller;
 use Think\Controller;
-class ResumeController extends Controller {
+class ResumeController extends BaseController {
 	//个人模板主页
 	//$username 			用户名
 	//$time 				最后修改时间

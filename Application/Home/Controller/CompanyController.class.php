@@ -8,6 +8,8 @@
  *
  */
 namespace Home\Controller;
+
+
 class CompanyController extends CompanyBaseController {
 	// 公司主页
 	public function index()
@@ -54,21 +56,54 @@ class CompanyController extends CompanyBaseController {
 		$this->display();
 	}
 
-	public function create()
+
+	// 公司列表页
+	public function companylist()
 	{
 		$this->display();
 	}
 
-	// 发布职位
-	public function doCreate()
+	public function showCompany()
 	{
-		$data = I();
 		$data['company_id'] = $this->uid;
-		$data['create_time'] = time();
-		unset($data['positionType']);
-		$jobObj = D('Job');
-		$result = $jobObj->add($data);
 
-		$this->ajaxReturn();
+		$company = $this->comObj->where('id = '.$this->uid)->find();
+		$company['scale'] = C('company_scale')[$company['scale']];
+		$company['stage'] = C('company_stage')[$company['stage']];
+		
+		$comTagObj = D('CompanyTag');
+		$tagObj = D('Tag');
+		$res = $comTagObj->where($data)->select();
+		$str = '';
+		if ($res) {
+			foreach($res as $val) {
+				$str .= $val['tag_id'].',';
+			}
+			$str = rtrim($str, ',');
+			$where['id'] = array('in', $str);
+			$tag = $tagObj->where($where)->select();
+			$this->assign('tag', $tag);
+		}
+		$result1 = $tagObj->where('type > 0')->limit(12)->select();
+		$result2 = $tagObj->where('type > 0')->limit('12,10')->select();
+
+		$productObj = D('Product');
+		$product = $productObj->where($data)->select();
+
+		$teamObj = D('Team');
+		$team = $teamObj->where($data)->select();
+
+		$jobObj = D('Job');
+		$job = $jobObj->where(array('company_id'=>$this->uid))->select();
+		$jobnum = $jobObj->where(array('company_id'=>$this->uid))->count();
+
+		$this->assign('company', $company);
+		$this->assign('allTag1', $result1);
+		$this->assign('allTag2', $result2);
+		$this->assign('product', $product);
+		$this->assign('team', $team);
+		$this->assign('job', $job);
+		$this->assign('jobnum', $jobnum);
+		$this->display();
 	}
 }

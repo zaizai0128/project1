@@ -30,9 +30,9 @@
         </a>
         <ul class="reset" id="navheader">
             <li class="current"><a href="index.html">首页</a></li>
-            <li ><a href="companylist.html" >公司</a></li>
+            <li ><a href="<?php echo U('Home/Company/companylist');?>" >公司</a></li>
             <li ><a href="h/toForum.html" target="_blank">论坛</a></li>
-            <li ><a href="jianli.html" rel="nofollow">我的简历</a></li>
+            <li ><a href="<?php echo U('Resume/index');?>" rel="nofollow">我的简历</a></li>
             <li ><a href="create.html" rel="nofollow">发布职位</a></li>
         </ul>
         <ul class="loginTop <?php echo ($data['loginTop_value']); ?>">
@@ -147,6 +147,118 @@
                         </div>
                         <div class="c_breakline"></div>
                         <div id="Product">
+                            <?php if(empty($product)): ?><div class="product_wrap no_product">
+                                <!--无产品 -->
+                                <dl class="c_section">
+                                    <dt>
+                                        <h2>
+                                            <em></em>
+                                            公司产品
+                                        </h2>
+                                    </dt>
+                                    <dd>
+                                        <div class="addnew">
+                                            酒香不怕巷子深已经过时啦！
+                                            <br>
+                                            把自己优秀的产品展示出来吸引人才围观吧！
+                                            <br>
+                                            <a class="product_edit " href="javascript:void(0)">
+                                                +添加公司产品
+                                            </a>
+                                            <span style="display:none"><?php echo U('Home/CompanyProduct/image');?></span>
+                                        </div>
+                                    </dd>
+                                </dl>
+                                <!-- 编辑产品 -->
+                                <dl id="newProduct" class="newProduct dn">
+                                    <dt>
+                                        <h2>
+                                            <em></em>
+                                            公司产品
+                                        </h2>
+                                    </dt>
+                                    <dd>
+                                        <form method="post" class="productForm" onsubmit="return $.sub(this);" action="<?php echo U('Home/CompanyProduct/active');?>">
+                                            <div class="new_product">
+                                                <div class="product_upload dn productNo">
+                                                    <div>
+                                                        <span>
+                                                            上传产品图片
+                                                        </span>
+                                                        <br>
+                                                        尺寸：380*220px 大小：小于5M
+                                                    </div>
+                                                </div>
+                                                <div class="product_upload productShow">
+                                                    <img width="380" height="220" src="/Public/HomeStyle/images/product_default.png">
+                                                    <span>
+                                                        更换产品图片
+                                                        <br>
+                                                        380*220px 小于5M
+                                                    </span>
+                                                </div>
+                                                <input type="file" title="支持jpg、jpeg、gif、png格式，文件小于5M" id="myfiles0">
+                                                <input type="hidden" value="" name="image" class="type">
+                                            </div>
+                                            <div class="cp_intro">
+                                                <input type="text" placeholder="请输入产品名称" value="" name="name">
+                                                <input type="text" placeholder="请输入产品网址" value=""
+                                                name="link">
+                                                <textarea placeholder="请简短描述该产品定位、产品特色、用户群体等" maxlength="500" value=""
+                                                class="s_textarea" name="desc"></textarea>
+                                                <div class="word_count fr">
+                                                    你还可以输入
+                                                    <span>
+                                                        500
+                                                    </span>
+                                                    字
+                                                </div>
+                                                <div class="clear">
+                                                </div>
+                                                <input type="submit" value="保存" class="btn_small">
+                                                <a class="btn_cancel_s product_delete" href="javascript:void(0)" onclick="$.del('<?php echo U('Home/CompanyProduct/delete', array('id'=>1));?>', this);">
+                                                    删除
+                                                </a>
+                                                <input type="hidden" value="11867" class="product_id">
+                                            </div>
+                                        </form>
+                                    </dd>
+                                </dl>
+                                <!--有产品-->
+                                <dl class="c_product dn">
+                                    <dt>
+                                        <h2>
+                                            <em></em>
+                                            公司产品
+                                        </h2>
+                                    </dt>
+                                    <dd>
+                                        <img width="380" height="220" alt="<?php echo ($proVal["name"]); ?>" src="<?php echo ($proVal["image"]); ?>">
+                                        <div class="cp_intro">
+                                            <h3>
+                                                <a target="_blank" href="<?php echo ($proVal["link"]); ?>" class="proName">
+                                                    <?php echo ($proVal["name"]); ?>
+                                                </a>
+                                            </h3>
+                                            <div class="scroll-pane" style="overflow: hidden; padding: 0px; width: 260px;">
+                                                <div class="jspContainer" style="width: 260px; height: 140px;">
+                                                    <div class="jspPane" style="padding: 0px; top: 0px; width: 260px;">
+                                                        <div class="proDesc">
+                                                            <?php echo ($proVal["desc"]); ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <a title="编辑公司产品" class="c_edit product_edit" href="javascript:void(0)">
+                                        </a>
+                                        <span style="display:none"><?php echo U('Home/CompanyProduct/image');?></span>
+                                        <a title="新增公司产品" class="c_add product_add" href="javascript:void(0)">
+                                        </a>
+                                    </dd>
+                                </dl>
+                            </div>
+                            <?php else: ?>
                             <?php if(is_array($product)): foreach($product as $key=>$proVal): ?><div class="product_wrap hasProduct">
                                 <!--无产品 -->
                                 <dl class="c_section dn">
@@ -255,86 +367,7 @@
                                         </a>
                                     </dd>
                                 </dl>
-                            </div><?php endforeach; endif; ?>
-                            <div class="product_wrap no_product dn">
-                                <!--无产品 -->
-                                <dl class="c_section">
-                                    <dt>
-                                        <h2>
-                                            <em></em>
-                                            公司产品
-                                        </h2>
-                                    </dt>
-                                    <dd>
-                                        <div class="addnew">
-                                            酒香不怕巷子深已经过时啦！
-                                            <br>
-                                            把自己优秀的产品展示出来吸引人才围观吧！
-                                            <br>
-                                            <a class="product_edit " href="javascript:void(0)">
-                                                +添加公司产品
-                                            </a>
-                                            <span style="display:none"><?php echo U('Home/CompanyProduct/image');?></span>
-                                        </div>
-                                    </dd>
-                                </dl>
-                                <!-- 无产品 -->
-                                <dl id="newProduct" class="newProduct dn">
-                                    <dt>
-                                        <h2>
-                                            <em></em>
-                                            公司产品
-                                        </h2>
-                                    </dt>
-                                    <dd>
-                                        <form method="post" class="productForm">
-                                            <div class="new_product">
-                                                <div class="product_upload dn productNo">
-                                                    <div>
-                                                        <span>
-                                                            上传产品图片
-                                                        </span>
-                                                        <br>
-                                                        尺寸：380*220px 大小：小于5M
-                                                    </div>
-                                                </div>
-                                                <div class="product_upload productShow">
-                                                    <img width="380" height="220" src="/Public/HomeStyle/images/product_default.png">
-                                                    <span>
-                                                        更换产品图片
-                                                        <br>
-                                                        380*220px 小于5M
-                                                    </span>
-                                                </div>
-                                                <input type="file" title="支持jpg、jpeg、gif、png格式，文件小于5M" id="myfiles0">
-                                                <input type="hidden" value="" name="type" class="type">
-                                                <input type="hidden" value="images/product_default.png" name="productPicUrl" class="productInfos">
-                                            </div>
-                                            <div class="cp_intro">
-                                                <input type="text" placeholder="请输入产品名称" value="" name="product">
-                                                <input type="text" placeholder="请输入产品网址" value=""
-                                                name="productUrl">
-                                                <textarea placeholder="请简短描述该产品定位、产品特色、用户群体等" maxlength="500" value=""
-                                                class="s_textarea" name="productProfile"></textarea>
-                                                <div class="word_count fr">
-                                                    你还可以输入
-                                                    <span>
-                                                        500
-                                                    </span>
-                                                    字
-                                                </div>
-                                                <div class="clear">
-                                                </div>
-                                                <input type="submit" value="保存" class="btn_small">
-                                                <a class="btn_cancel_s product_delete" href="javascript:void(0)" onclick="$.del('<?php echo U('Home/CompanyProduct/delete', array('id'=>1));?>', this);">
-                                                    删除
-                                                </a>
-                                                <input type="hidden" value="11867" class="product_id">
-                                            </div>
-                                        </form>
-                                    </dd>
-                                </dl>
-                            </div>
+                            </div><?php endforeach; endif; endif; ?>
                         </div>
                         <!-- end #Product -->
                         <div id="Profile">
@@ -462,7 +495,7 @@
                                 <div class="addnew">
                                     发布需要的人才信息，让伯乐和千里马尽快相遇……
                                     <br>
-                                    <a href="<?php echo U('Home/Company/create');?>">
+                                    <a href="<?php echo U('Home/CompanyJob/create');?>">
                                         +添加招聘职位
                                     </a>
                                 </div>
@@ -486,7 +519,7 @@
                             <dd>
                                 <ul class="reset c_jobs" id="jobList">
                                     <?php if(is_array($job)): foreach($job as $key=>$jobVal): ?><li>
-                                        <a href="#" target="_blank">
+                                        <a href="<?php echo U('Home/CompanyJob/job', array('id'=>$jobVal['id']));?>" target="_blank">
                                             <h3>
                                                 <span class="pos" title="<?php echo ($jobVal["name"]); ?>">
                                                     <?php echo ($jobVal["name"]); ?>
@@ -496,7 +529,7 @@
                                                 </span>
                                             </h3>
                                             <span>
-                                                <?php echo ($jobVal["create_time"]); ?>
+                                                <?php echo (date("y-m-d H:i:m",$jobVal["create_time"])); ?>
                                             </span>
                                             <div>
                                                 <?php echo ($jobVal["nature"]); ?> / <?php echo ($jobVal["salary_high"]); ?>k-<?php echo ($jobVal["salary_low"]); ?>k / <?php echo ($jobVal["work_year"]); ?> / <?php echo ($jobVal["edu"]); ?>
@@ -666,13 +699,14 @@
                                         <em></em>
                                         创始团队
                                     </h2>
+                                    <?php if(empty($team)): else: ?>
                                     <a title="添加创始人" class="c_add" href="javascript:void(0)">
-                                    </a>
+                                    </a><?php endif; ?>
                                 </dt>
                                 <dd>
-                                    <?php if(is_array($team)): foreach($team as $key=>$teamVal): ?><div class="member_wrap hasTeam">
+                                    <?php if(empty($team)): ?><div class="member_wrap noTeam">
                                         <!-- 无创始人 -->
-                                        <div class="member_info addnew_right dn">
+                                        <div class="member_info addnew_right">
                                             展示公司的领导班子，
                                             <br>
                                             提升诱人指数！
@@ -680,10 +714,12 @@
                                             <a class="member_edit" href="javascript:void(0)">
                                                 +添加成员
                                             </a>
+                                            <span style="display:none"><?php echo U('Home/CompanyTeam/image');?></span>
                                         </div>
                                         <!-- 编辑创始人 -->
                                         <div class="member_info newMember dn">
-                                            <form class="memberForm">
+                                            <form class="memberForm" onsubmit="return $.sub(this);" action="<?php echo U('Home/CompanyTeam/add');?>" method="post">
+                                                <input type="hidden" name="id" value="<?php echo ($teamVal["id"]); ?>">
                                                 <div class="new_portrait">
                                                     <div class="portrait_upload dn portraitNo">
                                                         <span>
@@ -696,9 +732,8 @@
                                                             更换头像
                                                         </span>
                                                     </div>
-                                                    <input type="file" value="" title="支持jpg、jpeg、gif、png格式，文件小于5M"  id="profiles0">
-                                                    <input type="hidden" value="7" name="type" class="type">
-                                                    <input type="hidden" value="<?php echo ($teamVal["image"]); ?>" name="photo" class="leaderInfos">
+                                                    <input type="file" value="" title="支持jpg、jpeg、gif、png格式，文件小于5M">
+                                                    <input type="hidden" value="" name="image" class="type">
                                                     <em>
                                                         尺寸：120*120px
                                                         <br>
@@ -708,7 +743,86 @@
                                                 <input type="text" placeholder="请输入创始人姓名" value="<?php echo ($teamVal["name"]); ?>" name="name">
                                                 <input type="text" placeholder="请输入创始人当前职位" value="<?php echo ($teamVal["position"]); ?>" name="position">
                                                 <input type="text" placeholder="请输入创始人新浪微博地址" value="<?php echo ($teamVal["weibo"]); ?>" name="weibo">
-                                                <textarea placeholder="请输入创始人个人简介" maxlength="500" class="s_textarea" name="remark"><?php echo ($teamVal["desc"]); ?></textarea>
+                                                <textarea placeholder="请输入创始人个人简介" maxlength="500" class="s_textarea" name="desc"><?php echo ($teamVal["desc"]); ?></textarea>
+                                                <div class="word_count fr">
+                                                    你还可以输入
+                                                    <span>
+                                                        500
+                                                    </span>
+                                                    字
+                                                </div>
+                                                <div class="clear"></div>
+                                                <input type="submit" value="保存" class="btn_small">
+                                                <a class="btn_cancel_s member_delete" href="javascript:void(0)">
+                                                    删除
+                                                </a>
+                                                <input type="hidden" value="11493" class="leader_id">
+                                            </form>
+                                        </div>
+                                        <!-- 显示创始人 -->
+                                        <div class="member_info dn">
+                                            <a title="编辑创始人" class="c_edit member_edit" href="javascript:void(0)">
+                                            </a>
+                                            <span style="display:none"><?php echo U('Home/CompanyTeam/image');?></span>
+                                            <span >
+                                            <div class="m_portrait">
+                                                <div></div>
+                                                <img width="120" height="120" alt="<?php echo ($teamVal["name"]); ?>" src="<?php echo ($teamVal["image"]); ?>">
+                                            </div>
+                                            <div class="m_name">
+                                                <?php echo ($teamVal["name"]); ?>
+                                                <?php if(empty($teamVal["weibo"])): else: ?>
+                                                <a target="_blank" class="weibo" href="<?php echo ($teamVal["weibo"]); ?>"></a><?php endif; ?>
+                                            </div>
+                                            <div class="m_position">
+                                                <?php echo ($teamVal["position"]); ?>
+                                            </div>
+                                            <div class="m_intro">
+                                                <?php echo ($teamVal["desc"]); ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <?php else: ?>
+                                    <?php if(is_array($team)): foreach($team as $key=>$teamVal): ?><div class="member_wrap hasTeam">
+                                        <!-- 无创始人 -->
+                                        <div class="member_info addnew_right dn">
+                                            展示公司的领导班子，
+                                            <br>
+                                            提升诱人指数！
+                                            <br>
+                                            <a class="member_edit" href="javascript:void(0)">
+                                                +添加成员
+                                            </a>
+                                            <span style="display:none"><?php echo U('Home/CompanyTeam/image');?></span>
+                                        </div>
+                                        <!-- 编辑创始人 -->
+                                        <div class="member_info newMember dn">
+                                            <form class="memberForm" onsubmit="return $.sub(this);" action="<?php echo U('Home/CompanyTeam/add');?>" method="post">
+                                                <input type="hidden" name="id" value="<?php echo ($teamVal["id"]); ?>">
+                                                <div class="new_portrait">
+                                                    <div class="portrait_upload dn portraitNo">
+                                                        <span>
+                                                            上传创始人头像
+                                                        </span>
+                                                    </div>
+                                                    <div class="portraitShow">
+                                                        <img width="120" height="120" src="<?php echo ($teamVal["image"]); ?>">
+                                                        <span>
+                                                            更换头像
+                                                        </span>
+                                                    </div>
+                                                    <input type="file" value="" title="支持jpg、jpeg、gif、png格式，文件小于5M">
+                                                    <input type="hidden" value="" name="image" class="type">
+                                                    <em>
+                                                        尺寸：120*120px
+                                                        <br>
+                                                        大小：小于5M
+                                                    </em>
+                                                </div>
+                                                <input type="text" placeholder="请输入创始人姓名" value="<?php echo ($teamVal["name"]); ?>" name="name">
+                                                <input type="text" placeholder="请输入创始人当前职位" value="<?php echo ($teamVal["position"]); ?>" name="position">
+                                                <input type="text" placeholder="请输入创始人新浪微博地址" value="<?php echo ($teamVal["weibo"]); ?>" name="weibo">
+                                                <textarea placeholder="请输入创始人个人简介" maxlength="500" class="s_textarea" name="desc"><?php echo ($teamVal["desc"]); ?></textarea>
                                                 <div class="word_count fr">
                                                     你还可以输入
                                                     <span>
@@ -728,14 +842,15 @@
                                         <div class="member_info">
                                             <a title="编辑创始人" class="c_edit member_edit" href="javascript:void(0)">
                                             </a>
+                                            <span style="display:none"><?php echo U('Home/CompanyTeam/image');?></span>
                                             <div class="m_portrait">
                                                 <div></div>
                                                 <img width="120" height="120" alt="<?php echo ($teamVal["name"]); ?>" src="<?php echo ($teamVal["image"]); ?>">
                                             </div>
                                             <div class="m_name">
                                                 <?php echo ($teamVal["name"]); ?>
-                                                <a target="_blank" class="weibo" href="<?php echo ($teamVal["weibo"]); ?>">
-                                                </a>
+                                                <?php if(empty($teamVal["weibo"])): else: ?>
+                                                <a target="_blank" class="weibo" href="<?php echo ($teamVal["weibo"]); ?>"></a><?php endif; ?>
                                             </div>
                                             <div class="m_position">
                                                 <?php echo ($teamVal["position"]); ?>
@@ -744,62 +859,7 @@
                                                 <?php echo ($teamVal["desc"]); ?>
                                             </div>
                                         </div>
-                                    </div><?php endforeach; endif; ?>
-                                     <div class="member_wrap noTeam">
-                                        <!-- 无创始人 -->
-                                        <div class="member_info addnew_right">
-                                            展示公司的领导班子，
-                                            <br>
-                                            提升诱人指数！
-                                            <br>
-                                            <a class="member_edit" href="javascript:void(0)">
-                                                +添加成员
-                                            </a>
-                                        </div>
-                                        <!-- 编辑创始人 -->
-                                        <div class="member_info newMember dn">
-                                            <form class="memberForm">
-                                                <div class="new_portrait">
-                                                    <div class="portrait_upload dn portraitNo">
-                                                        <span>
-                                                            上传创始人头像
-                                                        </span>
-                                                    </div>
-                                                    <div class="portraitShow">
-                                                        <img width="120" height="120" src="<?php echo ($teamVal["image"]); ?>">
-                                                        <span>
-                                                            更换头像
-                                                        </span>
-                                                    </div>
-                                                    <input type="file" value="" title="支持jpg、jpeg、gif、png格式，文件小于5M" onchange="" name="myfiles" id="profiles0">
-                                                    <input type="hidden" value="7" name="type" class="type">
-                                                    <input type="hidden" value="<?php echo ($teamVal["image"]); ?>" name="photo" class="leaderInfos">
-                                                    <em>
-                                                        尺寸：120*120px
-                                                        <br>
-                                                        大小：小于5M
-                                                    </em>
-                                                </div>
-                                                <input type="text" placeholder="请输入创始人姓名" value="<?php echo ($teamVal["name"]); ?>" name="name">
-                                                <input type="text" placeholder="请输入创始人当前职位" value="<?php echo ($teamVal["position"]); ?>" name="position">
-                                                <input type="text" placeholder="请输入创始人新浪微博地址" value="<?php echo ($teamVal["weibo"]); ?>" name="weibo">
-                                                <textarea placeholder="请输入创始人个人简介" maxlength="500" class="s_textarea" name="remark"><?php echo ($teamVal["desc"]); ?></textarea>
-                                                <div class="word_count fr">
-                                                    你还可以输入
-                                                    <span>
-                                                        500
-                                                    </span>
-                                                    字
-                                                </div>
-                                                <div class="clear"></div>
-                                                <input type="submit" value="保存" class="btn_small">
-                                                <a class="btn_cancel_s member_delete" href="javascript:void(0)">
-                                                    删除
-                                                </a>
-                                                <input type="hidden" value="11493" class="leader_id">
-                                            </form>
-                                        </div>
-                                    </div>
+                                    </div><?php endforeach; endif; endif; ?>
                                     <!-- end .member_wrap -->
                                 </dd>
                             </dl>
@@ -856,6 +916,7 @@
                 var file_obj = $('#'+file_id);
                 var class_obj = $('.'+class_id);
                 var n = $('#'+file_id).next();
+                console.log(file_obj.attr('name'));
                 $.ajaxFileUpload({
                     url : url,
                     fileElementId : file_id,
@@ -921,6 +982,15 @@
                                 } else if (data.code == -1) {
                                     obj.parents('dl').addClass('dn');
                                     obj.parents('dl').prev().removeClass('dn');
+                                } else if (data.code == 3) {
+                                    obj.parents('.member_info').addClass('dn');
+                                    obj.parents('.member_info').next().removeClass('dn');
+                                    obj.parents('.member_info').next().find('img').attr('alt', data.name);
+                                    obj.parents('.member_info').next().find('img').attr('src', data.image);
+                                    obj.parents('.member_info').next().find('.m_name').html(data.name);
+                                    obj.parents('.member_info').next().find('.m_name').children('a').attr('href', data.weibo);
+                                    obj.parents('.member_info').next().find('.m_position').html(data.position);
+                                    obj.parents('.member_info').next().find('.m_intro').html(data.desc);
                                 }
                             }
                         })
@@ -952,7 +1022,7 @@
                 })
 
                 $('.product_delete').click(function() {
-                    if (confirm('are you sur')){
+                    if (confirm('你确定删除此产品?')){
                         $.ajax({
                             url : "<?php echo U('Home/CompanyProduct/delete');?>",
                             data : $(this).parents('form').serialize(),
@@ -968,8 +1038,8 @@
                 })
 
                 $('#editIntro').click(function() {
-                    console.log($(this).parents('dl').prev().removeClass('dn'));
                     $(this).parents('dl').addClass('dn');
+                    $(this).parents('dl').prev().removeClass('dn');
                 })
 
                 $('#addIntro').click(function() {
@@ -990,6 +1060,22 @@
                 $('#cancelStages').click(function() {
                     $(this).parents('form').addClass('dn');
                     $(this).parents('form').prev().removeClass('dn');
+                })
+
+                $('.member_delete').click(function() {
+                    if (confirm('are you sur')){
+                        $.ajax({
+                            url : "<?php echo U('Home/CompanyTeam/delete');?>",
+                            data : $(this).parents('form').serialize(),
+                            type : 'post',
+                            sussecc : function(data) {
+                            }
+                        })
+                        $(this).parents('.member_wrap').empty();
+                    } else {
+                        $(this).parents('.member_info').addClass('dn');
+                        $(this).parents('.member_info').next().removeClass('dn');
+                    }
                 })
 
             })

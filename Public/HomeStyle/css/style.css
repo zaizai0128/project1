@@ -911,9 +911,9 @@ a.greylink{ color:#555;font-size:18px; margin-right:60px;text-decoration:underli
 .page404 p a{padding:0 5px;}
 .page404 a.back_home{color:#fff; background:#019875;margin-right:10px;}
 /*welcome popup*/
-#welOverlay {background: url("img/overlay.png") repeat scroll 0 0 transparent;height: 100%; position: fixed; width: 100%; left: 0; overflow: hidden;position: absolute;top: 0;z-index: 9999;}
+#welOverlay {background: url("images/overlay.png") repeat scroll 0 0 transparent;height: 100%; position: fixed; width: 100%; left: 0; overflow: hidden;position: absolute;top: 0;z-index: 9999;}
 #welcome{width:900px;height:500px;margin:0 auto;padding-top:50px;position:relative;}
-#welcome a.wel_c{background:url("img/welcome_c.png") no-repeat; width:45px;height:45px;position:absolute;top:60px;left:800px;}
+#welcome a.wel_c{background:url("images/welcome_c.png") no-repeat; width:45px;height:45px;position:absolute;top:60px;left:800px;}
 #welcome a.wel_go{width:240px;height:36px;position:absolute;left:390px;top:356px;}
 
 /*友情链接*/
@@ -1692,7 +1692,7 @@ ul.resumeLists .resumeIntro h3.read em{width:17px;height:17px;background:url(img
 .resumeLists a.resume_forward dt{background:#f2f2f2;font-size:16px;padding:6px 10px;border-bottom:1px dashed #cccccc;}
 .resumeLists a.resume_forward dd{background:#fff;padding:3px 10px;}
 .resumeLists a.resume_forward dd ul{margin:0;padding:0;list-style:none;}
-.resumeLists a.resume_forward dd ul li{padding:3px 0 3px 12px;margin:0;background:url("img/resume_square.png") left 14px no-repeat;}
+.resumeLists a.resume_forward dd ul li{padding:3px 0 3px 12px;margin:0;background:url("images/resume_square.png") left 14px no-repeat;}
 .contactInfo{clear:both;background:#f2f2f2;	border-top:1px dashed #d9d9d9;padding:5px 10px;margin-left:30px;}
 .contactInfo .fr{*margin:-25px 10px 0 0;}
 .filter_tip{color:#777;background:url(img/noresult_50.png) 5px 0 no-repeat;margin:-10px 40px 0 40px;padding:5px 0 20px 70px}

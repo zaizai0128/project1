@@ -72,7 +72,6 @@ class CompanyProductController extends CompanyBaseController {
 			$proObj = D('Product');
 
 			$result = $proObj->where(array('id'=>$data['id']))->delete();
-			dump($result);
 
 			$state['code'] = 1;
 			$state['msg'] = '删除成功';

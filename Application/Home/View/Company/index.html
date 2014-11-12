@@ -124,6 +124,119 @@
                         </div>
                         <div class="c_breakline"></div>
                         <div id="Product">
+                            <empty name="product">
+                            <div class="product_wrap no_product">
+                                <!--无产品 -->
+                                <dl class="c_section">
+                                    <dt>
+                                        <h2>
+                                            <em></em>
+                                            公司产品
+                                        </h2>
+                                    </dt>
+                                    <dd>
+                                        <div class="addnew">
+                                            酒香不怕巷子深已经过时啦！
+                                            <br>
+                                            把自己优秀的产品展示出来吸引人才围观吧！
+                                            <br>
+                                            <a class="product_edit " href="javascript:void(0)">
+                                                +添加公司产品
+                                            </a>
+                                            <span style="display:none">{:U('Home/CompanyProduct/image')}</span>
+                                        </div>
+                                    </dd>
+                                </dl>
+                                <!-- 编辑产品 -->
+                                <dl id="newProduct" class="newProduct dn">
+                                    <dt>
+                                        <h2>
+                                            <em></em>
+                                            公司产品
+                                        </h2>
+                                    </dt>
+                                    <dd>
+                                        <form method="post" class="productForm" onsubmit="return $.sub(this);" action="{:U('Home/CompanyProduct/active')}">
+                                            <div class="new_product">
+                                                <div class="product_upload dn productNo">
+                                                    <div>
+                                                        <span>
+                                                            上传产品图片
+                                                        </span>
+                                                        <br>
+                                                        尺寸：380*220px 大小：小于5M
+                                                    </div>
+                                                </div>
+                                                <div class="product_upload productShow">
+                                                    <img width="380" height="220" src="__PUBLIC__/HomeStyle/images/product_default.png">
+                                                    <span>
+                                                        更换产品图片
+                                                        <br>
+                                                        380*220px 小于5M
+                                                    </span>
+                                                </div>
+                                                <input type="file" title="支持jpg、jpeg、gif、png格式，文件小于5M" id="myfiles0">
+                                                <input type="hidden" value="" name="image" class="type">
+                                            </div>
+                                            <div class="cp_intro">
+                                                <input type="text" placeholder="请输入产品名称" value="" name="name">
+                                                <input type="text" placeholder="请输入产品网址" value=""
+                                                name="link">
+                                                <textarea placeholder="请简短描述该产品定位、产品特色、用户群体等" maxlength="500" value=""
+                                                class="s_textarea" name="desc"></textarea>
+                                                <div class="word_count fr">
+                                                    你还可以输入
+                                                    <span>
+                                                        500
+                                                    </span>
+                                                    字
+                                                </div>
+                                                <div class="clear">
+                                                </div>
+                                                <input type="submit" value="保存" class="btn_small">
+                                                <a class="btn_cancel_s product_delete" href="javascript:void(0)" onclick="$.del('{:U('Home/CompanyProduct/delete', array('id'=>1))}', this);">
+                                                    删除
+                                                </a>
+                                                <input type="hidden" value="11867" class="product_id">
+                                            </div>
+                                        </form>
+                                    </dd>
+                                </dl>
+                                <!--有产品-->
+                                <dl class="c_product dn">
+                                    <dt>
+                                        <h2>
+                                            <em></em>
+                                            公司产品
+                                        </h2>
+                                    </dt>
+                                    <dd>
+                                        <img width="380" height="220" alt="{$proVal.name}" src="{$proVal.image}">
+                                        <div class="cp_intro">
+                                            <h3>
+                                                <a target="_blank" href="{$proVal.link}" class="proName">
+                                                    {$proVal.name}
+                                                </a>
+                                            </h3>
+                                            <div class="scroll-pane" style="overflow: hidden; padding: 0px; width: 260px;">
+                                                <div class="jspContainer" style="width: 260px; height: 140px;">
+                                                    <div class="jspPane" style="padding: 0px; top: 0px; width: 260px;">
+                                                        <div class="proDesc">
+                                                            {$proVal.desc}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <a title="编辑公司产品" class="c_edit product_edit" href="javascript:void(0)">
+                                        </a>
+                                        <span style="display:none">{:U('Home/CompanyProduct/image')}</span>
+                                        <a title="新增公司产品" class="c_add product_add" href="javascript:void(0)">
+                                        </a>
+                                    </dd>
+                                </dl>
+                            </div>
+                            <else />
                             <foreach name="product" item="proVal">
                             <div class="product_wrap hasProduct">
                                 <!--无产品 -->
@@ -235,85 +348,7 @@
                                 </dl>
                             </div>
                             </foreach>
-                            <div class="product_wrap no_product dn">
-                                <!--无产品 -->
-                                <dl class="c_section">
-                                    <dt>
-                                        <h2>
-                                            <em></em>
-                                            公司产品
-                                        </h2>
-                                    </dt>
-                                    <dd>
-                                        <div class="addnew">
-                                            酒香不怕巷子深已经过时啦！
-                                            <br>
-                                            把自己优秀的产品展示出来吸引人才围观吧！
-                                            <br>
-                                            <a class="product_edit " href="javascript:void(0)">
-                                                +添加公司产品
-                                            </a>
-                                            <span style="display:none">{:U('Home/CompanyProduct/image')}</span>
-                                        </div>
-                                    </dd>
-                                </dl>
-                                <!-- 无产品 -->
-                                <dl id="newProduct" class="newProduct dn">
-                                    <dt>
-                                        <h2>
-                                            <em></em>
-                                            公司产品
-                                        </h2>
-                                    </dt>
-                                    <dd>
-                                        <form method="post" class="productForm">
-                                            <div class="new_product">
-                                                <div class="product_upload dn productNo">
-                                                    <div>
-                                                        <span>
-                                                            上传产品图片
-                                                        </span>
-                                                        <br>
-                                                        尺寸：380*220px 大小：小于5M
-                                                    </div>
-                                                </div>
-                                                <div class="product_upload productShow">
-                                                    <img width="380" height="220" src="__PUBLIC__/HomeStyle/images/product_default.png">
-                                                    <span>
-                                                        更换产品图片
-                                                        <br>
-                                                        380*220px 小于5M
-                                                    </span>
-                                                </div>
-                                                <input type="file" title="支持jpg、jpeg、gif、png格式，文件小于5M" id="myfiles0">
-                                                <input type="hidden" value="" name="type" class="type">
-                                                <input type="hidden" value="images/product_default.png" name="productPicUrl" class="productInfos">
-                                            </div>
-                                            <div class="cp_intro">
-                                                <input type="text" placeholder="请输入产品名称" value="" name="product">
-                                                <input type="text" placeholder="请输入产品网址" value=""
-                                                name="productUrl">
-                                                <textarea placeholder="请简短描述该产品定位、产品特色、用户群体等" maxlength="500" value=""
-                                                class="s_textarea" name="productProfile"></textarea>
-                                                <div class="word_count fr">
-                                                    你还可以输入
-                                                    <span>
-                                                        500
-                                                    </span>
-                                                    字
-                                                </div>
-                                                <div class="clear">
-                                                </div>
-                                                <input type="submit" value="保存" class="btn_small">
-                                                <a class="btn_cancel_s product_delete" href="javascript:void(0)" onclick="$.del('{:U('Home/CompanyProduct/delete', array('id'=>1))}', this);">
-                                                    删除
-                                                </a>
-                                                <input type="hidden" value="11867" class="product_id">
-                                            </div>
-                                        </form>
-                                    </dd>
-                                </dl>
-                            </div>
+                            </empty>
                         </div>
                         <!-- end #Product -->
                         <div id="Profile">
@@ -444,7 +479,7 @@
                                 <div class="addnew">
                                     发布需要的人才信息，让伯乐和千里马尽快相遇……
                                     <br>
-                                    <a href="{:U('Home/Company/create')}">
+                                    <a href="{:U('Home/CompanyJob/create')}">
                                         +添加招聘职位
                                     </a>
                                 </div>
@@ -469,7 +504,7 @@
                                 <ul class="reset c_jobs" id="jobList">
                                     <foreach name="job" item="jobVal">
                                     <li>
-                                        <a href="#" target="_blank">
+                                        <a href="{:U('Home/CompanyJob/job', array('id'=>$jobVal['id']))}" target="_blank">
                                             <h3>
                                                 <span class="pos" title="{$jobVal.name}">
                                                     {$jobVal.name}
@@ -479,7 +514,7 @@
                                                 </span>
                                             </h3>
                                             <span>
-                                                {$jobVal.create_time}
+                                                {$jobVal.create_time|date="y-m-d H:i:m",###}
                                             </span>
                                             <div>
                                                 {$jobVal.nature} / {$jobVal.salary_high}k-{$jobVal.salary_low}k / {$jobVal.work_year} / {$jobVal.edu}
@@ -651,14 +686,17 @@
                                         <em></em>
                                         创始团队
                                     </h2>
+                                    <empty name="team">
+                                    <else />
                                     <a title="添加创始人" class="c_add" href="javascript:void(0)">
                                     </a>
+                                    </empty>
                                 </dt>
                                 <dd>
-                                    <foreach name="team" item="teamVal">
-                                    <div class="member_wrap hasTeam">
+                                    <empty name="team">
+                                    <div class="member_wrap noTeam">
                                         <!-- 无创始人 -->
-                                        <div class="member_info addnew_right dn">
+                                        <div class="member_info addnew_right">
                                             展示公司的领导班子，
                                             <br>
                                             提升诱人指数！
@@ -666,10 +704,12 @@
                                             <a class="member_edit" href="javascript:void(0)">
                                                 +添加成员
                                             </a>
+                                            <span style="display:none">{:U('Home/CompanyTeam/image')}</span>
                                         </div>
                                         <!-- 编辑创始人 -->
                                         <div class="member_info newMember dn">
-                                            <form class="memberForm">
+                                            <form class="memberForm" onsubmit="return $.sub(this);" action="{:U('Home/CompanyTeam/add')}" method="post">
+                                                <input type="hidden" name="id" value="{$teamVal.id}">
                                                 <div class="new_portrait">
                                                     <div class="portrait_upload dn portraitNo">
                                                         <span>
@@ -682,9 +722,8 @@
                                                             更换头像
                                                         </span>
                                                     </div>
-                                                    <input type="file" value="" title="支持jpg、jpeg、gif、png格式，文件小于5M"  id="profiles0">
-                                                    <input type="hidden" value="7" name="type" class="type">
-                                                    <input type="hidden" value="{$teamVal.image}" name="photo" class="leaderInfos">
+                                                    <input type="file" value="" title="支持jpg、jpeg、gif、png格式，文件小于5M">
+                                                    <input type="hidden" value="" name="image" class="type">
                                                     <em>
                                                         尺寸：120*120px
                                                         <br>
@@ -694,7 +733,89 @@
                                                 <input type="text" placeholder="请输入创始人姓名" value="{$teamVal.name}" name="name">
                                                 <input type="text" placeholder="请输入创始人当前职位" value="{$teamVal.position}" name="position">
                                                 <input type="text" placeholder="请输入创始人新浪微博地址" value="{$teamVal.weibo}" name="weibo">
-                                                <textarea placeholder="请输入创始人个人简介" maxlength="500" class="s_textarea" name="remark">{$teamVal.desc}</textarea>
+                                                <textarea placeholder="请输入创始人个人简介" maxlength="500" class="s_textarea" name="desc">{$teamVal.desc}</textarea>
+                                                <div class="word_count fr">
+                                                    你还可以输入
+                                                    <span>
+                                                        500
+                                                    </span>
+                                                    字
+                                                </div>
+                                                <div class="clear"></div>
+                                                <input type="submit" value="保存" class="btn_small">
+                                                <a class="btn_cancel_s member_delete" href="javascript:void(0)">
+                                                    删除
+                                                </a>
+                                                <input type="hidden" value="11493" class="leader_id">
+                                            </form>
+                                        </div>
+                                        <!-- 显示创始人 -->
+                                        <div class="member_info dn">
+                                            <a title="编辑创始人" class="c_edit member_edit" href="javascript:void(0)">
+                                            </a>
+                                            <span style="display:none">{:U('Home/CompanyTeam/image')}</span>
+                                            <span >
+                                            <div class="m_portrait">
+                                                <div></div>
+                                                <img width="120" height="120" alt="{$teamVal.name}" src="{$teamVal.image}">
+                                            </div>
+                                            <div class="m_name">
+                                                {$teamVal.name}
+                                                <empty name="teamVal.weibo">
+                                                <else />
+                                                <a target="_blank" class="weibo" href="{$teamVal.weibo}"></a>
+                                                </empty>
+                                            </div>
+                                            <div class="m_position">
+                                                {$teamVal.position}
+                                            </div>
+                                            <div class="m_intro">
+                                                {$teamVal.desc}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <else />
+                                    <foreach name="team" item="teamVal">
+                                    <div class="member_wrap hasTeam">
+                                        <!-- 无创始人 -->
+                                        <div class="member_info addnew_right dn">
+                                            展示公司的领导班子，
+                                            <br>
+                                            提升诱人指数！
+                                            <br>
+                                            <a class="member_edit" href="javascript:void(0)">
+                                                +添加成员
+                                            </a>
+                                            <span style="display:none">{:U('Home/CompanyTeam/image')}</span>
+                                        </div>
+                                        <!-- 编辑创始人 -->
+                                        <div class="member_info newMember dn">
+                                            <form class="memberForm" onsubmit="return $.sub(this);" action="{:U('Home/CompanyTeam/add')}" method="post">
+                                                <input type="hidden" name="id" value="{$teamVal.id}">
+                                                <div class="new_portrait">
+                                                    <div class="portrait_upload dn portraitNo">
+                                                        <span>
+                                                            上传创始人头像
+                                                        </span>
+                                                    </div>
+                                                    <div class="portraitShow">
+                                                        <img width="120" height="120" src="{$teamVal.image}">
+                                                        <span>
+                                                            更换头像
+                                                        </span>
+                                                    </div>
+                                                    <input type="file" value="" title="支持jpg、jpeg、gif、png格式，文件小于5M">
+                                                    <input type="hidden" value="" name="image" class="type">
+                                                    <em>
+                                                        尺寸：120*120px
+                                                        <br>
+                                                        大小：小于5M
+                                                    </em>
+                                                </div>
+                                                <input type="text" placeholder="请输入创始人姓名" value="{$teamVal.name}" name="name">
+                                                <input type="text" placeholder="请输入创始人当前职位" value="{$teamVal.position}" name="position">
+                                                <input type="text" placeholder="请输入创始人新浪微博地址" value="{$teamVal.weibo}" name="weibo">
+                                                <textarea placeholder="请输入创始人个人简介" maxlength="500" class="s_textarea" name="desc">{$teamVal.desc}</textarea>
                                                 <div class="word_count fr">
                                                     你还可以输入
                                                     <span>
@@ -714,14 +835,17 @@
                                         <div class="member_info">
                                             <a title="编辑创始人" class="c_edit member_edit" href="javascript:void(0)">
                                             </a>
+                                            <span style="display:none">{:U('Home/CompanyTeam/image')}</span>
                                             <div class="m_portrait">
                                                 <div></div>
                                                 <img width="120" height="120" alt="{$teamVal.name}" src="{$teamVal.image}">
                                             </div>
                                             <div class="m_name">
                                                 {$teamVal.name}
-                                                <a target="_blank" class="weibo" href="{$teamVal.weibo}">
-                                                </a>
+                                                <empty name="teamVal.weibo">
+                                                <else />
+                                                <a target="_blank" class="weibo" href="{$teamVal.weibo}"></a>
+                                                </empty>
                                             </div>
                                             <div class="m_position">
                                                 {$teamVal.position}
@@ -732,61 +856,7 @@
                                         </div>
                                     </div>
                                     </foreach>
-                                     <div class="member_wrap noTeam">
-                                        <!-- 无创始人 -->
-                                        <div class="member_info addnew_right">
-                                            展示公司的领导班子，
-                                            <br>
-                                            提升诱人指数！
-                                            <br>
-                                            <a class="member_edit" href="javascript:void(0)">
-                                                +添加成员
-                                            </a>
-                                        </div>
-                                        <!-- 编辑创始人 -->
-                                        <div class="member_info newMember dn">
-                                            <form class="memberForm">
-                                                <div class="new_portrait">
-                                                    <div class="portrait_upload dn portraitNo">
-                                                        <span>
-                                                            上传创始人头像
-                                                        </span>
-                                                    </div>
-                                                    <div class="portraitShow">
-                                                        <img width="120" height="120" src="{$teamVal.image}">
-                                                        <span>
-                                                            更换头像
-                                                        </span>
-                                                    </div>
-                                                    <input type="file" value="" title="支持jpg、jpeg、gif、png格式，文件小于5M" onchange="" name="myfiles" id="profiles0">
-                                                    <input type="hidden" value="7" name="type" class="type">
-                                                    <input type="hidden" value="{$teamVal.image}" name="photo" class="leaderInfos">
-                                                    <em>
-                                                        尺寸：120*120px
-                                                        <br>
-                                                        大小：小于5M
-                                                    </em>
-                                                </div>
-                                                <input type="text" placeholder="请输入创始人姓名" value="{$teamVal.name}" name="name">
-                                                <input type="text" placeholder="请输入创始人当前职位" value="{$teamVal.position}" name="position">
-                                                <input type="text" placeholder="请输入创始人新浪微博地址" value="{$teamVal.weibo}" name="weibo">
-                                                <textarea placeholder="请输入创始人个人简介" maxlength="500" class="s_textarea" name="remark">{$teamVal.desc}</textarea>
-                                                <div class="word_count fr">
-                                                    你还可以输入
-                                                    <span>
-                                                        500
-                                                    </span>
-                                                    字
-                                                </div>
-                                                <div class="clear"></div>
-                                                <input type="submit" value="保存" class="btn_small">
-                                                <a class="btn_cancel_s member_delete" href="javascript:void(0)">
-                                                    删除
-                                                </a>
-                                                <input type="hidden" value="11493" class="leader_id">
-                                            </form>
-                                        </div>
-                                    </div>
+                                    </empty>
                                     <!-- end .member_wrap -->
                                 </dd>
                             </dl>
@@ -819,6 +889,7 @@
                 var file_obj = $('#'+file_id);
                 var class_obj = $('.'+class_id);
                 var n = $('#'+file_id).next();
+                console.log(file_obj.attr('name'));
                 $.ajaxFileUpload({
                     url : url,
                     fileElementId : file_id,
@@ -884,6 +955,15 @@
                                 } else if (data.code == -1) {
                                     obj.parents('dl').addClass('dn');
                                     obj.parents('dl').prev().removeClass('dn');
+                                } else if (data.code == 3) {
+                                    obj.parents('.member_info').addClass('dn');
+                                    obj.parents('.member_info').next().removeClass('dn');
+                                    obj.parents('.member_info').next().find('img').attr('alt', data.name);
+                                    obj.parents('.member_info').next().find('img').attr('src', data.image);
+                                    obj.parents('.member_info').next().find('.m_name').html(data.name);
+                                    obj.parents('.member_info').next().find('.m_name').children('a').attr('href', data.weibo);
+                                    obj.parents('.member_info').next().find('.m_position').html(data.position);
+                                    obj.parents('.member_info').next().find('.m_intro').html(data.desc);
                                 }
                             }
                         })
@@ -915,7 +995,7 @@
                 })
 
                 $('.product_delete').click(function() {
-                    if (confirm('are you sur')){
+                    if (confirm('你确定删除此产品?')){
                         $.ajax({
                             url : "{:U('Home/CompanyProduct/delete')}",
                             data : $(this).parents('form').serialize(),
@@ -931,8 +1011,8 @@
                 })
 
                 $('#editIntro').click(function() {
-                    console.log($(this).parents('dl').prev().removeClass('dn'));
                     $(this).parents('dl').addClass('dn');
+                    $(this).parents('dl').prev().removeClass('dn');
                 })
 
                 $('#addIntro').click(function() {
@@ -953,6 +1033,22 @@
                 $('#cancelStages').click(function() {
                     $(this).parents('form').addClass('dn');
                     $(this).parents('form').prev().removeClass('dn');
+                })
+
+                $('.member_delete').click(function() {
+                    if (confirm('are you sur')){
+                        $.ajax({
+                            url : "{:U('Home/CompanyTeam/delete')}",
+                            data : $(this).parents('form').serialize(),
+                            type : 'post',
+                            sussecc : function(data) {
+                            }
+                        })
+                        $(this).parents('.member_wrap').empty();
+                    } else {
+                        $(this).parents('.member_info').addClass('dn');
+                        $(this).parents('.member_info').next().removeClass('dn');
+                    }
                 })
 
             })

@@ -215,8 +215,8 @@
 				<div id="hotList">
 					<ul class="hot_pos reset">
 						<!--白色背景热门职位详情 开始-->
+						<foreach name="hotjob" item="vo" >
 						<li class="clearfix">
-							<foreach name="hotjob" item="vo" >
 							<div class="hot_pos_l">
 								<div class="mb10">
 									<a href="h/jobs/147822.html" target="_blank">{$vo.name}</a>&nbsp;
@@ -228,18 +228,17 @@
 								<br />
 								<span><em class="c7">职位诱惑：</em>{$vo.welfare}</span>
 								<br />
-								<span>1天前发布</span>
+								<span>发布时间:{$vo.modify_time|date='Y年m月d日',###}</span>
 							</div>
-							</foreach>
 							<div class="hot_pos_r">
 								<div class="mb10 recompany">
-									<a href="h/c/399.html" target="_blank">节操精选</a>
+									<a href="h/c/399.html" target="_blank">{$vo.company.name}</a>
 								</div>
-								<span><em class="c7">领域：</em> 移动互联网</span>
+								<span><em class="c7">领域：</em> {$vo.company.trade}</span>
 								<span><em class="c7">创始人：</em>陈桦</span>
 								<br />
-								<span><em class="c7">阶段：</em> 初创型(天使轮)</span>
-								<span><em class="c7">规模：</em>少于15人</span>
+								<span><em class="c7">阶段：</em>{$vo.company.stage}</span>
+								<span><em class="c7">规模：</em>{$vo.company.scale}</span>
 								<ul class="companyTags reset">
 									<li>移动互联网</li>
 									<li>五险一金</li>
@@ -247,9 +246,10 @@
 								</ul>
 							</div>
 						</li>
+						</foreach>
 						<!--白色背景热门职位详情 结束-->
 						<!--灰色背景热门职位详情 开始-->
-						<li class="odd clearfix">
+						<!--<li class="odd clearfix">
 							<div class="hot_pos_l">
 								<div class="mb10">
 									<a href="h/jobs/147974.html" target="_blank">售前工程师（运维经验优先）</a>&nbsp;
@@ -275,7 +275,7 @@
 										<li>商业险</li>
 									</ul>
 								</div>
-						</li>
+						</li>-->
 						<!--灰色背景热门职位详情 结束-->
 						<a href="list.html?city=%E5%85%A8%E5%9B%BD" class="btn fr" target="_blank">查看更多</a>
 					</ul>

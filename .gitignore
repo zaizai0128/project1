@@ -1,3 +1,10 @@
+<<<<<<< HEAD
 Application/Runtime/
 ThinkPHP/
 Uploads/
+=======
+.svn
+/main/Runtime
+*/Runtime
+*/info.php
+>>>>>>> 9903e9fb19fc111565bb8f68655f5628a4f8f81f

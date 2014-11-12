@@ -19,78 +19,35 @@
     
     <body>
         <div id="body">
-             <div id="header">
+            <div id="header">
     <div class="wrapper">
-        <a class="logo" href="index.html">
-            <img width="229" height="43" alt="拉勾招聘-专注互联网招聘" src="/Public/homestyle/images/logo.png">
+        <a href="index.html" class="logo">
+            <img src="/Public/HomeStyle/images/logo.png" width="229" height="43" alt="拉勾招聘-专注互联网招聘" />
         </a>
-        <ul id="navheader" class="reset">
-            <li>
-                <a href="index.html">
-                    首页
-                </a>
-            </li>
-            <li class="current">
-                <a href="companylist.html">
-                    公司
-                </a>
-            </li>
-            <li>
-                <a target="_blank" href="">
-                    论坛
-                </a>
-            </li>
-            <li>
-                <a rel="nofollow" href="">
-                    简历管理
-                </a>
-            </li>
-            <li>
-                <a rel="nofollow" href="create.html">
-                    发布职位
-                </a>
-            </li>
+        <ul class="reset" id="navheader">
+            <li class="current"><a href="index.html">首页</a></li>
+            <li ><a href="companylist.html" >公司</a></li>
+            <li ><a href="h/toForum.html" target="_blank">论坛</a></li>
+            <li ><a href="jianli.html" rel="nofollow">我的简历</a></li>
+            <li ><a href="create.html" rel="nofollow">发布职位</a></li>
         </ul>
-        <dl class="collapsible_menu">
+        <ul class="loginTop <?php echo ($data['loginTop_value']); ?>">
+            <li><a href="<?php echo U('User/login');?>" rel="nofollow">登录</a></li> 
+            <li>|</li>
+            <li><a href="<?php echo U('User/register');?>" rel="nofollow">注册</a></li>
+        </ul>
+        <dl class="collapsible_menu <?php echo ($data['collapsible_menu_value']); ?>">
             <dt>
-                <span>
-                    aaaaa&nbsp;
-                </span>
-                <span class="red dn" id="noticeDot-1">
-                </span>
-                <i>
-                </i>
+                <span><?php echo ($data['username']); ?>&nbsp;</span>
+                <span class="red dn" id="noticeDot-0"></span>
+                <i></i>
             </dt>
-            <dd>
-                <a href="positions.html">
-                    我发布的职位
-                </a>
-            </dd>
-            <dd>
-                <a href="positions.html">
-                    我收到的简历
-                </a>
-            </dd>
-            <dd class="btm">
-                <a href="myhome.html">
-                    我的公司主页
-                </a>
-            </dd>
-            <dd>
-                <a href="jianli.html">
-                    我要找工作
-                </a>
-            </dd>
-            <dd>
-                <a href="accountBind.html">
-                    帐号设置
-                </a>
-            </dd>
-            <dd class="logout">
-                <a rel="nofollow" href="login.html">
-                    退出
-                </a>
-            </dd>
+            <dd><a rel="nofollow" href="<?php echo U('Resume/index');?>">我的简历</a></dd>
+            <dd><a href="<?php echo U('CollectionJob/index');?>">我收藏的职位</a></dd>
+            <dd class="btm"><a href="subscribe.html">我的订阅</a></dd>
+            <dd><a href="<?php echo U('Company/index');?>">我要招人</a></dd>
+            <dd><a href="accountBind.html">帐号设置</a></dd>
+            <dd class="logout"><a rel="nofollow" href="<?php echo U('User/logout');?>">退出</a></dd>
         </dl>
     </div>
 </div>
@@ -109,7 +66,7 @@
                             <h4>
                                 恭喜你，公司信息已填写完善，你可以发布职位啦！
                             </h4>
-                            <a class="greylink" href="<?php echo U('Home/Company/create');?>">
+                            <a class="greylink" href="<?php echo U('Home/CompanyJob/create');?>">
                                 发布新职位
                             </a>
                             <a class="greylink" href="<?php echo U('Home/Company/index');?>">

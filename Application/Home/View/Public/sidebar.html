@@ -1,34 +1,24 @@
 <div class="sidebar">
-                    <a class="btn_create" href="create.html">
+                    <a class="btn_create" href="{:U('Home/CompanyJob/create')}">
                         发布新职位
                     </a>
                     <dl class="company_center_aside">
                         <dt>
                             我收到的简历
                         </dt>
-                        <dd>
-                            <a href="">
+                        <dd <if condition="[nav] eq 'unhandle'">class="current"</if>>
+                            <a href="{:U('Home/ResumeHandle/unhandle')}">
                                 待处理简历
                             </a>
                         </dd>
-                        <dd>
-                            <a href="canInterviewResumes.html">
-                                待定简历
-                            </a>
-                        </dd>
-                        <dd>
-                            <a href="haveNoticeResumes.html">
+                        <dd <if condition="[nav] eq 'forward'">class="current"</if>>
+                            <a href="{:U('Home/ResumeHandle/showForward')}">
                                 已通知面试简历
                             </a>
                         </dd>
-                        <dd>
-                            <a href="haveRefuseResumes.html">
+                        <dd <if condition="[nav] eq 'notpass'">class="current"</if>>
+                            <a href="{:U('Home/ResumeHandle/showNotpass')}">
                                 不合适简历
-                            </a>
-                        </dd>
-                        <dd class="btm">
-                            <a href="autoFilterResumes.html">
-                                自动过滤简历
                             </a>
                         </dd>
                     </dl>
@@ -36,13 +26,13 @@
                         <dt>
                             我发布的职位
                         </dt>
-                        <dd>
-                            <a href="positions.html">
+                        <dd <if condition="[nav] eq 'positions'">class="current"</if>>
+                            <a href="{:U('Home/CompanyJob/positions')}">
                                 有效职位
                             </a>
                         </dd>
-                        <dd>
-                            <a href="positions.html">
+                        <dd <if condition="[nav] eq 'invalid'">class="current"</if>>
+                            <a href="{:U('Home/CompanyJob/invalid')}">
                                 已下线职位
                             </a>
                         </dd>

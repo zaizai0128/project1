@@ -52,7 +52,7 @@
             <li class="current"><a href="index.html">首页</a></li>
             <li ><a href="companylist.html" >公司</a></li>
             <li ><a href="h/toForum.html" target="_blank">论坛</a></li>
-            <li ><a href="jianli.html" rel="nofollow">我的简历</a></li>
+            <li ><a href="<?php echo U('Resume/index');?>" rel="nofollow">我的简历</a></li>
             <li ><a href="create.html" rel="nofollow">发布职位</a></li>
         </ul>
         <ul class="loginTop <?php echo ($data['loginTop_value']); ?>">
@@ -233,8 +233,8 @@
 				<div id="hotList">
 					<ul class="hot_pos reset">
 						<!--白色背景热门职位详情 开始-->
-						<li class="clearfix">
-							<?php if(is_array($hotjob)): foreach($hotjob as $key=>$vo): ?><div class="hot_pos_l">
+						<?php if(is_array($hotjob)): foreach($hotjob as $key=>$vo): ?><li class="clearfix">
+							<div class="hot_pos_l">
 								<div class="mb10">
 									<a href="h/jobs/147822.html" target="_blank"><?php echo ($vo["name"]); ?></a>&nbsp;
 									<span class="c9">[<?php echo ($vo["city"]); ?>]</span>
@@ -245,27 +245,27 @@
 								<br />
 								<span><em class="c7">职位诱惑：</em><?php echo ($vo["welfare"]); ?></span>
 								<br />
-								<span>1天前发布</span>
-							</div><?php endforeach; endif; ?>
+								<span>发布时间:<?php echo (date('Y年m月d日',$vo["modify_time"])); ?></span>
+							</div>
 							<div class="hot_pos_r">
 								<div class="mb10 recompany">
-									<a href="h/c/399.html" target="_blank">节操精选</a>
+									<a href="h/c/399.html" target="_blank"><?php echo ($vo["company"]["name"]); ?></a>
 								</div>
-								<span><em class="c7">领域：</em> 移动互联网</span>
+								<span><em class="c7">领域：</em> <?php echo ($vo["company"]["trade"]); ?></span>
 								<span><em class="c7">创始人：</em>陈桦</span>
 								<br />
-								<span><em class="c7">阶段：</em> 初创型(天使轮)</span>
-								<span><em class="c7">规模：</em>少于15人</span>
+								<span><em class="c7">阶段：</em><?php echo ($vo["company"]["stage"]); ?></span>
+								<span><em class="c7">规模：</em><?php echo ($vo["company"]["scale"]); ?></span>
 								<ul class="companyTags reset">
 									<li>移动互联网</li>
 									<li>五险一金</li>
 									<li>扁平管理</li>
 								</ul>
 							</div>
-						</li>
+						</li><?php endforeach; endif; ?>
 						<!--白色背景热门职位详情 结束-->
 						<!--灰色背景热门职位详情 开始-->
-						<li class="odd clearfix">
+						<!--<li class="odd clearfix">
 							<div class="hot_pos_l">
 								<div class="mb10">
 									<a href="h/jobs/147974.html" target="_blank">售前工程师（运维经验优先）</a>&nbsp;
@@ -291,7 +291,7 @@
 										<li>商业险</li>
 									</ul>
 								</div>
-						</li>
+						</li>-->
 						<!--灰色背景热门职位详情 结束-->
 						<a href="list.html?city=%E5%85%A8%E5%9B%BD" class="btn fr" target="_blank">查看更多</a>
 					</ul>
