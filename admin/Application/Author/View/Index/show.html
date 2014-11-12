@@ -12,8 +12,9 @@
 				<h2>用户信息 - {$user_info.author_name}【{:ZC(C('USER.user_state'), $user_info['user_state'])}】</h2>
 			</div>
 			<div class="main-title">
-		    	<a class="btn btn-small" href="javascript:;">修改责任编辑</a>
-		    	<a class="btn btn-small" href="javascript:;">修改签约信息</a>
+		    	<a class="btn btn-small" href="{:ZU('author/info/assignEditor', 'ZL_ADMIN_DOMAIN', array('user_id'=>$user_info['user_id']))}">修改责任编辑</a>
+		    	<a class="btn btn-small" href="{:ZU('author/info/authorInfo', 'ZL_ADMIN_DOMAIN', array('user_id'=>$user_info['user_id']))}">修改签约信息</a>
+		    	<a class="btn btn-small" href="{:ZU('author/bank/edit', 'ZL_ADMIN_DOMAIN', array('user_id'=>$user_info['user_id']))}">修改银行卡信息</a>
 		    </div>
 			<!-- 标签页导航 -->
 			<div class="tab-wrap">

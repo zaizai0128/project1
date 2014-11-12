@@ -201,4 +201,13 @@ class ZlibBookModel extends BaseModel {
 		$data['bk_fullflag'] = 2;
 		return $this->data($data)->save();
 	}
+
+	/**
+	 * 获取用户拥有的书籍数量
+	 */
+	public function getBookTotalByUserId($user_id)
+	{
+		$condition['bk_author_id'] = $user_id;
+		return $this->where($condition)->count();
+	}
 }

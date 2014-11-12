@@ -38,6 +38,7 @@ class BookApplyBehavior {
 		$book = array();
 		$book_instance = D('Book', 'Service');
 		$book_apply_instance = D('BookApply', 'Service');
+		$author_instance = new \Zlib\Model\ZlibUserAuthorModel;
 		$chapter_apply_instance = new \Zlib\Model\ZlibBookApplyChapterModel;
 
 		// 获取审核书籍的信息
@@ -66,6 +67,12 @@ class BookApplyBehavior {
 		$book_id = $book_instance->doAdd($book);
 
 		if ($book_id <= 0) return False;
+
+		// 增加作者表的have_book个数
+		$have_book_num = $book_instance->getBookTotalByUserId($book_apply['bk_author_id']);
+		$author['user_id'] = $book_apply['bk_author_id'];
+		$author['have_book'] = $have_book_num;
+		$author_instance->doEdit($author);
 
 		// 创建章节对象
 		$chapter_instance = D('Chapter', 'Service')->getInstance($book_id);

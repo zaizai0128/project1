@@ -41,17 +41,6 @@
                    <span class="txt phone_error"></span>
                  </div>
               </li>
-              <li class="frm frm_resed">
-   <span class="frm_tit">短信验证码：</span>  
-                 <div class="frm_inp">
-                   <input type="text" value="" name="message" 
-                   class="re_inp message" placeholder="验证码" autocomplete="off" maxlength="6"/>
-                   <a class="resed_btn">免费获取验证码</a>
-                   <span class="txt"></span>
-                   
-                 </div>
-                 <span class="txt message_error"></span>
-              </li>
               <li class="frm">
    <span class="frm_tit">推荐人：</span>  
                  <div class="frm_inp">
@@ -69,9 +58,9 @@
                  </div>
               </li>
               <li class="frm">
-   <span class="frm_tit">申请说明：</span>  
+   <span class="frm_tit">部分文笔：</span>  
                  <div class="frm_inp">
-                   <textarea name="msg" class="msg"></textarea>
+                   <textarea name="msg" class="inp msg"></textarea>
                    <span class="txt"></span>
                    <span class="txt msg_error"></span>
                  </div>
@@ -103,7 +92,6 @@ jQuery(function($){
       var author_name = $('.author_name').val().replace(/\s+/, '');
       var true_name = $('.true_name').val().replace(/\s+/, '');
       var phone = $('.phone').val().replace(/\s+/, '');
-      var message = $('.message').val().replace(/\s+/, '');
       var qq = $('.qq').val().replace(/\s+/, '');
 
       if (author_name == '') {
@@ -137,16 +125,6 @@ jQuery(function($){
         err.push(7);
       } else {
         err_msg['phone_error'] = '';
-      }
-
-      if (message == '') {
-        err_msg['message_error'] = '验证码不允许为空';
-        err.push(8);
-      } else if (message.length > 6) {
-        err_msg['message_error'] = '验证码格式不正确';
-        err.push(9);
-      } else {
-        err_msg['message_error'] = '';
       }
 
       if (qq == '') {

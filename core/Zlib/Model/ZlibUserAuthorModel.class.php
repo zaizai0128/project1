@@ -94,4 +94,34 @@ class ZlibUserAuthorModel extends BaseModel {
 			->where($condition)->find();
 	}
 
+	/**
+	 * 获取编辑用户名
+	 * @param int user_id
+	 */
+	public function getEditorNameByUserId($user_id)
+	{
+		$info = $this->userInstance->getUserInfoByUserId($user_id, 'user_name');
+		return $info['user_name'];
+	}
+
+	/**
+	 * 获取编辑信息
+	 * @param string user_name
+	 */
+	public function getEditorByUserName($user_name, $field='*')
+	{
+		$info = $this->userInstance->getUserInfoByUserName($user_name, $field);
+		return $info;
+	}
+
+	/**
+	 * 获取作者的银行信息
+	 */
+	public function getBankByUserId($user_id, $field='*')
+	{
+		$bank = new ZlibUserAuthorBankModel;
+		return $bank->getBankInfoByUserId($user_id, $field);
+	}
+
+
 }

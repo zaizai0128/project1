@@ -1,0 +1,139 @@
+<extend name="Common@Public/base" />
+
+{// 主体内容}
+<block name="main">
+<div id="main-content">
+    <div id="top-alert" class="fixed alert alert-error" style="display: none;">
+        <button class="close fixed" style="margin-top: 4px;">&times;</button>
+        <div class="alert-content">这是内容</div>
+    </div>
+        <div id="main" class="main">
+			<div class="main-title cf">
+				<h2>修改【{$info.author_name}】的签约信息</h2>
+			</div>
+			<!-- 标签页导航 -->
+			<div class="tab-wrap">
+				<ul class="tab-nav nav">
+					<li data-tab="tab1" class="current">
+						<a href="javascript:void(0);">签约信息修改</a>
+					</li>
+				</ul>
+				<div class="tab-content">
+				<!-- 表单 -->
+				<form id="form" action="{:ZU('author/bank/doEdit', 'ZL_ADMIN_DOMAIN')}" method="post" class="form-horizontal">
+					<!-- 基础文档模型 -->
+					<div id="tab1" class="tab-pane in tab1">
+						<div class="form-item">
+							<label class="item-label">
+								开户行<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								<input type="text" class="text" name="bank" placeholder="开户行" value="{$info.bank}" />
+							</div>
+						</div>	 
+						<div class="form-item">
+							<label class="item-label">
+								开户人名称<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								<input type="text" class="text" name="bank_name" placeholder="开户人名称" value="{$info.bank_name}" />
+							</div>
+						</div>
+						<div class="form-item">
+							<label class="item-label">
+								银行账号<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								<input type="text" class="text" name="bank_num" placeholder="银行账号" value="{$info.bank_num}" />
+							</div>
+						</div>
+						<div class="form-item">
+							<label class="item-label">
+								身份证号<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								<input type="text" class="text" name="user_idcard" placeholder="身份证号" value="{$info.user_idcard}" />
+							</div>
+						</div>
+						<div class="form-item">
+							<label class="item-label">
+								银行所在城市<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								<input type="text" class="text" name="bank_prov_city" placeholder="银行所在城市" value="{$info.bank_prov_city}" />
+							</div>
+						</div>
+						<div class="form-item">
+							<label class="item-label">
+								开户人手机号<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								<input type="text" class="text" name="bank_mobile" placeholder="开户人手机号" value="{$info.bank_mobile}" />
+							</div>
+						</div>
+						<div class="form-item">
+							<label class="item-label">
+								开户人电话<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								<input type="text" class="text" name="bank_tel" placeholder="开户人电话" value="{$info.bank_tel}" />
+							</div>
+						</div>
+						<div class="form-item">
+							<label class="item-label">
+								办公室电话<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								<input type="text" class="text" name="office" placeholder="办公室电话" value="{$info.office}" />
+							</div>
+						</div>
+						<div class="form-item">
+							<label class="item-label">
+								邮寄地址<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								<input type="text" class="text" name="post_addr" placeholder="邮寄地址" value="{$info.post_addr}" />
+							</div>
+						</div>
+						<div class="form-item">
+							<label class="item-label">
+								邮编<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								<input type="text" class="text" name="post_code" placeholder="邮编" value="{$info.post_code}" />
+							</div>
+						</div>
+						<div class="form-item">
+							<label class="item-label">
+								作品列表?<span class="check-tips"></span>
+							</label>
+							<div class="controls">
+								<input type="text" class="text" name="product" placeholder="作品列表" value="{$info.product}" />
+							</div>
+						</div>
+						
+			        </div>
+					<div class="form-item cf">
+						<input type="hidden" name="user_id" value="{$info.user_id}" />
+						<input type="hidden" name="id" value="{$info.id}" />
+						<button class="btn submit-btn hidden ajax-post" id="submit" type="submit" target-form="form-horizontal">修 改</button>
+						<a class="btn btn-return" href="{:ZU('author/index/show', 'ZL_ADMIN_DOMAIN', array('user_id'=>$info['user_id']))}">返 回</a>
+					</div>
+				</form>
+				<!-- /表单 -->
+				</div>
+			</div>
+			<!-- /标签页导航 -->
+        </div>
+    </div>
+</block>
+
+<block name="js">
+<script  type="text/javascript">
+jQuery(function($){
+	
+	showTab();
+	$.menu('author', 'manager', 'list');
+});
+</script>
+</block>

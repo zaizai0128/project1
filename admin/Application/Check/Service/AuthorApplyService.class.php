@@ -73,6 +73,9 @@ class AuthorApplyService extends ZlibUserModel {
 		// 修改用户状态为作者
 		$user_data['user_type'] = '02'; // 02 || 03
 		$user_data['user_id'] = $apply_data['user_id'];
+		$user_data['user_mobile'] = $apply_data['user_mobile'];
+		$user_data['user_telephone'] = $apply_data['user_tel'];
+		$user_data['user_qq'] = $apply_data['user_qq'];
 		$result = parent::doEdit($user_data);
 
 		// 填充作者数据
@@ -80,6 +83,8 @@ class AuthorApplyService extends ZlibUserModel {
 		$author_data['author_name'] = $apply_data['author_name'];
 		$author_data['user_true_name'] = $apply_data['user_true_name'];
 		$author_data['create_time'] = z_now();
+
+		// 分配一个随机的责任编辑？
 
 		$result = $this->userAuthorInstance->doAdd($author_data);
 

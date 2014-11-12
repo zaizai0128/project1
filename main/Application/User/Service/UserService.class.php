@@ -151,8 +151,6 @@ class UserService extends ZlibUserModel {
 			return z_info(-12, '真实姓名不允许为空');
 		if (empty($data['phone']))
 			return z_info(-13, '手机号不允许为空');
-		if (empty($data['message']))
-			return z_info(-14, '短信验证码不允许为空');
 		if (empty($data['qq']))
 			return z_info(-15, 'QQ不允许为空');
 
@@ -200,8 +198,6 @@ class UserService extends ZlibUserModel {
 			return z_info(-12, '真实姓名不允许为空');
 		if (empty($data['phone']))
 			return z_info(-13, '手机号不允许为空');
-		if (empty($data['message']))
-			return z_info(-14, '短信验证码不允许为空');
 		if (empty($data['qq']))
 			return z_info(-15, 'QQ不允许为空');
 

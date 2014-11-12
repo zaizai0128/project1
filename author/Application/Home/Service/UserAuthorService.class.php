@@ -19,7 +19,6 @@ class UserAuthorService extends ZlibUserAuthorModel {
 		// 一些验证信息 ...
 		
 		$final_author['user_id'] = $data['user_id'];
-		$final_author['user_idcard'] = $data['a_idcard'];
 		$final_author['user_zipcode'] = $data['a_zipcode'];
 		$final_author['user_address'] = $data['a_address'];
 		$final_author['shenhe_time'] = z_now();

@@ -71,6 +71,7 @@ class IndexController extends BaseController {
 	{
 		$user_id = I('get.user_id');
 		$info = $this->authorInstance->getAuthorAllInfoByUserId($user_id);
+		$info['user_like_tag'] = json_decode($info['user_like_tag'], true);
 		
 		$this->assign('user_info', $info);
 		$this->display();
