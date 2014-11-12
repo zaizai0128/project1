@@ -132,7 +132,8 @@ class BookShelf {
 		$row['book_amount']++;
 		M('zl_bookshelf_0'.($this->mUserId % 10))->add($row, array(), true);
 		// 添加收藏日志
-		z_log('userid:['.$this->mUserId.'] '.'bookid:['.$book_id.']' ,  'LOG_COLLECT');
+		z_log('ip:['.z_ip().'] '.'userid:['.$this->mUserId.'] '.'bookid:['.$book_id.'] '.'shelfid:['.$shelf_id.'] ',
+				'LOG_COLLECT');
 		return true;
 	}
 

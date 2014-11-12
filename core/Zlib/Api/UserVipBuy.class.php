@@ -65,8 +65,7 @@ class UserVipBuy {
 		$bit = 1 << ($ch_order % 8);
 		$byte = ord($this->mChapterBuyBits[$byte_count]);
 		return !(($byte & $bit) == 0);
-	}
-
+	} 
 
 	public function setBuy($chapter_id) 
 	{

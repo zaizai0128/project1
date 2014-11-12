@@ -46,7 +46,6 @@ class FilterWords {
 
 		$str = S($this->mKeyName);
 		if (!$str) {
-			// echo "memcache is null".$this->mKeyName;
 			return false;
 		}
 		
@@ -72,7 +71,8 @@ class FilterWords {
 			array_push($this->mFilterWords, $row);
 		}
 		// print_r($this->mFilterWords);
-		S($this->mKeyName, json_encode($this->mBookClasses));
+
+		S($this->mKeyName, json_encode($this->mFilterWords));
 		if ($this->isDirty()) $this->setDirty(false);
 		S(self::$mLockPrefix.self::$mKeyName, null);
 			
@@ -158,15 +158,12 @@ class FilterWords {
 		$style = $style ?  $style : '<span style="color:red;font-size:24px;font-weight:bold;">${1}</span>';
 
 		foreach ($this->mFilterWords as $filter) {
-
 			if ($filter['is_reg'] == 1) {
 				$filter['word'] = ltrim($filter['word'], '/');
 				$filter['word'] = rtrim($filter['word'], '/miu');
 			}
-
 			$filter['word'] = str_replace('/', '\/', $filter['word']);
 			$filter['word'] = '/('.$filter['word'].')/miu';
-
 			array_push($pattern, $filter['word']);
 			array_push($replace, $style);
 		}
