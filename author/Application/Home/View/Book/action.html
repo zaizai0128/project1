@@ -1,7 +1,0 @@
-<ul class="autr_nav">
-	<li <if condition="[ac] eq 'info'">class="on"</if>><a href="{:ZU('book/edit', 'ZL_AUTHOR_DOMAIN', array('book_id'=>$book_info['bk_id']))}">作品信息管理</a></li>
-    <li <if condition="[ac] eq 'volume'">class="on"</if>><a href="{:ZU('volume/index', 'ZL_AUTHOR_DOMAIN', array('book_id'=>$book_info['bk_id']))}">分卷管理</a></li>
-    <li <if condition="[ac] eq 'chapter'">class="on"</if>><a href="{:ZU('chapter/index', 'ZL_AUTHOR_DOMAIN', array('book_id'=>$book_info['bk_id']))}">章节管理</a></li>
-    <li <if condition="[ac] eq 'draft'">class="on"</if>><a href="javascript:;">草稿箱</a></li>
-    <li <if condition="[ac] eq 'deputy'">class="on"</if>><a href="javascript:;">副版主管理</a></li>
-</ul> 
