@@ -22,7 +22,11 @@
             	   </span>
            			<div class="m_portrait">
                     	<div></div>
+                      <if condition="$data[image] eq '' ">
+                      <img src="__PUBLIC__/HomeStyle/images/default_headpic.png" alt="{$data['name']}" height="120" width="120">
+                      <else />
                     	<img src="/Uploads/User/image/{$data['image']}" alt="{$data['name']}" height="120" width="120">
+                      </if>
                     </div>
                 </div><!--end .basicShow-->
             </div><!--end #basicInfo-->

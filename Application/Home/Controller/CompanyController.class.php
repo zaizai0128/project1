@@ -65,7 +65,10 @@ class CompanyController extends CompanyBaseController {
 	{
 		$jobObj = D('Job');
 		$tagModel = D('Tag');
-		$res = $this->comObj->select();
+		$total = $this->comObj->count();
+		$page = new \Think\Page($total, 1);
+
+		$res = $this->comObj->limit($page->firstRow, $page->listRows)->select();
 		foreach ($res as &$val) {
 			$res2 = $tagModel->getList($val['id']);
 			$res3 = $jobObj->where(array('company_id'=>$val['id']))->limit(4)->select();
@@ -76,6 +79,7 @@ class CompanyController extends CompanyBaseController {
 		$tradeObj = D('Trade');
 		$trade = $tradeObj->select();
 
+		$this->assign('page', $page->show());
 		$this->assign('trade', $trade);
 		$this->assign('company', $res);
 		$this->display();

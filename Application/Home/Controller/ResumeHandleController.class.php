@@ -57,10 +57,15 @@ class ResumeHandleController extends CompanyBaseController {
 	{
 		$data = I();
 		$sendObj = D('Send');
+		$res = $sendObj->where(array('id'=>$data['deliverId']))->find();
+		if ($res['state3'] == 0) {
+			$save['state3'] = 2;
+			$save['state3_time'] = time();
+		}
 		$save['id'] = $data['deliverId'];
 		$save['state4'] = 1;
 		$save['state4_time'] = time();
-		$save['audition_time'] = $data['interviewTime'];
+		$save['audition_time'] = strtotime($data['interviewTime']);
 		$save['audition_linkman'] = $data['linkMan'];
 		$save['audition_linkphone'] = $data['linkPhone'];
 		$save['audition_address'] = $data['interAdd'];
@@ -125,8 +130,11 @@ class ResumeHandleController extends CompanyBaseController {
 		$data = I();
 		$array['id'] = $data['deliverIds'];
 		$array['content'] = $data['content'];
-		$array['state3'] = 2;
-		$array['state3_time'] = time();
+		$res = $sendObj->where(array('id'=>$data['deliverId']))->find();
+		if ($res['state3'] == 0) {
+			$array['state3'] = 2;
+			$array['state3_time'] = time();
+		}
 		$array['state4'] = -1;
 		$array['state4_time'] = time();
 		$sendObj = D('Send');
@@ -345,8 +353,27 @@ class ResumeHandleController extends CompanyBaseController {
 
 
 	// 已安排面试页面
-	public function showSorward()
+	public function showAudition()
 	{
+		$sendObj = D('Send');
+		$condition['s.state4'] = 1;
+		$condition['s.company_id'] = $this->uid;
+
+		$res = $sendObj->alias('AS s')
+					   ->field('*, r.name as rname, j.name as jname, s.id as id')
+					   ->join('LEFT JOIN `lg_resume` AS r ON s.user_id = r.id')
+					   ->join('LEFT JOIN `lg_job` AS j ON s.job_id = j.id')
+					   ->order('s.audition_time ASC')
+					   ->select();
+
+		// 循环数组, 按日期分布
+		$narr = array();
+
+		foreach ($res as $val) {
+			$date_key = date('Y-m-d', $val['audition_time']);
+			$narr[$date_key][$val['id']] = $val;
+		}
+		$this->assign('data', $narr);
 		$this->display();
 	}
 }
