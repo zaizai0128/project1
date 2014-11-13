@@ -27,6 +27,36 @@ class TypeController extends BaseController {
 		$this->display();
 	}
 
+	public function add()
+	{
+		$cate_class = $this->typeInstance->getClass();
+
+		$this->assign('cate_class', $cate_class);
+		$this->display();
+	}
+
+	public function doAdd()
+	{
+		if (IS_POST) {
+			$data = I();
+
+			$parent_info = $this->typeModel->where('id='.$data['pid'])->find();
+
+			$data['path'] = $parent_info['path'].'_'.$data['pid'];
+
+			$rs = $this->typeModel->add($data);
+
+			if ($rs) {
+				$msg['code'] = 1;
+				$msg['msg'] = '添加成功';
+			} else {
+				$msg['code'] = 0;
+				$msg['msg'] = '添加失败';
+			}
+			$this->ajaxReturn($msg);
+		}
+	}
+
 	public function edit()
 	{
 		$id = I('get.id');

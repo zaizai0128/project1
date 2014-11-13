@@ -1,127 +1,40 @@
-<extend name="Public/base" />
+<div class="modal-header no-padding">
+	<div class="table-header">
+		<i class="icon-lock"></i>
+		<button type="button" class="close" data-dismiss="modal">&times;</button>
+		修改用户【$info.username】【 <?php echo C('user_type')[$info['type']] ?>】资料
+	</div>
+</div>
 
-{// css}
-<block name="css">
-	<link rel="stylesheet" href="__STYLE__/css/jquery-ui-1.10.3.custom.min.css" />
-	<link rel="stylesheet" href="__STYLE__/css/chosen.css" />
-	<link rel="stylesheet" href="__STYLE__/css/datepicker.css" />
-	<link rel="stylesheet" href="__STYLE__/css/bootstrap-timepicker.css" />
-	<link rel="stylesheet" href="__STYLE__/css/daterangepicker.css" />
-	<link rel="stylesheet" href="__STYLE__/css/colorpicker.css" />
-</block>
-
-{// 导航}
-<block name="breadcrumb">
-<li class="active">用户信息修改</li>
-</block>
-
-{// 左侧菜单}
-<block name="sidebar">
-	<include file="Public/sidebar"/>
-</block>
-
-{// 主体}
-<block name="main">
-	<div class="page-content">
-		<div class="page-header position-relative">
-			<h1>
-				用户管理
-				<small>
-					<i class="icon-double-angle-right"></i>
-					用户信息修改
-				</small>
-			</h1>
-		</div><!--/.page-header-->
-
-		<div class="row-fluid">
-			<div class="span12">
-				<!--PAGE CONTENT BEGINS-->
-				<foreach name="arr" item="val">
-					<form class="form-horizontal" id="submit-form" action="{:U('user/doEdit', array('id'=>$val['id']))}" onsubmit="return $.submitForm();">
-						<div class="control-group">
-							<label class="control-label" for="form-username">用户名</label>
-
-							<div class="controls">
-								<input type="text" id="form-username" name="username" value="{$val.username}" placeholder="用户名" />
-							</div>
-						</div>
-
-						<div class="control-group">
-							<label class="control-label" for="form-password">密码</label>
-
-							<div class="controls">
-								<input type="password" id="form-password" name="password" value="{$val.password}" placeholder="密码"/>
-							</div>
-						</div>
-
-						<div class="control-group">
-							<label class="control-label" for="form-password">状态</label>
-
-							<div class="controls">
-								<!-- <input type="password" id="form-password" name="password" value="{$val.password}" placeholder="密码"/> -->
-								<select name="state">
-									<option>--请选择--</option>
-								</select>
-							</div>
-						</div>
-
-						<div class="form-actions">
-							<button class="btn btn-info">
-								<i class="icon-ok bigger-110"></i>
-								提交
-							</button>
-
-							&nbsp; &nbsp; &nbsp;
-							<button class="btn btn-info" type="reset">
-								<i class="icon-undo bigger-110"></i>
-								重置
-							</button>
-
-							&nbsp; &nbsp; &nbsp;
-							<a href={:U('User/index')} class="btn">
-								<i class="icon-reply icon-only bigger-110"></i>
-								返回
-							</a>
-						</div>
-					</form>
-				</foreach>
-			</div>
+<div class="modal-body overflow-visible">
+	<div class="control-group">
+		<label class="control-label" for="username">用户名</label>
+		<div class="controls">
+			<input type="text" required="required" disabled value="{$info.username}" id="username" placeholder="用户名" maxlength="10"/>
 		</div>
 	</div>
-</block>
 
-{// js}
-<block name="js">
-<script type="text/javascript">
-// jQuery(function($){
+	<div class="control-group">
+		<label class="control-label" for="gid">状态</label>
+		<div class="controls">
+			<select name="state">
+			<?php foreach (C('user_state') as $key => $value): ?>
+				<option value="{$key}" <?php if ($key == $info['state']): ?>
+					selected="selected"
+				<?php endif ?>>{$value}</option>				
+			<?php endforeach ?>
+			</select>
+		</div>
+	</div>
+</div>
 
-// 	$.extend({
-// 		submitForm : function() 
-// 		{
-// 			// zhejiushi这就是ajax的好处,用户体验好,界面不会来回跳.
-// 			$.ajax({
-// 				type : 'post',
-// 				data : $('#submit-form').serialize(),
-// 				url : $('#submit-form').attr('action'),
-// 				// async :false,
-// 				success :function(response)
-// 				{
-// 					// success
-// 					if (response.status > 0) {
-// 						window.location.href=response.url;
-// 					} else {
-// 						// 到时候弄个 modal弹框,提示错误原因.
-// 						// 暂时使用alert来代替
-// 						alert(response.msg);
-// 					}
-// 				}
-// 			});
-// 			return false;
-// 		}
-
-// 	});
-
-// });
-
-</script>
-</block>
+<div class="modal-footer">
+	<input type="hidden" name="id" value="{$info.id}" id="hidden-userid"/>
+	<button data-dismiss="modal" class="btn btn-small">
+		<i class="icon-remove"></i>
+		取消
+	</button>
+	<button type="button" class="btn btn-small btn-primary" onclick="$.action('{:U('Admin/User/doEdit')}', this);">
+		<i class="icon-ok"></i>修改
+	</button>
+</div>

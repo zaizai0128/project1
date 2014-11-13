@@ -11,4 +11,14 @@ return array(
 		'__UPLOAD__' => '/Uploads',
 	),
 	
+	'user_type' => array(
+		1 => '个人',
+		2 => '企业'
+	),
+
+	'user_state' => array(
+		-1 => '禁用',
+		0 => '未激活',
+		1 => '正常',
+	),
 );

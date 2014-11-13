@@ -15,16 +15,18 @@
 <block name="main">
 <div class="row-fluid">
 	<h3 class="header blue lighter smaller">
+		<form action="{:U('Admin/User/index')}" method="get">
 		<div class="row-fluid  dataTables_wrapper">
 			<div class="span4">
-				<button class="btn btn-primary btn-small" onclick="$.weitac.formShow('{{URL::route('admin.user.add')}}')"><i class="icon-plus"></i>创建用户</button>
+				&nbsp;
 			</div>
 			<div class="span8" id="m_search_div">
-				<button type="button" class="btn btn-primary btn-small pull-right" id="search_submit" onclick="search();"><i class="icon-ok bigger-110"></i>搜索</button>
-				<input name="username" value="" type="text" id="search_username" class="pull-right" placeholder="用户名"/>
+				<button type="submit" class="btn btn-primary btn-small pull-right" id="search_submit"><i class="icon-ok bigger-110"></i>搜索</button>
+				<input name="username" value="{$map.username}" type="text" id="search_username" class="pull-right" placeholder="用户名"/>
 				<label class="control-label pull-right">用户名：</label>
 			</div>	
-		</div>	
+		</div>
+		</form>
 	</h3>
 	<div class="table-header">用户列表</div>
 	<div class="dataTables_wrapper" role="grid">
@@ -39,20 +41,19 @@
 					</th>
 					<th>id</th>
 					<th>用户名</th>
-					<th class="hidden-480">密码</th>
-
+					<th>类型</th>
 					<th class="hidden-phone">
 						<i class="icon-time bigger-110 hidden-phone"></i>
-						修改时间
+						最后登录时间
 					</th>
+					<th>最后登录IP</th>
 					<th class="hidden-480">状态</th>
-
 					<th class="hidden-480">操作</th>
 				</tr>
 			</thead>
 
 			<tbody>
-				<foreach name="arr" item="value">	
+				<foreach name="data" item="value">	
 					<tr>
 						<td class="center">
 							<label>
@@ -62,58 +63,23 @@
 						</td>
 						<td>{$value.id}</td>
 						<td>{$value.username}</td>
-						<td class="hidden-480">{$value.password}</td>
-						<td class="hidden-phone">{$value.time}</td>
 						<td class="hidden-480">
-							<php>echo $vip[$value['state']]</php>
+							<?php echo C('user_type')[$value['type']] ?>
+						</td>
+						<td class="hidden-phone">{$value.login_time}</td>
+						<td class="hidden-phone">{$value.login_ip}</td>
+						<td class="hidden-480">
+							<?php echo C('user_state')[$value['state']] ?>
 						</td>
 						<td>
 							<div class="hidden-phone visible-desktop action-buttons">
-								<a class="blue" href="#">
-									<i class="icon-zoom-in bigger-130"></i>
-								</a>
-
-								<a class="green" href="{:U('user/edit', array('id'=>$value['id']))}">
+								<a href="javascript:;" onclick="$.lagou.formShow('{:U('Admin/User/edit', array('id'=>$value['id']))}');" class="green" data-rel="tooltip" data-original-title="编辑信息">
 									<i class="icon-pencil bigger-130"></i>
 								</a>
 
-								<a class="red" href="#">
+								<a href="javascript:;" onclick="$.del('{:U('Admin/User/deny', array('id'=>$value['id']))}');" class="red" data-rel="tooltip" data-original-title="禁用用户">
 									<i class="icon-trash bigger-130"></i>
 								</a>
-							</div>
-
-							<div class="hidden-desktop visible-phone">
-								<div class="inline position-relative">
-									<button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown">
-										<i class="icon-caret-down icon-only bigger-120"></i>
-									</button>
-
-									<ul class="dropdown-menu dropdown-icon-only dropdown-yellow pull-right dropdown-caret dropdown-close">
-										<li>
-											<a href="#" class="tooltip-info" data-rel="tooltip" title="View">
-												<span class="blue">
-													<i class="icon-zoom-in bigger-120"></i>
-												</span>
-											</a>
-										</li>
-
-										<li>
-											<a href="#" class="tooltip-success" data-rel="tooltip" title="Edit">
-												<span class="green">
-													<i class="icon-edit bigger-120"></i>
-												</span>
-											</a>
-										</li>
-
-										<li>
-											<a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
-												<span class="red">
-													<i class="icon-trash bigger-120"></i>
-												</span>
-											</a>
-										</li>
-									</ul>
-								</div>
 							</div>
 						</td>
 					</tr>
@@ -122,16 +88,7 @@
 		</table>
 		<!-- 分页 -->
 		<div class="row-fluid">
-			<div class="span3">
-				<div class="dataTables_info" id="user_table_info">当前显示 1 到 2 条，共 2 条记录</div>
-			</div>
-			<div class="dataTables_paginate paging_bootstrap pagination">
-				<ul>
-					<li class="prev disabled"><a href="#"><i class="icon-double-angle-left"></i></a></li>
-					<li class="active"><a href="#">1</a></li>
-					<li class="next disabled"><a href="#"><i class="icon-double-angle-right"></i></a></li>
-				</ul>
-			</div>
+			<div class="page">{$page}</div>
 		</div>
 	</div>
 
@@ -140,36 +97,52 @@
 
 {// js}
 <block name="js">
-	<script src="__STYLE__/js/jquery.dataTables.min.js"></script>
-	<script src="__STYLE__/js/jquery.dataTables.bootstrap.js"></script>
+<script type="text/javascript">
+		jQuery(function($) {
 
-	<script type="text/javascript">
-			jQuery(function($) {
+			// 这就是全选按钮
+			$('table th input:checkbox').on('click' , function(){
+				var that = this;
+				$(this).closest('table').find('tr > td:first-child input:checkbox')
+				.each(function(){
+					this.checked = that.checked;
+					$(this).closest('tr').toggleClass('selected');
+				});	
+			});
 
-				// 这就是全选按钮
-				$('table th input:checkbox').on('click' , function(){
-					var that = this;
-					$(this).closest('table').find('tr > td:first-child input:checkbox')
-					.each(function(){
-						this.checked = that.checked;
-						$(this).closest('tr').toggleClass('selected');
-					});	
-				});
-			
-				// 这个是你的鼠标放上去后,会弹出一些小提示之类的..
-				$('[data-rel="tooltip"]').tooltip({placement: tooltip_placement});
-				function tooltip_placement(context, source) {
-					var $source = $(source);
-					var $parent = $source.closest('table')
-					var off1 = $parent.offset();
-					var w1 = $parent.width();
-			
-					var off2 = $source.offset();
-					var w2 = $source.width();
-			
-					if( parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2) ) return 'right';
-					return 'left';
+			$.extend({
+
+				action : function(url, obj)
+				{
+					var obj = $(obj).parents('form');
+
+					$.ajax({
+						url : url,
+						type : 'post',
+						data : obj.serialize(),
+						success : function(res)
+						{
+							$.lagou.alert(res.msg, res.code, 2);
+							$.lagou.formHide();
+							location.reload();
+						}
+					});
+				},
+
+				del : function(url)
+				{
+					$.ajax({
+						url : url,
+						type : 'get',
+						success : function(res)
+						{
+							$.lagou.alert(res.msg, res.code, 2);
+							location.reload();
+						}
+					});
 				}
-			})
-		</script>
+			});
+		
+		})
+	</script>
 </block>

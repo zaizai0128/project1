@@ -3,7 +3,7 @@ return array(
     // url
     'URL_MODEL'             =>  2,
 	//'配置项'=>'配置值'
-	'DB_TYPE'               =>  'mysql',     // 数据库类型
+	'DB_TYPE'               =>  'mysqli',     // 数据库类型
     'DB_HOST'               =>  'localhost', // 服务器地址
     'DB_NAME'               =>  'lagou',          // 数据库名
     'DB_USER'               =>  'root',      // 用户名

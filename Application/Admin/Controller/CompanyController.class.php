@@ -22,8 +22,9 @@ class CompanyController extends BaseController {
 	{
 		$map = I();
 		$where = array_filter($map);
+		$where['state'] = array('lt', 3);
 		if (isset($where['name']))
-			$where['name'] = array('LIKE', '%'.$where['name'].'%');
+			$where['name'] = array('LIKE', $where['name'].'%');
 
 		$total = $this->companyObj->where($where)->count();
 		$Page = new \Think\Page($total, 20);

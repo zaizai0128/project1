@@ -26,7 +26,7 @@ class ManagerController extends BaseController {
 		$map = I();
 		$where = array_filter($map);
 		if (isset($map['username']))
-			$where['username'] = array('LIKE', '%'.$map['username'].'%');
+			$where['username'] = array('LIKE', $map['username'].'%');
 
 		$total = $this->adminObj->where($where)->count();
 		$Page = new \Think\Page($total, 20);

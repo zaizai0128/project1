@@ -53,6 +53,9 @@
         <ul class="reset" id="navheader">
             <li class="current"><a href="<?php echo U('Home/Index/index');?>">首页</a></li>
             <li ><a href="<?php echo U('Home/Company/companylist');?>" >公司</a></li>
+            <li class="current"><a href="<?php echo U('Index/index');?>">首页</a></li>
+            <li ><a href="companylist.html" >公司</a></li>
+            <li ><a href="h/toForum.html" target="_blank">论坛</a></li>
             <li ><a href="<?php echo U('Resume/index');?>" rel="nofollow">我的简历</a></li>
             <li ><a href="create.html" rel="nofollow">发布职位</a></li>
         </ul>
@@ -76,7 +79,6 @@
                 <span class="red dn" id="noticeDot-0"></span>
                 <i></i>
             </dt>
-            <dd><a rel="nofollow" href="<?php echo U('Resume/index');?>">我的简历</a></dd>
             <dd><a href="<?php echo U('CollectionJob/index');?>">我收藏的职位</a></dd>
             <dd class="btm"><a href="subscribe.html">我的订阅</a></dd>
             <dd><a href="<?php echo U('Home/CompanyJob/create');?>">我要招人</a></dd>
@@ -122,10 +124,10 @@
 							<div class="menu_sub dn">
 								<dl class="reset">
 									<?php if(is_array($vo['sub'])): foreach($vo['sub'] as $key=>$v): if($v['pid'] == $vo['id']): ?><dt style="margin-bottom:10px">
-												<a href="#"><?php echo ($v['name']); ?></a>
+												<a href="<?php echo U('Search/index',array('job'=>$v['name']));?>"><?php echo ($v['name']); ?></a>
 											</dt><?php endif; ?>								
 										<dd> 
-										<?php if(is_array($v['sub'])): foreach($v['sub'] as $key=>$o): if($o['pid'] == $v['id']): ?><a href="#"><?php echo ($o['name']); ?></a><?php endif; endforeach; endif; ?>
+										<?php if(is_array($v['sub'])): foreach($v['sub'] as $key=>$o): if($o['pid'] == $v['id']): ?><a href="<?php echo U('Search/index',array('job'=>$v['name']));?>"><?php echo ($o['name']); ?></a><?php endif; endforeach; endif; ?>
 										</dd><?php endforeach; endif; ?>			
 								</dl>
 							</div>
@@ -139,7 +141,7 @@
 			<div class="content">
 				<!--搜索框 开始-->
 				<div id="search_box">
-					<form id="searchForm" name="searchForm" action="list.html" method="get">
+					<form   action="<?php echo U('Search/index');?>" method="get">
 						<ul id="searchType">
 							<li data-searchtype="1" class="type_selected">职位</li>
 							<li data-searchtype="4">公司</li>
@@ -152,8 +154,6 @@
 				<!--搜索框 结束-->
 				<!--热门搜索 开始-->
 				<dl class="hotSearch">
-					<dt>热门搜索：</dt>
-					<dd><a href="list.htmlJava?labelWords=label&city=">Java</a></dd>
 				</dl>
 				<!--热门搜索 结束-->
 				<!--上部轮播 开始-->
@@ -266,10 +266,10 @@
 				<div id="hotList">
 					<ul class="hot_pos reset">
 						<!--白色背景热门职位详情 开始-->
-						<?php if(is_array($hotjob)): foreach($hotjob as $key=>$vo): ?><li class="clearfix">
+						<?php if(is_array($hotjob)): foreach($hotjob as $key=>$vo): ?><li class="odd clearfix">
 							<div class="hot_pos_l">
 								<div class="mb10">
-									<a href="h/jobs/147822.html" target="_blank"><?php echo ($vo["name"]); ?></a>&nbsp;
+									<a href="<?php echo U('JobShow/index',array('jid'=>$vo['id']));?>" target="_blank"><?php echo ($vo["name"]); ?></a>&nbsp;
 									<span class="c9">[<?php echo ($vo["city"]); ?>]</span>
 								</div>
 								<span><em class="c7">月薪： </em><?php echo ($vo["salary_low"]); ?>k-<?php echo ($vo["salary_high"]); ?>k</span>
@@ -297,100 +297,42 @@
 							</div>
 						</li><?php endforeach; endif; ?>
 						<!--白色背景热门职位详情 结束-->
-						<!--灰色背景热门职位详情 开始-->
-						<!--<li class="odd clearfix">
-							<div class="hot_pos_l">
-								<div class="mb10">
-									<a href="h/jobs/147974.html" target="_blank">售前工程师（运维经验优先）</a>&nbsp;
-									<span class="c9">[北京]</span>
-								</div>
-								<span><em class="c7">月薪： </em>6k-12k</span>
-								<span><em class="c7">经验：</em> 3-5年</span>
-								<span><em class="c7">最低学历： </em>大专</span>
-								<br />
-								<span><em class="c7">职位诱惑：</em>五险一金+商业保险+带薪年假+奖金等</span>
-								<br />
-								<span>1天前发布</span>
-							</div>
-							<div class="hot_pos_r">
-								<div class="mb10 recompany"><a href="h/c/5232.html" target="_blank">监控宝</a></div>
-									<span><em class="c7">领域：</em> 云计算\大数据</span>
-									<br />
-									<span><em class="c7">阶段：</em> 成长型(A轮)</span>
-									<span><em class="c7">规模：</em>50-150人</span>
-									<ul class="companyTags reset">
-										<li>五险一金</li>
-										<li>福利好</li>
-										<li>商业险</li>
-									</ul>
-								</div>
-						</li>-->
-						<!--灰色背景热门职位详情 结束-->
-						<a href="list.html?city=%E5%85%A8%E5%9B%BD" class="btn fr" target="_blank">查看更多</a>
+						<a href="#" class="btn fr" target="_blank">查看更多</a>
 					</ul>
 					<ul class="hot_pos reset dn">
-						<!--白色背景最新职位详情 开始-->
-						<li class="clearfix">
+						<!--最新职位详情 开始-->
+						<?php if(is_array($newjob)): foreach($newjob as $key=>$vo): ?><li class="odd clearfix">
 							<div class="hot_pos_l">
 								<div class="mb10">
-									<a href="h/jobs/147822.html" target="_blank">运营小弟</a>&nbsp;
-									<span class="c9">[北京]</span>
+									<a href="<?php echo U('JobShow/index',array('jid'=>$vo['id']));?>" target="_blank"><?php echo ($vo["name"]); ?></a>&nbsp;
+									<span class="c9">[<?php echo ($vo["city"]); ?>]</span>
 								</div>
-								<span><em class="c7">月薪： </em>15k-20k</span>
-								<span><em class="c7">经验：</em> 3-5年</span>
-								<span><em class="c7">最低学历： </em>本科</span>
+								<span><em class="c7">月薪： </em><?php echo ($vo["salary_low"]); ?>k-<?php echo ($vo["salary_high"]); ?>k</span>
+								<span><em class="c7">经验：</em> <?php echo ($vo["work_year"]); ?></span>
+								<span><em class="c7">最低学历： </em><?php echo ($vo["edu"]); ?></span>
 								<br />
-								<span><em class="c7">职位诱惑：</em></span>
+								<span><em class="c7">职位诱惑：</em><?php echo ($vo["welfare"]); ?></span>
 								<br />
-								<span>1天前发布</span>
+								<span>发布时间:<?php echo (date('Y年m月d日',$vo["modify_time"])); ?></span>
 							</div>
 							<div class="hot_pos_r">
 								<div class="mb10 recompany">
-									<a href="h/c/399.html" target="_blank">节操精选</a>
+									<a href="h/c/399.html" target="_blank"><?php echo ($vo["company"]["name"]); ?></a>
 								</div>
-								<span><em class="c7">领域：</em> 移动互联网</span>
+								<span><em class="c7">领域：</em> <?php echo ($vo["company"]["trade"]); ?></span>
 								<span><em class="c7">创始人：</em>陈桦</span>
 								<br />
-								<span><em class="c7">阶段：</em> 初创型(天使轮)</span>
-								<span><em class="c7">规模：</em>少于15人</span>
+								<span><em class="c7">阶段：</em><?php echo ($vo["company"]["stage"]); ?></span>
+								<span><em class="c7">规模：</em><?php echo ($vo["company"]["scale"]); ?></span>
 								<ul class="companyTags reset">
 									<li>移动互联网</li>
 									<li>五险一金</li>
 									<li>扁平管理</li>
 								</ul>
 							</div>
-						</li>
-						<!--白色背景最新职位详情 结束-->
-						<!--灰色背景最新职位详情 开始-->
-						<li class="odd clearfix">
-							<div class="hot_pos_l">
-								<div class="mb10">
-									<a href="h/jobs/147974.html" target="_blank">售前工程师（运维经验优先）</a>&nbsp;
-									<span class="c9">[北京]</span>
-								</div>
-								<span><em class="c7">月薪： </em>6k-12k</span>
-								<span><em class="c7">经验：</em> 3-5年</span>
-								<span><em class="c7">最低学历： </em>大专</span>
-								<br />
-								<span><em class="c7">职位诱惑：</em>五险一金+商业保险+带薪年假+奖金等</span>
-								<br />
-								<span>1天前发布</span>
-							</div>
-							<div class="hot_pos_r">
-								<div class="mb10 recompany"><a href="h/c/5232.html" target="_blank">监控宝</a></div>
-									<span><em class="c7">领域：</em> 云计算\大数据</span>
-									<br />
-									<span><em class="c7">阶段：</em> 成长型(A轮)</span>
-									<span><em class="c7">规模：</em>50-150人</span>
-									<ul class="companyTags reset">
-										<li>五险一金</li>
-										<li>福利好</li>
-										<li>商业险</li>
-									</ul>
-								</div>
-						</li>
-						<!--灰色背景最新职位详情 结束-->
-						<a href="list.html?city=%E5%85%A8%E5%9B%BD" class="btn fr" target="_blank">查看更多</a>
+						</li><?php endforeach; endif; ?>
+						<!--最新职位详情 结束-->
+						<a href="#" class="btn fr" target="_blank">查看更多</a>
 					</ul>
 				</div>
 				<!--职位详情框 结束-->
