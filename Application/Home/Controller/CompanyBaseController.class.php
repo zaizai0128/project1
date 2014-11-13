@@ -23,6 +23,7 @@ class CompanyBaseController extends Controller {
 			$this->redirect('Home/User/login');
 		}
 
+		cookie('state', 2);
 		$this->uid = session('user.id');
 
 		$this->comObj = D('Company');
@@ -33,6 +34,5 @@ class CompanyBaseController extends Controller {
 		if (!$result || $result['state'] == -1 || $result['step'] == 4) {
 			$this->redirect('Home/CompanyReg/step');
 		}
-
 	}
 }

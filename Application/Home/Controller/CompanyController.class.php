@@ -8,9 +8,12 @@
  *
  */
 namespace Home\Controller;
+use Home\Model;
 
 
 class CompanyController extends CompanyBaseController {
+
+	
 	// 公司主页
 	public function index()
 	{
@@ -60,14 +63,60 @@ class CompanyController extends CompanyBaseController {
 	// 公司列表页
 	public function companylist()
 	{
+		$jobObj = D('Job');
+		$tagModel = D('Tag');
+		$res = $this->comObj->select();
+		foreach ($res as &$val) {
+			$res2 = $tagModel->getList($val['id']);
+			$res3 = $jobObj->where(array('company_id'=>$val['id']))->limit(4)->select();
+			$val['tag'] = $res2;
+			$val['job'] = $res3;
+		}
+
+		$tradeObj = D('Trade');
+		$trade = $tradeObj->select();
+
+		$this->assign('trade', $trade);
+		$this->assign('company', $res);
 		$this->display();
 	}
 
+	// 公司筛选功能
+	public function search()
+	{
+		$data = I();
+		if ($data['city'] == '全国') {
+			$where['city'] == '';
+		} else {
+			$where['city'] = $data['city'];
+		}
+		$where['stage'] = array_flip(C('company_stage'))[$data['fs']];
+		$where['trade'] = array('like', '%'.$data['ifs'].'%');
+		$where = array_filter($where);
+
+		$jobObj = D('Job');
+		$tagModel = D('Tag');
+		$res = $this->comObj->where($where)->select();
+		foreach ($res as &$val) {
+			$res2 = $tagModel->getList($val['id']);
+			$res3 = $jobObj->where(array('company_id'=>$val['id']))->limit(4)->select();
+			$val['tag'] = $res2;
+			$val['job'] = $res3;
+		}
+
+		$tradeObj = D('Trade');
+		$trade = $tradeObj->select();
+		$this->assign('trade', $trade);
+		$this->assign('company', $res);
+		$this->display();
+	}
+
+	// 公司展示页
 	public function showCompany()
 	{
-		$data['company_id'] = $this->uid;
-
-		$company = $this->comObj->where('id = '.$this->uid)->find();
+		$tmp = I();
+		$data['company_id'] = $tmp['id'];
+		$company = $this->comObj->where($tmp)->find();
 		$company['scale'] = C('company_scale')[$company['scale']];
 		$company['stage'] = C('company_stage')[$company['stage']];
 		

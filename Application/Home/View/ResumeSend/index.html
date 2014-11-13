@@ -59,13 +59,13 @@
                             <dd>
                                 <div class="delivery_tabs">
                                     <ul class="reset">
-                                        <li class="current">
+                                        <li class="{$topshow['all_show']}">
                                             <a href="{:U('ResumeSend/allSend')}">
                                                 全部
                                             </a>
                                         </li>
-                                        <li>
-                                            <a href="{:U('ResumeSend/sendSuccess')}">
+                                        <li class="{$topshow['look_show']}">
+                                            <a href="{:U('ResumeSend/lookSuccess')}">
                                                 投递成功
                                             </a>
                                         </li>
@@ -294,27 +294,45 @@
                                                     </li>
                                                 </ul>
                                                 <ul class="status_list">
-                                                    <li class="top">
+                                                    <li class="{$vo.state_1_show} {$vo.state_1_dn}">
                                                         <div class="list_time">
                                                             <em>
                                                             </em>
-                                                            2014-07-01 17:15
+                                                            {$vo.state_1_time|date='Y年m月d日',###}
                                                         </div>
                                                         <div class="list_body">
-                                                            简历被lixiang标记为不合适
-                                                            <div>
-                                                                您的简历已收到，但目前您的工作经历与该职位不是很匹配，因此很抱歉地通知您无法进入面试。
-                                                            </div>
+                                                            简历投递成功
                                                         </div>
                                                     </li>
-                                                    <li class="bottom">
+                                                    <li class="{$vo.state_2_show} {$vo.state_2_dn}">
                                                         <div class="list_time">
                                                             <em>
                                                             </em>
-                                                            2014-07-01 17:08
+                                                            {$vo.state_2_time|date='Y年m月d日',###}
                                                         </div>
                                                         <div class="list_body">
-                                                            lixiang已成功接收你的简历
+                                                            HR查看了你的简历
+                                                        </div>
+                                                    </li>
+                                                    <li class="{$vo.state_3_show} {$vo.state_3_dn}">
+                                                        <div class="list_time">
+                                                            <em>
+                                                            </em>
+                                                            {$vo.state_3_time|date='Y年m月d日',###}
+                                                        </div>
+                                                        <div class="list_body">
+                                                            通过初步筛选
+                                                        </div>
+                                                    </li>
+                                                    <li class="{$vo.state_4_show} {$vo.state_4_dn}">
+                                                        <div class="list_time">
+                                                            <em>
+                                                            </em>
+                                                            {$vo.state_4_time|date='Y年m月d日',###}
+                                                        </div>
+                                                        <div class="list_body">
+                                                            {$vo.state_4_value}
+                                                            <div>{$vo.state_4_say}</div>
                                                         </div>
                                                     </li>
                                                 </ul>

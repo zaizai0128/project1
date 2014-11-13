@@ -95,6 +95,7 @@ class UserController extends Controller {
 		if($result['password'] == $password){
 			$user=array('id'=>$result['id'],'username'=>$result['username'],'type'=>$result['type']);
 			session('user',$user);
+			cookie('state', 1);
 			$this->success('登陆成功',U("Index/index"),3);
 		}else{
 			$this->error('用户密码输入错误重新登陆',U("User/login"),3);

@@ -33,9 +33,9 @@
                 <div class="clearfix">
                     <div class="content_l">
                         <form id="companyListForm" name="companyListForm" method="get" action="{:U('Home/Company/search')}">
-                            <input type="hidden" id="city" name="city" value="全国" />
-                            <input type="hidden" id="fs" name="fs" value="" />
-                            <input type="hidden" id="ifs" name="ifs" value="" />
+                            <input type="hidden" id="city" name="city" value="{$citySelect}" />
+                            <input type="hidden" id="fs" name="fs" value="{$stageSelect}" />
+                            <input type="hidden" id="ifs" name="ifs" value="{$tradeSelect}" />
                             <input type="hidden" id="ol" name="ol" value="" />
                             <dl class="hc_tag">
                                 <dt>
@@ -43,7 +43,7 @@
                                     <ul class="workplace reset fr" id="workplaceSelect">
                                         <?php foreach (C('city')['hot'] as $hotVal):?>
                                         <li>
-                                            <a href="javascript:void(0)"<if condition="$hotVal == '全国'">class="current"</if>>{$hotVal}</a> |
+                                            <a href="javascript:void(0)" <?php if ($_GET['city'] == $hotVal) echo 'class="current"'; ?>>{$hotVal}</a> |
                                         </li>
                                         <?php endforeach ;?>
                                         <li class="more">
@@ -60,7 +60,7 @@
                                                 <dt>{$key}</dt>
                                                 <dd>
                                                     <?php foreach(C('city')['other'][$key] as $val): ?>
-                                                    <span>{$val}</span>
+                                                    <span <?php if ($_GET['city'] == $Val) echo 'class="current"'; ?>>{$val}</span>
                                                     <?php endforeach ;?>
                                                 </dd>
                                             </dl>
@@ -73,7 +73,7 @@
                                         <dt>发展阶段：</dt>
                                         <dd>
                                             <?php foreach (C('company_stage') as $stageVal):?>
-                                            <a href="javascript:void(0)">{$stageVal}</a>
+                                            <a href="javascript:void(0)" <?php if ($_GET['fs'] == $stageVal) echo 'class="current"'; ?>>{$stageVal}</a>
                                             <?php endforeach; ?>
                                         </dd>
                                     </dl>
@@ -81,7 +81,7 @@
                                         <dt>行业领域：</dt>
                                         <dd>
                                             <foreach name="trade" item="tradeVal">
-                                            <a href="javascript:void(0)">{$tradeVal.name}</a>
+                                            <a href="javascript:void(0)" <?php if ($_GET['ifs'] == $tradeVal['name']) echo 'class="current"'; ?>>{$tradeVal.name}</a>
                                             </foreach>
                                         </dd>
                                     </dl>

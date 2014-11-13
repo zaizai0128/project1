@@ -15,7 +15,7 @@ class ResumeSendController extends BaseController {
 			$this->data['username']=$res_user['username'];
 		}
 		//投递职位的遍历
-		//
+		$topshow['all_show']='current';
 		$send=M('send');
 		$company=M('company');
 		$job=M('job');
@@ -26,36 +26,65 @@ class ResumeSendController extends BaseController {
 				//first
 				if($value['state1']==1){
 					$arr['state_1']='done';
+					$arr['state_1_show']='top';
+					$arr['state_1_time']=$res_send['state1_time'];
+					$arr['state_1_dn']='';
 				}else{
 					$arr['state_1']='grey';
+					$arr['state_1_show']='bottom';
+					$arr['state_1_dn']='dn';
 				}
 				//second	
 				if($value['state2']==1){
 					$arr['state_2']='done';
+					$arr['state_2_show']='top';
+					$arr['state_2_time']=$res_send['state2_time'];
+					$arr['state_2_dn']='';
 				}else{
 					$arr['state_2']='grey';
+					$arr['state_2_show']='bottom';
+					$arr['state_2_dn']='dn';
 				}
 				//third
 				if($value['state3']==0){
 					$arr['state_3']='grey';
 					$arr['state_3_value']='被转发';
+					$arr['state_3_show']='bottom';
+					$arr['state_3_dn']='dn';
 				}elseif($value['state3']==1){
 					$arr['state_3']='done';
 					$arr['state_3_value']='被转发';
+					$arr['state_3_show']='top';
+					$arr['state_3_time']=$res_send['state3_time'];
+					$arr['state_3_dn']='';
 				}else{
 					$arr['state_3']='done';
 					$arr['state_3_value']='通过初筛';
+					$arr['state_3_show']='top';
+					$arr['state_3_time']=$res_send['state3_time'];
+					$arr['state_3_dn']='';
 				}
 				//fourth
 				if($value['state4']==0){
 					$arr['state_4']='grey';
 					$arr['state_4_value']='通知面试';
+					$arr['state_4_show']='bottom';
+					$arr['state_4_say']=$res_send['content'];
+					$arr['state_4_dn']='dn';
 				}elseif($value['state4']==1){
 					$arr['state_4']='done';
 					$arr['state_4_value']='通知面试';
+					$arr['state_4_show']='top';
+					$arr['state_4_time']=$res_send['state4_time'];
+					$arr['state_4_say']=$res_send['content'];
+					$arr['state_4_dn']='';
 				}else{
 					$arr['state_4']='done';
 					$arr['state_4_value']='不合适';
+					$arr['state_4_show']='top';
+					$arr['state_4_time']=$res_send['state4_time'];
+					$arr['state_4_say']=$res_send['content'];
+					$arr['state_4_dn']='';
 				}
 				$res_job=$job->where("id={$arr['job_id']}")->find();
 				if($res_job){
@@ -72,6 +101,7 @@ class ResumeSendController extends BaseController {
 		//显示用户投递的职位
 		$this->assign('data',$this->data);
 		$this->assign('result',$result);
+		$this->assign('topshow',$topshow);
 		$this->display('ResumeSend/index');	
 	}
 	//查看过的简历
@@ -83,6 +113,7 @@ class ResumeSendController extends BaseController {
 			$this->data['username']=$res_user['username'];
 		}
 		//投递职位的遍历
+		$topshow['look_show']='current';
 		$send=M('send');
 		$company=M('company');
 		$job=M('job');
@@ -96,30 +127,54 @@ class ResumeSendController extends BaseController {
 					//first
 					if($value['state1']==1){
 						$arr['state_1']='done';
+						$arr['state_1_show']='top';
+						$arr['state_1_time']=$res_send['state1_time'];
+						$arr['state_1_dn']='';
 					}else{
 						$arr['state_1']='grey';
+						$arr['state_1_show']='bottom';
+						$arr['state_1_dn']='dn';
 					}
 					//third
 					if($value['state3']==0){
 						$arr['state_3']='grey';
 						$arr['state_3_value']='被转发';
+						$arr['state_3_show']='bottom';
+						$arr['state_3_dn']='dn';
 					}elseif($value['state3']==1){
 						$arr['state_3']='done';
 						$arr['state_3_value']='被转发';
+						$arr['state_3_show']='top';
+						$arr['state_3_time']=$res_send['state3_time'];
+						$arr['state_3_dn']='';
 					}else{
 						$arr['state_3']='done';
 						$arr['state_3_value']='通过初筛';
+						$arr['state_3_show']='top';
+						$arr['state_3_time']=$res_send['state3_time'];
+						$arr['state_3_dn']='';
 					}
 					//fourth
 					if($value['state4']==0){
 						$arr['state_4']='grey';
 						$arr['state_4_value']='通知面试';
+						$arr['state_4_show']='bottom';
+						$arr['state_4_say']=$res_send['content'];
+						$arr['state_4_dn']='dn';
 					}elseif($value['state4']==1){
 						$arr['state_4']='done';
 						$arr['state_4_value']='通知面试';
+						$arr['state_4_show']='top';
+						$arr['state_4_time']=$res_send['state4_time'];
+						$arr['state_4_say']=$res_send['content'];
+						$arr['state_4_dn']='';
 					}else{
 						$arr['state_4']='done';
 						$arr['state_4_value']='不合适';
+						$arr['state_4_show']='top';
+						$arr['state_4_time']=$res_send['state4_time'];
+						$arr['state_4_say']=$res_send['content'];
+						$arr['state_4_dn']='';
 					}
 					$res_job=$job->where("id={$arr['job_id']}")->find();
 					if($res_job){
@@ -136,6 +191,7 @@ class ResumeSendController extends BaseController {
 		//var_dump($result);
 		//var_dump($res_send);
 		//显示用户投递的职位
+		$this->assign('topshow',$topshow);
 		$this->assign('data',$this->data);
 		$this->assign('result',$result);
 		$this->display('ResumeSend/index');			
@@ -317,6 +373,7 @@ class ResumeSendController extends BaseController {
 						$result[]=$arr;	
 					}
 				}			
-			}		
+			}
+		}		
 	}
 }

@@ -30,17 +30,16 @@ class IndexController extends BaseController {
 		$res_category=$this->getCates();
 		//显示热门职位的分类
 		$res_hotjob=$this->showHot();
+		//显示最新职位的分类
+		$res_newjob=$this->newJob();
 		//输出到模板
 		$this->assign('data',$this->data);
 		$this->assign('cates',$res_category);
 		$this->assign('hotjob',$res_hotjob);
+		$this->assign('newjob',$res_newjob);
 		$this->display();
 		//var_dump($res_category);
 	}
-    //最新职位的显示
-    public function newjob_ajax(){
-    	
-    }
     //遍历数组的子分类
     public function getCates($pid=0){
         $cate = M('job_category');
@@ -65,7 +64,7 @@ class IndexController extends BaseController {
     	$user_col = M('user_col');
     	$job = M('job');
     	$company = M('company');
-    	$res_user_col=$user_col->query("select job_id,count(job_id) as times from lg_user_col GROUP BY job_id order by times desc limit 3");
+    	$res_user_col=$user_col->query("select job_id,count(job_id) as times from lg_user_col GROUP BY job_id order by times desc limit 2");
     	foreach($res_user_col as $key=>$value){
     		$id=$value['job_id'];
     		$arr=$job->where("id={$id}")->find();
@@ -75,6 +74,20 @@ class IndexController extends BaseController {
     	}
     	//var_dump($hot_job);
     	return $hot_job;
+    }
+    //最新职位的显示
+    public function newJob(){
+    	$job = M('job');
+    	$company = M('company');
+    	$res_job=$job->order('id desc')->limit(2)->select();
+    	foreach($res_job as $key=>$value){
+    		$id=$value['company_id'];
+    		$arr=$value;
+    		$arr['company']=$company->where("id={$id}")->find();
+    		$new_job[]=$arr;    		
+    	}
+    	return $new_job;
+    	//var_dump($new_job);
     }
 
 }

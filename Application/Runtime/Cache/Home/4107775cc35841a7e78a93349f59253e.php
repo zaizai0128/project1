@@ -82,6 +82,12 @@
                                     <a target="_blank" class="applyC" href="javascript:;">
                                         已认证
                                     </a>
+                                <?php elseif($company['state'] == 3): ?>
+                                    <em class="unvalid"></em>
+                                    <span class="va dn">
+                                        拉勾未认证企业
+                                    </span>
+                                    <span class="waitReview">等待审核</span>
                                 <?php else: ?>
                                     <em class="unvalid"></em>
                                     <span class="va dn">
@@ -519,7 +525,7 @@
                             <dd>
                                 <ul class="reset c_jobs" id="jobList">
                                     <?php if(is_array($job)): foreach($job as $key=>$jobVal): ?><li>
-                                        <a href="<?php echo U('Home/CompanyJob/job', array('id'=>$jobVal['id']));?>" target="_blank">
+                                        <a href="<?php echo U('Home/JobShow/index', array('id'=>$jobVal['id']));?>" target="_blank">
                                             <h3>
                                                 <span class="pos" title="<?php echo ($jobVal["name"]); ?>">
                                                     <?php echo ($jobVal["name"]); ?>

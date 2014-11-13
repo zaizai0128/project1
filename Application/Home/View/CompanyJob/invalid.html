@@ -51,7 +51,7 @@
                                 	<foreach name="job" item="jobVal">
                                     <li data-id="149594">
                                         <h3>
-                                            <a target="_blank" title="随便写" href="http://www.lagou.com/jobs/149594.html">
+                                            <a target="_blank" title="随便写" href="{:U('Home/JobShow/index', array('id'=>$jobVal['id']))}">
                                                 {$jobVal.name}
                                             </a>
                                             <span>

@@ -3,30 +3,65 @@
         <a href="index.html" class="logo">
             <img src="__PUBLIC__/HomeStyle/images/logo.png" width="229" height="43" alt="拉勾招聘-专注互联网招聘" />
         </a>
+        <?php if (!$_COOKIE['state']) :?>
+        <!-- 未登录头部 -->
         <ul class="reset" id="navheader">
-            <li class="current"><a href="index.html">首页</a></li>
+            <li class="current"><a href="{:U('Home/Index/index')}">首页</a></li>
             <li ><a href="{:U('Home/Company/companylist')}" >公司</a></li>
+            <li class="current"><a href="{:U('Index/index')}">首页</a></li>
+            <li ><a href="companylist.html" >公司</a></li>
             <li ><a href="h/toForum.html" target="_blank">论坛</a></li>
             <li ><a href="{:U('Resume/index')}" rel="nofollow">我的简历</a></li>
             <li ><a href="create.html" rel="nofollow">发布职位</a></li>
         </ul>
-        <ul class="loginTop {$data['loginTop_value']}">
+        <ul class="loginTop">
             <li><a href="{:U('User/login')}" rel="nofollow">登录</a></li> 
             <li>|</li>
             <li><a href="{:U('User/register')}" rel="nofollow">注册</a></li>
         </ul>
-        <dl class="collapsible_menu {$data['collapsible_menu_value']}">
+        <?php endif ;?>
+
+        <?php if ($_COOKIE['state'] == 1) :?>
+        <!-- 个人用户头部 -->
+         <ul class="reset" id="navheader">
+            <li class="current"><a href="index.html">首页</a></li>
+            <li ><a href="{:U('Home/Company/companylist')}" >公司</a></li>
+            <li ><a href="{:U('Resume/index')}" rel="nofollow">我的简历</a></li>
+        </ul>
+        <dl class="collapsible_menu">
             <dt>
-                <span>{$data['username']}&nbsp;</span>
+                <span><?php echo $_SESSION['user']['username']?>&nbsp;</span>
                 <span class="red dn" id="noticeDot-0"></span>
                 <i></i>
             </dt>
-            <dd><a rel="nofollow" href="{:U('Resume/index')}">我的简历</a></dd>
             <dd><a href="{:U('CollectionJob/index')}">我收藏的职位</a></dd>
             <dd class="btm"><a href="subscribe.html">我的订阅</a></dd>
-            <dd><a href="{:U('Company/index')}">我要招人</a></dd>
+            <dd><a href="{:U('Home/CompanyJob/create')}">我要招人</a></dd>
             <dd><a href="accountBind.html">帐号设置</a></dd>
             <dd class="logout"><a rel="nofollow" href="{:U('User/logout')}">退出</a></dd>
         </dl>
+        <?php endif ;?>
+        <?php if ($_COOKIE['state'] == 2) :?>
+        <!-- 公司用户头部 -->
+         <ul class="reset" id="navheader">
+            <li class="current"><a href="index.html">首页</a></li>
+            <li ><a href="{:U('Home/Company/companylist')}" >公司</a></li>
+            <li ><a href="{:U('Resume/index')}" rel="nofollow">简历管理</a></li>
+            <li ><a href="create.html" rel="nofollow">发布职位</a></li>
+        </ul>
+        <dl class="collapsible_menu">
+            <dt>
+                <span><?php echo $_SESSION['user']['username']?>&nbsp;</span>
+                <span class="red dn" id="noticeDot-0"></span>
+                <i></i>
+            </dt>
+            <dd><a rel="nofollow" href="{:U('Resume/index')}">我发布的职位</a></dd>
+            <dd><a href="{:U('CollectionJob/index')}">我收到的简历</a></dd>
+            <dd class="btm"><a href="subscribe.html">我公司的主页</a></dd>
+            <dd><a href="{:U('Company/index')}">我要找工作</a></dd>
+            <dd><a href="accountBind.html">帐号设置</a></dd>
+            <dd class="logout"><a rel="nofollow" href="{:U('User/logout')}">退出</a></dd>
+        </dl>
+        <?php endif ;?>
     </div>
 </div>

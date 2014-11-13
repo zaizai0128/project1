@@ -125,7 +125,10 @@ class ResumeHandleController extends CompanyBaseController {
 		$data = I();
 		$array['id'] = $data['deliverIds'];
 		$array['content'] = $data['content'];
+		$array['state3'] = 2;
+		$array['state3_time'] = time();
 		$array['state4'] = -1;
+		$array['state4_time'] = time();
 		$sendObj = D('Send');
 		$sendObj->save($array);
 
