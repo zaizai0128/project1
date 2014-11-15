@@ -51,6 +51,7 @@ class UserController extends Controller {
 				//验证通过一般跳转到首页
 				$user=array('id'=>$userInfo['id'],'username'=>$userInfo['username'],'type'=>$userInfo['type']); 
 				session('user',$user);
+				cookie('state',1);
 				$this->success('拉钩网邮箱验证成功',U('Resume/index'),3);
 			}else{
 				$this->error('拉钩网邮箱验证失败',U("User/login"),3);
@@ -96,14 +97,15 @@ class UserController extends Controller {
 			$user=array('id'=>$result['id'],'username'=>$result['username'],'type'=>$result['type']);
 			session('user',$user);
 			cookie('state', 1);
-			$this->success('登陆成功',U("Index/index"),3);
+			$this->redirect('Index/index');
 		}else{
-			$this->error('用户密码输入错误重新登陆',U("User/login"),3);
+			$this->redirect('User/login');
 		}
 	}
 	//用户退出功能
 	public function logout(){
 		session('user',null);
+		cookie('state',null);
 		$this->redirect('Home/Index/index');
 	}
 }

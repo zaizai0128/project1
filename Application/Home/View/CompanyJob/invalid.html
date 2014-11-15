@@ -23,7 +23,7 @@
     
     <body>
         <div id="body">
-            <include file="Public/header" nav="company" />
+            <include file="Public/header" nav="job" />
             <!-- end #header -->
             <div id="container">
             	<include file="Public/sidebar" nav="invalid" />
@@ -51,7 +51,7 @@
                                 	<foreach name="job" item="jobVal">
                                     <li data-id="149594">
                                         <h3>
-                                            <a target="_blank" title="随便写" href="{:U('Home/JobShow/index', array('id'=>$jobVal['id']))}">
+                                            <a target="_blank" title="随便写" href="{:U('Home/JobShow/index', array('jid'=>$jobVal['id']))}">
                                                 {$jobVal.name}
                                             </a>
                                             <span>

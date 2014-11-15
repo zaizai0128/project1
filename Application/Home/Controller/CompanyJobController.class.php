@@ -42,6 +42,7 @@ class CompanyJobController extends CompanyBaseController {
 			$data['modify_time'] = time();
 			$result = $jobObj->save($data);
 		} else {
+			$data['modify_time'] = time();
 			$data['create_time'] = time();
 			$result = $jobObj->add($data);
 			$data['id'] = $result;

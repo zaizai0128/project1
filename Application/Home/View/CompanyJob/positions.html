@@ -23,7 +23,7 @@
     
     <body>
         <div id="body">
-            <include file="Public/header" nav="company" />
+            <include file="Public/header" nav="job" />
             <!-- end #header -->
             <div id="container">
             	<include file="Public/sidebar" nav="positions" />
@@ -51,7 +51,7 @@
                                 	<foreach name="job" item="jobVal">
                                     <li data-id="{$jobVal.id}">
                                         <h3>
-                                            <a target="_blank" title="随便写" href="{:U('Home/JobShow/index', array('id'=>$jobVal['id']))}">
+                                            <a target="_blank" title="随便写" href="{:U('Home/JobShow/index', array('jid'=>$jobVal['id']))}">
                                                 {$jobVal.name}
                                             </a>
                                             <span>
@@ -97,7 +97,9 @@
         </div>
         <!-- end #body -->
         <include file="Public/footer" />
+        <script src="__PUBLIC__/HomeStyle/js/core.min.js" type="text/javascript"></script>
         <script src="__PUBLIC__/HomeStyle/js/popup.min.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/HomeStyle/js/tongji.js" type="text/javascript"></script>
         <!-- -->
         <script src="__PUBLIC__/HomeStyle/js/analytics01.js" type="text/javascript"></script>
         <script type="text/javascript" src="__PUBLIC__/HomeStyle/js/h.js"></script>

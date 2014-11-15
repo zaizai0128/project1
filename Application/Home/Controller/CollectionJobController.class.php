@@ -15,6 +15,7 @@ class CollectionJobController extends BaseController {
 		$user_col=M('user_col');
 		$company = M('company');
 		$job=M('job');
+		$send=M('send');
 		$res_user_col=$user_col->where("uid={$id}")->select();
 		if($res_user_col){
 			foreach ($res_user_col as $value) {
@@ -22,13 +23,20 @@ class CollectionJobController extends BaseController {
 				$arr=$res_job;
 				$cid=$res_job['company_id'];
 				$arr['company']=$company->where("id={$cid}")->find();
+				$res_send=$send->where("user_id={$id} and job_id={$value['job_id']}")->find();
+				if($res_send){
+					$arr['show_1']='';
+					$arr['show_2']='dn';
+				}else{
+					$arr['show_1']='dn';
+					$arr['show_2']='';
+				}
 				$result[]=$arr;
    			}
 		}
 		$this->assign('data',$this->data);
 		$this->assign('result',$result);
 		$this->display();
-		//var_dump($data);
 	}
 	//收藏职位的删除
 	public function jobDel(){

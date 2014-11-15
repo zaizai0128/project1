@@ -1,21 +1,7 @@
 <?php
 namespace Home\Controller;
 use Think\Controller;
-class IndexController extends BaseController {
-
-	public function tmp2()
-	{
-
-		$msg['content']['data']['phone'] = '18612666432';
-		$msg['content']['data']['email'] = '247678652@qq.com';
-		$msg['content']['rows'] = [];
-		$msg['message'] = '操作成功';
-		$msg['state'] = 1;
-
-		$this->ajaxReturn($msg);
-		// echo '{"content":{"data":{"phone":"18612666432","email":"247678652@qq.com"},"rows":[]},"message":"操作成功","state":1}';
-	}
-
+class IndexController extends Controller {
 	//首页的显示遍历
 	public function index(){
 		//显示首页用户名
@@ -87,7 +73,119 @@ class IndexController extends BaseController {
     		$new_job[]=$arr;    		
     	}
     	return $new_job;
-    	//var_dump($new_job);
+    }
+
+    // 公司列表页
+    public function companylist()
+    {
+        $jobObj = D('Job');
+        $tagModel = D('Tag');
+        $comObj = D('Company');
+        $total = $comObj->count();
+        $page = new \Think\Page($total, 1);
+        $page->setConfig('first', '首页');
+        $page->setConfig('prev', '上一页');
+        $page->setConfig('next', '下一页');
+        $page->setConfig('last', '尾页');
+        $res = $comObj->limit($page->firstRow, $page->listRows)->select();
+        foreach ($res as &$val) {
+            $res2 = $tagModel->getList($val['id']);
+            $res3 = $jobObj->where(array('company_id'=>$val['id']))->limit(4)->select();
+            $val['tag'] = $res2;
+            $val['job'] = $res3;
+        }
+
+        $tradeObj = D('Trade');
+        $trade = $tradeObj->select();
+
+        $this->assign('page', $page->show());
+        $this->assign('trade', $trade);
+        $this->assign('company', $res);
+        $this->display();
+    }
+
+    // 公司展示页
+    public function showCompany()
+    {
+        $tmp = I();
+        $comObj = D('Company');
+        $data['company_id'] = $tmp['id'];
+        $company = $comObj->where($tmp)->find();
+        $company['scale'] = C('company_scale')[$company['scale']];
+        $company['stage'] = C('company_stage')[$company['stage']];
+        
+        $comTagObj = D('CompanyTag');
+        $tagObj = D('Tag');
+        $res = $comTagObj->where($data)->select();
+        $str = '';
+        if ($res) {
+            foreach($res as $val) {
+                $str .= $val['tag_id'].',';
+            }
+            $str = rtrim($str, ',');
+            $where['id'] = array('in', $str);
+            $tag = $tagObj->where($where)->select();
+            $this->assign('tag', $tag);
+        }
+        $result1 = $tagObj->where('type > 0')->limit(12)->select();
+        $result2 = $tagObj->where('type > 0')->limit('12,10')->select();
+
+        $productObj = D('Product');
+        $product = $productObj->where($data)->select();
+
+        $teamObj = D('Team');
+        $team = $teamObj->where($data)->select();
+
+        $jobObj = D('Job');
+        $job = $jobObj->where($data)->select();
+        $jobnum = $jobObj->where($data)->count();
+
+        $this->assign('company', $company);
+        $this->assign('allTag1', $result1);
+        $this->assign('allTag2', $result2);
+        $this->assign('product', $product);
+        $this->assign('team', $team);
+        $this->assign('job', $job);
+        $this->assign('jobnum', $jobnum);
+        $this->display();
+    }
+
+    // 公司筛选功能
+    public function search()
+    {
+        $data = I();
+        $comObj = D('Company');
+        if ($data['city'] == '全国') {
+            $where['city'] == '';
+        } else {
+            $where['city'] = $data['city'];
+        }
+        $where['stage'] = array_flip(C('company_stage'))[$data['fs']];
+        $where['trade'] = array('like', '%'.$data['ifs'].'%');
+        $where = array_filter($where);
+        $total = $comObj->where($where)->count();
+        $page = new \Think\Page($total, 1);
+        $page->setConfig('first', '首页');
+        $page->setConfig('prev', '上一页');
+        $page->setConfig('next', '下一页');
+        $page->setConfig('last', '尾页');
+
+        $jobObj = D('Job');
+        $tagModel = D('Tag');
+        $res = $comObj->where($where)->limit($page->firstRow, $page->listRows)->select();
+        foreach ($res as &$val) {
+            $res2 = $tagModel->getList($val['id']);
+            $res3 = $jobObj->where(array('company_id'=>$val['id']))->limit(4)->select();
+            $val['tag'] = $res2;
+            $val['job'] = $res3;
+        }
+
+        $tradeObj = D('Trade');
+        $trade = $tradeObj->select();
+        $this->assign('page', $page->show());
+        $this->assign('trade', $trade);
+        $this->assign('company', $res);
+        $this->display();
     }
 
 }

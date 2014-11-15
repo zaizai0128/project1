@@ -150,7 +150,7 @@
                                 <ul class="reset c_jobs" id="jobList">
                                     <foreach name="job" item="jobVal">
                                     <li>
-                                        <a href="{:U('Home/JobShow/index', array('id'=>$jobVal['id']))}" target="_blank">
+                                        <a href="{:U('Home/JobShow/index', array('jid'=>$jobVal['id']))}" target="_blank">
                                             <h3>
                                                 <span class="pos" title="{$jobVal.name}">
                                                     {$jobVal.name}

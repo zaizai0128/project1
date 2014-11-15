@@ -128,9 +128,10 @@ class ResumeHandleController extends CompanyBaseController {
 	public function sendNotPass()
 	{
 		$data = I();
+		$sendObj = D('Send');
 		$array['id'] = $data['deliverIds'];
 		$array['content'] = $data['content'];
-		$res = $sendObj->where(array('id'=>$data['deliverId']))->find();
+		$res = $sendObj->where(array('id'=>$data['deliverIds']))->find();
 		if ($res['state3'] == 0) {
 			$array['state3'] = 2;
 			$array['state3_time'] = time();
@@ -248,9 +249,6 @@ class ResumeHandleController extends CompanyBaseController {
 		$show_works=M('show_works');
 		//查询用户基本信息
 		$res_resume=$resume->where("id='{$id}'")->find();
-		if($res_resume['create_time'] == '' ){
-			$this->error('请完善简历',U("Resume/index"),3);
-		}
 		if($res_resume){
 			$data['name']=$res_resume['name'];
 			if($res_resume['sex']==1){
@@ -343,9 +341,7 @@ class ResumeHandleController extends CompanyBaseController {
 			}
 			$val['job_name'] = $res2['name'];
 		}
-		dump($res);
 		$company = $this->comObj->where(array('id'=>$this->uid))->find();
-
 		$this->assign('send', $res);
 		$this->assign('company', $company);
 		$this->display();
@@ -364,6 +360,7 @@ class ResumeHandleController extends CompanyBaseController {
 					   ->join('LEFT JOIN `lg_resume` AS r ON s.user_id = r.id')
 					   ->join('LEFT JOIN `lg_job` AS j ON s.job_id = j.id')
 					   ->order('s.audition_time ASC')
+					   ->where($condition)
 					   ->select();
 
 		// 循环数组, 按日期分布
@@ -373,6 +370,7 @@ class ResumeHandleController extends CompanyBaseController {
 			$date_key = date('Y-m-d', $val['audition_time']);
 			$narr[$date_key][$val['id']] = $val;
 		}
+		// dump($narr);
 		$this->assign('data', $narr);
 		$this->display();
 	}

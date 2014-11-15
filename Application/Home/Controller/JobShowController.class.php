@@ -1,7 +1,7 @@
 <?php
 namespace Home\Controller;
 use Think\Controller;
-class JobShowController extends BaseController {
+class JobShowController extends Controller {
 	//显示indexShow的信息
 	public function index(){
 		$user=M('users');

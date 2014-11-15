@@ -35,20 +35,21 @@ var rctx = "http://hr.lagou.com";
                             <ul class="reset my_collections">
                                 <foreach name="result" item="vo" >
                                     <li data-id="245610">
-                                    <a href="" target="_blank" title="师盛">
-                                        <img src="" alt="师盛">
+                                    <a href="{:U('JobShow/index',array(jid=>$vo['id']))}" target="_blank" title="师盛">
+                                        <img src="{$vo.company.logo}" alt="师盛">
                                     </a>
                                     <div class="co_item">
                                         <h2 title="PHP 程序员">
-                                            <a href="http://www.lagou.com/jobs/245610.html" target="_blank">
+                                            <a href="{:U('JobShow/index',array(jid=>$vo['id']))}" target="_blank">
                                                 <em>{$vo.name}</em> 
                                                 <span>（{$vo.salary_low}k-{$vo.salary_high}k）</span>
                                             </a>
                                         </h2>
                                         <span class="co_time">发布时间：{$vo.modify_time|date='Y年m月d日',###}</span>
                                         <div class="co_cate">{$vo.company.name} / {$vo.address} / {$vo.work_year} / {$vo.edu}</div>
-                                        <span class="co_youhuo c7">{$vo.desc}</span>
-                                        <a href="" target="_blank" class="collection_link">投个简历</a>
+                                        <span class="co_youhuo c7">{$vo.welfare}</span>
+                                        <a href="{:U('JobShow/index',array('jid'=>$vo['id']))}" target="_blank" class="collection_link {$vo.show_2}">投个简历</a>
+                                        <span class="collection_status {$vo.show_1}">已投递</span>
                                         <i></i>
                                         <a href="{:U('CollectionJob/jobDel',array('jid'=>$vo['id']))}" class="collection_link">
                                             取消收藏
@@ -64,14 +65,10 @@ var rctx = "http://hr.lagou.com";
             <div class="content_r">
                 <div id="myInfo" class="mycenterR">
                     <h2>我的信息</h2>
-                    <a href="http://www.lagou.com/mycenter/collections.html">我收藏的职位</a>
-                    <br>
-                                        <a target="_blank" href="http://www.lagou.com/mycenter/delivery.html">我投递的职位<span class="red dn" id="noticeNoPage">&nbsp;(0)</span></a>
-                    <br>
-                                        <a href="http://www.lagou.com/s/subscribe.html" target="_blank">我订阅的职位</a>
-                                        <br>
-                    <a href="http://www.lagou.com/jobs/mList.html" target="_blank">我的职位推荐</a>
-                                    </div><!--end #myInfo-->
+                    <a target="_blank" href="{:U('CollectionJob/index')}">我收藏的职位</a><br>
+                    <a target="_blank" href="{:U('ResumeSend/allSend')}">我投递的职位<span class="red dn" id="noticeNoPage">&nbsp;(0)</span></a><br>
+                    <a target="_blank" href="#">我订阅的职位</a>                   
+                </div><!--end #myInfo-->
                                 <div id="myRecommend" class="mycenterR">
                     <h2>可能适合你的职位 <i>匹配度</i></h2>
                     <ul class="reset">

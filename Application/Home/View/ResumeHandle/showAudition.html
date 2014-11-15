@@ -49,7 +49,7 @@
     
     <body>
         <div id="body">
-            <include file="Public/header" />
+            <include file="Public/header" nav="handle" />
             <!-- end #header -->
             <div id="container">
                 <include file="Public/sidebar" nav="forward" />
@@ -124,18 +124,17 @@
                                                         </p>
                                                     </div>
                                                     <div class="con_r fr">
-                                                        <a target="_blank" href="http://www.lagou.com/nearBy/preview.html?deliverId=3261640"
-                                                        class="preview">
+                                                        <a target="_blank" href="{:U('Home/ResumeHandle/show', array('id'=>$v['user_id'], 'sid'=>$v['id']))}" class="preview">
                                                             <span>
                                                                 预览简历
                                                             </span>
                                                         </a>
-                                                        <a target="_blank" href="http://www.lagou.com/corpResume/downloadResume?deliverId=3261640"
+                                                        <!-- <a target="_blank" href="http://www.lagou.com/corpResume/downloadResume?deliverId=3261640"
                                                         class="download" data-key="f8c9cb931414c41a2f5c461f170d980a" data-type="0">
                                                             <span>
                                                                 下载简历
                                                             </span>
-                                                        </a>
+                                                        </a> -->
                                                     </div>
                                                 </li>
                                             </ul>

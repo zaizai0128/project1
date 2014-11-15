@@ -66,26 +66,21 @@
                                         </li>
                                         <li class="{$topshow['look_show']}">
                                             <a href="{:U('ResumeSend/lookSuccess')}">
-                                                投递成功
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="{:U('ResumeSend/lookSuccess')}">
                                                 被查看
                                             </a>
                                         </li>
-                                        <li>
-                                            <a href="{:U('ResumeSend/index')}">
-                                                通过初筛
+                                        <li class="{$topshow['resend_success']}">
+                                            <a href="{:U('ResumeSend/resendSuccess')}">
+                                                被转发
                                             </a>
                                         </li>
-                                        <li>
-                                            <a href="{:U('ResumeSend/index')}">
+                                        <li class="{$topshow['noticeAudition']}">
+                                            <a href="{:U('ResumeSend/noticeAudition')}">
                                                 通知面试
                                             </a>
                                         </li>
-                                        <li class="last">
-                                            <a href="{:U('ResumeSend/index')}">
+                                        <li class="{$topshow['notby']}">
+                                            <a href="{:U('ResumeSend/notBy')}">
                                                 不合适
                                             </a>
                                         </li>
@@ -93,120 +88,6 @@
                                 </div>
                                 <form id="deliveryForm">
                                     <ul class="reset my_delivery">
-                                        <li>
-                                            <div class="d_item">
-                                                <h2 title="随便写">
-                                                    <a target="_blank" href="#">
-                                                        <em>
-                                                            随便写
-                                                        </em>
-                                                        <span>
-                                                            （1k-2k）
-                                                        </span>
-                                                        <!-- -->
-                                                    </a>
-                                                </h2>
-                                                <div class="clear">
-                                                </div>
-                                                <a title="公司名称" class="d_jobname" target="_blank" href="http://www.lagou.com/c/25927.html">
-                                                    公司名称
-                                                    <span>
-                                                        [上海]
-                                                    </span>
-                                                </a>
-                                                <span class="d_time">
-                                                    2014-07-01 17:15
-                                                </span>
-                                                <div class="clear">
-                                                </div>
-                                                <div class="d_resume">
-                                                    使用简历：
-                                                    <span>
-                                                        在线简历
-                                                    </span>
-                                                </div>
-                                                <a class="btn_showprogress" href="javascript:;">
-                                                    不合适
-                                                    <i>
-                                                    </i>
-                                                </a>
-                                            </div>
-                                            <div class="progress_status  dn">
-                                                <ul class="status_steps">
-                                                    <li class="status_grey status_1">
-                                                        1
-                                                    </li>
-                                                    <li class="status_line status_line_grey">
-                                                        <span>
-                                                        </span>
-                                                    </li>
-                                                    <li class="status_done">
-                                                        <span>
-                                                            2
-                                                        </span>
-                                                    </li>
-                                                    <li class="status_line status_line_done">
-                                                        <span>
-                                                        </span>
-                                                    </li>
-                                                    <li class="status_done">
-                                                        <span>
-                                                            3
-                                                        </span>
-                                                    </li>
-                                                    <li class="status_line status_line_done">
-                                                        <span>
-                                                        </span>
-                                                    </li>
-                                                    <li class="status_done">
-                                                        <span>
-                                                            4
-                                                        </span>
-                                                    </li>
-                                                </ul>
-                                                <ul class="status_text">
-                                                    <li>
-                                                        投递成功
-                                                    </li>
-                                                    <li class="status_text_2">
-                                                        简历被查看
-                                                    </li>
-                                                    <li class="status_text_3">
-                                                        通过初步筛选
-                                                    </li>
-                                                    <li style="margin-left: 75px;*margin-left: 60px;" class="status_text_4">
-                                                        不合适
-                                                    </li>
-                                                </ul>
-                                                <ul class="status_list">
-                                                    <li class="top">
-                                                        <div class="list_time">
-                                                            <em>
-                                                            </em>
-                                                            2014-07-01 17:15
-                                                        </div>
-                                                        <div class="list_body">
-                                                            简历被lixiang标记为不合适
-                                                            <div>
-                                                                您的简历已收到，但目前您的工作经历与该职位不是很匹配，因此很抱歉地通知您无法进入面试。
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li class="bottom">
-                                                        <div class="list_time">
-                                                            <em>
-                                                            </em>
-                                                            2014-07-01 17:08
-                                                        </div>
-                                                        <div class="list_body">
-                                                            lixiang已成功接收你的简历
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                                <a class="btn_closeprogress" href="javascript:;">
-                                                </a>
-                                            </div>
-                                        </li>
                                         <foreach name="result" item="vo" >
                                         <li>
                                             <div class="d_item">
@@ -350,27 +231,10 @@
                     </div>
                     <div class="content_r">
                         <div class="mycenterR" id="myInfo">
-                            <h2>
-                                我的信息
-                            </h2>
-                            <a href="collections.html">
-                                我收藏的职位
-                            </a>
-                            <br />
-                            <a href="toudi.html" target="_blank">
-                                我投递的职位
-                                <span id="noticeNoPage" class="red dn">
-                                    &nbsp;(0)
-                                </span>
-                            </a>
-                            <br />
-                            <a target="_blank" href="subscribe.html">
-                                我订阅的职位
-                            </a>
-                            <br />
-                            <a target="_blank" href="mList.html">
-                                我的职位推荐
-                            </a>
+                            <h2>我的信息</h2>
+                            <a target="_blank" href="{:U('CollectionJob/index')}">我收藏的职位</a><br>
+                            <a target="_blank" href="{:U('ResumeSend/allSend')}">我投递的职位<span class="red dn" id="noticeNoPage">&nbsp;(0)</span></a><br>
+                            <a target="_blank" href="#">我订阅的职位</a>
                         </div>
                         <!--end #myInfo-->
                         <div class="mycenterR" id="myRecommend">

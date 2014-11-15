@@ -1,7 +1,7 @@
 <?php
 namespace Home\Controller;
 use Think\Controller;
-class SearchController extends BaseController {
+class SearchController extends Controller {
 	public function index(){
 		//显示首页用户名
 		$user=M('users');
@@ -79,6 +79,7 @@ class SearchController extends BaseController {
 		$company_tag = M('company_tag');
 		$tag = M('tag');
 		//分页
+		$_SESSION['search']['state']=1;
 		$a = $_SESSION['search'];
 		$count = $job->where($a)->count();
 		$Page = new \Think\Page($count,1);

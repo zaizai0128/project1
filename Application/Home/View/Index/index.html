@@ -70,7 +70,7 @@
 										<dd> 
 										<foreach name="v['sub']" item = "o">  
 											<if condition = "$o['pid'] eq $v['id']">
-												<a href="{:U('Search/index',array('job'=>$v['name']))}">{$o['name']}</a>
+												<a href="{:U('Search/index',array('job'=>$o['name']))}">{$o['name']}</a>
 											</if>
 										</foreach>
 										</dd>		
@@ -91,7 +91,6 @@
 					<form   action="{:U('Search/index')}" method="get">
 						<ul id="searchType">
 							<li data-searchtype="1" class="type_selected">职位</li>
-							<li data-searchtype="4">公司</li>
 						</ul>
 						<div class="searchtype_arrow"></div>
 						<input type="text" id="search_input" name = "kd"  tabindex="1" value=""  placeholder="请输入职位名称，如：产品经理"  />
@@ -230,7 +229,7 @@
 							</div>
 							<div class="hot_pos_r">
 								<div class="mb10 recompany">
-									<a href="h/c/399.html" target="_blank">{$vo.company.name}</a>
+									<a href="{:U('Index/showCompany',array('id'=>$vo['company']['id']))}" target="_blank">{$vo.company.name}</a>
 								</div>
 								<span><em class="c7">领域：</em> {$vo.company.trade}</span>
 								<span><em class="c7">创始人：</em>陈桦</span>
@@ -267,7 +266,7 @@
 							</div>
 							<div class="hot_pos_r">
 								<div class="mb10 recompany">
-									<a href="h/c/399.html" target="_blank">{$vo.company.name}</a>
+									<a href="{:U('Index/showCompany',array('id'=>$vo['company']['id']))}" target="_blank">{$vo.company.name}</a>
 								</div>
 								<span><em class="c7">领域：</em> {$vo.company.trade}</span>
 								<span><em class="c7">创始人：</em>陈桦</span>
