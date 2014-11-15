@@ -1,3 +1,5 @@
 .svn/
-/Application/Runtime
+*/Application/Runtime/*
+Application/Runtime/*
+Application/Runtime
 */info.php
