@@ -92,6 +92,18 @@ class ManagerController extends BaseController {
 		}
 	}
 
+	/**
+	 * 删除
+	 */
+	public function del()
+	{
+		$id = I('get.user_id');
+		$this->adminObj->where('id='.$id)->delete();
+		$msg['code'] = 1;
+		$msg['msg'] = '删除成功';
+		$this->ajaxReturn($msg);
+	}
+
 	public function pic()
 	{
 		$user_id = I('post.user_id');

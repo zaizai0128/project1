@@ -73,9 +73,10 @@
 					</td>
 					<td>
 						<div class="hidden-phone visible-desktop action-buttons">
-							<a href="javascript:;" onclick="$.lagou.formShow('{:U('Admin/Manager/edit', array('user_id'=>$value['id']))}');" class="blue tooltip-info no-hover-underline" data-rel="tooltip" data-placement="left" data-original-title="编辑资料">
+							<a href="javascript:;" onclick="$.lagou.formShow('{:U('Admin/Manager/edit', array('user_id'=>$value['id']))}');" class="blue tooltip-info no-hover-underline" data-rel="tooltip" data-original-title="编辑资料">
 								<i class="icon-pencil bigger-130"></i>
 							</a>
+							<a href="javascript:;" onclick="$.del('{:U('Admin/Manager/del', array('user_id'=>$value['id']))}');" class="red tooltip-error no-hover-underline" data-rel="tooltip" data-original-title="删除管理员"><i class="icon-trash bigger-130"></i></a>
 						</div>
 					</td>
 				</tr>
@@ -103,7 +104,21 @@
 						$(this).closest('tr').toggleClass('selected');
 					});	
 				});
-			
+				
+				$.extend({
+
+					del : function(url)
+					{
+						$.lagou.confirm('确认删除么', function(res){
+							if (res) {
+								$.get(url, function(response){
+									$.lagou.alert(response.msg, response.code, 2);
+									location.reload(0);
+								});
+							}
+						});
+					}
+				});
 			})
 		</script>
 </block>

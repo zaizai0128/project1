@@ -51,13 +51,10 @@
         <?php if (!$_COOKIE['state']) :?>
         <!-- 未登录头部 -->
         <ul class="reset" id="navheader">
-            <li class="current"><a href="<?php echo U('Home/Index/index');?>">首页</a></li>
-            <li ><a href="<?php echo U('Home/Company/companylist');?>" >公司</a></li>
-            <li class="current"><a href="<?php echo U('Index/index');?>">首页</a></li>
-            <li ><a href="companylist.html" >公司</a></li>
-            <li ><a href="h/toForum.html" target="_blank">论坛</a></li>
-            <li ><a href="<?php echo U('Resume/index');?>" rel="nofollow">我的简历</a></li>
-            <li ><a href="create.html" rel="nofollow">发布职位</a></li>
+            <li <?php if(index == 'index'): ?>class="current"<?php endif; ?>><a href="<?php echo U('Home/Index/index');?>">首页</a></li>
+            <li <?php if(index == 'company'): ?>class="current"<?php endif; ?>><a href="<?php echo U('Home/Index/companylist');?>" >公司</a></li>
+            <li <?php if(index == 'resume'): ?>class="current"<?php endif; ?>><a href="<?php echo U('Resume/index');?>" rel="nofollow">我的简历</a></li>
+            <li <?php if(index == 'job'): ?>class="current"<?php endif; ?>><a href="<?php echo U('Home/CompanyJob/create');?>" rel="nofollow">发布职位</a></li>
         </ul>
         <ul class="loginTop">
             <li><a href="<?php echo U('User/login');?>" rel="nofollow">登录</a></li> 
@@ -69,9 +66,9 @@
         <?php if ($_COOKIE['state'] == 1) :?>
         <!-- 个人用户头部 -->
          <ul class="reset" id="navheader">
-            <li class="current"><a href="index.html">首页</a></li>
-            <li ><a href="<?php echo U('Home/Company/companylist');?>" >公司</a></li>
-            <li ><a href="<?php echo U('Resume/index');?>" rel="nofollow">我的简历</a></li>
+            <li <?php if(index == 'index'): ?>class="current"<?php endif; ?>><a href="<?php echo U('Home/Index/index');?>">首页</a></li>
+            <li <?php if(index == 'company'): ?>class="current"<?php endif; ?>><a href="<?php echo U('Home/Index/companylist');?>" >公司</a></li>
+            <li <?php if(index == 'resume'): ?>class="current"<?php endif; ?>><a href="<?php echo U('Resume/index');?>" rel="nofollow">我的简历</a></li>
         </ul>
         <dl class="collapsible_menu">
             <dt>
@@ -80,19 +77,19 @@
                 <i></i>
             </dt>
             <dd><a href="<?php echo U('CollectionJob/index');?>">我收藏的职位</a></dd>
-            <dd class="btm"><a href="subscribe.html">我的订阅</a></dd>
+            <dd class="btm"><a href="###">我的订阅</a></dd>
             <dd><a href="<?php echo U('Home/CompanyJob/create');?>">我要招人</a></dd>
-            <dd><a href="accountBind.html">帐号设置</a></dd>
+            <dd><a href="###">帐号设置</a></dd>
             <dd class="logout"><a rel="nofollow" href="<?php echo U('User/logout');?>">退出</a></dd>
         </dl>
         <?php endif ;?>
         <?php if ($_COOKIE['state'] == 2) :?>
         <!-- 公司用户头部 -->
          <ul class="reset" id="navheader">
-            <li class="current"><a href="index.html">首页</a></li>
-            <li ><a href="<?php echo U('Home/Company/companylist');?>" >公司</a></li>
-            <li ><a href="<?php echo U('Resume/index');?>" rel="nofollow">简历管理</a></li>
-            <li ><a href="create.html" rel="nofollow">发布职位</a></li>
+            <li <?php if(index == 'index'): ?>class="current"<?php endif; ?>><a href="<?php echo U('Home/Index/index');?>">首页</a></li>
+            <li <?php if(index == 'company'): ?>class="current"<?php endif; ?>><a href="<?php echo U('Home/Index/companylist');?>" >公司</a></li>
+            <li <?php if(index == 'handle'): ?>class="current"<?php endif; ?>><a href="<?php echo U('Home/ResumeHandle/unhandle');?>" rel="nofollow">简历管理</a></li>
+            <li <?php if(index == 'job'): ?>class="current"<?php endif; ?>><a href="<?php echo U('Home/CompanyJob/create');?>" rel="nofollow">发布职位</a></li>
         </ul>
         <dl class="collapsible_menu">
             <dt>
@@ -100,11 +97,11 @@
                 <span class="red dn" id="noticeDot-0"></span>
                 <i></i>
             </dt>
-            <dd><a rel="nofollow" href="<?php echo U('Resume/index');?>">我发布的职位</a></dd>
-            <dd><a href="<?php echo U('CollectionJob/index');?>">我收到的简历</a></dd>
-            <dd class="btm"><a href="subscribe.html">我公司的主页</a></dd>
-            <dd><a href="<?php echo U('Company/index');?>">我要找工作</a></dd>
-            <dd><a href="accountBind.html">帐号设置</a></dd>
+            <dd><a rel="nofollow" href="<?php echo U('Home/CompanyJob/positions');?>">我发布的职位</a></dd>
+            <dd><a href="<?php echo U('Home/ResumeHandle/unhandle');?>">我收到的简历</a></dd>
+            <dd class="btm"><a href="<?php echo U('Home/Company/index');?>">我公司的主页</a></dd>
+            <dd><a href="<?php echo U('Home/Resume/index');?>">我要找工作</a></dd>
+            <dd><a href="###">帐号设置</a></dd>
             <dd class="logout"><a rel="nofollow" href="<?php echo U('User/logout');?>">退出</a></dd>
         </dl>
         <?php endif ;?>
@@ -127,7 +124,7 @@
 												<a href="<?php echo U('Search/index',array('job'=>$v['name']));?>"><?php echo ($v['name']); ?></a>
 											</dt><?php endif; ?>								
 										<dd> 
-										<?php if(is_array($v['sub'])): foreach($v['sub'] as $key=>$o): if($o['pid'] == $v['id']): ?><a href="<?php echo U('Search/index',array('job'=>$v['name']));?>"><?php echo ($o['name']); ?></a><?php endif; endforeach; endif; ?>
+										<?php if(is_array($v['sub'])): foreach($v['sub'] as $key=>$o): if($o['pid'] == $v['id']): ?><a href="<?php echo U('Search/index',array('job'=>$o['name']));?>"><?php echo ($o['name']); ?></a><?php endif; endforeach; endif; ?>
 										</dd><?php endforeach; endif; ?>			
 								</dl>
 							</div>
@@ -144,7 +141,6 @@
 					<form   action="<?php echo U('Search/index');?>" method="get">
 						<ul id="searchType">
 							<li data-searchtype="1" class="type_selected">职位</li>
-							<li data-searchtype="4">公司</li>
 						</ul>
 						<div class="searchtype_arrow"></div>
 						<input type="text" id="search_input" name = "kd"  tabindex="1" value=""  placeholder="请输入职位名称，如：产品经理"  />
@@ -282,7 +278,7 @@
 							</div>
 							<div class="hot_pos_r">
 								<div class="mb10 recompany">
-									<a href="h/c/399.html" target="_blank"><?php echo ($vo["company"]["name"]); ?></a>
+									<a href="<?php echo U('Index/showCompany',array('id'=>$vo['company']['id']));?>" target="_blank"><?php echo ($vo["company"]["name"]); ?></a>
 								</div>
 								<span><em class="c7">领域：</em> <?php echo ($vo["company"]["trade"]); ?></span>
 								<span><em class="c7">创始人：</em>陈桦</span>
@@ -317,7 +313,7 @@
 							</div>
 							<div class="hot_pos_r">
 								<div class="mb10 recompany">
-									<a href="h/c/399.html" target="_blank"><?php echo ($vo["company"]["name"]); ?></a>
+									<a href="<?php echo U('Index/showCompany',array('id'=>$vo['company']['id']));?>" target="_blank"><?php echo ($vo["company"]["name"]); ?></a>
 								</div>
 								<span><em class="c7">领域：</em> <?php echo ($vo["company"]["trade"]); ?></span>
 								<span><em class="c7">创始人：</em>陈桦</span>
