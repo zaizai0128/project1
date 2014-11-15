@@ -52,14 +52,8 @@ class ManagerController extends BaseController {
 			$data['create_time'] = time();
 			$id = $this->adminObj->data($data)->add();
 
-			if ($id) {
-				$msg['code'] = 1;
-				$msg['msg'] = '添加成功';
-			} else {
-				$msg['code'] = 0;
-				$msg['msg'] = '添加失败';
-			}
-			
+			$msg['code'] = 1;
+			$msg['msg'] = '添加成功';
 			$this->ajaxReturn($msg);
 		}
 	}
@@ -80,14 +74,8 @@ class ManagerController extends BaseController {
 			$data['status'] = isset($data['status']) ? $data['status'] : 0 ;
 			$res = $this->adminObj->data($data)->save();
 
-			if ($res) {
-				$msg['code'] = 1;
-				$msg['msg'] = '修改成功';
-			} else {
-				$msg['code'] = 0;
-				$msg['msg'] = '修改失败';
-			}
-			
+			$msg['code'] = 1;
+			$msg['msg'] = '修改成功';
 			$this->ajaxReturn($msg);
 		}
 	}

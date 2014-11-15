@@ -42,6 +42,7 @@
 					<th>id</th>
 					<th>用户名</th>
 					<th>类型</th>
+					<th>创建时间</th>
 					<th class="hidden-phone">
 						<i class="icon-time bigger-110 hidden-phone"></i>
 						最后登录时间
@@ -66,6 +67,7 @@
 						<td class="hidden-480">
 							<?php echo C('user_type')[$value['type']] ?>
 						</td>
+						<td>{$value.create_time|date="Y-m-d H:i",###}</td>
 						<td class="hidden-phone">{$value.login_time}</td>
 						<td class="hidden-phone">{$value.login_ip}</td>
 						<td class="hidden-480">
