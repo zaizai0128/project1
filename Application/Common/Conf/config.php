@@ -13,7 +13,7 @@ return array(
     'DB_FIELDTYPE_CHECK'    =>  false,       // 是否进行字段类型检查
     'DB_FIELDS_CACHE'       =>  true,        // 启用字段缓存
     'DB_CHARSET'            =>  'utf8',      // 数据库编码默认采用utf8
-	'SHOW_PAGE_TRACE' 		=>	true,				//开启页面trace
+	'SHOW_PAGE_TRACE' 		=>	false,				//开启页面trace
 	'DOMAIN'                =>  'http://lagou.me',
 	'WEB_NAME'				=>	'拉勾',
     
