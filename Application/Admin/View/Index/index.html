@@ -36,7 +36,7 @@
 					</div>
 
 					<div class="infobox-data">
-						<span class="infobox-data-number">32</span>
+						<span class="infobox-data-number">{$data.resume_total}</span>
 						<div class="infobox-content">用户简历数</div>
 					</div>
 					
@@ -48,7 +48,7 @@
 					</div>
 
 					<div class="infobox-data">
-						<span class="infobox-data-number">32</span>
+						<span class="infobox-data-number">{$data.job_total}</span>
 						<div class="infobox-content">招聘职位数</div>
 					</div>
 					
@@ -60,7 +60,7 @@
 					</div>
 
 					<div class="infobox-data">
-						<span class="infobox-data-number">32</span>
+						<span class="infobox-data-number">{$data.link_total}</span>
 						<div class="infobox-content">友情链接数</div>
 					</div>
 					
@@ -72,7 +72,7 @@
 					</div>
 
 					<div class="infobox-data">
-						<span class="infobox-data-number">32</span>
+						<span class="infobox-data-number">{$data.user_incheck}</span>
 						<div class="infobox-content">已验证用户数</div>
 					</div>
 					
@@ -84,7 +84,7 @@
 					</div>
 
 					<div class="infobox-data">
-						<span class="infobox-data-number">32</span>
+						<span class="infobox-data-number">{$data.user_uncheck}</span>
 						<div class="infobox-content">未验证用户数</div>
 					</div>
 					
@@ -96,7 +96,7 @@
 					</div>
 
 					<div class="infobox-data">
-						<span class="infobox-data-number">32</span>
+						<span class="infobox-data-number">{$data.company_incheck}</span>
 						<div class="infobox-content">已验证企业用户数</div>
 					</div>
 					
@@ -108,32 +108,10 @@
 					</div>
 
 					<div class="infobox-data">
-						<span class="infobox-data-number">32</span>
+						<span class="infobox-data-number">{$data.company_uncheck}</span>
 						<div class="infobox-content">未验证企业用户数</div>
 					</div>
 					
-				</div>
-
-				<div class="infobox infobox-blue">
-					<div class="infobox-icon">
-						<i class="icon-bar-chart"></i>
-					</div>
-
-					<div class="infobox-data">
-						<span class="infobox-data-number">32</span>
-						<div class="infobox-content">已激活企业用户数</div>
-					</div>
-				</div>
-
-				<div class="infobox infobox-pink">
-					<div class="infobox-icon">
-						<i class="icon-bar-chart"></i>
-					</div>
-
-					<div class="infobox-data">
-						<span class="infobox-data-number">32</span>
-						<div class="infobox-content">未激活企业用户数</div>
-					</div>
 				</div>
 			</div>
 			<div class="vspace"></div>
@@ -147,19 +125,19 @@
 							<div id="piechart-placeholder"></div>
 							<div class="hr hr8 hr-double"></div>
 							<div class="clearfix">
-								<div style="width:44%;float:left;">
+								<div style="width:45%;float:left;">
 									<span class="grey">
 										<i class="icon-group icon-2x blue"></i>
 										&nbsp; 普通用户
 									</span>
-									<h4 class="bigger pull-right">1,255</h4>
+									<h4 class="bigger pull-right">{$data.user_total}</h4>
 								</div>
-								<div style="width:44%;float:right;">
+								<div style="width:45%;float:right;">
 									<span class="grey">
 										<i class="icon-group icon-2x red"></i>
 										&nbsp; 企业用户
 									</span>
-									<h4 class="bigger pull-right">1,050</h4>
+									<h4 class="bigger pull-right">{$data.company_total}</h4>
 								</div>
 								<div style="clear:both;"></div>
 							</div>
@@ -235,8 +213,8 @@
 		/* 统计饼图 */
 		var placeholder = $('#piechart-placeholder').css({'width':'90%' , 'min-height':'150px'});
 		var data = [
-			{ label: "普通用户",  data: 55.5, color: "#2091CF"},
-			{ label: "企业用户",  data: 44.5, color: "#DE5A42"}
+			{ label: "普通用户",  data: {$data.user_bite}, color: "#2091CF"},
+			{ label: "企业用户",  data: {$data.company_bite}, color: "#DE5A42"}
 		]
 		function drawPieChart(placeholder, data, position) {
 			$.plot(placeholder, data, {
