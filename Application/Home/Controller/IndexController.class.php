@@ -82,7 +82,7 @@ class IndexController extends Controller {
         $tagModel = D('Tag');
         $comObj = D('Company');
         $total = $comObj->count();
-        $page = new \Think\Page($total, 1);
+        $page = new \Think\Page($total, 15);
         $page->setConfig('first', '首页');
         $page->setConfig('prev', '上一页');
         $page->setConfig('next', '下一页');
@@ -164,7 +164,7 @@ class IndexController extends Controller {
         $where['trade'] = array('like', '%'.$data['ifs'].'%');
         $where = array_filter($where);
         $total = $comObj->where($where)->count();
-        $page = new \Think\Page($total, 1);
+        $page = new \Think\Page($total, 15);
         $page->setConfig('first', '首页');
         $page->setConfig('prev', '上一页');
         $page->setConfig('next', '下一页');
