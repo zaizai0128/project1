@@ -48,7 +48,7 @@ class LinkController extends BaseController {
 			$data['state'] = 1;
 			$rs = $this->linkObj->add($data);
 
-			$msg['code'] = $rs;
+			$msg['code'] = 1;
 			$msg['msg'] = '添加成功';
 			$this->ajaxReturn($msg);
 		}

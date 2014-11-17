@@ -17,16 +17,6 @@ $(function(){
         });
 	});
 	
-	/*bindEmail*/
-	/**没有进行帐号绑定的时候，如果点击logo离开，出现弹窗**/
-	//var isLeave=true;
-	// window.onbeforeunload = function(){
-	// 	if(isLeave){
-	// 		return;
-	// 	}else{
-	// 		return "内容还未保存，确认离开该页面吗？ ";	
-	// 	}
-	//  }
 	$('#confirmLeave').click(function(){
 		isLeave = false;
 	})
@@ -490,7 +480,7 @@ $(function(){
     		var comfirmpassword = $('#comfirmpassword').val();
     		var resubmitToken = $('#resubmitToken').val();
     		$.ajax({
-    			url:ctx+'/user/updatePwd.json',
+    			url:"doSettingPwd",
     			type:'POST',
     			data:{
     				oldPassword:oldpassword,
@@ -503,7 +493,7 @@ $(function(){
 				$('#resubmitToken').val(result.resubmitToken);
     			if(result.success){
     				$.colorbox({inline:true, href:$("#updatePassword"),title:"修改密码成功"});
-    				setCountdown(4,'updatePassword h4 span',ctx+"/user/logout.html");	//调用倒计时
+    				setCountdown(4,'updatePassword h4 span',result.url);	//调用倒计时
     			}else{
     				$('#updatePwd_beError').html(result.msg).show();
     			}

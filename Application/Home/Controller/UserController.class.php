@@ -94,6 +94,8 @@ class UserController extends Controller {
 		$user=M('users');
 		$result=$user->where("username='$username'")->find();
 		if($result['password'] == $password){
+			$login['login_time']=time();
+			$user->where("username='$username'")->save($login);
 			$user=array('id'=>$result['id'],'username'=>$result['username'],'type'=>$result['type']);
 			session('user',$user);
 			cookie('state', 1);

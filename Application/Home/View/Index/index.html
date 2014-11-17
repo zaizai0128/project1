@@ -93,7 +93,7 @@
 							<li data-searchtype="1" class="type_selected">职位</li>
 						</ul>
 						<div class="searchtype_arrow"></div>
-						<input type="text" id="search_input" name = "kd"  tabindex="1" value=""  placeholder="请输入职位名称，如：产品经理"  />
+						<input type="text" id="search_input" name = "job"  tabindex="1" value=""  placeholder="请输入职位名称，如：产品经理"  />
 						<input type="submit" id="search_button" value="搜索" />
 					</form>
 				</div>
@@ -103,9 +103,9 @@
 				</dl>
 				<!--热门搜索 结束-->
 				<!--上部轮播 开始-->
-				<div id="home_banner">
+				<!--<div id="home_banner">
 					<!--上部轮播 开始-->
-					<ul class="banner_bg">
+					<!--<ul class="banner_bg">
 						<li  class="banner_bg_1 current" >
 							<a href="h/subject/s_buyfundation.html?utm_source=DH__lagou&utm_medium=banner&utm_campaign=haomai" target="_blank"><img src="__PUBLIC__/HomeStyle/images/d05a2cc6e6c94bdd80e074eb05e37ebd.jpg" width="612" height="160" alt="好买基金——来了就给100万" /></a>
 						</li>
@@ -115,10 +115,10 @@
 						<li  class="banner_bg_3" >
 							<a href="h/subject/s_xiamen.html?utm_source=DH__lagou&utm_medium=home&utm_campaign=xiamen" target="_blank"><img src="__PUBLIC__/HomeStyle/images/d03110162390422bb97cebc7fd2ab586.jpg" width="612" height="160" alt="出北京记——第一站厦门" /></a>
 						</li>
-					</ul>
+					</ul>-->
 					<!--上部轮播 结束-->
 					<!--右侧竖条轮播 开始-->
-					<div class="banner_control">
+					<!--<div class="banner_control">
 						<em></em> 
 						<ul class="thumbs">
 							<li  class="thumbs_1 current" >
@@ -134,74 +134,38 @@
 								<img src="__PUBLIC__/HomeStyle/images/354d445c5fd84f1990b91eb559677eb5.jpg" width="113" height="42" />
 							</li>
 						</ul>
-					</div>
+					</div>-->
 					<!--右侧竖条轮播 结束-->
-				</div>
+				<!--</div>-->
 				<!--上部轮播结束-->
 				<!--下部广告框 开始-->
 				<ul id="da-thumbs" class="da-thumbs">
+					<foreach name="advert" item="vo" >
 					<li >
-						<a href="h/c/1650.html" target="_blank">
-							<img src="__PUBLIC__/HomeStyle/images/a254b11ecead45bda166afa8aaa9c8bc.jpg" width="113" height="113" alt="联想" />
+						<a href="{:U('Index/showCompany',array('id'=>$vo['id']))}" target="_blank">
+							<img src="{$vo.logo}" width="110" height="113" alt="" />
 							<div class="hot_info">
-								<h2 title="联想">联想</h2>
+								<h2 title="{$vo.shortname}">{$vo.shortname}</h2>
 								<em></em>
-								<p title="世界因联想更美好">世界因联想更美好</p>
+								<p title="{$vo.one_desc}">{$vo.one_desc}</p>
 							</div>
 						</a>
-					</li>
+					</li>					
+					</foreach>
+				</ul>
+				<ul id="da-thumbs" class="da-thumbs">
+					<foreach name="adverts" item="vo" >
 					<li >
-						<a href="h/c/9725.html" target="_blank">
-							<img src="__PUBLIC__/HomeStyle/images/c75654bc2ab141df8218983cfe5c89f9.jpg" width="113" height="113" alt="淘米" />
+						<a href="{:U('Index/showCompany',array('id'=>$vo['id']))}" target="_blank">
+							<img src="{$vo.logo}" width="110" height="113" alt="" />
 							<div class="hot_info">
-								<h2 title="淘米">淘米</h2>
+								<h2 title="{$vo.shortname}">{$vo.shortname}</h2>
 								<em></em>
-								<p title="将心注入 追求极致">将心注入 追求极致</p>
+								<p title="{$vo.one_desc}">{$vo.one_desc}</p>
 							</div>
 						</a>
-					</li>
-					<li >
-						<a href="h/c/1914.html" target="_blank">
-							<img src="__PUBLIC__/HomeStyle/images/2bba2b71d0b0443eaea1774f7ee17c9f.png" width="113" height="113" alt="优酷土豆" />
-							<div class="hot_info">
-								<h2 title="优酷土豆">优酷土豆</h2>
-								<em></em>
-								<p title="专注于视频领域，是中国网络视频行业领军企业">
-									专注于视频领域，是中国网络视频行业领军企业
-								</p>
-							</div>
-						</a>
-					</li>
-					<li >
-						<a href="h/c/6630.html" target="_blank">
-							<img src="__PUBLIC__/HomeStyle/images/f4822a445a8b495ebad81fcfad3e40e2.jpg" width="113" height="113" alt="思特沃克" />
-							<div class="hot_info">
-								<h2 title="思特沃克">思特沃克</h2>
-								<em></em>
-								<p title="一家全球信息技术服务公司">一家全球信息技术服务公司</p>
-							</div>
-						</a>
-					</li>
-					<li >
-						<a href="h/c/2700.html" target="_blank">
-							<img src="__PUBLIC__/HomeStyle/images/5caf8f9631114bf990f87bb11360653e.png" width="113" height="113" alt="奇猫" />
-							<div class="hot_info">
-								<h2 title="奇猫">奇猫</h2>
-								<em></em>
-								<p title="专注于移动互联网、互联网产品研发">专注于移动互联网、互联网产品研发</p>
-							</div>
-						</a>
-					</li>
-					<li  class="last" >
-						<a href="h/c/1335.html" target="_blank">
-							<img src="__PUBLIC__/HomeStyle/images/c0052c69ef4546c3b7d08366d0744974.jpg" width="113" height="113" alt="堆糖网" />
-							<div class="hot_info">
-								<h2 title="堆糖网">堆糖网</h2>
-								<em></em>
-								<p title="分享收集生活中的美好，遇见世界上的另外一个你">分享收集生活中的美好，遇见世界上的另外一个你</p>
-							</div>
-						</a>
-					</li>
+					</li>					
+					</foreach>					
 				</ul>
 				<!--下部广告位 结束-->
 				<ul class="reset hotabbing" id="check_position">
@@ -232,10 +196,10 @@
 									<a href="{:U('Index/showCompany',array('id'=>$vo['company']['id']))}" target="_blank">{$vo.company.name}</a>
 								</div>
 								<span><em class="c7">领域：</em> {$vo.company.trade}</span>
-								<span><em class="c7">创始人：</em>陈桦</span>
+								<span><em class="c7">创始人：</em>{$vo.team.name}</span>
 								<br />
-								<span><em class="c7">阶段：</em>{$vo.company.stage}</span>
-								<span><em class="c7">规模：</em>{$vo.company.scale}</span>
+								<span><em class="c7">阶段：</em>{:C('company_stage')[$vo['company']['stage']]}</span>
+								<span><em class="c7">规模：</em>{:C('company_scale')[$vo['company']['scale']]}</span>
 								<ul class="companyTags reset">
 									<li>移动互联网</li>
 									<li>五险一金</li>
@@ -245,7 +209,7 @@
 						</li>
 						</foreach>
 						<!--白色背景热门职位详情 结束-->
-						<a href="#" class="btn fr" target="_blank">查看更多</a>
+						<a href="{:U('Search/index')}" class="btn fr" target="_blank">查看更多</a>
 					</ul>
 					<ul class="hot_pos reset dn">
 						<!--最新职位详情 开始-->
@@ -269,10 +233,10 @@
 									<a href="{:U('Index/showCompany',array('id'=>$vo['company']['id']))}" target="_blank">{$vo.company.name}</a>
 								</div>
 								<span><em class="c7">领域：</em> {$vo.company.trade}</span>
-								<span><em class="c7">创始人：</em>陈桦</span>
+								<span><em class="c7">创始人：</em>{$vo.team.name}</span>
 								<br />
-								<span><em class="c7">阶段：</em>{$vo.company.stage}</span>
-								<span><em class="c7">规模：</em>{$vo.company.scale}</span>
+								<span><em class="c7">阶段：</em>{:C('company_stage')[$vo['company']['stage']]}</span>
+								<span><em class="c7">规模：</em>{:C('company_scale')[$vo['company']['scale']]}</span>
 								<ul class="companyTags reset">
 									<li>移动互联网</li>
 									<li>五险一金</li>
@@ -282,7 +246,7 @@
 						</li>
 						</foreach>
 						<!--最新职位详情 结束-->
-						<a href="#" class="btn fr" target="_blank">查看更多</a>
+						<a href="{:U('Search/index')}" class="btn fr" target="_blank">查看更多</a>
 					</ul>
 				</div>
 				<!--职位详情框 结束-->

@@ -82,14 +82,14 @@ class SearchController extends Controller {
 		$_SESSION['search']['state']=1;
 		$a = $_SESSION['search'];
 		$count = $job->where($a)->count();
-		$Page = new \Think\Page($count,1);
+		$Page = new \Think\Page($count,10);
 		$Page->setConfig('first','首页');
 		$Page->setConfig('prev','上一页');
 		$Page->setConfig('next','下一页');
 		$Page->setConfig('last','尾页');
 		$show = $Page->show();
 		//搜索结果
-		$res_job = $job->where($a)->page(I('get.p',1),1)->select();
+		$res_job = $job->where($a)->page(I('get.p',1),10)->select();
 		if($res_job){
 			foreach($res_job as $key => $value){
 				$cid=$value['company_id'];
@@ -138,17 +138,17 @@ class SearchController extends Controller {
 	public function clearCon(){
 		switch($_GET['id']){
 			case 1:
-				unset($_SESSION['search']['salary_low']);$_SESSION['search_c']['salary_show']='dn';break;
+				unset($_SESSION['search']['salary_low']);unset($_SESSION['search_c']['salary']);$_SESSION['search_c']['salary_show']='dn';break;
 			case 2:
-				unset($_SESSION['search']['work_year']);$_SESSION['search_c']['work_year_show']='dn';break;
+				unset($_SESSION['search']['work_year']);unset($_SESSION['search_c']['work_year']);$_SESSION['search_c']['work_year_show']='dn';break;
 			case 3:
-				unset($_SESSION['search']['city']);$_SESSION['search_c']['city_show']='dn';break;
+				unset($_SESSION['search']['city']);unset($_SESSION['search_c']['city']);$_SESSION['search_c']['city_show']='dn';break;
 			case 4:
-				unset($_SESSION['search']['edu']);$_SESSION['search_c']['edu_show']='dn';break;
+				unset($_SESSION['search']['edu']);unset($_SESSION['search_c']['edu']);$_SESSION['search_c']['edu_show']='dn';break;
 			case 5:
-				unset($_SESSION['search']['nature']);$_SESSION['search_c']['nature_show']='dn';break;
+				unset($_SESSION['search']['nature']);unset($_SESSION['search_c']['nature']);$_SESSION['search_c']['nature_show']='dn';break;
 			case 6:
-				unset($_SESSION['search']['name']);$_SESSION['search_c']['name_show']='dn';break;
+				unset($_SESSION['search']['name']);unset($_SESSION['search_c']['name']);$_SESSION['search_c']['name_show']='dn';break;
 		}
 		$this->redirect('Search/index');
 	}

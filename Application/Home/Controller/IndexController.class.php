@@ -18,11 +18,16 @@ class IndexController extends Controller {
 		$res_hotjob=$this->showHot();
 		//显示最新职位的分类
 		$res_newjob=$this->newJob();
+        //广告位的显示
+        $res_advert=$this->showadvert();
+        $res_adverts=$this->showadverts();
 		//输出到模板
 		$this->assign('data',$this->data);
 		$this->assign('cates',$res_category);
 		$this->assign('hotjob',$res_hotjob);
 		$this->assign('newjob',$res_newjob);
+        $this->assign('advert',$res_advert);
+        $this->assign('adverts',$res_adverts);
 		$this->display();
 		//var_dump($res_category);
 	}
@@ -186,6 +191,17 @@ class IndexController extends Controller {
         $this->assign('trade', $trade);
         $this->assign('company', $res);
         $this->display();
+    }
+    //首页广告位
+    public function showadvert(){
+        $company=M('company');
+        $res_company=$company->limit(0,6)->select();
+        return $res_company;
+    }
+    public function showadverts(){
+        $company=M('company');
+        $res_company=$company->limit(6,6)->select();
+        return $res_company;
     }
 
 }
