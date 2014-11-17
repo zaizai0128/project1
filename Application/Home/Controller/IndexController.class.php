@@ -55,7 +55,7 @@ class IndexController extends Controller {
     	$user_col = M('user_col');
     	$job = M('job');
     	$company = M('company');
-    	$res_user_col=$user_col->query("select job_id,count(job_id) as times from lg_user_col GROUP BY job_id order by times desc limit 2");
+    	$res_user_col=$user_col->query("select job_id,count(job_id) as times from lg_user_col GROUP BY job_id order by times desc limit 10");
     	foreach($res_user_col as $key=>$value){
     		$id=$value['job_id'];
     		$arr=$job->where("id={$id}")->find();
@@ -70,7 +70,7 @@ class IndexController extends Controller {
     public function newJob(){
     	$job = M('job');
     	$company = M('company');
-    	$res_job=$job->order('id desc')->limit(2)->select();
+    	$res_job=$job->order('id desc')->limit(10)->select();
     	foreach($res_job as $key=>$value){
     		$id=$value['company_id'];
     		$arr=$value;

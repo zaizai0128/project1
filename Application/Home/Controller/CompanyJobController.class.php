@@ -142,12 +142,6 @@ class CompanyJobController extends CompanyBaseController {
 		
 	}
 
-	// 职位发布详情页
-	public function job()
-	{
-		echo '职位';
-	}
-
 	// 职位下线操作
 	public function cancel()
 	{

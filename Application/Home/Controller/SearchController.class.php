@@ -49,8 +49,7 @@ class SearchController extends Controller {
 			$_SESSION['search']['work_year']=$_GET['workyear'];
 			$_SESSION['search_c']['work_year']=$_GET['workyear'];
 			$_SESSION['search_c']['work_year_show']='';
-		}
-		//进行工作地点判断
+		}		//进行工作地点判断
 		if(!empty($_GET['address'])){
 			$_SESSION['search']['city']=$_GET['address'];
 			$_SESSION['search_c']['city']=$_GET['address'];

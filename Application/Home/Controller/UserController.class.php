@@ -52,7 +52,7 @@ class UserController extends Controller {
 				$user=array('id'=>$userInfo['id'],'username'=>$userInfo['username'],'type'=>$userInfo['type']); 
 				session('user',$user);
 				cookie('state',1);
-				$this->success('拉钩网邮箱验证成功',U('Resume/index'),3);
+				$this->success('拉钩网邮箱验证成功',U('Index/index'),3);
 			}else{
 				$this->error('拉钩网邮箱验证失败',U("User/login"),3);
 			}
@@ -80,7 +80,7 @@ class UserController extends Controller {
         if (!$mail->Send()) {                    //发送邮件
             echo '邮件发送失败:'.$mail->ErrorInfo;
         } else {
-            echo "邮件发送成功";
+            $this->redirect('User/wait');
         }
 	}
 	//用户登陆界面
@@ -109,5 +109,9 @@ class UserController extends Controller {
 		session('user',null);
 		cookie('state',null);
 		$this->redirect('Home/Index/index');
+	}
+	//用户注册成功跳转
+	public function wait(){
+		$this->display();
 	}
 }
