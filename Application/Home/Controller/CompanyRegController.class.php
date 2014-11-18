@@ -174,6 +174,7 @@ class CompanyRegController extends Controller {
 		$url = C('DOMAIN').U('Home/CompanyReg/active', array('id'=>$this->id));
 		$msg =<<<HTML
 			<h1>感谢您注册拉勾网,请<a href="$url">点击激活</a>账号.</h1>
+			<div>$url</div>
 HTML;
 		$project = '企业邮箱激活 - 拉勾网';
 
