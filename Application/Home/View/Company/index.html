@@ -896,7 +896,6 @@
                 var file_obj = $('#'+file_id);
                 var class_obj = $('.'+class_id);
                 var n = $('#'+file_id).next();
-                console.log(file_obj.attr('name'));
                 $.ajaxFileUpload({
                     url : url,
                     fileElementId : file_id,
@@ -905,7 +904,6 @@
                     data : {fid:file_obj.attr('name'), id:file_obj.attr('id')},
                     type : 'post',
                     success : function(data) {
-                        console.log(data);
                         n.val(data.url);
                         data.url = data.url + '?' + parseInt(Math.random()*10000);
                         class_obj.attr('src', data.url);
