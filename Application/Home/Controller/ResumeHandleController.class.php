@@ -65,6 +65,7 @@ class ResumeHandleController extends CompanyBaseController {
 		$save['id'] = $data['deliverId'];
 		$save['state4'] = 1;
 		$save['state4_time'] = time();
+		$save['content'] = '您的简历已通过我们的筛选，很高兴通知您参加我们的面试。';
 		$save['audition_time'] = strtotime($data['interviewTime']);
 		$save['audition_linkman'] = $data['linkMan'];
 		$save['audition_linkphone'] = $data['linkPhone'];

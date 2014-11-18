@@ -14,7 +14,7 @@ return array(
     'DB_FIELDS_CACHE'       =>  true,        // 启用字段缓存
     'DB_CHARSET'            =>  'utf8',      // 数据库编码默认采用utf8
 	'SHOW_PAGE_TRACE' 		=>	false,				//开启页面trace
-	'DOMAIN'                =>  'http://lagou.me',
+	'DOMAIN'                =>  'http://5me.pw',
 	'WEB_NAME'				=>	'拉勾',
     
     'DEFAULT_FILTER'        =>  'htmlspecialchars,trim', // 默认参数过滤方法 用于I函数...
