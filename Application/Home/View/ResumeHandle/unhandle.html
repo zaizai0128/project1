@@ -56,22 +56,22 @@
                                     <div>
                                         共收到
                                         <span>
-                                            2
+                                            {$resume_total}
                                         </span>
                                         份应聘简历
                                     </div>
                                     <a href="{:U('Home/ResumeHandle/unhandle')}">
-                                        待处理简历（0）
+                                        待处理简历（{$unhandle_total}）
                                     </a>
                                     <a href="http://hr.lagou.com/interview/arranged.html">
-                                        已安排面试（0）
+                                        已安排面试（{$audition_total}）
                                     </a>
                                     <a href="http://hr.lagou.com/interview/haveRefuselist.html">
-                                        不合适简历（1）
+                                        不合适简历（{$notPass_total}）
                                     </a>
                                 </div>
                                 <else />
-                                <div class="filter_actions">
+                              <!--   <div class="filter_actions">
                                     <label class="checkbox">
                                         <input type="checkbox">
                                         <i></i>
@@ -81,7 +81,7 @@
                                     </span>
                                     <a href="javascript:;" class="mark_nofit" id="resumeRefuseAll">
                                         不合适
-                                    </a>
+                                    </a> -->
                                     <!-- <ul class="filter_btn reset">
                                         <li id="filter_btn2">
                                             <span>
@@ -91,7 +91,7 @@
                                             </i>
                                         </li>
                                     </ul> -->
-                                </div>
+                                <!-- </div> -->
                                 <!-- end .filter_actions -->
                                 <!-- <div class="filter_options">
                                     <dl>
@@ -200,10 +200,10 @@
                                             <span class="time">
                                                 {$sendVal.state1_time|date="Y-m-d H:i:m", ###}
                                             </span>
-                                            <label class="checkbox">
+                                            <!-- <label class="checkbox">
                                                 <input type="checkbox">
                                                 <i></i>
-                                            </label>
+                                            </label> -->
                                             <span class="employee">
                                                 应聘：
                                                 <a href="{:U(Home/Company)}" class="employee_position"

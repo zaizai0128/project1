@@ -227,8 +227,17 @@ class ResumeHandleController extends CompanyBaseController {
 		}
 		$company = $this->comObj->where(array('id'=>$this->uid))->find();
 
+		$resume_total = $sendObj->where(array('company_id'=>$this->uid))->count();
+		$unhandle_total = $sendObj->where(array('company_id'=>$this->uid, 'state4'=>0))->count();
+		$audition_total = $sendObj->where(array('company_id'=>$this->uid, 'state4'=>1))->count();
+		$notPass_total = $sendObj->where(array('company_id'=>$this->uid, 'state4'=>2))->count();
+
 		$this->assign('send', $res);
 		$this->assign('company', $company);
+		$this->assign('resume_total', $resume_total);
+		$this->assign('unhandle_total', $unhandle_total);
+		$this->assign('audition_total', $audition_total);
+		$this->assign('notPass_total', $notPass_total);
 		$this->display();
 	}
 
@@ -320,7 +329,8 @@ class ResumeHandleController extends CompanyBaseController {
 		$workObj = D('WorkHistory');
 		$hopeObj = D('Hopejob');
 		$array = array('女', '男');
-		$res = $sendObj->where(array('company_id'=>$this->uid, 'state4'=>-1))->select();
+		$res = $sendObj->where(array('company_id'=>$this->uid, 'state4'=>2))->select();
+		$num = $sendObj->where(array('company_id'=>$this->uid, 'state4'=>2))->count();
 		foreach ($res as &$val) {
 			$res2 = $jobObj->where(array('id'=>$val['job_id']))->find();
 			$res3 = $resumeObj->where(array('id'=>$val['user_id']))->select();
@@ -345,6 +355,7 @@ class ResumeHandleController extends CompanyBaseController {
 		$company = $this->comObj->where(array('id'=>$this->uid))->find();
 		$this->assign('send', $res);
 		$this->assign('company', $company);
+		$this->assign('num', $num);
 		$this->display();
 	}
 

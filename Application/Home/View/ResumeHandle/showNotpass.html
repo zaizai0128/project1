@@ -52,7 +52,7 @@
                                 </em>
                                 不合适简历
                                 <span>
-                                    （共4份）
+                                    （共{$num}份）
                                 </span>
                             </h1>
                         </dt>
@@ -61,7 +61,7 @@
                             	<empty name="send">
                             	<div class="no_resume_tip no_resume_home">你暂时还没有拒绝过任何人哦~</div>
                             	<else />
-                                <div class="filter_actions">
+                                <!-- <div class="filter_actions">
                                     <label class="checkbox">
                                         <input type="checkbox">
                                         <i></i>
@@ -84,9 +84,9 @@
                                             </i>
                                         </li>
                                     </ul>
-                                </div>
+                                </div> -->
                                 <!-- end .filter_actions -->
-                                <input value="1" id="pageNo" type="hidden">
+                               <!--  <input value="1" id="pageNo" type="hidden">
                                 <input value="1" id="totalPageCount" type="hidden">
                                 <div class="filter_options">
                                     <dl>
@@ -163,7 +163,7 @@
                                         </dd>
                                     </dl>
                                     <input id="positionId" name="positionId" value="" type="hidden">
-                                </div>
+                                </div> -->
                                 <!-- end .filter_options -->
                                 <ul class="resume_lists">
                                 	<foreach name="send" item="sendVal">
@@ -172,11 +172,11 @@
                                             <span class="time">
                                                 {$sendVal.state1_time|date="Y-m-d H:i:m", ###}
                                             </span>
-                                            <label class="checkbox">
+                                            <!-- <label class="checkbox">
                                                 <input type="checkbox">
                                                 <i>
                                                 </i>
-                                            </label>
+                                            </label> -->
                                             <span class="employee">
                                                 应聘：
                                                 <a class="employee_position" href="#####"
