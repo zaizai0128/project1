@@ -25,6 +25,8 @@ class UserController extends Controller {
 		$date['password']=md5($_POST['password']);
 		$date['verify']=$verify;
 		$date['create_time']=time();
+		$date['login_time']=time();
+		$date['login_ip']=$_SERVER['REMOTE_ADDR'];
 		$result=$user->data($date)->add();
 		if($result){
 			$to=$date['username'];
@@ -95,6 +97,7 @@ class UserController extends Controller {
 		$result=$user->where("username='$username'")->find();
 		if($result['password'] == $password){
 			$login['login_time']=time();
+			$login['login_ip'] = $_SERVER['REMOTE_ADDR'];
 			$user->where("username='$username'")->save($login);
 			$user=array('id'=>$result['id'],'username'=>$result['username'],'type'=>$result['type']);
 			session('user',$user);
