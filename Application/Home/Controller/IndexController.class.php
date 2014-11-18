@@ -21,6 +21,8 @@ class IndexController extends Controller {
         //广告位的显示
         $res_advert=$this->showadvert();
         $res_adverts=$this->showadverts();
+        //友情链接
+        $friend=$this->friend();
 		//输出到模板
 		$this->assign('data',$this->data);
 		$this->assign('cates',$res_category);
@@ -28,6 +30,7 @@ class IndexController extends Controller {
 		$this->assign('newjob',$res_newjob);
         $this->assign('advert',$res_advert);
         $this->assign('adverts',$res_adverts);
+        $this->assign('friend',$friend);
 		$this->display();
 		//var_dump($res_category);
 	}
@@ -202,6 +205,12 @@ class IndexController extends Controller {
         $company=M('company');
         $res_company=$company->limit(6,6)->select();
         return $res_company;
+    }
+    //首页友情链接
+    public function friend(){
+    	$links=M('links');
+    	$res_links=$links->select();
+    	return $res_links;
     }
 
 }

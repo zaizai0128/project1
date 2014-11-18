@@ -256,9 +256,9 @@
 					<dl>
 						<dt>友情链接</dt>
 						<dd>
-								<a href="http://www.zhuqu.com/" target="_blank">住趣家居网</a> <span>|</span>
-								<a href="http://iwebad.com/" target="_blank">网络广告人社区</a>
-								<a href="h/af/flink.html" target="_blank" class="more">更多</a>
+								<foreach name="friend" item="vo" >
+									<a href="{$vo.url}" target="_blank">{$vo.name}</a> <span>|</span>
+								</foreach>
 						</dd>
 					</dl>
 				</div>
